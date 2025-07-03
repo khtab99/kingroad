@@ -1,0 +1,48 @@
+{
+  "all": [
+    { "id": "all", "nameAr": "الكل", "nameEn": "All" },
+    { "id": "internal", "nameAr": "داخليه", "nameEn": "Internal" },
+    { "id": "external", "nameAr": "خارجيه", "nameEn": "External" },
+    {
+      "id": "air-conditioning",
+      "nameAr": "جوض المكيفه",
+      "nameEn": "Air Condition"
+    },
+    { "id": "accessories", "nameAr": "ملحقات", "nameEn": "Accessories" },
+    { "id": "oils", "nameAr": "زيوت", "nameEn": "Oils" },
+    { "id": "consumables", "nameAr": "كليبات", "nameEn": "Consumables" }
+  ],
+  "external": [
+    { "id": "all", "nameAr": "الكل", "nameEn": "All" },
+    { "id": "bumpers", "nameAr": "مصدات", "nameEn": "Bumpers" },
+    { "id": "lights", "nameAr": "أضواء", "nameEn": "Lights" },
+    { "id": "mirrors", "nameAr": "مرايا", "nameEn": "Mirrors" },
+    { "id": "grilles", "nameAr": "شبكات", "nameEn": "Grilles" },
+    { "id": "doors", "nameAr": "أبواب", "nameEn": "Doors" },
+    { "id": "windows", "nameAr": "نوافذ", "nameEn": "Windows" }
+  ],
+  "internal": [
+    { "id": "all", "nameAr": "الكل", "nameEn": "All" },
+    { "id": "dashboard", "nameAr": "لوحة القيادة", "nameEn": "Dashboard" },
+    { "id": "seats", "nameAr": "مقاعد", "nameEn": "Seats" },
+    { "id": "door-panels", "nameAr": "ألواح الأبواب", "nameEn": "Door Panels" },
+    { "id": "steering", "nameAr": "مقود", "nameEn": "Steering" },
+    { "id": "console", "nameAr": "كونسول", "nameEn": "Console" }
+  ],
+  "air-conditioning": [
+    { "id": "all", "nameAr": "الكل", "nameEn": "All" },
+    { "id": "compressor", "nameAr": "ضاغط", "nameEn": "Compressor" },
+    { "id": "condenser", "nameAr": "مكثف", "nameEn": "Condenser" },
+    { "id": "evaporator", "nameAr": "مبخر", "nameEn": "Evaporator" },
+    { "id": "filters", "nameAr": "فلاتر", "nameEn": "Filters" },
+    { "id": "hoses", "nameAr": "خراطيم", "nameEn": "Hoses" }
+  ],
+  "accessories": [
+    { "id": "all", "nameAr": "الكل", "nameEn": "All" },
+    { "id": "floor-mats", "nameAr": "سجاد أرضية", "nameEn": "Floor Mats" },
+    { "id": "covers", "nameAr": "أغطية", "nameEn": "Covers" },
+    { "id": "organizers", "nameAr": "منظمات", "nameEn": "Organizers" },
+    { "id": "electronics", "nameAr": "إلكترونيات", "nameEn": "Electronics" },
+    { "id": "tools", "nameAr": "أدوات", "nameEn": "Tools" }
+  ]
+}

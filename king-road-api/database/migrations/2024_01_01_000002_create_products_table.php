@@ -44,7 +44,8 @@ return new class extends Migration
             $table->index(['is_active', 'is_featured']);
             $table->index(['category_id', 'is_active']);
             $table->index('inventory');
-            $table->fullText(['name_en', 'name_ar', 'description_en', 'description_ar']);
+            // SQLite doesn't support fulltext indexes
+// $table->fullText(['name_en', 'name_ar', 'description_en', 'description_ar']);
         });
     }
 

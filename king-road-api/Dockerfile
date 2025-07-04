@@ -1,11 +1,33 @@
-FROM php:8.3-cli
+FROM php:8.2-fpm
 
+# Arguments defined in docker-compose.yml
+ARG PHP_VERSION=8.2
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    zip \
+    unzip
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
 WORKDIR /var/www/html
 
-# Install system deps
-RUN apt-get update && apt-get install -y \
-    zip unzip curl libzip-dev libpng-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo_mysql zip
+# Copy existing application directory contents
+COPY . .
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Expose port 8000 and start php server
+EXPOSE 8000

@@ -23,7 +23,7 @@ RUN npm install -g serve
 COPY --from=build /app/out .
 
 # Expose the port your app will run on
-EXPOSE 3002
+EXPOSE 3000
 
 # Serve the static content
-CMD ["serve", "-l", "3002"]
+CMD ["serve", "-l", "3000"]

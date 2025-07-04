@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class RouteServiceProvider extends LaravelRouteServiceProvider
 {
+    public const HOME = '/home';
+
     protected $namespace = 'App\Http\Controllers';
 
     public function boot()
@@ -18,15 +20,15 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
         $this->configureRateLimiting();
     }
 
-    protected function mapApiRoutes()
+    public function mapApiRoutes(): void
     {
-        Route::prefix('api/v1')
+        Route::prefix('api')
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
     }
 
-    protected function mapWebRoutes()
+    public function mapWebRoutes(): void
     {
         Route::middleware('web')
             ->namespace($this->namespace)

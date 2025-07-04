@@ -15,12 +15,18 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
 
     public function boot()
     {
-        parent::boot();
-        
         $this->configureRateLimiting();
+        
+        parent::boot();
     }
 
-    public function mapApiRoutes(): void
+    public function map(): void
+    {
+        $this->mapApiRoutes();
+        $this->mapWebRoutes();
+    }
+
+    protected function mapApiRoutes(): void
     {
         Route::prefix('api')
             ->middleware('api')
@@ -28,7 +34,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->group(base_path('routes/api.php'));
     }
 
-    public function mapWebRoutes(): void
+    protected function mapWebRoutes(): void
     {
         Route::middleware('web')
             ->namespace($this->namespace)

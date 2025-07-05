@@ -1,26 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\ReviewController;
-use App\Http\Controllers\Api\CouponController;
-use App\Http\Controllers\Api\AddressController;
-use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\Admin\AdminAuthController;
 use App\Http\Controllers\Api\Admin\AdminDashboardController;
 use App\Http\Controllers\Api\Admin\AdminProductController;
-use App\Http\Controllers\Api\Admin\AdminOrderController;
-use App\Http\Controllers\Api\Admin\AdminCustomerController;
-use App\Http\Controllers\Api\Admin\AdminCategoryController;
-use App\Http\Controllers\Api\Admin\AdminReviewController;
-use App\Http\Controllers\Api\Admin\AdminCouponController;
-use App\Http\Controllers\Api\Admin\AdminAnalyticsController;
-use App\Http\Controllers\Api\Admin\AdminSettingController;
-use App\Http\Controllers\Api\Admin\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +31,6 @@ Route::prefix('v1')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'index']);
         Route::get('/{product}', [ProductController::class, 'show']);
-        // Route::get('/{product}/reviews', [ReviewController::class, 'productReviews']);
         Route::post('/{product}/increment-views', [ProductController::class, 'incrementViews']);
     });
 
@@ -53,14 +40,6 @@ Route::prefix('v1')->group(function () {
         Route::get('/{category}', [CategoryController::class, 'show']);
         Route::get('/{category}/products', [CategoryController::class, 'products']);
     });
-
-    // Coupons
-    Route::prefix('coupons')->group(function () {
-        // Route::post('/validate', [CouponController::class, 'validate']);
-    });
-
-    // Settings
-    // Route::get('settings/public', [SettingController::class, 'public']);
 });
 
 // Protected user routes
@@ -72,15 +51,16 @@ Route::prefix('v1')->middleware(['auth:api'])->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::delete('account', [AuthController::class, 'deleteAccount']);
     });
+        Route::get('/', [CartController::class, 'index']);
+    // Cart management
+    Route::prefix('cart')->group(function () {
 
-    // User addresses
-    Route::prefix('addresses')->group(function () {
-        // Route::get('/', [AddressController::class, 'index']);
-        // Route::post('/', [AddressController::class, 'store']);
-        // Route::get('/{address}', [AddressController::class, 'show']);
-        // Route::put('/{address}', [AddressController::class, 'update']);
-        // Route::delete('/{address}', [AddressController::class, 'destroy']);
-        // Route::post('/{address}/set-default', [AddressController::class, 'setDefault']);
+        Route::post('/add', [CartController::class, 'addToCart']);
+        Route::put('/update/{cartItem}', [CartController::class, 'updateQuantity']);
+        Route::delete('/remove/{cartItem}', [CartController::class, 'removeFromCart']);
+        Route::delete('/clear', [CartController::class, 'clearCart']);
+        Route::get('/count', [CartController::class, 'getCartCount']);
+        Route::get('/total', [CartController::class, 'getCartTotal']);
     });
 
     // Orders
@@ -89,15 +69,6 @@ Route::prefix('v1')->middleware(['auth:api'])->group(function () {
         Route::post('/', [OrderController::class, 'store']);
         Route::get('/{order}', [OrderController::class, 'show']);
         Route::post('/{order}/cancel', [OrderController::class, 'cancel']);
-    });
-
-    // Reviews
-    Route::prefix('reviews')->group(function () {
-        // Route::get('/', [ReviewController::class, 'index']);
-        // Route::post('/', [ReviewController::class, 'store']);
-        // Route::get('/{review}', [ReviewController::class, 'show']);
-        // Route::put('/{review}', [ReviewController::class, 'update']);
-        // Route::delete('/{review}', [ReviewController::class, 'destroy']);
     });
 });
 
@@ -134,88 +105,6 @@ Route::prefix('v1/admin')->group(function () {
             Route::post('/bulk-delete', [AdminProductController::class, 'bulkDelete']);
             Route::post('/import', [AdminProductController::class, 'import']);
             Route::get('/export', [AdminProductController::class, 'export']);
-        });
-
-        // Categories management
-        Route::prefix('categories')->group(function () {
-            // Route::get('/', [AdminCategoryController::class, 'index']);
-            // Route::post('/', [AdminCategoryController::class, 'store']);
-            // Route::get('/{category}', [AdminCategoryController::class, 'show']);
-            // Route::put('/{category}', [AdminCategoryController::class, 'update']);
-            // Route::delete('/{category}', [AdminCategoryController::class, 'destroy']);
-            // Route::post('/{category}/reorder', [AdminCategoryController::class, 'reorder']);
-        });
-
-        // Orders management
-        Route::prefix('orders')->group(function () {
-            // Route::get('/', [AdminOrderController::class, 'index']);
-            // Route::get('/{order}', [AdminOrderController::class, 'show']);
-            // Route::put('/{order}', [AdminOrderController::class, 'update']);
-            // Route::post('/{order}/update-status', [AdminOrderController::class, 'updateStatus']);
-            // Route::post('/{order}/add-tracking', [AdminOrderController::class, 'addTracking']);
-            // Route::post('/{order}/send-notification', [AdminOrderController::class, 'sendNotification']);
-            // Route::get('/{order}/invoice', [AdminOrderController::class, 'generateInvoice']);
-            // Route::get('/export', [AdminOrderController::class, 'export']);
-        });
-
-        // Customers management
-        Route::prefix('customers')->group(function () {
-            // Route::get('/', [AdminCustomerController::class, 'index']);
-            // Route::get('/{user}', [AdminCustomerController::class, 'show']);
-            // Route::put('/{user}', [AdminCustomerController::class, 'update']);
-            // Route::delete('/{user}', [AdminCustomerController::class, 'destroy']);
-            // Route::get('/{user}/orders', [AdminCustomerController::class, 'orders']);
-            // Route::get('/{user}/reviews', [AdminCustomerController::class, 'reviews']);
-            // Route::post('/{user}/send-email', [AdminCustomerController::class, 'sendEmail']);
-            // Route::get('/export', [AdminCustomerController::class, 'export']);
-        });
-
-        // Reviews management
-        Route::prefix('reviews')->group(function () {
-            // Route::get('/', [AdminReviewController::class, 'index']);
-            // Route::get('/{review}', [AdminReviewController::class, 'show']);
-            // Route::post('/{review}/approve', [AdminReviewController::class, 'approve']);
-            // Route::post('/{review}/reject', [AdminReviewController::class, 'reject']);
-            // Route::delete('/{review}', [AdminReviewController::class, 'destroy']);
-            // Route::post('/bulk-approve', [AdminReviewController::class, 'bulkApprove']);
-            // Route::post('/bulk-reject', [AdminReviewController::class, 'bulkReject']);
-        });
-
-        // Coupons management
-        Route::prefix('coupons')->group(function () {
-            // Route::get('/', [AdminCouponController::class, 'index']);
-            // Route::post('/', [AdminCouponController::class, 'store']);
-            // Route::get('/{coupon}', [AdminCouponController::class, 'show']);
-            // Route::put('/{coupon}', [AdminCouponController::class, 'update']);
-            // Route::delete('/{coupon}', [AdminCouponController::class, 'destroy']);
-            // Route::get('/{coupon}/usage', [AdminCouponController::class, 'usage']);
-        });
-
-        // Analytics
-        Route::prefix('analytics')->group(function () {
-            // Route::get('sales', [AdminAnalyticsController::class, 'sales']);
-            // Route::get('products', [AdminAnalyticsController::class, 'products']);
-            // Route::get('customers', [AdminAnalyticsController::class, 'customers']);
-            // Route::get('orders', [AdminAnalyticsController::class, 'orders']);
-            // Route::get('revenue', [AdminAnalyticsController::class, 'revenue']);
-            // Route::get('inventory', [AdminAnalyticsController::class, 'inventory']);
-        });
-
-        // Settings
-        Route::prefix('settings')->group(function () {
-            // Route::get('/', [AdminSettingController::class, 'index']);
-            // Route::put('/', [AdminSettingController::class, 'update']);
-            // Route::get('/groups/{group}', [AdminSettingController::class, 'group']);
-        });
-
-        // Admin users management (Super Admin only)
-        Route::prefix('users')->middleware(['admin.permission:super_admin'])->group(function () {
-            // Route::get('/', [AdminUserController::class, 'index']);
-            // Route::post('/', [AdminUserController::class, 'store']);
-            // Route::get('/{admin}', [AdminUserController::class, 'show']);
-            // Route::put('/{admin}', [AdminUserController::class, 'update']);
-            // Route::delete('/{admin}', [AdminUserController::class, 'destroy']);
-            // Route::post('/{admin}/toggle-status', [AdminUserController::class, 'toggleStatus']);
         });
     });
 });

@@ -64,6 +64,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Review::class);
     }
 
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     public function defaultAddress()
     {
         return $this->addresses()->where('is_default', true)->first();

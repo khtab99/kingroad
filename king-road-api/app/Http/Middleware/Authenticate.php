@@ -19,28 +19,66 @@ class Authenticate
             }
 
             foreach ($guards as $guard) {
-                if ($token = JWTAuth::parseToken()) {
-                    try {
-                        $user = $token->authenticate();
-                        
-                        if (!$user) {
-                            throw new JWTException('User not found');
+                if ($guard === 'admin') {
+                    // Handle admin authentication
+                    if ($token = JWTAuth::parseToken()) {
+                        try {
+                            $admin = $token->authenticate();
+                            
+                            if (!$admin) {
+                                return handleErrorResponse(0, 'Admin not found');
+                            }
+
+                            if (!$admin instanceof \App\Models\Admin) {
+                                return handleErrorResponse(0, 'Invalid admin token');
+                            }
+                            
+                            if (!$admin->is_active) {
+                                return handleErrorResponse(0, 'Admin account is deactivated');
+                            }
+                            
+                            return $next($request);
+                        } catch (TokenExpiredException $e) {
+                            return handleErrorResponse(0, 'Admin token has expired');
+                        } catch (TokenInvalidException $e) {
+                            return handleErrorResponse(0, 'Admin token is invalid');
+                        } catch (JWTException $e) {
+                            return handleErrorResponse(0, 'Admin token not found');
                         }
-                        
-                        return $next($request);
-                    } catch (TokenExpiredException $e) {
-                        return response()->json(['error' => 'Token has expired'], 401);
-                    } catch (TokenInvalidException $e) {
-                        return response()->json(['error' => 'Token is invalid'], 401);
-                    } catch (JWTException $e) {
-                        return response()->json(['error' => 'Token not found'], 401);
+                    }
+                } else {
+                    // Handle user authentication
+                    if ($token = JWTAuth::parseToken()) {
+                        try {
+                            $user = $token->authenticate();
+                            
+                            if (!$user) {
+                                return handleErrorResponse(0, 'User not found');
+                            }
+
+                            if (!$user instanceof \App\Models\User) {
+                                return handleErrorResponse(0, 'Invalid user token');
+                            }
+                            
+                            if (!$user->is_active) {
+                                return handleErrorResponse(0, 'User account is deactivated');
+                            }
+                            
+                            return $next($request);
+                        } catch (TokenExpiredException $e) {
+                            return handleErrorResponse(0, 'Token has expired');
+                        } catch (TokenInvalidException $e) {
+                            return handleErrorResponse(0, 'Token is invalid');
+                        } catch (JWTException $e) {
+                            return handleErrorResponse(0, 'Token not found');
+                        }
                     }
                 }
             }
 
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return handleErrorResponse(0, 'Unauthorized');
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return handleErrorResponse(0, $e);
         }
     }
 }

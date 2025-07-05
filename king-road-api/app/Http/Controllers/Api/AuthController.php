@@ -8,108 +8,127 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'country' => $request->country,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'country' => $request->country,
+                'password' => Hash::make($request->password),
+            ]);
 
-        $token = JWTAuth::fromUser($user);
-        $user->updateLastLogin();
+            $token = JWTAuth::fromUser($user);
+            $user->updateLastLogin();
 
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => new UserResource($user),
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60,
-        ], 201);
+            return handleSuccessReponse(1, 'User registered successfully', [
+                'user' => new UserResource($user),
+                'token' => [
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => config('jwt.ttl') * 60,
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return handleErrorResponse(0, $e);
+        }
     }
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        try {
+            $credentials = $request->only('email', 'password');
 
-        if (!$token = JWTAuth::attempt($credentials)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return handleErrorResponse(0, 'Invalid credentials');
+            }
+
+            $user = auth()->user();
+            
+            if (!$user->is_active) {
+                return handleErrorResponse(0, 'Your account has been deactivated');
+            }
+
+            $user->updateLastLogin();
+
+            return handleSuccessReponse(1, 'Login successful', [
+                'user' => new UserResource($user),
+                'token' => [
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => config('jwt.ttl') * 60,
+                ]
             ]);
+        } catch (\Exception $e) {
+            return handleErrorResponse(0, $e);
         }
-
-        $user = auth()->user();
-        
-        if (!$user->is_active) {
-            throw ValidationException::withMessages([
-                'email' => ['Your account has been deactivated.'],
-            ]);
-        }
-
-        $user->updateLastLogin();
-
-        return response()->json([
-            'message' => 'Login successful',
-            'user' => new UserResource($user),
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60,
-        ]);
     }
 
     public function profile()
     {
-        return response()->json([
-            'user' => new UserResource(auth()->user()),
-        ]);
+        try {
+            return handleSuccessReponse(1, 'Profile retrieved successfully', [
+                'user' => new UserResource(auth()->user())
+            ]);
+        } catch (\Exception $e) {
+            return handleErrorResponse(0, $e);
+        }
     }
 
     public function updateProfile(UpdateProfileRequest $request)
     {
-        $user = auth()->user();
-        
-        $data = $request->validated();
-        
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
+        try {
+            $user = auth()->user();
+            
+            $data = $request->validated();
+            
+            if (isset($data['password'])) {
+                $data['password'] = Hash::make($data['password']);
+            }
+
+            $user->update($data);
+
+            return handleSuccessReponse(1, 'Profile updated successfully', [
+                'user' => new UserResource($user->fresh())
+            ]);
+        } catch (\Exception $e) {
+            return handleErrorResponse(0, $e);
         }
-
-        $user->update($data);
-
-        return response()->json([
-            'message' => 'Profile updated successfully',
-            'user' => new UserResource($user->fresh()),
-        ]);
     }
 
     public function refresh()
     {
-        $token = JWTAuth::refresh();
+        try {
+            $token = JWTAuth::refresh();
 
-        return response()->json([
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60,
-        ]);
+            return handleSuccessReponse(1, 'Token refreshed successfully', [
+                'token' => [
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => config('jwt.ttl') * 60,
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return handleErrorResponse(0, $e);
+        }
     }
 
     public function logout()
     {
-        JWTAuth::invalidate();
+        try {
+            JWTAuth::invalidate();
 
-        return response()->json([
-            'message' => 'Successfully logged out',
-        ]);
+            return handleSuccessReponse(1, 'Successfully logged out', null);
+        } catch (\Exception $e) {
+            return handleErrorResponse(0, $e);
+        }
     }
 
     public function forgotPassword(Request $request)

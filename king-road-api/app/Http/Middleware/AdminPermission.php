@@ -10,14 +10,18 @@ class AdminPermission
 {
     public function handle(Request $request, Closure $next, string $role = null): Response
     {
-        $admin = auth('admin')->user();
+        $admin = auth()->user();
 
         if (!$admin) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return handleErrorResponse(0, 'Unauthorized');
+        }
+
+        if (!$admin instanceof \App\Models\Admin) {
+            return handleErrorResponse(0, 'Invalid admin user');
         }
 
         if ($role && $admin->role !== $role && $admin->role !== 'super_admin') {
-            return response()->json(['message' => 'Insufficient permissions'], 403);
+            return handleErrorResponse(0, 'Insufficient permissions');
         }
 
         return $next($request);

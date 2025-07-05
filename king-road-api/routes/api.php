@@ -43,7 +43,7 @@ Route::prefix('v1')->group(function () {
 });
 
 // Protected user routes
-Route::prefix('v1')->middleware(['auth:api'])->group(function () {
+Route::prefix('v1')->middleware(['jwt'])->group(function () {
     // User profile
     Route::prefix('user')->group(function () {
         Route::get('profile', [AuthController::class, 'profile']);
@@ -81,7 +81,7 @@ Route::prefix('v1/admin')->group(function () {
     });
 
     // Protected admin routes
-    Route::middleware(['auth:admin'])->group(function () {
+    Route::middleware(['jwt'])->group(function () {
         // Admin profile
         Route::get('profile', [AdminAuthController::class, 'profile']);
         Route::post('logout', [AdminAuthController::class, 'logout']);

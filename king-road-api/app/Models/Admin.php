@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -21,6 +22,8 @@ class Admin extends Authenticatable
         'permissions',
     ];
 
+    protected $guard = 'admin';
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -31,8 +34,35 @@ class Admin extends Authenticatable
         'last_login_at' => 'datetime',
         'is_active' => 'boolean',
         'permissions' => 'array',
-        'password' => 'hashed',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [
+            'role' => $this->role,
+            'permissions' => $this->permissions
+        ];
+    }
+
+    public function getRememberToken()
+    {
+        return $this->remember_token;
+    }
+
+    public function setRememberToken($value)
+    {
+        $this->remember_token = $value;
+    }
+
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
+    }
 
     public function scopeActive($query)
     {
@@ -41,7 +71,8 @@ class Admin extends Authenticatable
 
     public function updateLastLogin()
     {
-        $this->update(['last_login_at' => now()]);
+        $this->last_login_at = now();
+        $this->save();
     }
 
     public function hasPermission($permission)

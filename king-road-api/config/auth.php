@@ -14,10 +14,12 @@ return [
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
+            'hash' => false, // Disable password hashing for JWT
         ],
         'admin' => [
             'driver' => 'jwt',
             'provider' => 'admins',
+            'hash' => false, // Disable password hashing for JWT
         ],
     ],
 
@@ -29,6 +31,7 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+            'table' => 'admins',
         ],
     ],
 

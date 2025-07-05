@@ -16,7 +16,7 @@ return [
     |
     */
 
-   'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => 'sqlite',
 
     /*
     |--------------------------------------------------------------------------
@@ -33,13 +33,9 @@ return [
 
         'sqlite' => [
             'driver' => 'sqlite',
-            'url' => env('DB_URL'),
-            'database' => env('DB_DATABASE', '/Users/osman/development/king-road/king-road-api/database/database.sqlite'),
+            'database' => database_path('database.sqlite'),
             'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'busy_timeout' => null,
-            'journal_mode' => null,
-            'synchronous' => null,
+            'foreign_key_constraints' => true,
         ],
 
         'mysql' => [

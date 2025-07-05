@@ -47,7 +47,7 @@ class JsonResponseMiddleware
                         return $this->responseFactory->json([
                             'status' => 'error',
                             'message' => 'Unauthenticated',
-                            'error' => 'Please provide a valid authentication token',
+                            'error' => 'Please provide a valid authentication token or login again',
                         ], 401);
                     }
                     

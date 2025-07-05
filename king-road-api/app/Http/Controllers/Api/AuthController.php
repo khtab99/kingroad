@@ -8,9 +8,14 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class AuthController extends Controller
 {
@@ -23,18 +28,15 @@ class AuthController extends Controller
                 'phone' => $request->phone,
                 'country' => $request->country,
                 'password' => Hash::make($request->password),
+                'is_active' => true,
             ]);
 
-            $token = JWTAuth::fromUser($user);
-            $user->updateLastLogin();
+            $token = $user->createToken('auth-token', ['*'])->plainTextToken;
+            $user->update(['last_login_at' => now()]);
 
             return handleSuccessReponse(1, 'User registered successfully', [
                 'user' => new UserResource($user),
-                'token' => [
-                    'access_token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' => config('jwt.ttl') * 60,
-                ]
+                'token' => $token
             ]);
         } catch (\Exception $e) {
             return handleErrorResponse(0, $e);
@@ -46,25 +48,22 @@ class AuthController extends Controller
         try {
             $credentials = $request->only('email', 'password');
 
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (!Auth::attempt($credentials)) {
                 return handleErrorResponse(0, 'Invalid credentials');
             }
 
-            $user = auth()->user();
+            $user = Auth::user();
             
             if (!$user->is_active) {
                 return handleErrorResponse(0, 'Your account has been deactivated');
             }
 
-            $user->updateLastLogin();
+            $user->update(['last_login_at' => now()]);
+            $token = $user->createToken('auth-token', ['*'])->plainTextToken;
 
             return handleSuccessReponse(1, 'Login successful', [
                 'user' => new UserResource($user),
-                'token' => [
-                    'access_token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' => config('jwt.ttl') * 60,
-                ]
+                'token' => $token
             ]);
         } catch (\Exception $e) {
             return handleErrorResponse(0, $e);
@@ -74,8 +73,14 @@ class AuthController extends Controller
     public function profile()
     {
         try {
+            $user = Auth::user();
+            
+            if (!$user) {
+                return handleErrorResponse(0, 'User not found');
+            }
+
             return handleSuccessReponse(1, 'Profile retrieved successfully', [
-                'user' => new UserResource(auth()->user())
+                'user' => new UserResource($user)
             ]);
         } catch (\Exception $e) {
             return handleErrorResponse(0, $e);
@@ -85,18 +90,25 @@ class AuthController extends Controller
     public function updateProfile(UpdateProfileRequest $request)
     {
         try {
-            $user = auth()->user();
+            $user = Auth::user();
             
-            $data = $request->validated();
-            
-            if (isset($data['password'])) {
-                $data['password'] = Hash::make($data['password']);
+            $data = $request->only([
+                'name',
+                'email',
+                'phone',
+                'country',
+                'language',
+                'preferences'
+            ]);
+
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password);
             }
 
             $user->update($data);
 
             return handleSuccessReponse(1, 'Profile updated successfully', [
-                'user' => new UserResource($user->fresh())
+                'user' => new UserResource($user)
             ]);
         } catch (\Exception $e) {
             return handleErrorResponse(0, $e);
@@ -120,12 +132,16 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         try {
-            JWTAuth::invalidate();
+            $user = Auth::user();
+            if (!$user) {
+                return handleErrorResponse(0, 'User not found');
+            }
 
-            return handleSuccessReponse(1, 'Successfully logged out', null);
+            $user->currentAccessToken()->delete();
+            return handleSuccessReponse(1, 'Successfully logged out');
         } catch (\Exception $e) {
             return handleErrorResponse(0, $e);
         }

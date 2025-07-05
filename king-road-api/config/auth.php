@@ -12,14 +12,12 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'jwt',
+            'driver' => 'sanctum',
             'provider' => 'users',
-            'hash' => false, // Disable password hashing for JWT
         ],
         'admin' => [
-            'driver' => 'jwt',
+            'driver' => 'sanctum',
             'provider' => 'admins',
-            'hash' => false, // Disable password hashing for JWT
         ],
     ],
 

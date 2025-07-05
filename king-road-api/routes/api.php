@@ -51,10 +51,10 @@ Route::prefix('v1')->middleware(['auth:api'])->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::delete('account', [AuthController::class, 'deleteAccount']);
     });
-        Route::get('/', [CartController::class, 'index']);
+
     // Cart management
     Route::prefix('cart')->group(function () {
-
+        Route::get('/', [CartController::class, 'index']);
         Route::post('/add', [CartController::class, 'addToCart']);
         Route::put('/update/{cartItem}', [CartController::class, 'updateQuantity']);
         Route::delete('/remove/{cartItem}', [CartController::class, 'removeFromCart']);

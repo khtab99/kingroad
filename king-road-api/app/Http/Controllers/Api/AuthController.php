@@ -81,18 +81,16 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         try {
-            $credentials = $request->only('email', 'password');
+            // Find user by email
+            $user = User::where('email', $request->email)->first();
 
-            // Attempt authentication
-            if (!Auth::attempt($credentials)) {
+            // Check if user exists and password is correct
+            if (!$user || !Hash::check($request->password, $user->password)) {
                 return $this->handleErrorResponse(0, 'Invalid email or password');
             }
-
-            $user = Auth::user();
             
             // Check if user is active
             if (!$user->is_active) {
-                Auth::logout();
                 return $this->handleErrorResponse(0, 'Your account has been deactivated. Please contact support.');
             }
 
@@ -113,7 +111,7 @@ class AuthController extends Controller
 
         } catch (Exception $e) {
             Log::error('Login failed: ' . $e->getMessage(), [
-                'email' => $request->email,
+                'email' => $request->email ?? 'unknown',
                 'trace' => $e->getTraceAsString()
             ]);
             
@@ -128,6 +126,7 @@ class AuthController extends Controller
     {
         try {
             $user = Auth::user();
+
             
             if (!$user) {
                 return $this->handleErrorResponse(0, 'User not authenticated');

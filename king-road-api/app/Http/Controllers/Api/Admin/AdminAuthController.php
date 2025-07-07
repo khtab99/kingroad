@@ -26,7 +26,6 @@ class AdminAuthController extends Controller
             // Find admin by email
             $admin = Admin::where('email', $request->email)->first();
 
-            dd($admin);
             
             // Check credentials
             if (!$admin || !Hash::check($request->password, $admin->password)) {

@@ -30,7 +30,7 @@ class ProductResource extends JsonResource
             'category' => new CategoryResource($this->whenLoaded('category')),
             'subcategory' => new CategoryResource($this->whenLoaded('subcategory')),
             'images' => $this->images,
-            'featured_image' => $this->featured_image,
+      'featured_image' => $this->featured_image ? url($this->featured_image) : null,
             'weight' => $this->weight,
             'dimensions' => $this->dimensions,
             'is_active' => $this->is_active,

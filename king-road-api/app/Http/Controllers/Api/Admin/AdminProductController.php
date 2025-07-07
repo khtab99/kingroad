@@ -18,7 +18,7 @@ class AdminProductController extends Controller
     {
         $products = QueryBuilder::for(Product::class)
             ->with(['category', 'subcategory'])
-            ->allowedFilters([
+            ->allowedFilters(filters: [
                 'name_en',
                 'name_ar',
                 'sku',

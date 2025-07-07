@@ -51,6 +51,7 @@ class Product extends Model
         'is_featured' => 'boolean',
         'track_inventory' => 'boolean',
         'images' => 'array',
+        'featured_image' => 'string',
         'dimensions' => 'array',
         'tags' => 'array',
     ];
@@ -159,4 +160,11 @@ class Product extends Model
             'reviews_count' => $reviewsCount,
         ]);
     }
+
+    public function getFeaturedImageAttribute($value)
+{
+    return $value
+        ? url($value) // adds domain like http://yourdomain.com/storage/...
+        : null;
+}
 }

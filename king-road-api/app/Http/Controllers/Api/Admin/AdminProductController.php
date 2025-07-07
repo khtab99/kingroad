@@ -110,10 +110,11 @@ class AdminProductController extends Controller
         $product->update($data);
         $product->load(['category', 'subcategory']);
 
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'product' => new ProductResource($product),
-        ]);
+        return handleSuccessReponse(
+         [   1,
+            'Product updated successfully',
+            new ProductResource($product)])
+        ;
     }
 
     public function destroy(Product $product)

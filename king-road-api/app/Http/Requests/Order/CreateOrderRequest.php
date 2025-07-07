@@ -14,9 +14,7 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_name' => 'required|string|max:255',
             'customer_phone' => 'required|string|max:20',
-            'customer_email' => 'nullable|email|max:255',
             'address_type' => 'required|in:house,apartment,office',
             'street' => 'required|string|max:255',
             'house_number' => 'nullable|string|max:50',

@@ -24,6 +24,7 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
     {
         $this->mapApiRoutes();
         $this->mapWebRoutes();
+        $this->mapAdminApiRoutes();
     }
 
     protected function mapApiRoutes(): void
@@ -32,6 +33,13 @@ class RouteServiceProvider extends LaravelRouteServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+    protected function mapAdminApiRoutes(): void
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/admin_api.php'));
     }
 
     protected function mapWebRoutes(): void

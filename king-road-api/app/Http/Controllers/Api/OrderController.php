@@ -25,6 +25,13 @@ class OrderController extends Controller
 
     public function store(CreateOrderRequest $request)
     {
+
+        $user = auth()->user();
+
+        if (!$user) {
+            return $this->handleErrorResponse(0, 'User not authenticated');
+        }
+
         return DB::transaction(function () use ($request) {
             $data = $request->validated();
             
@@ -36,9 +43,9 @@ class OrderController extends Controller
                 $product = Product::findOrFail($item['product_id']);
                 
                 // Check inventory
-                if ($product->track_inventory && $product->inventory < $item['quantity']) {
-                    throw new \Exception("Insufficient inventory for product: {$product->name}");
-                }
+                // if ($product->track_inventory && $product->inventory < $item['quantity']) {
+                //     throw new \Exception("Insufficient inventory for product: {$product->name}");
+                // }
 
                 $price = $product->current_price;
                 $total = $price * $item['quantity'];
@@ -76,9 +83,9 @@ class OrderController extends Controller
             // Create order
             $order = Order::create([
                 'user_id' => auth()->id(),
-                'customer_name' => $data['customer_name'],
+                'customer_name' => auth()->user()->name,
                 'customer_phone' => $data['customer_phone'],
-                'customer_email' => $data['customer_email'] ?? auth()->user()->email,
+                'customer_email' =>  auth()->user()->email,
                 'address_type' => $data['address_type'],
                 'street' => $data['street'],
                 'house_number' => $data['house_number'] ?? null,

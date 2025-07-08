@@ -14,31 +14,39 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // Address - either use existing address or provide new address data
+            'address_id' => 'nullable|exists:addresses,id',
+            
+            // New address data (required if address_id not provided)
             'customer_phone' => 'required|string|max:20',
-            'address_type' => 'required|in:house,apartment,office',
-            'street' => 'required|string|max:255',
+            'address_type' => 'required_without:address_id|in:house,apartment,office',
+            'street' => 'required_without:address_id|string|max:255',
             'house_number' => 'nullable|string|max:50',
             'building_number' => 'nullable|string|max:50',
             'floor' => 'nullable|string|max:50',
             'apartment_number' => 'nullable|string|max:50',
             'office_number' => 'nullable|string|max:50',
             'additional_description' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:100',
+            'country' => 'nullable|string|max:100',
+            
+            // Order details
             'delivery_fee' => 'nullable|numeric|min:0',
             'payment_method' => 'nullable|string|max:50',
             'customer_notes' => 'nullable|string|max:500',
-            'coupon_code' => 'nullable|string|exists:coupons,code',
-            'items' => 'required|array|min:1',
-            'items.*.product_id' => 'required|exists:products,id',
-            'items.*.quantity' => 'required|integer|min:1',
+            
+            // Save address option
+            'save_address' => 'boolean',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'items.required' => 'At least one item is required',
-            'items.*.product_id.exists' => 'One or more products do not exist',
-            'items.*.quantity.min' => 'Quantity must be at least 1',
+            'customer_phone.required' => 'Phone number is required',
+            'address_type.required_without' => 'Address type is required when not using saved address',
+            'street.required_without' => 'Street address is required when not using saved address',
+            'address_id.exists' => 'Selected address does not exist',
         ];
     }
 }

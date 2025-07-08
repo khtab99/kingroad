@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\AddressController;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Session\Middleware\StartSession;
 
 
 
@@ -33,15 +36,20 @@ Route::prefix('v1')->group(function () {
         Route::get('/{category}/products', [CategoryController::class, 'products']);
     });
 
-    // Cart management (accessible by both guests and authenticated users)
-    Route::prefix('cart')->group(function () {
+    Route::middleware([
+        'api',
+        EncryptCookies::class,
+        StartSession::class,
+    ])->group(function () {
+        Route::prefix('cart')->group(function () {
         Route::get('/', [CartController::class, 'index']);
         Route::post('/add', [CartController::class, 'addToCart']);
-        Route::put('/update/{cartItem}', [CartController::class, 'updateQuantity']); 
-        Route::delete('/remove/{cartItem}', [CartController::class, 'removeFromCart']); 
+        Route::put('/update/{cartItemId}', [CartController::class, 'updateQuantity']); 
+        Route::delete('/remove/{cartItemId}', [CartController::class, 'removeFromCart']); 
         Route::delete('/clear', [CartController::class, 'clearCart']); 
         Route::get('/count', [CartController::class, 'getCartCount']);
         Route::get('/total', [CartController::class, 'getCartTotal']);
+        });
     });
 });
 
@@ -56,8 +64,21 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
         Route::delete('account', [AuthController::class, 'deleteAccount']);
     });
 
-    // Cart transfer (only for authenticated users)
-    Route::post('cart/transfer', [CartController::class, 'transferGuestCart']);
+    // Cart transfer from guest session to authenticated user (requires authentication)
+    Route::prefix('cart')->group(function () {
+        Route::post('/transfer-guest', [CartController::class, 'transferGuestCart']);
+    });
+
+    // Addresses
+    Route::prefix('addresses')->group(function () {
+        Route::get('/', [AddressController::class, 'index']);
+        Route::post('/', [AddressController::class, 'store']);
+        Route::get('/default', [AddressController::class, 'getDefault']);
+        Route::get('/{address}', [AddressController::class, 'show']);
+        Route::put('/{address}', [AddressController::class, 'update']);
+        Route::delete('/{address}', [AddressController::class, 'destroy']);
+        Route::post('/{address}/set-default', [AddressController::class, 'setDefault']);
+    });
 
     // Orders
     Route::prefix('orders')->group(function () {

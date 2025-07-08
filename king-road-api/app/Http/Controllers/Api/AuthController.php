@@ -56,12 +56,42 @@ class AuthController extends Controller
             // Update last login
             $user->update(['last_login_at' => now()]);
 
+            // Check if there's a guest cart to transfer
+            $guestCartTransferred = false;
+            if (session()->has('cart')) {
+                $sessionCart = session()->get('cart', []);
+                if (!empty($sessionCart)) {
+                    // Transfer guest cart items to user's cart
+                    foreach ($sessionCart as $sessionItem) {
+                        $product = \App\Models\Product::find($sessionItem['product_id']);
+                        
+                        if ($product && $product->is_active) {
+                            $quantity = $sessionItem['quantity'];
+                            if ($product->track_inventory) {
+                                $quantity = min($quantity, $product->inventory);
+                            }
+                            if ($quantity > 0) {
+                                $user->cartItems()->create([
+                                    'product_id' => $product->id,
+                                    'quantity' => $quantity,
+                                    'price' => $product->current_price,
+                                ]);
+                            }
+                        }
+                    }
+                    
+                    // Clear session cart after transfer
+                    session()->forget('cart');
+                    $guestCartTransferred = true;
+                }
+            }
             DB::commit();
 
             return $this->handleSuccessResponse(1, 'User registered successfully', [
                 'user' => new UserResource($user->fresh()),
                 'token' => $token,
-                'token_type' => 'Bearer'
+                'token_type' => 'Bearer',
+                'guest_cart_transferred' => $guestCartTransferred,
             ]);
 
         } catch (Exception $e) {
@@ -103,10 +133,55 @@ class AuthController extends Controller
             // Update last login
             $user->update(['last_login_at' => now()]);
 
+            // Check if there's a guest cart to transfer
+            $guestCartTransferred = false;
+            if (session()->has('cart')) {
+                $sessionCart = session()->get('cart', []);
+                if (!empty($sessionCart)) {
+                    // Transfer guest cart items to user's cart
+                    foreach ($sessionCart as $sessionItem) {
+                        $product = \App\Models\Product::find($sessionItem['product_id']);
+                        
+                        if ($product && $product->is_active) {
+                            $existingCartItem = $user->cartItems()
+                                ->where('product_id', $product->id)
+                                ->first();
+
+                            if ($existingCartItem) {
+                                $newQuantity = $existingCartItem->quantity + $sessionItem['quantity'];
+                                if ($product->track_inventory) {
+                                    $newQuantity = min($newQuantity, $product->inventory);
+                                }
+                                $existingCartItem->update([
+                                    'quantity' => $newQuantity,
+                                    'price' => $product->current_price,
+                                ]);
+                            } else {
+                                $quantity = $sessionItem['quantity'];
+                                if ($product->track_inventory) {
+                                    $quantity = min($quantity, $product->inventory);
+                                }
+                                if ($quantity > 0) {
+                                    $user->cartItems()->create([
+                                        'product_id' => $product->id,
+                                        'quantity' => $quantity,
+                                        'price' => $product->current_price,
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Clear session cart after transfer
+                    session()->forget('cart');
+                    $guestCartTransferred = true;
+                }
+            }
             return $this->handleSuccessResponse(1, 'Login successful', [
                 'user' => new UserResource($user->fresh()),
                 'token' => $token,
-                'token_type' => 'Bearer'
+                'token_type' => 'Bearer',
+                'guest_cart_transferred' => $guestCartTransferred,
             ]);
 
         } catch (Exception $e) {

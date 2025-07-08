@@ -8,7 +8,7 @@ class AddToCartRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->check();
+        return true; // Allow both authenticated and guest users
     }
 
     public function rules(): array

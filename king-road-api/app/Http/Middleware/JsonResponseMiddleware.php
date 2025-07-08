@@ -25,9 +25,17 @@ class JsonResponseMiddleware
     public function handle(Request $request, Closure $next)
     {
         try {
+            // Start session if not already started
+            if (!session()->isStarted()) {
+                session_start();
+            }
+
             // Get the response first to ensure authentication middleware runs
             $response = $next($request);
             
+            // Save session data before sending response
+            session()->save();
+
             // Only handle if it's an API route
             if (str_starts_with($request->path(), 'api/')) {
                 // If the response is not already a JSON response
@@ -35,7 +43,7 @@ class JsonResponseMiddleware
                     // Handle validation errors
                     if ($response instanceof Response && $response->getStatusCode() === 422) {
                         $errors = json_decode($response->getContent(), true);
-                        return $this->responseFactory->json([
+                        $response = $this->responseFactory->json([
                             'status' => 'error',
                             'message' => 'Validation error',
                             'errors' => $errors['errors'] ?? $errors,
@@ -44,16 +52,16 @@ class JsonResponseMiddleware
                     
                     // Handle authentication errors
                     if ($response->getStatusCode() === 401) {
-                        return $this->responseFactory->json([
+                        $response = $this->responseFactory->json([
                             'status' => 'error',
                             'message' => 'Unauthenticated',
                             'error' => 'Please provide a valid authentication token or login again',
                         ], 401);
                     }
-                    
+
                     // Handle errors
                     if ($response->getStatusCode() >= 400) {
-                        return $this->responseFactory->json([
+                        $response = $this->responseFactory->json([
                             'status' => 'error',
                             'message' => 'Internal server error',
                             'error' => $response->getContent(),
@@ -86,12 +94,18 @@ class JsonResponseMiddleware
                         }
                     }
                     
-                    // Return the content as JSON
-                    return $this->responseFactory->json([
-                        'status' => $content['status'] ?? 'success',
-                        'message' => $content['message'] ?? 'Success',
-                        'data' => $content['data'] ?? $content,
-                    ], 200);
+                    // Check if content already has the expected structure
+                    if (is_array($content) && isset($content['status']) && isset($content['message'])) {
+                        // Content already has the expected structure, return as is
+                        return $this->responseFactory->json($content, 200);
+                    } else {
+                        // Return the content as JSON with wrapper
+                        return $this->responseFactory->json([
+                            'status' => $content['status'] ?? 'success',
+                            'message' => $content['message'] ?? 'Success',
+                            'data' => $content['data'] ?? $content,
+                        ], 200);
+                    }
                 }
             }
             

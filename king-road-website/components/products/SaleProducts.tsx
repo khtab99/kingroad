@@ -51,8 +51,8 @@ export function SaleProducts({ limit = 8 }: SaleProductsProps) {
           <h2 className="text-2xl font-bold text-gray-900 mb-8">
             {language === "ar" ? "عروض خاصة" : "Special Offers"}
           </h2>
-          <ProductError 
-            error={saleProductsError} 
+          <ProductError
+            error={saleProductsError}
             onRetry={revalidateSaleProducts}
             variant="inline"
           />
@@ -73,14 +73,14 @@ export function SaleProducts({ limit = 8 }: SaleProductsProps) {
             {language === "ar" ? "عروض خاصة" : "Special Offers"}
           </h2>
           <p className="text-gray-600">
-            {language === "ar" 
+            {language === "ar"
               ? "وفر أكثر مع عروضنا الحصرية"
               : "Save more with our exclusive deals"}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {saleProducts.map((product) => (
+          {saleProducts.map((product: any) => (
             <ProductCard
               key={product.id}
               product={product}

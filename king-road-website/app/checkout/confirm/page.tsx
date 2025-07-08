@@ -255,7 +255,7 @@ export default function CheckoutConfirmPage() {
             {language === "ar" ? "عناصر الطلب" : "Order Items"}
           </h3>
 
-          {checkoutData.cartItems.map((item) => (
+          {checkoutData.cartItems.map((item: any) => (
             <div
               key={item.id}
               className="flex items-center justify-between py-2 text-right"

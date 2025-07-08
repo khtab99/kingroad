@@ -12,7 +12,7 @@ import { Logo } from "./logo";
 import { useGetCartCount } from "@/api/cart";
 import { useAuth, logout } from "@/api/auth";
 import { AuthModal } from "./auth/AuthModal";
-
+import { toast } from "sonner";
 export function Header() {
   const { language, isMenuOpen, setMenuOpen } = useStore();
   const t = translations[language];

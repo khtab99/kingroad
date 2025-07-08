@@ -202,7 +202,11 @@ export function AuthModal({
           </DialogTitle>
         </DialogHeader>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs
+          value={activeTab}
+          onValueChange={(val) => setActiveTab(val as "login" | "register")}
+          className="w-full"
+        >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="login">
               {language === "ar" ? "تسجيل الدخول" : "Login"}

@@ -200,7 +200,7 @@ export default function CartPage() {
                 </Link>
               </div>
             ) : (
-              cartItems.map((item) => {
+              cartItems.map((item: any) => {
                 const isLoading = loadingItems[item.id];
                 const productName =
                   language === "ar"

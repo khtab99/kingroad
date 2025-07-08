@@ -219,7 +219,7 @@ export async function removeFromCart(cartItemId: string) {
 
     return response;
   } catch (error) {
-    console.error('Remove from cart error:', error);
+    console.error("Remove from cart error:", error);
     throw error;
   }
 }

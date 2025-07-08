@@ -32,7 +32,6 @@ axiosInstance.interceptors.request.use(
 
 // Response interceptor
 axiosInstance.interceptors.response.use(
-  (res) => res,
   (res) => {
     return res;
   },
@@ -104,16 +103,12 @@ export const kingRoadCreator = async (args: any) => {
   return res.data;
 };
 
-export const kingRoadUpdatePatch = async (
-  args: string | [string, AxiosRequestConfig]
-) => {
+export const kingRoadUpdatePatch = async (args: any) => {
   const [url, config] = Array.isArray(args) ? args : [args];
 
   const res = await axiosInstance.patch(url, config);
 };
-export const kingRoadUpdatePut = async (
-  args: string | [string, AxiosRequestConfig]
-) => {
+export const kingRoadUpdatePut = async (args: any) => {
   const [url, config] = Array.isArray(args) ? args : [args];
 
   const res = await axiosInstance.put(url, config);
@@ -132,9 +127,7 @@ export const kingRoadCreatorPut = async (
 
 // ----------------------------------------------------------------------
 
-export const kingRoadFetcher = async (
-  args: string | [string, AxiosRequestConfig]
-) => {
+export const kingRoadFetcher = async (args: any) => {
   const [url, config] = Array.isArray(args) ? args : [args];
   const res = await axiosInstance?.get(url, { ...config });
   return res.data;
@@ -177,6 +170,8 @@ export const endpoints = {
     details: "/api/v1/orders/",
     create: "/api/v1/orders",
     cancel: "/api/v1/orders/", // + {id}/cancel
+    update: "/api/v1/orders/",
+    delete: "/api/v1/orders/",
   },
   auth: {
     login: "/api/v1/auth/login",

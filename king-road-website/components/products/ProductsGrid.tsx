@@ -40,7 +40,10 @@ export function ProductsGrid({
     }
 
     // Subcategory filter
-    if (selectedSubcategories.length > 0 && !selectedSubcategories.includes("all")) {
+    if (
+      selectedSubcategories.length > 0 &&
+      !selectedSubcategories.includes("all")
+    ) {
       apiFilters.subcategory_id = selectedSubcategories[0]; // Take first selected subcategory
     }
 
@@ -77,7 +80,10 @@ export function ProductsGrid({
     currentPage: apiCurrentPage,
     lastPage,
     revalidateProducts,
-  } = useGetProductsByCategory(selectedCategory === "all" ? "" : selectedCategory, filters);
+  } = useGetProductsByCategory(
+    selectedCategory === "all" ? "" : selectedCategory,
+    filters
+  );
 
   const handleBuyNow = (product: any) => {
     router.push("/cart");
@@ -113,10 +119,7 @@ export function ProductsGrid({
             {language === "ar" ? "المنتجات" : "Products"}
           </h2>
         </div>
-        <ProductError 
-          error={productError} 
-          onRetry={revalidateProducts}
-        />
+        <ProductError error={productError} onRetry={revalidateProducts} />
       </div>
     );
   }
@@ -133,24 +136,27 @@ export function ProductsGrid({
             0 {language === "ar" ? "منتج" : "products"}
           </p>
         </div>
-        <ProductError 
-          error={null} 
+        <ProductError
+          error={null}
           onRetry={revalidateProducts}
           variant="empty"
         />
       </div>
     );
-  };
+  }
 
   return (
     <div>
       {/* Products Header */}
       <div className="mb-6">
         <h2 className="text-xl font-semibold text-gray-800 mb-2 capitalize">
-          {selectedCategory === "all" 
-            ? (language === "ar" ? "جميع المنتجات" : "All Products")
-            : (language === "ar" ? "المنتجات" : "Products")
-          }
+          {selectedCategory === "all"
+            ? language === "ar"
+              ? "جميع المنتجات"
+              : "All Products"
+            : language === "ar"
+            ? "المنتجات"
+            : "Products"}
         </h2>
         <p className="text-gray-600 text-sm">
           {totalProducts} {language === "ar" ? "منتج" : "products"}
@@ -159,7 +165,7 @@ export function ProductsGrid({
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {productList.map((product) => (
+        {productList.map((product: any) => (
           <ProductCard
             key={product.id}
             product={product}

@@ -14,18 +14,21 @@ interface CategoryListProps {
   variant?: "grid" | "list";
 }
 
-export function CategoryList({ onCategorySelect, variant = "grid" }: CategoryListProps) {
+export function CategoryList({
+  onCategorySelect,
+  variant = "grid",
+}: CategoryListProps) {
   const { language } = useStore();
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const {
     superCategoryList,
     superCategoryLoading,
     superCategoryError,
     revalidateSuperCategory,
-  } = useGetSuperCategory({ 
+  } = useGetSuperCategory({
     search: searchTerm || undefined,
-    per_page: 20 
+    per_page: 20,
   });
 
   if (superCategoryLoading) {
@@ -34,8 +37,8 @@ export function CategoryList({ onCategorySelect, variant = "grid" }: CategoryLis
 
   if (superCategoryError) {
     return (
-      <CategoryError 
-        error={superCategoryError} 
+      <CategoryError
+        error={superCategoryError}
         onRetry={revalidateSuperCategory}
       />
     );
@@ -65,12 +68,14 @@ export function CategoryList({ onCategorySelect, variant = "grid" }: CategoryLis
           </p>
         </div>
       ) : (
-        <div className={
-          variant === "grid" 
-            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            : "space-y-4"
-        }>
-          {superCategoryList.map((category) => (
+        <div
+          className={
+            variant === "grid"
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              : "space-y-4"
+          }
+        >
+          {superCategoryList.map((category: any) => (
             <CategoryCard
               key={category.id}
               category={category}

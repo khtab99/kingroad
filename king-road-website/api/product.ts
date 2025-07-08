@@ -143,7 +143,7 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
   const memoizedValue = useMemo(() => {
     const productData = data?.data || [];
     const metaData = data?.meta || {};
-    
+
     return {
       productList: productData,
       productLoading: isLoading,
@@ -160,14 +160,7 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
       // Links
       links: data?.links || {},
     };
-  }, [
-    data?.data,
-    data?.meta,
-    data?.links,
-    error,
-    isLoading,
-    isValidating,
-  ]);
+  }, [data?.data, data?.meta, data?.links, error, isLoading, isValidating]);
 
   return {
     ...memoizedValue,
@@ -176,11 +169,17 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
 }
 
 // Hook for fetching products by category
-export function useGetProductsByCategory(categoryId: string, filters: Omit<ProductFilters, 'category_id'> = {}) {
-  const productFilters = useMemo(() => ({
-    ...filters,
-    category_id: categoryId,
-  }), [categoryId, filters]);
+export function useGetProductsByCategory(
+  categoryId: string,
+  filters: Omit<ProductFilters, "category_id"> = {}
+) {
+  const productFilters = useMemo(
+    () => ({
+      ...filters,
+      category_id: categoryId,
+    }),
+    [categoryId, filters]
+  );
 
   return useGetAllProducts(productFilters);
 }
@@ -188,9 +187,9 @@ export function useGetProductsByCategory(categoryId: string, filters: Omit<Produ
 // Hook for fetching single product by ID
 export function useGetProductById(id: string | null) {
   const URL = id ? `${endpoints.product.details}${id}` : null;
-  
+
   const { data, isLoading, error, isValidating } = useSWR(
-    URL, 
+    URL,
     kingRoadFetcher,
     {
       revalidateOnFocus: false,
@@ -219,18 +218,17 @@ export function useGetProductById(id: string | null) {
 
 // Hook for fetching featured products
 export function useGetFeaturedProducts(limit: number = 8) {
-  const filters = useMemo(() => ({
-    is_featured: true,
-    per_page: limit,
-    sort: "-created_at",
-  }), [limit]);
+  const filters = useMemo(
+    () => ({
+      is_featured: true,
+      per_page: limit,
+      sort: "-created_at",
+    }),
+    [limit]
+  );
 
-  const {
-    productList,
-    productLoading,
-    productError,
-    revalidateProducts,
-  } = useGetAllProducts(filters);
+  const { productList, productLoading, productError, revalidateProducts } =
+    useGetAllProducts(filters);
 
   return {
     featuredProducts: productList,
@@ -242,18 +240,17 @@ export function useGetFeaturedProducts(limit: number = 8) {
 
 // Hook for fetching products on sale
 export function useGetSaleProducts(limit: number = 8) {
-  const filters = useMemo(() => ({
-    is_on_sale: true,
-    per_page: limit,
-    sort: "-discount_percentage",
-  }), [limit]);
+  const filters = useMemo(
+    () => ({
+      is_on_sale: true,
+      per_page: limit,
+      sort: "-discount_percentage",
+    }),
+    [limit]
+  );
 
-  const {
-    productList,
-    productLoading,
-    productError,
-    revalidateProducts,
-  } = useGetAllProducts(filters);
+  const { productList, productLoading, productError, revalidateProducts } =
+    useGetAllProducts(filters);
 
   return {
     saleProducts: productList,
@@ -264,11 +261,17 @@ export function useGetSaleProducts(limit: number = 8) {
 }
 
 // Hook for searching products
-export function useSearchProducts(searchTerm: string, filters: Omit<ProductFilters, 'search'> = {}) {
-  const searchFilters = useMemo(() => ({
-    ...filters,
-    search: searchTerm,
-  }), [searchTerm, filters]);
+export function useSearchProducts(
+  searchTerm: string,
+  filters: Omit<ProductFilters, "search"> = {}
+) {
+  const searchFilters = useMemo(
+    () => ({
+      ...filters,
+      search: searchTerm,
+    }),
+    [searchTerm, filters]
+  );
 
   // Only fetch if search term is provided
   const shouldFetch = searchTerm.trim().length > 0;
@@ -294,14 +297,17 @@ export function useSearchProducts(searchTerm: string, filters: Omit<ProductFilte
 export function useIncrementProductViews() {
   const incrementViews = async (productId: string) => {
     try {
-      await kingRoadFetcher(`${endpoints.product.details}${productId}/increment-views`, {
-        method: 'POST',
-      });
-      
+      await kingRoadFetcher(
+        `${endpoints.product.details}${productId}/increment-views`
+        // {
+        //   method: "POST",
+        // }
+      );
+
       // Revalidate the product data
       mutate(`${endpoints.product.details}${productId}`);
     } catch (error) {
-      console.error('Failed to increment product views:', error);
+      console.error("Failed to increment product views:", error);
     }
   };
 

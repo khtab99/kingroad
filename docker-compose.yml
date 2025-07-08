@@ -36,7 +36,7 @@ services:
     build:
       context: ./king-road-api
       args:
-        PHP_VERSION: 8.2 # or 8.1 if you prefer
+        PHP_VERSION: 8.2
     platform: linux/amd64
     container_name: king-road-api
     restart: unless-stopped
@@ -73,26 +73,16 @@ services:
     depends_on:
       - mysql
 
+  king-road-website:
+    build:
+      context: ./king-road-website
+      dockerfile: Dockerfile
+    container_name: king-road-website
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+
+# ⬇️ Move this block to the bottom (outside services)
 volumes:
   mysql_data:
-  # king-road-website:
-  #   build:
-  #     context: ./king-road-website
-  #   container_name: king-road-website
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./king-road-website:/app
-  #   working_dir: /app
-  #   command: sh -c "npm install && npm run dev"
-
-  # admin:
-  #   build:
-  #     context: ./admin
-  #   container_name: admin
-  #   ports:
-  #     - "5173:5173"
-  #   volumes:
-  #     - ./admin:/app
-  #   working_dir: /app
-  #   command: sh -c "npm install && npm run dev"

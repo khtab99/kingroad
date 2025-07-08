@@ -12,7 +12,7 @@ import {
 export interface Address {
   id: string;
   user_id: string;
-  type: 'house' | 'apartment' | 'office';
+  type: "house" | "apartment" | "office";
   street: string;
   house_number?: string;
   building_number?: string;
@@ -29,7 +29,7 @@ export interface Address {
 }
 
 export interface CreateAddressData {
-  type: 'house' | 'apartment' | 'office';
+  type: "house" | "apartment" | "office";
   street: string;
   house_number?: string;
   building_number?: string;
@@ -153,7 +153,7 @@ export async function createAddress(data: CreateAddressData) {
 }
 
 // Update address
-export async function updateAddress(id: string, data: Partial<CreateAddressData>) {
+export async function updateAddress(id: string, data: any) {
   try {
     const response = await kingRoadUpdatePut([
       `${endpoints.address.update}${id}`,
@@ -211,7 +211,10 @@ export function useAddressActions() {
     return createAddress(data);
   };
 
-  const updateExistingAddress = async (id: string, data: Partial<CreateAddressData>) => {
+  const updateExistingAddress = async (
+    id: string,
+    data: Partial<CreateAddressData>
+  ) => {
     return updateAddress(id, data);
   };
 

@@ -24,9 +24,9 @@ export default function ProductsPage() {
   const params = useParams();
   const { language } = useStore();
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
-    ["all"]
-  );
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([
+    "all",
+  ]);
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -70,17 +70,21 @@ export default function ProductsPage() {
                 {language === "ar" ? "الفلاتر" : "Filters"}
               </Button>
             </SheetTrigger>
-            <SheetContent 
-              side={language === "ar" ? "right" : "left"} 
+            <SheetContent
+              side={language === "ar" ? "right" : "left"}
               className="w-80 overflow-y-auto"
             >
               <SheetHeader>
-                <SheetTitle className={language === "ar" ? "text-right" : "text-left"}>
+                <SheetTitle
+                  className={language === "ar" ? "text-right" : "text-left"}
+                >
                   {language === "ar" ? "الفلاتر" : "Filters"}
                 </SheetTitle>
-                <SheetDescription className={language === "ar" ? "text-right" : "text-left"}>
-                  {language === "ar" 
-                    ? "اختر الفلاتر لتصفية المنتجات" 
+                <SheetDescription
+                  className={language === "ar" ? "text-right" : "text-left"}
+                >
+                  {language === "ar"
+                    ? "اختر الفلاتر لتصفية المنتجات"
                     : "Choose filters to refine your product search"}
                 </SheetDescription>
               </SheetHeader>

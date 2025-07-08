@@ -1,7 +1,8 @@
 "use client";
 
+import { useGetSubCategories } from "@/api/category";
+import { SubCategoryList } from "@/components/category/SubCategoryList";
 import { useStore } from "@/store/useStore";
-import subCategoriesByCategory from "../../data/subCategoriesByCategory.json";
 
 interface ProductsSidebarProps {
   selectedCategory: string;
@@ -20,15 +21,6 @@ export function ProductsSidebar({
 }: ProductsSidebarProps) {
   const { language } = useStore();
 
-  const currentSubcategories =
-    subCategoriesByCategory[
-      selectedCategory as keyof typeof subCategoriesByCategory
-    ] || subCategoriesByCategory.all;
-
-  const handleSubcategoryChange = (subcategoryId: string) => {
-    // Single selection - only one subcategory can be selected at a time
-    onSubcategoryChange([subcategoryId]);
-  };
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6">
@@ -36,25 +28,12 @@ export function ProductsSidebar({
         {language === "ar" ? "الفئات" : "Categories"}
       </h3>
 
-      <div className="space-y-3">
-        {currentSubcategories.map((subcategory) => (
-          <label
-            key={subcategory.id}
-            className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
-          >
-            <input
-              type="radio"
-              name="subcategory"
-              checked={selectedSubcategories.includes(subcategory.id)}
-              onChange={() => handleSubcategoryChange(subcategory.id)}
-              className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
-            />
-            <span className="text-gray-700 text-sm">
-              {language === "ar" ? subcategory.nameAr : subcategory.nameEn}
-            </span>
-          </label>
-        ))}
-      </div>
+      <SubCategoryList
+        parentCategoryId={selectedCategory === "all" ? null : selectedCategory}
+        selectedSubcategories={selectedSubcategories}
+        onSubcategoryChange={onSubcategoryChange}
+        variant="radio"
+      />
 
       {/* Sort Options */}
       <div className="mt-8">

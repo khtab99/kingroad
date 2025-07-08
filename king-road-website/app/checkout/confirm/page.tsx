@@ -43,20 +43,20 @@ interface CheckoutData {
 export default function CheckoutConfirmPage() {
   const { language, clearCart } = useStore();
   const router = useRouter();
-  
+
   const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
   useEffect(() => {
-    const data = localStorage.getItem('checkoutData');
+    const data = localStorage.getItem("checkoutData");
     if (!data) {
       toast.error(
         language === "ar" ? "لا توجد بيانات طلب" : "No order data found"
       );
-      router.push('/cart');
+      router.push("/cart");
       return;
     }
-    
+
     try {
       const parsedData = JSON.parse(data);
       setCheckoutData(parsedData);
@@ -64,7 +64,7 @@ export default function CheckoutConfirmPage() {
       toast.error(
         language === "ar" ? "خطأ في بيانات الطلب" : "Error in order data"
       );
-      router.push('/cart');
+      router.push("/cart");
     }
   }, [language, router]);
 
@@ -91,45 +91,70 @@ export default function CheckoutConfirmPage() {
 
   const getAddressDetails = () => {
     if (!checkoutData) return "";
-    
-    const { addressType, street, houseNumber, buildingNumber, floor, apartmentNumber, officeNumber, additionalDescription } = checkoutData;
-    
+
+    const {
+      addressType,
+      street,
+      houseNumber,
+      buildingNumber,
+      floor,
+      apartmentNumber,
+      officeNumber,
+      additionalDescription,
+    } = checkoutData;
+
     let details = `${language === "ar" ? "الشارع:" : "Street:"} ${street}`;
-    
+
     switch (addressType) {
       case "house":
-        details += `, ${language === "ar" ? "رقم المنزل:" : "House No.:"} ${houseNumber}`;
+        details += `, ${
+          language === "ar" ? "رقم المنزل:" : "House No.:"
+        } ${houseNumber}`;
         break;
       case "apartment":
-        details += `, ${language === "ar" ? "رقم المبنى:" : "Building No.:"} ${buildingNumber}`;
+        details += `, ${
+          language === "ar" ? "رقم المبنى:" : "Building No.:"
+        } ${buildingNumber}`;
         details += `, ${language === "ar" ? "الطابق:" : "Floor:"} ${floor}`;
-        details += `, ${language === "ar" ? "رقم الشقة:" : "Apartment No.:"} ${apartmentNumber}`;
+        details += `, ${
+          language === "ar" ? "رقم الشقة:" : "Apartment No.:"
+        } ${apartmentNumber}`;
         break;
       case "office":
-        details += `, ${language === "ar" ? "رقم المبنى:" : "Building No.:"} ${buildingNumber}`;
+        details += `, ${
+          language === "ar" ? "رقم المبنى:" : "Building No.:"
+        } ${buildingNumber}`;
         details += `, ${language === "ar" ? "الطابق:" : "Floor:"} ${floor}`;
-        details += `, ${language === "ar" ? "رقم المكتب:" : "Office No.:"} ${officeNumber}`;
+        details += `, ${
+          language === "ar" ? "رقم المكتب:" : "Office No.:"
+        } ${officeNumber}`;
         break;
     }
-    
+
     if (additionalDescription) {
-      details += `, ${language === "ar" ? "توجيهات:" : "Directions:"} ${additionalDescription}`;
+      details += `, ${
+        language === "ar" ? "توجيهات:" : "Directions:"
+      } ${additionalDescription}`;
     }
-    
+
     return details;
   };
 
   const handlePayNow = () => {
     if (!selectedPaymentMethod) {
       toast.error(
-        language === "ar" ? "يرجى اختيار طريقة الدفع" : "Please select payment method"
+        language === "ar"
+          ? "يرجى اختيار طريقة الدفع"
+          : "Please select payment method"
       );
       return;
     }
 
     // Simulate payment processing
     toast.success(
-      language === "ar" ? "تم تأكيد الطلب بنجاح" : "Order confirmed successfully",
+      language === "ar"
+        ? "تم تأكيد الطلب بنجاح"
+        : "Order confirmed successfully",
       {
         description:
           language === "ar"
@@ -140,8 +165,8 @@ export default function CheckoutConfirmPage() {
 
     // Clear cart and redirect
     clearCart();
-    localStorage.removeItem('checkoutData');
-    router.push('/');
+    localStorage.removeItem("checkoutData");
+    router.push("/");
   };
 
   if (!checkoutData) {
@@ -157,7 +182,9 @@ export default function CheckoutConfirmPage() {
     );
   }
 
-  const AddressIcon = addressTypes[checkoutData.addressType as keyof typeof addressTypes]?.icon || Home;
+  const AddressIcon =
+    addressTypes[checkoutData.addressType as keyof typeof addressTypes]?.icon ||
+    Home;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -187,9 +214,11 @@ export default function CheckoutConfirmPage() {
         {/* Payment Method Selection */}
         <div className="mb-8">
           <h2 className="text-center text-gray-700 mb-6">
-            {language === "ar" ? "اختر طريقة الدفع المفضلة لديك" : "Choose your preferred payment method"}
+            {language === "ar"
+              ? "اختر طريقة الدفع المفضلة لديك"
+              : "Choose your preferred payment method"}
           </h2>
-          
+
           <div className="grid grid-cols-2 gap-4 mb-8">
             {paymentMethods.map((method) => (
               <button
@@ -225,11 +254,14 @@ export default function CheckoutConfirmPage() {
           <h3 className="text-gray-800 font-medium mb-4 text-right">
             {language === "ar" ? "عناصر الطلب" : "Order Items"}
           </h3>
-          
+
           {checkoutData.cartItems.map((item) => (
-            <div key={item.id} className="flex items-center justify-between py-2 text-right">
+            <div
+              key={item.id}
+              className="flex items-center justify-between py-2 text-right"
+            >
               <span className="text-gray-800 font-medium">
-                {item.price.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                {item.price} {language === "ar" ? "د.إ" : "AED"}
               </span>
               <span className="text-gray-600">
                 x{item.quantity} {item.name}
@@ -258,14 +290,14 @@ export default function CheckoutConfirmPage() {
           <div className="space-y-3 text-right">
             <div className="flex items-center justify-end gap-2">
               <span className="text-gray-700">
-                {language === "ar" ? "مجيم الدفاع - الإمارات العربية المتحدة" : "Mujeim Al Difa - UAE"}
+                {language === "ar"
+                  ? "مجيم الدفاع - الإمارات العربية المتحدة"
+                  : "Mujeim Al Difa - UAE"}
               </span>
               <AddressIcon className="h-4 w-4 text-gray-600" />
             </div>
-            
-            <div className="text-sm text-gray-600">
-              {getAddressDetails()}
-            </div>
+
+            <div className="text-sm text-gray-600">{getAddressDetails()}</div>
 
             <div className="flex items-center justify-end gap-2">
               <span className="text-gray-700">{checkoutData.name}</span>
@@ -294,10 +326,11 @@ export default function CheckoutConfirmPage() {
                 {language === "ar" ? "طريقة الدفع" : "Payment Method"}
               </h3>
               <p className="text-gray-600">
-                {language === "ar" 
-                  ? paymentMethods.find(m => m.id === selectedPaymentMethod)?.nameAr
-                  : paymentMethods.find(m => m.id === selectedPaymentMethod)?.nameEn
-                }
+                {language === "ar"
+                  ? paymentMethods.find((m) => m.id === selectedPaymentMethod)
+                      ?.nameAr
+                  : paymentMethods.find((m) => m.id === selectedPaymentMethod)
+                      ?.nameEn}
               </p>
             </div>
           </div>
@@ -308,7 +341,8 @@ export default function CheckoutConfirmPage() {
           <div className="space-y-3 text-right">
             <div className="flex justify-between items-center">
               <span className="text-gray-800">
-                {checkoutData.subtotal.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                {checkoutData.subtotal.toFixed(2)}{" "}
+                {language === "ar" ? "د.إ" : "AED"}
               </span>
               <span className="text-gray-600">
                 {language === "ar" ? "المجموع الفرعي" : "Subtotal"}
@@ -317,7 +351,8 @@ export default function CheckoutConfirmPage() {
 
             <div className="flex justify-between items-center">
               <span className="text-gray-800">
-                {checkoutData.deliveryFee.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                {checkoutData.deliveryFee.toFixed(2)}{" "}
+                {language === "ar" ? "د.إ" : "AED"}
               </span>
               <span className="text-gray-600">
                 {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
@@ -327,7 +362,8 @@ export default function CheckoutConfirmPage() {
             <div className="border-t border-gray-200 pt-3">
               <div className="flex justify-between items-center">
                 <span className="text-gray-800 font-medium text-lg">
-                  {checkoutData.total.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                  {checkoutData.total.toFixed(2)}{" "}
+                  {language === "ar" ? "د.إ" : "AED"}
                 </span>
                 <span className="text-gray-800 font-medium">
                   {language === "ar" ? "المجموع" : "Total"}

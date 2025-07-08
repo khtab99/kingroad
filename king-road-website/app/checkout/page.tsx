@@ -11,10 +11,16 @@ import AddressTypeSelection from "../../components/checkout/AddressTypeSelection
 import AddressForm from "../../components/checkout/AddressForm";
 import DeliveryTab from "../../components/checkout/DeliveryTab";
 import { Button } from "@/components/ui/button";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { useGetCartItems, useGetCartTotal } from "@/api/cart";
 
 export default function CheckoutPage() {
-  const { cartItems, language, cartCount } = useStore();
+  const { language } = useStore();
   const router = useRouter();
+
+  // Get cart data from API
+  const { cartItems, cartEmpty } = useGetCartItems();
+  const { cartTotal } = useGetCartTotal();
 
   const [selectedAddressType, setSelectedAddressType] = useState("");
   const [formData, setFormData] = useState({
@@ -33,7 +39,7 @@ export default function CheckoutPage() {
 
   // Redirect if cart is empty
   useEffect(() => {
-    if (cartCount === 0) {
+    if (cartEmpty) {
       toast.error(language === "ar" ? "عربة التسوق فارغة" : "Cart is empty", {
         description:
           language === "ar"
@@ -42,7 +48,7 @@ export default function CheckoutPage() {
       });
       router.push("/category/all");
     }
-  }, [cartCount, language, router]);
+  }, [cartEmpty, language, router]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({
@@ -97,30 +103,25 @@ export default function CheckoutPage() {
       addressType: selectedAddressType,
       ...formData,
       cartItems,
-      subtotal: cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      ),
-      deliveryFee: 0,
-      total: cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      ),
+      subtotal: cartTotal.subtotal,
+      deliveryFee: cartTotal.delivery_fee || 0,
+      total: cartTotal.total,
     };
 
     localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
     router.push("/checkout/confirm");
   };
 
-  if (cartCount === 0) {
+  if (cartEmpty) {
     return null;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
 
-      <div className="max-w-2xl mx-auto px-4 py-6">
+        <div className="max-w-2xl mx-auto px-4 py-6">
         <CheckoutHeader
           language={language}
           onBack={() => router.back()}
@@ -154,9 +155,10 @@ export default function CheckoutPage() {
         >
           {language === "ar" ? "التالي" : "Next"}
         </Button>
-      </div>
 
-      <Footer />
-    </div>
+        </div>
+        <Footer />
+      </div>
+    </ProtectedRoute>
   );
 }

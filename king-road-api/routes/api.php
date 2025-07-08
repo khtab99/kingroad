@@ -32,7 +32,19 @@ Route::prefix('v1')->group(function () {
         Route::get('/{category}', [CategoryController::class, 'show']);
         Route::get('/{category}/products', [CategoryController::class, 'products']);
     });
+
+    // Cart management (accessible by both guests and authenticated users)
+    Route::prefix('cart')->group(function () {
+        Route::get('/', [CartController::class, 'index']);
+        Route::post('/add', [CartController::class, 'addToCart']);
+        Route::put('/update/{cartItem}', [CartController::class, 'updateQuantity']); 
+        Route::delete('/remove/{cartItem}', [CartController::class, 'removeFromCart']); 
+        Route::delete('/clear', [CartController::class, 'clearCart']); 
+        Route::get('/count', [CartController::class, 'getCartCount']);
+        Route::get('/total', [CartController::class, 'getCartTotal']);
+    });
 });
+
 
 // Protected user routes
 Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
@@ -44,16 +56,8 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
         Route::delete('account', [AuthController::class, 'deleteAccount']);
     });
 
-    // Cart management
-    Route::prefix('cart')->group(function () {
-        Route::get('/', [CartController::class, 'index']);
-        Route::post('/add', [CartController::class, 'addToCart']);
-        Route::put('/update/{cartItem}', [CartController::class, 'updateQuantity']);
-        Route::delete('/remove/{cartItem}', [CartController::class, 'removeFromCart']);
-        Route::delete('/clear', [CartController::class, 'clearCart']);
-        Route::get('/count', [CartController::class, 'getCartCount']);
-        Route::get('/total', [CartController::class, 'getCartTotal']);
-    });
+    // Cart transfer (only for authenticated users)
+    Route::post('cart/transfer', [CartController::class, 'transferGuestCart']);
 
     // Orders
     Route::prefix('orders')->group(function () {
@@ -63,4 +67,3 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
         Route::post('/{order}/cancel', [OrderController::class, 'cancel']);
     });
 });
-

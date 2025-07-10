@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Cairo } from "next/font/google";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 const cairo = Cairo({ subsets: ["latin"] });
@@ -22,7 +22,7 @@ export default function RootLayout({
       <link rel="icon" href="/favicon.ico" />
       <body className={inter.className + " " + cairo.className}>
         {children}
-        <Toaster position="top-center" richColors closeButton duration={3000} />
+        <Toaster />
       </body>
     </html>
   );

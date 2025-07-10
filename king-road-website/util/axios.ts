@@ -8,12 +8,14 @@ const HOST_API = process.env.NEXT_PUBLIC_API_URL;
 
 const axiosInstance = axios.create({
   baseURL: HOST_API,
+  withCredentials: true,
   headers: {
     "Accept-Language": "en", // Default to 'en', can be changed to 'ar'
     Accept: "application/json",
     "X-Requested-With": "XMLHttpRequest",
     "Content-Type": "application/json",
   },
+    'Accept': 'application/json',
   withCredentials: true, // Enable credentials for session support
 });
 

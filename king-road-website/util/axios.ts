@@ -8,14 +8,8 @@ const HOST_API = process.env.NEXT_PUBLIC_API_URL;
 
 const axiosInstance = axios.create({
   baseURL: HOST_API,
-  withCredentials: true,
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
   headers: {
     "Accept-Language": "en", // Default to 'en', can be changed to 'ar'
-    Accept: "application/json",
-    "X-Requested-With": "XMLHttpRequest",
-    "Content-Type": "application/json",
   },
 });
 
@@ -23,7 +17,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = getToken();
-
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -34,9 +27,7 @@ axiosInstance.interceptors.request.use(
 
 // Response interceptor
 axiosInstance.interceptors.response.use(
-  (res) => {
-    return res;
-  },
+  (res) => res,
   (error) =>
     Promise.reject(
       (error.response && error.response.data) || "Something went wrong"
@@ -88,21 +79,9 @@ export const kingRoadCreatorForm = async (args: string | [string, any]) => {
 };
 
 export const kingRoadCreator = async (args: any) => {
-  const [url, data] = Array.isArray(args) ? args : [args];
-  const config: AxiosRequestConfig = {
-    headers:
-      data instanceof FormData
-        ? {
-            "Content-Type": "multipart/form-data",
-          }
-        : {
-            "Content-Type": "application/json",
-          },
-  };
+  const [url, config] = Array.isArray(args) ? args : [args];
 
-  const res: any = await axiosInstance.post(url, data, config);
-
-  return res.data;
+  const res = await axiosInstance.post(url, config);
 };
 
 export const kingRoadUpdatePatch = async (args: any) => {
@@ -118,9 +97,7 @@ export const kingRoadUpdatePut = async (args: any) => {
 
 // ----------------------------------------------------------------------
 
-export const kingRoadCreatorPut = async (
-  args: string | [string, AxiosRequestConfig]
-) => {
+export const kingRoadCreatorPut = async (args: any) => {
   const [url, config] = Array.isArray(args) ? args : [args];
 
   const res = await axiosInstance.put(url, config);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Menu, Search, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,39 +9,10 @@ import { MobileMenu } from "./MobileMenu";
 import translations from "@/data/translations.json";
 import Link from "next/link";
 import { Logo } from "./logo";
-import { useGetCartCount } from "@/api/cart";
-import { useAuth, logout } from "@/api/auth";
-import { AuthModal } from "./auth/AuthModal";
-import { toast } from "sonner";
+
 export function Header() {
-  const { language, isMenuOpen, setMenuOpen } = useStore();
+  const { cartCount, language, isMenuOpen, setMenuOpen } = useStore();
   const t = translations[language];
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authModalTab, setAuthModalTab] = useState<"login" | "register">(
-    "login"
-  );
-
-  // Get cart count from API
-  const { cartCount } = useGetCartCount();
-
-  // Get auth state
-  const { isAuthenticated, user } = useAuth();
-
-  const handleAuthClick = (tab: "login" | "register") => {
-    setAuthModalTab(tab);
-    setShowAuthModal(true);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      toast.success(
-        language === "ar" ? "تم تسجيل الخروج بنجاح" : "Logged out successfully"
-      );
-    } catch (error) {
-      toast.error(language === "ar" ? "فشل تسجيل الخروج" : "Logout failed");
-    }
-  };
 
   return (
     <>
@@ -106,20 +77,9 @@ export function Header() {
                 <span className="cursor-pointer hover:text-gray-900 font-medium">
                   {t.topNav.privacyPolicy}
                 </span>
-                {!isAuthenticated ? (
-                  <span
-                    onClick={() => handleAuthClick("register")}
-                    className="cursor-pointer hover:text-gray-900 font-medium"
-                  >
-                    {t.topNav.registration}
-                  </span>
-                ) : (
-                  <span className="text-gray-900 font-medium">
-                    {language === "ar"
-                      ? `مرحباً ${user?.name}`
-                      : `Hello ${user?.name}`}
-                  </span>
-                )}
+                <span className="cursor-pointer hover:text-gray-900 font-medium">
+                  {t.topNav.registration}
+                </span>
               </div>
 
               {/* Right Section */}
@@ -147,37 +107,6 @@ export function Header() {
                   {language === "en" ? "عربي" : "English"}
                 </Button>
 
-                {/* Auth Buttons */}
-                {!isAuthenticated ? (
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleAuthClick("login")}
-                      className="text-sm font-medium text-gray-700 hover:text-gray-900"
-                    >
-                      {language === "ar" ? "دخول" : "Login"}
-                    </Button>
-                    {/* <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleAuthClick("register")}
-                      className="text-sm font-medium"
-                    >
-                      {language === "ar" ? "تسجيل" : "Register"}
-                    </Button> */}
-                  </div>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="text-sm font-medium text-gray-700 hover:text-gray-900"
-                  >
-                    {language === "ar" ? "خروج" : "Logout"}
-                  </Button>
-                )}
-
                 {/* Cart */}
                 <Link href="/cart" className="flex items-center gap-2 relative">
                   <ShoppingCart className="h-5 w-5 text-gray-700 " />
@@ -186,9 +115,6 @@ export function Header() {
                       {cartCount}
                     </span>
                   )}
-                </Link>
-                <Link href="/track-order" className="text-gray-700 hover:text-blue-600 transition-colors">
-                  Track Order
                 </Link>
 
                 {/* Brand */}
@@ -200,12 +126,6 @@ export function Header() {
       </header>
 
       <MobileMenu />
-
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        defaultTab={authModalTab}
-      />
     </>
   );
 }

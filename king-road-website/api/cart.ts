@@ -68,7 +68,7 @@ export function useGetCartItems() {
     endpoints.cart.list,
     async (url) => {
       // First get CSRF token
-      await axiosInstance.get('/sanctum/csrf-cookie');
+      await axiosInstance.get("/sanctum/csrf-cookie");
       return kingRoadFetcher(url);
     },
     {
@@ -282,7 +282,7 @@ export const cartApi = {
     try {
       const [itemsResponse, totalResponse] = await Promise.all([
         kingRoadFetcher(endpoints.cart.list),
-        kingRoadFetcher(endpoints.cart.total)
+        kingRoadFetcher(endpoints.cart.total),
       ]);
 
       const items = itemsResponse.data || [];
@@ -302,7 +302,7 @@ export const cartApi = {
         error: null,
       };
     } catch (error) {
-      console.error('Error fetching cart:', error);
+      console.error("Error fetching cart:", error);
       return {
         status: 0,
         items: [],
@@ -314,35 +314,35 @@ export const cartApi = {
         },
         count: 0,
         loading: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch cart',
+        error: error instanceof Error ? error.message : "Failed to fetch cart",
       };
     }
   },
 
   // Get cart items
   getCartItems: useGetCartItems,
-  
+
   // Get cart count
   getCartCount: useGetCartCount,
-  
+
   // Get cart total
   getCartTotal: useGetCartTotal,
-  
+
   // Add item to cart
   addToCart: addProductToCart,
-  
+
   // Update cart quantity
   updateCartQuantity,
-  
+
   // Remove item from cart
   removeFromCart,
-  
+
   // Clear cart
   clearCart,
-  
+
   // Transfer guest cart
   transferGuestCart,
-  
+
   // Get cart actions
   useCartActions,
 };

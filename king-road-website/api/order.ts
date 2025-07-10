@@ -2,7 +2,7 @@ import useSWR, { mutate } from "swr";
 import { useMemo } from "react";
 import {
   endpoints,
-  kingRoadCreator,
+  kingRoadCreatorForm,
   kingRoadFetcher,
   kingRoadSmasher,
   kingRoadUpdatePatch,
@@ -10,31 +10,6 @@ import {
 // utils
 
 // types
-export interface CreateOrderData {
-  // Address - either use existing address or provide new address data
-  address_id?: string;
-  
-  // New address data (required if address_id not provided)
-  customer_phone: string;
-  address_type?: 'house' | 'apartment' | 'office';
-  street?: string;
-  house_number?: string;
-  building_number?: string;
-  floor?: string;
-  apartment_number?: string;
-  office_number?: string;
-  additional_description?: string;
-  city?: string;
-  country?: string;
-  
-  // Order details
-  delivery_fee?: number;
-  payment_method?: string;
-  customer_notes?: string;
-  
-  // Save address option
-  save_address?: boolean;
-}
 
 // ----------------------------------------------------------------------
 
@@ -114,7 +89,7 @@ export function useGetOrderById(id: any) {
 
 export function createNewOrder(body: any) {
   const URL = endpoints.order.create;
-  const response = kingRoadCreator([URL, body]);
+  const response = kingRoadCreatorForm([URL, body]);
   return response;
 }
 

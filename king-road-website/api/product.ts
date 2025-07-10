@@ -299,9 +299,6 @@ export function useIncrementProductViews() {
     try {
       await kingRoadFetcher(
         `${endpoints.product.details}${productId}/increment-views`
-        // {
-        //   method: "POST",
-        // }
       );
 
       // Revalidate the product data

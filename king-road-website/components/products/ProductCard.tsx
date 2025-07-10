@@ -5,11 +5,9 @@ import { Product } from "@/api/product";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ShoppingCart, Eye, Loader2 } from "lucide-react";
+import { Star, ShoppingCart, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-import { addProductToCart } from "@/api/cart";
-import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -26,41 +24,49 @@ export function ProductCard({
 }: ProductCardProps) {
   const { language, addToCart } = useStore();
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const { toast: useToastHook } = useToast();
 
   const productName = language === "ar" ? product.name_ar : product.name_en;
   const isOutOfStock = !product.is_in_stock;
 
   const handleAddToCart = async () => {
     if (isOutOfStock) {
-      useToastHook({
-        title: "Out of Stock",
-        description: "This product is currently out of stock.",
-        variant: "destructive",
-      });
+      toast.error(
+        language === "ar" ? "المنتج غير متوفر" : "Product out of stock"
+      );
       return;
     }
 
     setIsAddingToCart(true);
 
     try {
-      await addToCart(product, 1);
-      useToastHook({
-        title: "Added to Cart",
-        description: `${productName} has been added to your cart.`,
-      });
+      const cartItem = {
+        id: product.id,
+        name: productName,
+        price: product.current_price,
+        quantity: 1,
+        image: product.featured_image,
+      };
 
-      // Optional callback
-      // onAddToCart?.(product);
-    } catch (err: any) {
-      // Log entire error for diagnostics
-      console.error("Add to cart error:", err);
+      addToCart(cartItem);
 
-      useToastHook({
-        title: "Failed to Add",
-        description: "Failed to add item to cart. Please try again.",
-        variant: "destructive",
-      });
+      if (onAddToCart) {
+        onAddToCart(product);
+      }
+
+      toast.success(
+        language === "ar"
+          ? `تم إضافة ${productName} إلى السلة`
+          : `${productName} added to cart`,
+        {
+          description:
+            language === "ar"
+              ? "يمكنك مراجعة السلة من الأعلى"
+              : "You can review your cart from the top",
+          duration: 3000,
+        }
+      );
+    } catch (error) {
+      toast.error(language === "ar" ? "حدث خطأ" : "Something went wrong");
     } finally {
       setIsAddingToCart(false);
     }
@@ -171,11 +177,11 @@ export function ProductCard({
               onClick={handleAddToCart}
             >
               {isAddingToCart ? (
-                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600" />
               ) : (
                 <>
                   <ShoppingCart className="h-4 w-4 mr-1" />
-                  {product.is_in_stock ? (language === "ar" ? "أضف" : "Add") : (language === "ar" ? "نفد المخزون" : "Out of Stock")}
+                  {language === "ar" ? "أضف" : "Add"}
                 </>
               )}
             </Button>
@@ -184,11 +190,13 @@ export function ProductCard({
       </div>
     );
   }
+
   const cleanImageUrl = product?.featured_image?.includes(
     "assets/images/product/"
   )
     ? product.featured_image.replace("http://localhost:8000", "")
     : product?.featured_image || "/assets/images/product/1.jpg";
+
   return (
     <div className="bg-white rounded-lg overflow-hidden border border-gray-200 relative group hover:shadow-md transition-shadow">
       {/* Product Image */}
@@ -283,7 +291,7 @@ export function ProductCard({
             </span>
             {product.is_on_sale && product.sale_price && (
               <span className="text-sm text-gray-500 line-through">
-                {product?.price}
+                {product.price.toFixed(2)}
               </span>
             )}
           </div>
@@ -342,15 +350,11 @@ export function ProductCard({
             onClick={handleAddToCart}
           >
             {isAddingToCart ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                Adding...
-              </>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600" />
+            ) : language === "ar" ? (
+              "+ أضف"
             ) : (
-              <>
-                <ShoppingCart className="h-4 w-4 mr-1" />
-                {product.is_in_stock ? (language === "ar" ? "+ أضف" : "+ Add") : (language === "ar" ? "نفد المخزون" : "Out of Stock")}
-              </>
+              "+ Add"
             )}
           </Button>
         </div>

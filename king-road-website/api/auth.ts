@@ -120,23 +120,23 @@ export async function logout(): Promise<void> {
 }
 
 // Refresh token function
-export async function refreshToken(): Promise<string> {
-  try {
-    const response = await kingRoadCreator([endpoints.auth.refresh, {}]);
+// export async function refreshToken(): Promise<string> {
+//   try {
+//     const response = await kingRoadCreator([endpoints.auth.refresh, {}]);
 
-    if (response?.data?.token) {
-      setToken(response.data.token);
-      return response.data.token;
-    }
+//     if (response?.data?.token) {
+//       setToken(response.data.token);
+//       return response.data.token;
+//     }
 
-    throw new Error("Failed to refresh token");
-  } catch (error: any) {
-    console.error("Token refresh failed:", error);
-    // If refresh fails, logout user
-    await logout();
-    throw error;
-  }
-}
+//     throw new Error("Failed to refresh token");
+//   } catch (error: any) {
+//     console.error("Token refresh failed:", error);
+//     // If refresh fails, logout user
+//     await logout();
+//     throw error;
+//   }
+// }
 
 // Check if user is authenticated
 export function isAuthenticated(): boolean {

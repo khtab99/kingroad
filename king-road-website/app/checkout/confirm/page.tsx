@@ -255,7 +255,7 @@ export default function CheckoutConfirmPage() {
             {language === "ar" ? "عناصر الطلب" : "Order Items"}
           </h3>
 
-          {checkoutData.cartItems.map((item: any) => (
+          {checkoutData.cartItems.map((item) => (
             <div
               key={item.id}
               className="flex items-center justify-between py-2 text-right"
@@ -341,8 +341,7 @@ export default function CheckoutConfirmPage() {
           <div className="space-y-3 text-right">
             <div className="flex justify-between items-center">
               <span className="text-gray-800">
-                {checkoutData.subtotal.toFixed(2)}{" "}
-                {language === "ar" ? "د.إ" : "AED"}
+                {checkoutData.subtotal} {language === "ar" ? "د.إ" : "AED"}
               </span>
               <span className="text-gray-600">
                 {language === "ar" ? "المجموع الفرعي" : "Subtotal"}
@@ -351,8 +350,7 @@ export default function CheckoutConfirmPage() {
 
             <div className="flex justify-between items-center">
               <span className="text-gray-800">
-                {checkoutData.deliveryFee.toFixed(2)}{" "}
-                {language === "ar" ? "د.إ" : "AED"}
+                {checkoutData.deliveryFee} {language === "ar" ? "د.إ" : "AED"}
               </span>
               <span className="text-gray-600">
                 {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
@@ -362,8 +360,7 @@ export default function CheckoutConfirmPage() {
             <div className="border-t border-gray-200 pt-3">
               <div className="flex justify-between items-center">
                 <span className="text-gray-800 font-medium text-lg">
-                  {checkoutData.total.toFixed(2)}{" "}
-                  {language === "ar" ? "د.إ" : "AED"}
+                  {checkoutData.total} {language === "ar" ? "د.إ" : "AED"}
                 </span>
                 <span className="text-gray-800 font-medium">
                   {language === "ar" ? "المجموع" : "Total"}

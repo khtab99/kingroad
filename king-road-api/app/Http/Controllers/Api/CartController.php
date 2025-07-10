@@ -5,44 +5,24 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\AddToCartRequest;
 use App\Http\Requests\Cart\UpdateCartRequest;
-use App\Http\Resources\CartResource;
-use App\Models\Cart;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api')->only([
-            'addToCart',
-            'updateQuantity',
-            'removeFromCart',
-            'getCartTotal',
-            'transferGuestCart'
-        ]);
-    }
-
     /**
-     * Get cart items (authenticated users from DB, guests from session)
+     * Get guest cart items from session
      */
     public function index(Request $request)
     {
         try {
-            Log::info('Cart index called', [
-                'authenticated' => auth()->check(),
+            Log::info('Guest cart index called', [
                 'session_id' => session()->getId(),
                 'session_cart' => session('cart', [])
             ]);
 
-            $cartItems = auth()->check() 
-                ? $this->getAuthenticatedUserCartItems()
-                : $this->getGuestUserCartItems();
+            $cartItems = $this->getGuestUserCartItems();
 
             return handleSuccessReponse(
                 1,
@@ -50,37 +30,28 @@ class CartController extends Controller
                 $cartItems
             );
         } catch (\Exception $e) {
-            Log::error('Cart index error', ['error' => $e->getMessage()]);
+            Log::error('Guest cart index error', ['error' => $e->getMessage()]);
             return handleErrorResponse(0, $e);
         }
     }
 
     /**
-     * Add item to cart (DB for authenticated, session for guests)
+     * Add item to guest cart (session only)
      */
     public function addToCart(AddToCartRequest $request)
     {
         try {
-            Log::info('Add to cart called', [
-                'authenticated' => auth()->check(),
+            Log::info('Add to guest cart called', [
                 'product_id' => $request->product_id,
                 'session_id' => session()->getId()
             ]);
-
-            // Ensure session is properly started
-            if (!session()->isStarted()) {
-                Log::warning('Session not started, starting now');
-                session_start();
-            }
 
             // Get the current session cart
             $sessionCart = session()->get('cart', []);
             
             // Add the item to cart
             $product = Product::findOrFail($request->product_id);
-            $cartItem = Auth::check()
-                ? $this->addToCartDatabase($request, $product)
-                : $this->addToCartSession($request, $product);
+            $cartItem = $this->addToCartSession($request, $product);
 
             // Force session save after cart operation
             session()->save();
@@ -94,62 +65,53 @@ class CartController extends Controller
 
             return $cartItem;
         } catch (\Exception $e) {
-            Log::error('Add to cart error', ['error' => $e->getMessage()]);
+            Log::error('Add to guest cart error', ['error' => $e->getMessage()]);
             return handleErrorResponse(0, $e);
         }
     }
 
     /**
-     * Update cart item quantity
+     * Update guest cart item quantity
      */
     public function updateQuantity($cartItemId, UpdateCartRequest $request)
     {
-        Log::info('Update quantity called', [
-            'authenticated' => auth()->check(), 
+        Log::info('Update guest cart quantity called', [
             'cart_item_id' => $cartItemId
         ]);
 
         try {
-            return auth()->check()
-                ? $this->updateQuantityDatabase($cartItemId, $request)
-                : $this->updateQuantitySession($cartItemId, $request);
+            return $this->updateQuantitySession($cartItemId, $request);
         } catch (\Exception $e) {
-            Log::error('Update quantity error', ['error' => $e->getMessage()]);
+            Log::error('Update guest cart quantity error', ['error' => $e->getMessage()]);
             return handleErrorResponse(0, $e);
         }
     }
 
     /**
-     * Remove item from cart
+     * Remove item from guest cart
      */
     public function removeFromCart($cartItemId)
     {
-        Log::info('Remove from cart called', [
-            'authenticated' => auth()->check(), 
+        Log::info('Remove from guest cart called', [
             'cart_item_id' => $cartItemId
         ]);
         
         try {
-            return auth()->check()
-                ? $this->removeFromCartDatabase($cartItemId)
-                : $this->removeFromCartSession($cartItemId);
+            return $this->removeFromCartSession($cartItemId);
         } catch (\Exception $e) {
-            Log::error('Remove from cart error', ['error' => $e->getMessage()]);
+            Log::error('Remove from guest cart error', ['error' => $e->getMessage()]);
             return handleErrorResponse(0, $e);
         }
     }
 
     /**
-     * Clear entire cart
+     * Clear entire guest cart
      */
     public function clearCart()
     {
         try {
-            if (Auth::check()) {
-                Auth::user()->cartItems()->delete();
-            } else {
-                session()->forget('cart');
-            }
+            session()->forget('cart');
+            session()->save();
 
             return handleSuccessReponse(
                 1,
@@ -157,28 +119,15 @@ class CartController extends Controller
                 null
             );
         } catch (\Exception $e) {
-            Log::error('Clear cart error', ['error' => $e->getMessage()]);
+            Log::error('Clear guest cart error', ['error' => $e->getMessage()]);
             return handleErrorResponse(0, $e);
         }
     }
 
     /**
-     * Get authenticated user cart items
-     */
-    private function getAuthenticatedUserCartItems()
-    {
-        $cartItems = auth()->user()
-            ->cartItems()
-            ->with(['product.category', 'product.subcategory'])
-            ->get();
-
-        return CartResource::collection($cartItems);
-    }
-
-    /**
      * Get guest user cart items
      */
-    public function getGuestUserCartItems()
+    private function getGuestUserCartItems()
     {
         try {
             $sessionCart = session('cart', []);
@@ -205,24 +154,19 @@ class CartController extends Controller
     }
 
     /**
-     * Get cart count
+     * Get guest cart count
      */
     public function getCartCount()
     {
         try {
-            Log::info('Get cart count called', [
-                'authenticated' => Auth::check(),
+            Log::info('Get guest cart count called', [
                 'session_id' => session()->getId(),
-                'session_cart' => session('cart', []) // Log current session cart
+                'session_cart' => session('cart', [])
             ]);
 
-            if (Auth::check()) {
-                $count = Auth::user()->cartItems()->sum('quantity');
-            } else {
-                $sessionCart = session('cart', []);
-                Log::debug('Session cart content', ['cart' => $sessionCart]);
-                $count = array_sum(array_column($sessionCart, 'quantity'));
-            }
+            $sessionCart = session('cart', []);
+            Log::debug('Session cart content', ['cart' => $sessionCart]);
+            $count = array_sum(array_column($sessionCart, 'quantity'));
 
             return handleSuccessReponse(
                 1,
@@ -230,110 +174,29 @@ class CartController extends Controller
                 ['count' => $count]
             );
         } catch (\Exception $e) {
-            Log::error('Get cart count error', ['error' => $e->getMessage()]);
+            Log::error('Get guest cart count error', ['error' => $e->getMessage()]);
             return handleErrorResponse(0, $e);
         }
     }
 
     /**
-     * Get cart total
+     * Get guest cart total
      */
     public function getCartTotal()
     {
-        Log::info('Get cart total called', [
-            'authenticated' => Auth::check(),
+        Log::info('Get guest cart total called', [
             'session_id' => session()->getId()
         ]);
         
         try {
-            if (Auth::check()) {
-                $cartItems = Auth::user()->cartItems()->with('product')->get();
-                $subtotal = $this->calculateSubtotal($cartItems);
-                $itemCount = $cartItems->sum('quantity');
-                return $this->buildCartTotalResponse($subtotal, $itemCount);
-            } else {
-                $result = $this->calculateGuestCartTotal();
-                $subtotal = $result['subtotal'];
-                $itemCount = $result['itemCount'];
-                return $this->buildCartTotalResponse($subtotal, $itemCount);
-            }
+            $result = $this->calculateGuestCartTotal();
+            $subtotal = $result['subtotal'];
+            $itemCount = $result['itemCount'];
+            return $this->buildCartTotalResponse($subtotal, $itemCount);
         } catch (\Exception $e) {
-            Log::error('Get cart total error', ['error' => $e->getMessage()]);
+            Log::error('Get guest cart total error', ['error' => $e->getMessage()]);
             return handleErrorResponse(0, $e);
         }
-    }
-
-    /**
-     * Transfer guest cart to authenticated user cart
-     */
-    public function transferGuestCart()
-    {
-        Log::info('Transfer guest cart called', ['authenticated' => Auth::check()]);
-        
-        try {
-            if (!Auth::check()) {
-                return handleErrorResponse(0, 'User must be authenticated to transfer cart');
-            }
-
-            $sessionCart = Session::get('cart', []);
-            
-            if (empty($sessionCart)) {
-                return handleSuccessReponse(
-                    1,
-                    'No guest cart items to transfer',
-                    null
-                );
-            }
-
-            return DB::transaction(function () use ($sessionCart) {
-                $transferredCount = $this->transferCartItems($sessionCart);
-                Session::forget('cart');
-
-                return handleSuccessReponse(
-                    1,
-                    "Successfully transferred {$transferredCount} items to your cart",
-                    ['transferred_count' => $transferredCount]
-                );
-            });
-        } catch (\Exception $e) {
-            Log::error('Transfer guest cart error', ['error' => $e->getMessage()]);
-            return handleErrorResponse(0, $e);
-        }
-    }
-
-    /**
-     * Add item to cart for authenticated user
-     */
-    private function addToCartDatabase($request, $product)
-    {
-        $user = Auth::user();
-        $existingCartItem = $user->cartItems()->where('product_id', $product->id)->first();
-
-        if ($existingCartItem) {
-            $newQuantity = $existingCartItem->quantity + $request->quantity;
-            $this->validateProductAvailability($product, $newQuantity);
-
-            $existingCartItem->update([
-                'quantity' => $newQuantity,
-                'price' => $product->current_price,
-            ]);
-
-            $cartItem = $existingCartItem->fresh(['product.category', 'product.subcategory']);
-        } else {
-            $cartItem = $user->cartItems()->create([
-                'product_id' => $product->id,
-                'quantity' => $request->quantity,
-                'price' => $product->current_price,
-            ]);
-
-            $cartItem->load(['product.category', 'product.subcategory']);
-        }
-
-        return handleSuccessReponse(
-            1,
-            __('message.created'),
-            new CartResource($cartItem)
-        );
     }
 
     /**
@@ -392,35 +255,6 @@ class CartController extends Controller
     }
 
     /**
-     * Update cart item quantity for authenticated user
-     */
-    private function updateQuantityDatabase($cartItemId, $request)
-    {
-        $cartItem = Cart::findOrFail($cartItemId);
-        
-        // Ensure user owns this cart item
-        if ($cartItem->user_id !== auth()->id()) {
-            return handleErrorResponse(0, 'Unauthorized access to cart item');
-        }
-
-        $product = $cartItem->product;
-        $this->validateProductAvailability($product, $request->quantity);
-
-        $cartItem->update([
-            'quantity' => $request->quantity,
-            'price' => $product->current_price,
-        ]);
-
-        $cartItem->load(['product.category', 'product.subcategory']);
-
-        return handleSuccessReponse(
-            1,
-            __('message.updated'),
-            new CartResource($cartItem)
-        );
-    }
-
-    /**
      * Update cart item quantity for guest user
      */
     private function updateQuantitySession($cartItemId, $request)
@@ -447,27 +281,6 @@ class CartController extends Controller
             1,
             __('message.updated'),
             $cartItem
-        );
-    }
-
-    /**
-     * Remove item from cart for authenticated user
-     */
-    private function removeFromCartDatabase($cartItemId)
-    {
-        $cartItem = Cart::findOrFail($cartItemId);
-        
-        // Ensure user owns this cart item
-        if ($cartItem->user_id !== auth()->id()) {
-            return handleErrorResponse(0, 'Unauthorized access to cart item');
-        }
-
-        $cartItem->delete();
-
-        return handleSuccessReponse(
-            1,
-            __('message.deleted'),
-            null
         );
     }
 
@@ -525,16 +338,6 @@ class CartController extends Controller
     }
 
     /**
-     * Calculate subtotal for authenticated user cart
-     */
-    private function calculateSubtotal($cartItems)
-    {
-        return $cartItems->sum(function ($item) {
-            return $item->quantity * $item->product->current_price;
-        });
-    }
-
-    /**
      * Validate product availability
      */
     private function validateProductAvailability($product, $quantity)
@@ -546,39 +349,6 @@ class CartController extends Controller
         if ($product->track_inventory && $product->inventory < $quantity) {
             throw new \Exception('Insufficient inventory. Available: ' . $product->inventory);
         }
-    }
-
-    /**
-     * Transfer cart items from guest to authenticated user
-     */
-    private function transferCartItems(array $sessionCart): int
-    {
-        $user = Auth::user();
-        $transferredCount = 0;
-
-        foreach ($sessionCart as $item) {
-            $product = Product::findOrFail($item['product_id']);
-            $existingCartItem = $user->cartItems()->where('product_id', $product->id)->first();
-
-            if ($existingCartItem) {
-                $newQuantity = $existingCartItem->quantity + $item['quantity'];
-                $this->validateProductAvailability($product, $newQuantity);
-                $existingCartItem->update([
-                    'quantity' => $newQuantity,
-                    'price' => $product->current_price,
-                ]);
-            } else {
-                $user->cartItems()->create([
-                    'product_id' => $product->id,
-                    'quantity' => $item['quantity'],
-                    'price' => $product->current_price,
-                ]);
-            }
-
-            $transferredCount++;
-        }
-
-        return $transferredCount;
     }
 
     /**
@@ -606,8 +376,6 @@ class CartController extends Controller
         }
         return null;
     }
-
-
 
     private function formatSessionCartItem(array $sessionItem, Product $product): array
     {

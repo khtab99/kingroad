@@ -1,8 +1,7 @@
-components/ui/_
+components/ui/\_
 hooks/use-toast.ts
-king-road-website
 king-road-website/admin-prompt.md
 king-road-website/admin-create-full-instructions.md
-king-road-website/components/ui/_
+king-road-website/components/ui/\_
 king-road-website/hooks/use-toast.ts
 king-road-api/vendor

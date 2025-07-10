@@ -75,6 +75,16 @@ class Order extends Model
         return $query->where('created_at', '>=', now()->subDays($days));
     }
 
+    public function scopeGuest($query)
+    {
+        return $query->whereNull('user_id');
+    }
+
+    public function scopeRegistered($query)
+    {
+        return $query->whereNotNull('user_id');
+    }
+
     public function getFormattedAddressAttribute()
     {
         $parts = [$this->street];

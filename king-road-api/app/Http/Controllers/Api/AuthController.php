@@ -85,6 +85,10 @@ class AuthController extends Controller
                     $guestCartTransferred = true;
                 }
             }
+
+            // Check if there are any guest orders that can be linked to this user
+            $this->linkGuestOrdersToUser($user);
+
             DB::commit();
 
             return $this->handleSuccessResponse(1, 'User registered successfully', [
@@ -177,6 +181,10 @@ class AuthController extends Controller
                     $guestCartTransferred = true;
                 }
             }
+
+            // Check if there are any guest orders that can be linked to this user
+            $this->linkGuestOrdersToUser($user);
+
             return $this->handleSuccessResponse(1, 'Login successful', [
                 'user' => new UserResource($user->fresh()),
                 'token' => $token,
@@ -191,6 +199,38 @@ class AuthController extends Controller
             ]);
             
             return $this->handleErrorResponse(0, 'Login failed. Please try again.');
+        }
+    }
+
+    /**
+     * Link guest orders to user account
+     */
+    private function linkGuestOrdersToUser($user)
+    {
+        try {
+            // Find guest orders with matching email or phone
+            $guestOrders = \App\Models\Order::whereNull('user_id')
+                ->where(function ($query) use ($user) {
+                    $query->where('customer_email', $user->email)
+                          ->orWhere('customer_phone', $user->phone);
+                })
+                ->get();
+
+            if ($guestOrders->count() > 0) {
+                $guestOrders->each(function ($order) use ($user) {
+                    $order->update(['user_id' => $user->id]);
+                });
+
+                Log::info('Guest orders linked to user', [
+                    'user_id' => $user->id,
+                    'orders_count' => $guestOrders->count()
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to link guest orders to user', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage()
+            ]);
         }
     }
 

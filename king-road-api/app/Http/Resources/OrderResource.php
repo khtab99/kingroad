@@ -15,6 +15,7 @@ class OrderResource extends JsonResource
             'customer_name' => $this->customer_name,
             'customer_phone' => $this->customer_phone,
             'customer_email' => $this->customer_email,
+            'is_guest_order' => is_null($this->user_id),
             'address_type' => $this->address_type,
             'formatted_address' => $this->formatted_address,
             'address_details' => [

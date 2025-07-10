@@ -49,6 +49,14 @@ Route::prefix('v1')->group(function () {
         Route::delete('/clear', [CartController::class, 'clearCart']); 
         Route::get('/count', [CartController::class, 'getCartCount']);
         Route::get('/total', [CartController::class, 'getCartTotal']);
+        Route::post('/validate', [CartController::class, 'validateCart']);
+        });
+
+        // Guest checkout routes
+        Route::prefix('guest')->group(function () {
+            Route::post('/orders', [\App\Http\Controllers\Api\GuestOrderController::class, 'store']);
+            Route::post('/orders/lookup', [\App\Http\Controllers\Api\GuestOrderController::class, 'show']);
+            Route::post('/orders/cancel', [\App\Http\Controllers\Api\GuestOrderController::class, 'cancel']);
         });
     });
 });

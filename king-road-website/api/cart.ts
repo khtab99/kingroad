@@ -9,6 +9,7 @@ import {
   kingRoadUpdatePatch,
   kingRoadUpdatePut,
 } from "@/util/axios";
+import axiosInstance from "@/util/axios";
 
 // Types
 export interface CartItem {
@@ -65,7 +66,11 @@ export interface CartCountResponse {
 export function useGetCartItems() {
   const { data, error, isLoading, isValidating } = useSWR(
     endpoints.cart.list,
-    kingRoadFetcher,
+    async (url) => {
+      // First get CSRF token
+      await axiosInstance.get('/sanctum/csrf-cookie');
+      return kingRoadFetcher(url);
+    },
     {
       revalidateOnFocus: false,
       dedupingInterval: 10000, // Cache for 10 seconds
@@ -269,3 +274,75 @@ export function useCartActions() {
     transferGuestCartToUser,
   };
 }
+
+// Cart API object
+export const cartApi = {
+  // Get cart items and total
+  getCart: async () => {
+    try {
+      const [itemsResponse, totalResponse] = await Promise.all([
+        kingRoadFetcher(endpoints.cart.list),
+        kingRoadFetcher(endpoints.cart.total)
+      ]);
+
+      const items = itemsResponse.data || [];
+      const total = totalResponse.data || {
+        subtotal: 0,
+        item_count: 0,
+        delivery_fee: 0,
+        total: 0,
+      };
+
+      return {
+        status: 1,
+        items,
+        total,
+        count: items.length,
+        loading: false,
+        error: null,
+      };
+    } catch (error) {
+      console.error('Error fetching cart:', error);
+      return {
+        status: 0,
+        items: [],
+        total: {
+          subtotal: 0,
+          item_count: 0,
+          delivery_fee: 0,
+          total: 0,
+        },
+        count: 0,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch cart',
+      };
+    }
+  },
+
+  // Get cart items
+  getCartItems: useGetCartItems,
+  
+  // Get cart count
+  getCartCount: useGetCartCount,
+  
+  // Get cart total
+  getCartTotal: useGetCartTotal,
+  
+  // Add item to cart
+  addToCart: addProductToCart,
+  
+  // Update cart quantity
+  updateCartQuantity,
+  
+  // Remove item from cart
+  removeFromCart,
+  
+  // Clear cart
+  clearCart,
+  
+  // Transfer guest cart
+  transferGuestCart,
+  
+  // Get cart actions
+  useCartActions,
+};

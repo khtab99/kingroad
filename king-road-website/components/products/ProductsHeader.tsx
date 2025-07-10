@@ -8,7 +8,7 @@ import { useStore } from "@/store/useStore";
 import translations from "@/data/translations.json";
 
 export function ProductsHeader() {
-  const { cartCount, language, toggleLanguage } = useStore();
+  const { cartItems, language, toggleLanguage } = useStore();
   const t = translations[language];
 
   return (
@@ -47,9 +47,11 @@ export function ProductsHeader() {
             className="relative text-white hover:bg-gray-600"
           >
             <ShoppingCart className="h-6 w-6" />
-            <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-              {cartCount}
-            </span>
+            {cartItems.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                {cartItems.length}
+              </span>
+            )}
           </Button>
         </div>
       </div>
@@ -107,16 +109,21 @@ export function ProductsHeader() {
                 {language === "en" ? "عربي" : "English"}
               </Button>
 
-              {/* Cart */}
-              <div className="flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5" />
-                <span className="bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                  {cartCount}
-                </span>
-              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <ShoppingCart className="h-6 w-6" />
+                    {cartItems.length > 0 && (
+                      <span className="absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                        {cartItems.length}
+                      </span>
+                    )}
+                  </div>
 
-              {/* Brand */}
-              <div className="text-xl font-bold">King Road</div>
+                  {/* Brand */}
+                  <div className="text-xl font-bold">King Road</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

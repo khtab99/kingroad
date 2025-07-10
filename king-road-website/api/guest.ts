@@ -1,10 +1,10 @@
-import { axiosInstance } from '../util/axios';
+import axiosInstance from "@/util/axios";
 
 export interface GuestOrderData {
   customer_name: string;
   customer_phone: string;
   customer_email?: string;
-  address_type: 'house' | 'apartment' | 'office';
+  address_type: "house" | "apartment" | "office";
   street: string;
   house_number?: string;
   building_number?: string;
@@ -27,25 +27,31 @@ export interface OrderLookupData {
 export const guestApi = {
   // Create guest order
   createOrder: async (orderData: GuestOrderData) => {
-    const response = await axiosInstance.post('/guest/orders', orderData);
+    const response = await axiosInstance.post("/guest/orders", orderData);
     return response.data;
   },
 
   // Lookup guest order
   lookupOrder: async (lookupData: OrderLookupData) => {
-    const response = await axiosInstance.post('/guest/orders/lookup', lookupData);
+    const response = await axiosInstance.post(
+      "/guest/orders/lookup",
+      lookupData
+    );
     return response.data;
   },
 
   // Cancel guest order
   cancelOrder: async (lookupData: OrderLookupData) => {
-    const response = await axiosInstance.post('/guest/orders/cancel', lookupData);
+    const response = await axiosInstance.post(
+      "/guest/orders/cancel",
+      lookupData
+    );
     return response.data;
   },
 
   // Validate cart before checkout
   validateCart: async () => {
-    const response = await axiosInstance.post('/cart/validate');
+    const response = await axiosInstance.post("/cart/validate");
     return response.data;
-  }
+  },
 };

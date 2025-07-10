@@ -54,20 +54,20 @@ interface StoreState {
   // User state
   user: User | null;
   isAuthenticated: boolean;
-  
+
   // Cart state
   cartItems: CartItem[];
   cartTotal: CartTotal;
   isCartLoading: boolean;
-  
+
   // UI state
   language: "en" | "ar";
   isMenuOpen: boolean;
-  
+
   // Actions
   setUser: (user: User | null) => void;
   logout: () => void;
-  
+
   // Cart actions
   addToCart: (product: any, quantity: number) => Promise<void>;
   updateCartQuantity: (productId: number, quantity: number) => Promise<void>;
@@ -75,7 +75,7 @@ interface StoreState {
   clearCart: () => Promise<void>;
   loadCart: () => Promise<void>;
   refreshCartTotal: () => Promise<void>;
-  
+
   // UI actions
   toggleLanguage: () => void;
   setMenuOpen: (open: boolean) => void;
@@ -95,11 +95,11 @@ export const useStore = create<StoreState>()(
 
       // User actions
       setUser: (user) => {
-        set({ 
-          user, 
-          isAuthenticated: !!user 
+        set({
+          user,
+          isAuthenticated: !!user,
         });
-        
+
         // Load cart when user logs in
         if (user) {
           get().loadCart();
@@ -107,11 +107,11 @@ export const useStore = create<StoreState>()(
       },
 
       logout: () => {
-        set({ 
-          user: null, 
+        set({
+          user: null,
           isAuthenticated: false,
           cartItems: [],
-          cartTotal: { subtotal: 0, item_count: 0, total: 0 }
+          cartTotal: { subtotal: 0, item_count: 0, total: 0 },
         });
       },
 
@@ -120,148 +120,121 @@ export const useStore = create<StoreState>()(
         try {
           const response = await cartApi.addToCart({
             product_id: product.id,
-            quantity
+            quantity,
           });
-          
-          if (response.status === 1) {
-            // Reload cart after successful addition
-            await get().loadCart();
-          } else {
-            throw new Error(response.message || 'Failed to add to cart');
-          }
+
+          // Reload cart after successful addition
+          await get().loadCart();
         } catch (error) {
-          console.error('Failed to add to cart:', error);
+          console.error("Failed to add to cart:", error);
           throw error;
         }
       },
 
       updateCartQuantity: async (productId, quantity) => {
         try {
-          const cartItem = get().cartItems.find(item => item.product_id === productId);
+          const cartItem = get().cartItems.find(
+            (item) => item.product_id === productId
+          );
           if (!cartItem) {
-            throw new Error('Cart item not found');
+            throw new Error("Cart item not found");
           }
 
           if (quantity <= 0) {
             return get().removeFromCart(productId);
           }
-          
-          const response = await cartApi.updateQuantity(cartItem.id, { quantity });
-          if (response.status === 1) {
-            // Reload cart after successful update
-            await get().loadCart();
-          } else {
-            throw new Error(response.message || 'Failed to update quantity');
-          }
+
+          await cartApi.updateCartQuantity(cartItem.id, quantity);
+          // Reload cart after successful update
+          await get().loadCart();
         } catch (error) {
-          console.error('Failed to update cart quantity:', error);
+          console.error("Failed to update cart quantity:", error);
           throw error;
         }
       },
 
       removeFromCart: async (productId) => {
         try {
-          const cartItem = get().cartItems.find(item => item.product_id === productId);
+          const cartItem = get().cartItems.find(
+            (item) => item.product_id === productId
+          );
           if (!cartItem) {
-            throw new Error('Cart item not found');
+            throw new Error("Cart item not found");
           }
 
-          const response = await cartApi.removeFromCart(cartItem.id);
-          if (response.status === 1) {
-            // Reload cart after successful removal
-            await get().loadCart();
-          } else {
-            throw new Error(response.message || 'Failed to remove from cart');
-          }
+          await cartApi.removeFromCart(cartItem.id);
+          // Reload cart after successful removal
+          await get().loadCart();
         } catch (error) {
-          console.error('Failed to remove from cart:', error);
+          console.error("Failed to remove from cart:", error);
           throw error;
         }
       },
 
       clearCart: async () => {
         try {
-          const response = await cartApi.clearCart();
-          if (response.status === 1) {
-            set({ 
-              cartItems: [], 
-              cartTotal: { subtotal: 0, item_count: 0, total: 0 } 
-            });
-          } else {
-            throw new Error(response.message || 'Failed to clear cart');
-          }
-        } catch (error) {
-          console.error('Failed to clear cart:', error);
-          // Clear local state even if API call fails
-          set({ 
-            cartItems: [], 
-            cartTotal: { subtotal: 0, item_count: 0, total: 0 } 
+          await cartApi.clearCart();
+          set({
+            cartItems: [],
+            cartTotal: { subtotal: 0, item_count: 0, total: 0 },
           });
+        } catch (error) {
+          console.error("Failed to clear cart:", error);
+          throw error;
         }
       },
 
       loadCart: async () => {
         try {
-          set({ isCartLoading: true });
-          
-          const [cartResponse, totalResponse] = await Promise.all([
-            cartApi.getCart(),
-            cartApi.getCartTotal()
-          ]);
-          
-          if (cartResponse.status === 1 && totalResponse.status === 1) {
+          const cart = await cartApi.getCart();
+          if (cart.status === 1) {
             set({
-              cartItems: cartResponse.data || [],
-              cartTotal: totalResponse.data || { subtotal: 0, item_count: 0, total: 0 }
+              cartItems: cart.items,
+              cartTotal: cart.total,
+              isCartLoading: false,
             });
           } else {
-            // Set empty cart if API calls fail
-            set({
-              cartItems: [],
-              cartTotal: { subtotal: 0, item_count: 0, total: 0 }
-            });
+            throw new Error(cart.error || "Failed to load cart");
           }
         } catch (error) {
-          console.error('Failed to load cart:', error);
-          // Set empty cart on error
-          set({
-            cartItems: [],
-            cartTotal: { subtotal: 0, item_count: 0, total: 0 }
-          });
-        } finally {
+          console.error("Failed to load cart:", error);
           set({ isCartLoading: false });
+          throw error;
         }
       },
 
       refreshCartTotal: async () => {
         try {
-          const response = await cartApi.getCartTotal();
-          if (response.status === 1) {
-            set({ cartTotal: response.data });
+          const cart = await cartApi.getCart();
+          if (cart.status === 1) {
+            set({ cartTotal: cart.total });
+          } else {
+            throw new Error(cart.error || "Failed to refresh cart total");
           }
         } catch (error) {
-          console.error('Failed to refresh cart total:', error);
+          console.error("Failed to refresh cart total:", error);
+          throw error;
         }
       },
 
       // UI actions
       toggleLanguage: () => {
-        set(state => ({ 
-          language: state.language === 'en' ? 'ar' : 'en' 
+        set((state) => ({
+          language: state.language === "en" ? "ar" : "en",
         }));
       },
 
       setMenuOpen: (open) => {
         set({ isMenuOpen: open });
-      }
+      },
     }),
     {
-      name: 'king-road-store',
-      partialize: (state) => ({ 
+      name: "king-road-store",
+      partialize: (state) => ({
         user: state.user,
         language: state.language,
-        isAuthenticated: state.isAuthenticated
-      })
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );

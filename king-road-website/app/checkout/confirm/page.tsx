@@ -251,7 +251,7 @@ export default function CheckoutConfirmPage() {
 
         {/* Order Summary */}
         <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
-          <h3 className="text-gray-800 font-medium mb-4 text-right">
+          <h3 className="text-gray-800 font-medium mb-4 text-center">
             {language === "ar" ? "عناصر الطلب" : "Order Items"}
           </h3>
 

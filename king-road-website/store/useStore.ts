@@ -1,95 +1,113 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
+      updateCartQuantity: async (productId, quantity) => {
+        try {
+          const cartItem = get().cartItems.find(item => item.product_id === productId);
+          if (cartItem) {
+            if (quantity <= 0) {
+              return get().removeFromCart(productId);
+            }
+            
+            const response = await cartApi.updateQuantity(cartItem.id, { quantity });
+            if (response.status === 1) {
+              // Reload cart after successful update
+              get().loadCart();
+            }
 interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image?: string;
-}
 
+      addToCart: async (product, quantity) => {
 interface StoreState {
-  cartItems: CartItem[];
-  cartCount: number;
-  language: 'en' | 'ar';
-  isMenuOpen: boolean;
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  clearCart: () => void;
-  toggleLanguage: () => void;
-  setMenuOpen: (open: boolean) => void;
-}
-
-export const useStore = create<StoreState>()(
-  persist(
-    (set, get) => ({
-      cartItems: [],
-      cartCount: 0,
-      language: 'en',
-      isMenuOpen: false,
-      
-      addToCart: (item) => {
-        const { cartItems } = get();
-        const existingItem = cartItems.find(i => i.id === item.id);
-        
-        if (existingItem) {
-          const newQuantity = existingItem.quantity + item.quantity;
-          const newItems = cartItems.map(i =>
-            i.id === item.id ? { ...i, quantity: newQuantity } : i
-          );
-          set({
-            cartItems: newItems,
-            cartCount: newItems.reduce((sum, i) => sum + i.quantity, 0)
-          });
-        } else {
-          const newItems = [...cartItems, item];
-          set({
-            cartItems: newItems,
-            cartCount: newItems.reduce((sum, i) => sum + i.quantity, 0)
-          });
-        }
-      },
-      
-      removeFromCart: (id) => {
-        const { cartItems } = get();
-        const newItems = cartItems.filter(i => i.id !== id);
-        set({
-          cartItems: newItems,
-          cartCount: newItems.reduce((sum, i) => sum + i.quantity, 0)
-        });
-      },
-      
+        try {
       updateQuantity: (id, quantity) => {
+          const response = await cartApi.addToCart({
         const { cartItems } = get();
+            product_id: product.id,
         if (quantity <= 0) {
+            quantity
           get().removeFromCart(id);
+          });
           return;
+        } catch (error) {
+          console.error('Failed to update cart quantity:', error);
+          throw error;
         }
-        
-        const newItems = cartItems.map(i =>
-          i.id === id ? { ...i, quantity } : i
-        );
-        set({
-          cartItems: newItems,
-          cartCount: newItems.reduce((sum, i) => sum + i.quantity, 0)
-        });
       },
+        );
+      removeFromCart: async (productId) => {
+        } catch (error) {
+        try {
       
-      clearCart: () => set({ cartItems: [], cartCount: 0 }),
-      
+          const cartItem = get().cartItems.find(item => item.product_id === productId);
       toggleLanguage: () => set(state => ({ language: state.language === 'en' ? 'ar' : 'en' })),
+          if (cartItem) {
       
+            const response = await cartApi.removeFromCart(cartItem.id);
       setMenuOpen: (open) => set({ isMenuOpen: open }),
+      clearCart: async () => {
+        try {
+          const response = await cartApi.clearCart();
+          if (response.status === 1) {
+            set({ cartItems: [], cartTotal: { subtotal: 0, item_count: 0, total: 0 } });
+          }
+        } catch (error) {
+          console.error('Failed to clear cart:', error);
+          // Clear local state even if API call fails
+          set({ cartItems: [], cartTotal: { subtotal: 0, item_count: 0, total: 0 } });
+        }
+      },
+
+      loadCart: async () => {
+        try {
+          set({ isCartLoading: true });
+          
+          const [cartResponse, totalResponse] = await Promise.all([
+            cartApi.getCart(),
+            cartApi.getCartTotal()
+          ]);
+          
+          if (cartResponse.status === 1 && totalResponse.status === 1) {
+            set({
+              cartItems: cartResponse.data || [],
+              cartTotal: totalResponse.data || { subtotal: 0, item_count: 0, total: 0 }
+            });
+          }
+        } catch (error) {
+          console.error('Failed to load cart:', error);
+          // Set empty cart on error
+          set({
+            cartItems: [],
+            cartTotal: { subtotal: 0, item_count: 0, total: 0 }
+          });
+        } finally {
+          set({ isCartLoading: false });
+        }
+      },
+
+      refreshCartTotal: async () => {
+        try {
+          const response = await cartApi.getCartTotal();
+          if (response.status === 1) {
+            set({ cartTotal: response.data });
+          }
+        } catch (error) {
+          console.error('Failed to refresh cart total:', error);
+        }
+      }
     }),
+              // Reload cart after successful removal
     {
-      name: 'king-road-store',
+              get().loadCart();
+      partialize: (state) => ({ user: state.user }) // Only persist user, cart is loaded from API
+            }
       partialize: (state) => ({ 
+          }
         cartItems: state.cartItems, 
+        } catch (error) {
         cartCount: state.cartCount,
+          console.error('Failed to remove from cart:', error);
         language: state.language
+          throw error;
       }),
+        }
     }
+      },
   )
 );

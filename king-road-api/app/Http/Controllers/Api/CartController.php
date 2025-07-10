@@ -200,6 +200,74 @@ class CartController extends Controller
     }
 
     /**
+     * Validate cart before checkout
+     */
+    public function validateCart()
+    {
+        try {
+            $sessionCart = session('cart', []);
+            
+            if (empty($sessionCart)) {
+                return handleErrorResponse(0, 'Cart is empty');
+            }
+
+            $validationErrors = [];
+            $validItems = [];
+            $subtotal = 0;
+
+            foreach ($sessionCart as $index => $item) {
+                $product = Product::find($item['product_id']);
+                
+                if (!$product) {
+                    $validationErrors[] = "Product with ID {$item['product_id']} not found";
+                    continue;
+                }
+
+                if (!$product->is_active) {
+                    $validationErrors[] = "Product '{$product->name}' is no longer available";
+                    continue;
+                }
+
+                if ($product->track_inventory && $product->inventory < $item['quantity']) {
+                    $validationErrors[] = "Insufficient inventory for '{$product->name}'. Available: {$product->inventory}";
+                    continue;
+                }
+
+                // Check if price has changed
+                if ($product->current_price != $item['price']) {
+                    $validationErrors[] = "Price for '{$product->name}' has changed from {$item['price']} to {$product->current_price}";
+                }
+
+                $validItems[] = [
+                    'id' => $item['id'],
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'quantity' => $item['quantity'],
+                    'price' => $product->current_price,
+                    'total' => $item['quantity'] * $product->current_price,
+                    'image' => $product->featured_image,
+                ];
+
+                $subtotal += $item['quantity'] * $product->current_price;
+            }
+
+            return handleSuccessReponse(
+                1,
+                'Cart validation completed',
+                [
+                    'valid' => empty($validationErrors),
+                    'errors' => $validationErrors,
+                    'items' => $validItems,
+                    'subtotal' => $subtotal,
+                    'item_count' => count($validItems),
+                ]
+            );
+        } catch (\Exception $e) {
+            Log::error('Cart validation error', ['error' => $e->getMessage()]);
+            return handleErrorResponse(0, $e);
+        }
+    }
+    /**
      * Add item to cart for guest user
      */
     private function addToCartSession($request, $product)

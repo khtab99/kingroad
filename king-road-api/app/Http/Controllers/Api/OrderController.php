@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateOrderRequest;
 use App\Http\Resources\OrderResource;
-use App\Models\Address;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -28,113 +27,85 @@ class OrderController extends Controller
     {
         return DB::transaction(function () use ($request) {
             $data = $request->validated();
-            $user = auth()->user();
             
-            // Get cart items
-            $cartItems = $user->cartItems()->with('product')->get();
-            
-            if ($cartItems->isEmpty()) {
-                throw new \Exception('Cart is empty');
-            }
-            
-            // Calculate totals from cart
+            // Calculate totals
             $subtotal = 0;
             $orderItems = [];
 
-            foreach ($cartItems as $cartItem) {
-                $product = $cartItem->product;
+            foreach ($data['items'] as $item) {
+                $product = Product::findOrFail($item['product_id']);
                 
                 // Check inventory
-                if ($product->track_inventory && $product->inventory < $cartItem->quantity) {
-                    throw new \Exception("Insufficient inventory for product: {$product->name}");
-                }
+                // if ($product->track_inventory && $product->inventory < $item['quantity']) {
+                //     throw new \Exception("Insufficient inventory for product: {$product->name}");
+                // }
 
-                $price = $cartItem->price; // Use cart price
-                $total = $price * $cartItem->quantity;
+                $price = $product->current_price;
+                $total = $price * $item['quantity'];
                 $subtotal += $total;
 
                 $orderItems[] = [
                     'product_id' => $product->id,
-                    'product_name' => $product->name_en,
+                    'product_name' => $product->name,
                     'product_sku' => $product->sku,
                     'product_image' => $product->featured_image,
-                    'quantity' => $cartItem->quantity,
+                    'quantity' => $item['quantity'],
                     'price' => $price,
                     'total' => $total,
                 ];
 
                 // Update inventory
                 if ($product->track_inventory) {
-                    $product->decrement('inventory', $cartItem->quantity);
+                    $product->decrement('inventory', $item['quantity']);
+                }
+            }
+
+            // Apply coupon if provided
+            $discount = 0;
+            if (!empty($data['coupon_code'])) {
+                $coupon = \App\Models\Coupon::where('code', $data['coupon_code'])->valid()->first();
+                if ($coupon) {
+                    $discount = $coupon->calculateDiscount($subtotal);
+                    $coupon->incrementUsage();
                 }
             }
 
             $deliveryFee = $data['delivery_fee'] ?? 0;
-            $total = $subtotal + $deliveryFee;
-
-            // Handle address - either use existing address or create from form data
-            $addressData = [];
-            if (isset($data['address_id'])) {
-                $address = Address::where('id', $data['address_id'])
-                    ->where('user_id', $user->id)
-                    ->firstOrFail();
-                
-                $addressData = [
-                    'address_type' => $address->type,
-                    'street' => $address->street,
-                    'house_number' => $address->house_number,
-                    'building_number' => $address->building_number,
-                    'floor' => $address->floor,
-                    'apartment_number' => $address->apartment_number,
-                    'office_number' => $address->office_number,
-                    'additional_description' => $address->additional_description,
-                    'city' => $address->city,
-                    'country' => $address->country,
-                ];
-            } else {
-                $addressData = [
-                    'address_type' => $data['address_type'],
-                    'street' => $data['street'],
-                    'house_number' => $data['house_number'] ?? null,
-                    'building_number' => $data['building_number'] ?? null,
-                    'floor' => $data['floor'] ?? null,
-                    'apartment_number' => $data['apartment_number'] ?? null,
-                    'office_number' => $data['office_number'] ?? null,
-                    'additional_description' => $data['additional_description'] ?? null,
-                    'city' => $data['city'] ?? 'Umm Al Quwain',
-                    'country' => $data['country'] ?? 'United Arab Emirates',
-                ];
-            }
+            $total = $subtotal + $deliveryFee - $discount;
 
             // Create order
-            $order = Order::create(array_merge($addressData, [
-                'user_id' => $user->id,
-                'customer_name' => $user->name,
+            $order = Order::create([
+                'user_id' => auth()->id(),
+                'customer_name' => $data['customer_name'],
                 'customer_phone' => $data['customer_phone'],
-                'customer_email' => $user->email,
+                'customer_email' => $data['customer_email'] ?? auth()->user()->email,
+                'address_type' => $data['address_type'],
+                'street' => $data['street'],
+                'house_number' => $data['house_number'] ?? null,
+                'building_number' => $data['building_number'] ?? null,
+                'floor' => $data['floor'] ?? null,
+                'apartment_number' => $data['apartment_number'] ?? null,
+                'office_number' => $data['office_number'] ?? null,
+                'additional_description' => $data['additional_description'] ?? null,
                 'subtotal' => $subtotal,
                 'delivery_fee' => $deliveryFee,
-                'discount' => 0,
+                'discount' => $discount,
                 'total' => $total,
                 'payment_method' => $data['payment_method'] ?? null,
                 'customer_notes' => $data['customer_notes'] ?? null,
-            ]));
+            ]);
 
             // Create order items
             foreach ($orderItems as $item) {
                 $order->items()->create($item);
             }
 
-            // Clear user's cart after successful order
-            $user->cartItems()->delete();
-
             $order->load(['items.product']);
 
-            return handleSuccessReponse(
-                1,
-                'Order created successfully',
-                new OrderResource($order)
-            );
+            return response()->json([
+                'message' => 'Order created successfully',
+                'order' => new OrderResource($order),
+            ], 201);
         });
     }
 

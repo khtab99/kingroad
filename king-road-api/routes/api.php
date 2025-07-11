@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\GuestOrderController;
@@ -59,12 +60,21 @@ Route::prefix('v1')->group(function () {
             Route::post('/orders/lookup', [GuestOrderController::class, 'show']);
             Route::post('/orders/cancel', [GuestOrderController::class, 'cancel']);
         });
+        
+        // Webhook route (no CSRF protection)
+        Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
 
             Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
         Route::get('/{order}', [OrderController::class, 'show']);
         Route::post('/{order}/cancel', [OrderController::class, 'cancel']);
+    });
+    
+    // Payment routes
+    Route::prefix('payment')->group(function () {
+        Route::post('/create-checkout-session', [PaymentController::class, 'createCheckoutSession']);
+        Route::post('/verify', [PaymentController::class, 'verifyPayment']);
     });
     });
 });

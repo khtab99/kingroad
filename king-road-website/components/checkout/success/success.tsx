@@ -17,6 +17,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { guestApi } from "@/api/guest";
+import { paymentApi } from '@/api/payment';
 import Link from "next/link";
 
 interface Order {
@@ -50,9 +51,11 @@ export default function CheckoutSuccessContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
+  const [paymentVerified, setPaymentVerified] = useState(false);
 
   const orderNumber = searchParams.get("order");
   const customerPhone = searchParams.get("phone");
+  const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
     if (orderNumber && customerPhone) {
@@ -61,7 +64,7 @@ export default function CheckoutSuccessContent() {
       setError("Missing order information");
       setLoading(false);
     }
-  }, [orderNumber, customerPhone]);
+  }, [orderNumber, customerPhone, sessionId]);
 
   const loadOrderDetails = async () => {
     try {
@@ -69,6 +72,19 @@ export default function CheckoutSuccessContent() {
       setError(null);
 
       const response = await guestApi.lookupOrder({
+      // If we have a session ID, verify payment first
+      if (sessionId) {
+        try {
+          const paymentResponse = await paymentApi.verifyPayment({ session_id: sessionId });
+          if (paymentResponse.status === 1) {
+            setPaymentVerified(true);
+          }
+        } catch (error) {
+          console.error("Payment verification failed:", error);
+          // Continue to load order even if payment verification fails
+        }
+      }
+
         order_number: orderNumber!,
         customer_phone: customerPhone!,
       });
@@ -163,11 +179,14 @@ export default function CheckoutSuccessContent() {
         <div className="text-center mb-8">
           <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Order Placed Successfully!
+            {order.payment_status === 'paid' || paymentVerified 
+              ? "Payment Successful!" 
+              : "Order Placed Successfully!"}
           </h1>
           <p className="text-gray-600">
-            Thank you for your order. We'll send you updates about your
-            delivery.
+            {order.payment_status === 'paid' || paymentVerified
+              ? "Thank you for your payment. Your order has been confirmed and will be processed shortly."
+              : "Thank you for your order. We'll send you updates about your delivery."}
           </p>
         </div>
 

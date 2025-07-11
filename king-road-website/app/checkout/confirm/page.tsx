@@ -145,35 +145,6 @@ export default function CheckoutConfirmPage() {
     return details;
   };
 
-  // const handlePayNow = () => {
-  //   if (!selectedPaymentMethod) {
-  //     toast.error(
-  //       language === "ar"
-  //         ? "يرجى اختيار طريقة الدفع"
-  //         : "Please select payment method"
-  //     );
-  //     return;
-  //   }
-
-  //   // Simulate payment processing
-  //   toast.success(
-  //     language === "ar"
-  //       ? "تم تأكيد الطلب بنجاح"
-  //       : "Order confirmed successfully",
-  //     {
-  //       description:
-  //         language === "ar"
-  //           ? "سيتم التواصل معك قريباً"
-  //           : "We will contact you soon",
-  //     }
-  //   );
-
-  //   // Clear cart and redirect
-  //   clearCart();
-  //   localStorage.removeItem("checkoutData");
-  //   router.push("/");
-  // };
-
   const handlePayNow = async () => {
     if (!selectedPaymentMethod) {
       toast.error(

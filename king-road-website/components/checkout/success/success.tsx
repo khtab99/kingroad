@@ -17,7 +17,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { guestApi } from "@/api/guest";
-import { paymentApi } from '@/api/payment';
+import { paymentApi } from "@/api/payment";
 import Link from "next/link";
 
 interface Order {
@@ -71,20 +71,24 @@ export default function CheckoutSuccessContent() {
       setLoading(true);
       setError(null);
 
-      const response = await guestApi.lookupOrder({
-      // If we have a session ID, verify payment first
+      // ✅ Step 1: Optional payment verification
       if (sessionId) {
         try {
-          const paymentResponse = await paymentApi.verifyPayment({ session_id: sessionId });
+          const paymentResponse = await paymentApi.verifyPayment({
+            session_id: sessionId,
+          });
+
           if (paymentResponse.status === 1) {
             setPaymentVerified(true);
           }
         } catch (error) {
           console.error("Payment verification failed:", error);
-          // Continue to load order even if payment verification fails
+          // Continue even if verification fails
         }
       }
 
+      // ✅ Step 2: Lookup order after (or regardless of) payment verification
+      const response = await guestApi.lookupOrder({
         order_number: orderNumber!,
         customer_phone: customerPhone!,
       });
@@ -179,12 +183,12 @@ export default function CheckoutSuccessContent() {
         <div className="text-center mb-8">
           <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {order.payment_status === 'paid' || paymentVerified 
-              ? "Payment Successful!" 
+            {order.payment_status === "paid" || paymentVerified
+              ? "Payment Successful!"
               : "Order Placed Successfully!"}
           </h1>
           <p className="text-gray-600">
-            {order.payment_status === 'paid' || paymentVerified
+            {order.payment_status === "paid" || paymentVerified
               ? "Thank you for your payment. Your order has been confirmed and will be processed shortly."
               : "Thank you for your order. We'll send you updates about your delivery."}
           </p>

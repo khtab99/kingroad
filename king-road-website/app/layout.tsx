@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.ico" />
-      <body className={inter.className + " " + cairo.className}>
+      <body className={cairo.className}>
         {children}
         <Toaster position="top-center" richColors closeButton duration={3000} />
       </body>

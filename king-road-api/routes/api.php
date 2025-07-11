@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\GuestOrderController;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Session\Middleware\StartSession;
 
@@ -54,10 +55,17 @@ Route::prefix('v1')->group(function () {
 
         // Guest checkout routes
         Route::prefix('guest')->group(function () {
-            Route::post('/orders', [\App\Http\Controllers\Api\GuestOrderController::class, 'store']);
-            Route::post('/orders/lookup', [\App\Http\Controllers\Api\GuestOrderController::class, 'show']);
-            Route::post('/orders/cancel', [\App\Http\Controllers\Api\GuestOrderController::class, 'cancel']);
+            Route::post('/orders', [GuestOrderController::class, 'store']);
+            Route::post('/orders/lookup', [GuestOrderController::class, 'show']);
+            Route::post('/orders/cancel', [GuestOrderController::class, 'cancel']);
         });
+
+            Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'index']);
+        Route::post('/', [OrderController::class, 'store']);
+        Route::get('/{order}', [OrderController::class, 'show']);
+        Route::post('/{order}/cancel', [OrderController::class, 'cancel']);
+    });
     });
 });
 
@@ -89,10 +97,5 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
     });
 
     // Orders
-    Route::prefix('orders')->group(function () {
-        Route::get('/', [OrderController::class, 'index']);
-        Route::post('/', [OrderController::class, 'store']);
-        Route::get('/{order}', [OrderController::class, 'show']);
-        Route::post('/{order}/cancel', [OrderController::class, 'cancel']);
-    });
+
 });

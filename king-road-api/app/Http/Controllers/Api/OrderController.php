@@ -23,91 +23,91 @@ class OrderController extends Controller
         return OrderResource::collection($orders);
     }
 
-    public function store(CreateOrderRequest $request)
-    {
-        return DB::transaction(function () use ($request) {
-            $data = $request->validated();
-            
-            // Calculate totals
-            $subtotal = 0;
-            $orderItems = [];
+  public function store(CreateOrderRequest $request)
+{
+    return DB::transaction(function () use ($request) {
+        $data = $request->validated();
 
-            foreach ($data['items'] as $item) {
-                $product = Product::findOrFail($item['product_id']);
-                
-                // Check inventory
-                // if ($product->track_inventory && $product->inventory < $item['quantity']) {
-                //     throw new \Exception("Insufficient inventory for product: {$product->name}");
-                // }
+        $subtotal = 0;
+        $orderItems = [];
 
-                $price = $product->current_price;
-                $total = $price * $item['quantity'];
-                $subtotal += $total;
+        foreach ($data['items'] as $item) {
+            $product = Product::findOrFail($item['product_id']);
 
-                $orderItems[] = [
-                    'product_id' => $product->id,
-                    'product_name' => $product->name,
-                    'product_sku' => $product->sku,
-                    'product_image' => $product->featured_image,
-                    'quantity' => $item['quantity'],
-                    'price' => $price,
-                    'total' => $total,
-                ];
+            // Optional inventory check (disabled)
+            // if ($product->track_inventory && $product->inventory < $item['quantity']) {
+            //     throw new \Exception("Insufficient inventory for product: {$product->name}");
+            // }
 
-                // Update inventory
-                if ($product->track_inventory) {
-                    $product->decrement('inventory', $item['quantity']);
-                }
-            }
+            $price = $product->current_price;
+            $total = $price * $item['quantity'];
+            $subtotal += $total;
 
-            // Apply coupon if provided
-            $discount = 0;
-            if (!empty($data['coupon_code'])) {
-                $coupon = \App\Models\Coupon::where('code', $data['coupon_code'])->valid()->first();
-                if ($coupon) {
-                    $discount = $coupon->calculateDiscount($subtotal);
-                    $coupon->incrementUsage();
-                }
-            }
-
-            $deliveryFee = $data['delivery_fee'] ?? 0;
-            $total = $subtotal + $deliveryFee - $discount;
-
-            // Create order
-            $order = Order::create([
-                'user_id' => auth()->id(),
-                'customer_name' => $data['customer_name'],
-                'customer_phone' => $data['customer_phone'],
-                'customer_email' => $data['customer_email'] ?? auth()->user()->email,
-                'address_type' => $data['address_type'],
-                'street' => $data['street'],
-                'house_number' => $data['house_number'] ?? null,
-                'building_number' => $data['building_number'] ?? null,
-                'floor' => $data['floor'] ?? null,
-                'apartment_number' => $data['apartment_number'] ?? null,
-                'office_number' => $data['office_number'] ?? null,
-                'additional_description' => $data['additional_description'] ?? null,
-                'subtotal' => $subtotal,
-                'delivery_fee' => $deliveryFee,
-                'discount' => $discount,
+            $orderItems[] = [
+                'product_id' => $product->id,
+                'product_name' => $product->name,
+                'product_sku' => $product->sku,
+                'product_image' => $product->featured_image,
+                'quantity' => $item['quantity'],
+                'price' => $price,
                 'total' => $total,
-                'payment_method' => $data['payment_method'] ?? null,
-                'customer_notes' => $data['customer_notes'] ?? null,
-            ]);
+            ];
 
-            // Create order items
-            foreach ($orderItems as $item) {
-                $order->items()->create($item);
+            if ($product->track_inventory) {
+                $product->decrement('inventory', $item['quantity']);
             }
+        }
 
-            $order->load(['items.product']);
+        // Handle coupon
+        $discount = 0;
+        if (!empty($data['coupon_code'])) {
+            $coupon = \App\Models\Coupon::where('code', $data['coupon_code'])->valid()->first();
+            if ($coupon) {
+                $discount = $coupon->calculateDiscount($subtotal);
+                $coupon->incrementUsage();
+            }
+        }
 
-            return response()->json([
-                'message' => 'Order created successfully',
-                'order' => new OrderResource($order),
-            ], 201);
-        });
-    }
+        $deliveryFee = $data['delivery_fee'] ?? 0;
+        $total = $subtotal + $deliveryFee - $discount;
+
+        $order = Order::create([
+         'user_id' => auth()->check() ? auth()->id() : null,
+
+
+            'customer_name' => $data['customer_name'],
+            'customer_phone' => $data['customer_phone'],
+'customer_email' => $data['customer_email'] ?? (auth()->check() ? auth()->user()->email : null),
+            'address_type' => $data['address_type'],
+            'street' => $data['street'],
+            'house_number' => $data['house_number'] ?? null,
+            'building_number' => $data['building_number'] ?? null,
+            'floor' => $data['floor'] ?? null,
+            'apartment_number' => $data['apartment_number'] ?? null,
+            'office_number' => $data['office_number'] ?? null,
+            'additional_description' => $data['additional_description'] ?? null,
+            'subtotal' => $subtotal,
+            'delivery_fee' => $deliveryFee,
+            'discount' => $discount,
+            'total' => $total,
+            'payment_method' => $data['payment_method'] ?? null,
+            'customer_notes' => $data['customer_notes'] ?? null,
+        ]);
+
+        // Attach items
+        foreach ($orderItems as $item) {
+            $order->items()->create($item);
+        }
+
+        $order->load(['items.product']);
+
+        return response()->json([
+            'message' => 'Order created successfully',
+            'order' => new OrderResource($order),
+        ], 201);
+    });
+}
+
 
     public function show(Order $order)
     {

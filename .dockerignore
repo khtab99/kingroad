@@ -21,3 +21,5 @@ coverage
 README.md
 Dockerfile
 docker-compose.yml
+king-road-website/node_modules
+king-road-admin/node_modules

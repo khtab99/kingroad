@@ -78,10 +78,15 @@ services:
       context: ./king-road-website
       dockerfile: Dockerfile
     container_name: king-road-website
+    volumes:
+      - ./king-road-website:/app
+      - /app/node_modules # prevents overwriting node_modules
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev
 
   king-road-admin:
     build:

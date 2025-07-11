@@ -86,77 +86,91 @@ export default function CartPage() {
             </div>
           )}
 
-          {cartItems.map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0"
-            >
-              {/* Product Image */}
-              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image
-                    src={
-                      item.image ||
-                      "https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg"
-                    }
-                    alt={item.name}
-                    width={64}
-                    height={64}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex flex-col items-start">
-                  <h4 className="text-gray-800 font-medium text-sm leading-relaxed mb-2">
-                    x{item.quantity} {item.name}
-                  </h4>
+          {cartItems.map((item: any) => {
+            console.log("item", item);
 
-                  {/* Quantity Controls */}
-                  <div className="flex items-center justify-end gap-3 mb-2">
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
-                    >
-                      <Plus className="h-4 w-4 text-gray-600" />
-                    </button>
-
-                    <span className="text-gray-800 font-medium min-w-[20px] text-center">
-                      {item.quantity}
-                    </span>
-
-                    <button
-                      onClick={() =>
-                        updateQuantity(item.id, Math.max(0, item.quantity - 1))
+            const cleanImageUrl = item?.featured_image?.includes(
+              "assets/images/product/"
+            )
+              ? item.featured_image.replace("http://localhost:8000", "")
+              : item?.featured_image || "/assets/images/product/1.jpg";
+            return (
+              <div
+                key={item.id}
+                className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0"
+              >
+                {/* Product Image */}
+                <div className="flex items-center gap-5">
+                  <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <Image
+                      src={
+                        cleanImageUrl ||
+                        "https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg"
                       }
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                      alt={item.name}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <h4 className="text-gray-800 font-medium text-sm leading-relaxed mb-2">
+                      x{item.quantity} {item.name}
+                    </h4>
+
+                    {/* Quantity Controls */}
+                    <div className="flex items-center justify-end gap-3 mb-2">
+                      <button
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
+                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                      >
+                        <Plus className="h-4 w-4 text-gray-600" />
+                      </button>
+
+                      <span className="text-gray-800 font-medium min-w-[20px] text-center">
+                        {item.quantity}
+                      </span>
+
+                      <button
+                        onClick={() =>
+                          updateQuantity(
+                            item.id,
+                            Math.max(0, item.quantity - 1)
+                          )
+                        }
+                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                      >
+                        <Minus className="h-4 w-4 text-gray-600" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center flex-col gap-4">
+                  {/* Price */}
+                  <div className="text-left ml-4">
+                    <span className="text-gray-800 font-medium">
+                      {(item.price * item.quantity).toFixed(2)}{" "}
+                      {language === "ar" ? "د.إ" : "AED"}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-end gap-4">
+                    <button className="text-gray-400 hover:text-gray-600">
+                      <Edit3 className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-gray-400 hover:text-red-500"
                     >
-                      <Minus className="h-4 w-4 text-gray-600" />
+                      <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
               </div>
-
-              <div className="flex items-center flex-col gap-4">
-                {/* Price */}
-                <div className="text-left ml-4">
-                  <span className="text-gray-800 font-medium">
-                    {(item.price * item.quantity).toFixed(2)}{" "}
-                    {language === "ar" ? "د.إ" : "AED"}
-                  </span>
-                </div>
-                <div className="flex items-center justify-end gap-4">
-                  <button className="text-gray-400 hover:text-gray-600">
-                    <Edit3 className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-gray-400 hover:text-red-500"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Discount Code */}

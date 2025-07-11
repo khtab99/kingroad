@@ -20,6 +20,7 @@ import {
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
+import { createNewOrder } from "@/api/order";
 
 interface CheckoutData {
   addressType: string;
@@ -144,7 +145,36 @@ export default function CheckoutConfirmPage() {
     return details;
   };
 
-  const handlePayNow = () => {
+  // const handlePayNow = () => {
+  //   if (!selectedPaymentMethod) {
+  //     toast.error(
+  //       language === "ar"
+  //         ? "يرجى اختيار طريقة الدفع"
+  //         : "Please select payment method"
+  //     );
+  //     return;
+  //   }
+
+  //   // Simulate payment processing
+  //   toast.success(
+  //     language === "ar"
+  //       ? "تم تأكيد الطلب بنجاح"
+  //       : "Order confirmed successfully",
+  //     {
+  //       description:
+  //         language === "ar"
+  //           ? "سيتم التواصل معك قريباً"
+  //           : "We will contact you soon",
+  //     }
+  //   );
+
+  //   // Clear cart and redirect
+  //   clearCart();
+  //   localStorage.removeItem("checkoutData");
+  //   router.push("/");
+  // };
+
+  const handlePayNow = async () => {
     if (!selectedPaymentMethod) {
       toast.error(
         language === "ar"
@@ -154,23 +184,54 @@ export default function CheckoutConfirmPage() {
       return;
     }
 
-    // Simulate payment processing
-    toast.success(
-      language === "ar"
-        ? "تم تأكيد الطلب بنجاح"
-        : "Order confirmed successfully",
-      {
-        description:
-          language === "ar"
-            ? "سيتم التواصل معك قريباً"
-            : "We will contact you soon",
-      }
-    );
+    if (!checkoutData) return;
 
-    // Clear cart and redirect
-    clearCart();
-    localStorage.removeItem("checkoutData");
-    router.push("/");
+    const orderBody = {
+      customer_phone: `+971${checkoutData.phone}`,
+      customer_name: checkoutData.name,
+      customer_email: checkoutData.email || "",
+      address_type: checkoutData.addressType,
+      street: checkoutData.street,
+      house_number: checkoutData.houseNumber || "",
+      building_number: checkoutData.buildingNumber || "",
+      floor: checkoutData.floor || "",
+      apartment_number: checkoutData.apartmentNumber || "",
+      office_number: checkoutData.officeNumber || null,
+      additional_description: checkoutData.additionalDescription || "",
+      delivery_fee: checkoutData.deliveryFee,
+      payment_method: selectedPaymentMethod, // maps to 'cash', 'apple-pay', etc.
+      customer_notes: "", // you can enhance this later to accept user input
+      // coupon_code: "", // optional
+      items: checkoutData.cartItems.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+      })),
+    };
+
+    try {
+      await createNewOrder(orderBody);
+
+      toast.success(
+        language === "ar"
+          ? "تم تأكيد الطلب بنجاح"
+          : "Order confirmed successfully",
+        {
+          description:
+            language === "ar"
+              ? "سيتم التواصل معك قريباً"
+              : "We will contact you soon",
+        }
+      );
+
+      clearCart();
+      localStorage.removeItem("checkoutData");
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        language === "ar" ? "فشل في تأكيد الطلب" : "Failed to confirm order"
+      );
+    }
   };
 
   if (!checkoutData) {

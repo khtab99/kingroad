@@ -160,36 +160,32 @@ export default function CheckoutConfirmPage() {
 
     try {
       // First create the order
-      const orderResponse = await fetch("/api/v1/guest/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer_phone: `+971${checkoutData.phone}`,
-          customer_name: checkoutData.name,
-          customer_email: checkoutData.email || "",
-          address_type: checkoutData.addressType,
-          street: checkoutData.street,
-          house_number: checkoutData.houseNumber || "",
-          building_number: checkoutData.buildingNumber || "",
-          floor: checkoutData.floor || "",
-          apartment_number: checkoutData.apartmentNumber || "",
-          office_number: checkoutData.officeNumber || null,
-          additional_description: checkoutData.additionalDescription || "",
-          delivery_fee: checkoutData.deliveryFee,
-          payment_method: selectedPaymentMethod,
-          customer_notes: "",
-        }),
-      });
+      const orderBody = {
+        customer_phone: `+971${checkoutData.phone}`,
+        customer_name: checkoutData.name,
+        customer_email: checkoutData.email || "",
+        address_type: checkoutData.addressType,
+        street: checkoutData.street,
+        house_number: checkoutData.houseNumber || "",
+        building_number: checkoutData.buildingNumber || "",
+        floor: checkoutData.floor || "",
+        apartment_number: checkoutData.apartmentNumber || "",
+        office_number: checkoutData.officeNumber || null,
+        additional_description: checkoutData.additionalDescription || "",
+        delivery_fee: checkoutData.deliveryFee,
+        payment_method: selectedPaymentMethod, // maps to 'cash', 'apple-pay', etc.
+        customer_notes: "", // you can enhance this later to accept user input
+        // coupon_code: "", // optional
+        items: checkoutData.cartItems.map((item) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+        })),
+      };
 
-      if (!orderResponse.ok) {
-        throw new Error("Failed to create order");
-      }
+      const orderResponse = await createNewOrder(orderBody);
 
-      const orderData = await orderResponse.json();
-      const orderId = orderData.data.order.id;
-      
+      const orderId = orderResponse?.order?.id;
+
       // For cash on delivery, redirect to success page
       if (selectedPaymentMethod === "cash_on_delivery") {
         toast.success(
@@ -203,33 +199,41 @@ export default function CheckoutConfirmPage() {
                 : "We will contact you soon",
           }
         );
-        
+
         clearCart();
         localStorage.removeItem("checkoutData");
-        router.push(`/checkout/success?order=${orderData.data.order.order_number}&phone=${encodeURIComponent(orderData.data.order.customer_phone)}`);
+        router.push(
+          `/checkout/success?order=${
+            orderResponse.order.order_number
+          }&phone=${encodeURIComponent(orderResponse.order.customer_phone)}`
+        );
         return;
       }
-      
+
       // For card payments, create Stripe checkout session
-      if (selectedPaymentMethod === "cards" || selectedPaymentMethod === "apple-pay") {
+      if (
+        selectedPaymentMethod === "cards" ||
+        selectedPaymentMethod === "apple-pay"
+      ) {
         const baseUrl = window.location.origin;
         const successUrl = `${baseUrl}/checkout/success`;
         const cancelUrl = `${baseUrl}/checkout/confirm`;
-        
+
         const stripeResponse = await paymentApi.createCheckoutSession({
           order_id: orderId,
           success_url: successUrl,
           cancel_url: cancelUrl,
         });
-        
+
         if (stripeResponse.status === 1 && stripeResponse.data.checkout_url) {
           // Redirect to Stripe checkout
           window.location.href = stripeResponse.data.checkout_url;
         } else {
-          throw new Error(stripeResponse.message || "Failed to create payment session");
+          throw new Error(
+            stripeResponse.message || "Failed to create payment session"
+          );
         }
       }
-
     } catch (error) {
       console.error(error);
       toast.error(

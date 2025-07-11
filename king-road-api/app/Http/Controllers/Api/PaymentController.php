@@ -32,7 +32,7 @@ class PaymentController extends Controller
             }
 
             // Set Stripe API key
-            Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            Stripe::setApiKey(env('STRIPE_SECRET'));
 
             // Prepare line items for Stripe
             $lineItems = [];
@@ -116,7 +116,7 @@ class PaymentController extends Controller
 
         try {
             // Set Stripe API key
-            Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            Stripe::setApiKey(env('STRIPE_SECRET'));
 
             // Verify webhook signature
             $event = \Stripe\Webhook::constructEvent(
@@ -224,7 +224,7 @@ class PaymentController extends Controller
             ]);
 
             // Set Stripe API key
-            Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            Stripe::setApiKey(env('STRIPE_SECRET'));
 
             // Retrieve the session
             $session = StripeSession::retrieve($request->session_id);

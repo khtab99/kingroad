@@ -23,6 +23,8 @@ import Image from "next/image";
 
 interface CheckoutData {
   addressType: string;
+  country: any;
+  city: any;
   street: string;
   houseNumber: string;
   buildingNumber: string;
@@ -46,6 +48,8 @@ export default function CheckoutConfirmPage() {
 
   const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+
+  console.log("checkoutData", checkoutData);
 
   useEffect(() => {
     const data = localStorage.getItem("checkoutData");
@@ -290,9 +294,7 @@ export default function CheckoutConfirmPage() {
           <div className="space-y-3 text-right">
             <div className="flex items-center justify-end gap-2">
               <span className="text-gray-700">
-                {language === "ar"
-                  ? "مجيم الدفاع - الإمارات العربية المتحدة"
-                  : "Mujeim Al Difa - UAE"}
+                {checkoutData.country}, {checkoutData.city}
               </span>
               <AddressIcon className="h-4 w-4 text-gray-600" />
             </div>

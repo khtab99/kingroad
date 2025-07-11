@@ -1,11 +1,30 @@
 import { Input } from "@/components/ui/input";
 import { User, Mail } from "lucide-react";
 import Link from "next/link";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const uaeCities = [
+  "Dubai",
+  "Abu Dhabi",
+  "Sharjah",
+  "Ajman",
+  "Ras Al Khaimah",
+  "Fujairah",
+  "Umm Al Quwain",
+];
 
 interface AddressFormProps {
   language: string;
   selectedAddressType: string;
   formData: {
+    country: any;
+    city: any;
     street: string;
     houseNumber: string;
     buildingNumber: string;
@@ -93,7 +112,9 @@ export default function AddressForm({
                 </label>
                 <Input
                   value={formData.buildingNumber}
-                  onChange={(e) => onInputChange("buildingNumber", e.target.value)}
+                  onChange={(e) =>
+                    onInputChange("buildingNumber", e.target.value)
+                  }
                   disabled={disabled}
                   className={`text-right ${
                     disabled ? "bg-gray-100 text-gray-400" : ""
@@ -125,7 +146,9 @@ export default function AddressForm({
                 </label>
                 <Input
                   value={formData.apartmentNumber}
-                  onChange={(e) => onInputChange("apartmentNumber", e.target.value)}
+                  onChange={(e) =>
+                    onInputChange("apartmentNumber", e.target.value)
+                  }
                   disabled={disabled}
                   className={`text-right ${
                     disabled ? "bg-gray-100 text-gray-400" : ""
@@ -162,7 +185,9 @@ export default function AddressForm({
                 </label>
                 <Input
                   value={formData.buildingNumber}
-                  onChange={(e) => onInputChange("buildingNumber", e.target.value)}
+                  onChange={(e) =>
+                    onInputChange("buildingNumber", e.target.value)
+                  }
                   disabled={disabled}
                   className={`text-right ${
                     disabled ? "bg-gray-100 text-gray-400" : ""
@@ -190,11 +215,15 @@ export default function AddressForm({
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
-                  {language === "ar" ? "رقم المكتب / الاسم" : "Office No. / Name"}
+                  {language === "ar"
+                    ? "رقم المكتب / الاسم"
+                    : "Office No. / Name"}
                 </label>
                 <Input
                   value={formData.officeNumber}
-                  onChange={(e) => onInputChange("officeNumber", e.target.value)}
+                  onChange={(e) =>
+                    onInputChange("officeNumber", e.target.value)
+                  }
                   disabled={disabled}
                   className={`text-right ${
                     disabled ? "bg-gray-100 text-gray-400" : ""
@@ -211,11 +240,94 @@ export default function AddressForm({
     }
   };
 
+  const renderCountryCityFields = () => {
+    return (
+      <>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+            {language === "ar" ? "الدولة" : "Country"}
+          </label>
+          <Select
+            value={formData.country}
+            onValueChange={(value) => onInputChange("country", value)}
+            disabled={disabled}
+          >
+            <SelectTrigger
+              className={`text-right ${
+                disabled ? "bg-gray-100 text-gray-400" : ""
+              }`}
+              dir="rtl"
+            >
+              <SelectValue
+                placeholder={
+                  language === "ar" ? "اختر الدولة" : "Select a country"
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="UAE">
+                {language === "ar" ? "الإمارات" : "United Arab Emirates"}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+            {language === "ar" ? "المدينة" : "City"}
+          </label>
+          <Select
+            value={formData.city}
+            onValueChange={(value) => onInputChange("city", value)}
+            disabled={disabled}
+          >
+            <SelectTrigger
+              className={`text-right ${
+                disabled ? "bg-gray-100 text-gray-400" : ""
+              }`}
+              dir="rtl"
+            >
+              <SelectValue
+                placeholder={
+                  language === "ar" ? "اختر المدينة" : "Select a city"
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {uaeCities.map((city) => (
+                <SelectItem key={city} value={city}>
+                  {language === "ar"
+                    ? // simple example of manual translation for common cities
+                      city === "Dubai"
+                      ? "دبي"
+                      : city === "Abu Dhabi"
+                      ? "أبو ظبي"
+                      : city === "Sharjah"
+                      ? "الشارقة"
+                      : city === "Ajman"
+                      ? "عجمان"
+                      : city === "Ras Al Khaimah"
+                      ? "رأس الخيمة"
+                      : city === "Fujairah"
+                      ? "الفجيرة"
+                      : city === "Umm Al Quwain"
+                      ? "أم القيوين"
+                      : city
+                    : city}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className="space-y-4 mb-6">
+      {renderCountryCityFields()}
       {/* Dynamic Address Fields */}
       {renderAddressFields()}
-
       {/* Special Directions - Common for all types */}
       {selectedAddressType && (
         <div>
@@ -230,9 +342,7 @@ export default function AddressForm({
               onInputChange("additionalDescription", e.target.value)
             }
             placeholder={
-              language === "ar"
-                ? "أدخل التوجيهات"
-                : "Enter Directions"
+              language === "ar" ? "أدخل التوجيهات" : "Enter Directions"
             }
             disabled={disabled}
             className={`text-right ${
@@ -242,7 +352,6 @@ export default function AddressForm({
           />
         </div>
       )}
-
       {/* Name and Phone */}
       <div className="grid grid-cols-2 gap-4">
         <div>
@@ -286,7 +395,6 @@ export default function AddressForm({
           </div>
         </div>
       </div>
-
       {/* Email */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
@@ -311,12 +419,14 @@ export default function AddressForm({
           <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
       </div>
-
       {/* Create Account Checkbox */}
       <div className="flex items-center justify-end gap-3">
         <label className="text-sm text-gray-700">
           {language === "ar" ? "هل لديك حساب؟" : "Do you have an account?"}{" "}
-          <Link href="/login" className="text-blue-600 underline cursor-pointer">
+          <Link
+            href="/login"
+            className="text-blue-600 underline cursor-pointer"
+          >
             {language === "ar" ? "تسجيل الدخول" : "Login"}
           </Link>
         </label>

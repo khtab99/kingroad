@@ -18,6 +18,8 @@ export default function CheckoutPage() {
 
   const [selectedAddressType, setSelectedAddressType] = useState("");
   const [formData, setFormData] = useState({
+    country: "",
+    city: "",
     street: "",
     houseNumber: "",
     buildingNumber: "",
@@ -53,9 +55,13 @@ export default function CheckoutPage() {
 
   const isFormValid = () => {
     if (!selectedAddressType) return false;
-    
+
     // Common required fields
-    if (!formData.street.trim() || !formData.name.trim() || !formData.phone.trim()) {
+    if (
+      !formData.street.trim() ||
+      !formData.name.trim() ||
+      !formData.phone.trim()
+    ) {
       return false;
     }
 
@@ -63,21 +69,21 @@ export default function CheckoutPage() {
     switch (selectedAddressType) {
       case "house":
         return formData.houseNumber.trim() !== "";
-      
+
       case "apartment":
         return (
           formData.buildingNumber.trim() !== "" &&
           formData.floor.trim() !== "" &&
           formData.apartmentNumber.trim() !== ""
         );
-      
+
       case "office":
         return (
           formData.buildingNumber.trim() !== "" &&
           formData.floor.trim() !== "" &&
           formData.officeNumber.trim() !== ""
         );
-      
+
       default:
         return false;
     }

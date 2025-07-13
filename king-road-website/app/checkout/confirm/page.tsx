@@ -51,8 +51,6 @@ export default function CheckoutConfirmPage() {
   const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
-  console.log("checkoutData", checkoutData);
-
   useEffect(() => {
     const data = localStorage.getItem("checkoutData");
     if (!data) {

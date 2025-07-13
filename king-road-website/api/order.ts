@@ -92,6 +92,11 @@ export function createNewOrder(body: any) {
   const response = kingRoadCreatorForm([URL, body]);
   return response;
 }
+export function lookupOrder(body: any) {
+  const URL = endpoints.order.lookup;
+  const response = kingRoadCreatorForm([URL, body]);
+  return response;
+}
 
 export function updateOrderStatus(id: any, body: any) {
   const URL = endpoints.order.update + id;

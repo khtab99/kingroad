@@ -19,6 +19,7 @@ import {
 import { guestApi } from "@/api/guest";
 import { paymentApi } from "@/api/payment";
 import Link from "next/link";
+import { lookupOrder } from "@/api/order";
 
 interface Order {
   id: number;
@@ -88,7 +89,7 @@ export default function CheckoutSuccessContent() {
       }
 
       // ✅ Step 2: Lookup order after (or regardless of) payment verification
-      const response = await guestApi.lookupOrder({
+      const response = await lookupOrder({
         order_number: orderNumber!,
         customer_phone: customerPhone!,
       });
@@ -308,40 +309,47 @@ export default function CheckoutSuccessContent() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {order.items.map((item) => (
-                    <div key={item.id} className="flex items-center space-x-4">
-                      <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-                        {item.product_image ? (
-                          <img
-                            src={item.product_image}
-                            alt={item.product_name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Package className="h-6 w-6 text-gray-400" />
-                          </div>
-                        )}
+                  {order.items.map((item: any) => {
+                    const cleanImageUrl = item?.featured_image?.includes(
+                      "assets/images/product/"
+                    )
+                      ? item.featured_image.replace("http://localhost:8000", "")
+                      : item?.featured_image || "/assets/images/product/1.jpg";
+                    return (
+                      <div
+                        key={item.id}
+                        className="flex items-center space-x-4"
+                      >
+                        <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
+                          {cleanImageUrl ? (
+                            <img
+                              src={cleanImageUrl}
+                              alt={item.product_name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <Package className="h-6 w-6 text-gray-400" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-gray-900">
+                            {item.product_name}
+                          </h4>
+                          <p className="text-sm text-gray-500">
+                            SKU: {item.product_sku}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Quantity: {item.quantity} × AED {item.price}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-medium">AED {item.total}</p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">
-                          {item.product_name}
-                        </h4>
-                        <p className="text-sm text-gray-500">
-                          SKU: {item.product_sku}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          Quantity: {item.quantity} × AED{" "}
-                          {item.price.toFixed(2)}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium">
-                          AED {item.total.toFixed(2)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
@@ -357,7 +365,7 @@ export default function CheckoutSuccessContent() {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>AED {order.subtotal.toFixed(2)}</span>
+                    <span>AED {order.subtotal}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Delivery Fee</span>
@@ -368,13 +376,13 @@ export default function CheckoutSuccessContent() {
                     >
                       {order.delivery_fee === 0
                         ? "FREE"
-                        : `AED ${order.delivery_fee.toFixed(2)}`}
+                        : `AED ${order.delivery_fee}`}
                     </span>
                   </div>
                   <Separator />
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Total</span>
-                    <span>AED {order.total.toFixed(2)}</span>
+                    <span>AED {order.total}</span>
                   </div>
                 </div>
 

@@ -33,10 +33,7 @@ export const guestApi = {
 
   // Lookup guest order
   lookupOrder: async (lookupData: OrderLookupData) => {
-    const response = await axiosInstance.post(
-      "/guest/orders/lookup",
-      lookupData
-    );
+    const response = await axiosInstance.post("/orders/lookup", lookupData);
     return response.data;
   },
 

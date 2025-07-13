@@ -18,8 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <link rel="icon" href="/favicon.ico" />
+    <html>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={cairo.className}>
         {children}
         <Toaster position="top-center" richColors closeButton duration={3000} />

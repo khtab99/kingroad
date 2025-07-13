@@ -151,6 +151,7 @@ export const endpoints = {
     cancel: "/api/v1/orders/", // + {id}/cancel
     update: "/api/v1/orders/",
     delete: "/api/v1/orders/",
+    lookup: "/api/v1/orders/lookup",
   },
   auth: {
     login: "/api/v1/auth/login",

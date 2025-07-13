@@ -28,6 +28,28 @@ export function usePaymentHandler(language: string) {
     setIsProcessing(true);
 
     try {
+      // Validate cart before proceeding
+      const cartValidation = await fetch("/api/v1/cart/validate");
+      const validationData = await cartValidation.json();
+      
+      if (!validationData.data.valid) {
+        toast.error(
+          language === "ar"
+            ? "هناك مشكلة في سلة التسوق الخاصة بك"
+            : "There's an issue with your cart"
+        );
+        
+        // Show specific errors
+        if (validationData.data.errors && validationData.data.errors.length > 0) {
+          validationData.data.errors.forEach((error: string) => {
+            toast.error(error);
+          });
+        }
+        
+        setIsProcessing(false);
+        return;
+      }
+
       const orderBody = {
         customer_phone: `+971${checkoutData.phone}`,
         customer_name: checkoutData.name,
@@ -95,6 +117,8 @@ export function usePaymentHandler(language: string) {
           // Store the order ID in session storage for verification on return
           sessionStorage.setItem("pendingOrderId", orderId);
           sessionStorage.setItem("pendingPaymentTime", Date.now().toString());
+          // Store checkout data in session storage to preserve it if user navigates back
+          sessionStorage.setItem("checkoutData", JSON.stringify(checkoutData));
           window.location.href = stripeResponse.data.checkout_url;
         } else {
           throw new Error(

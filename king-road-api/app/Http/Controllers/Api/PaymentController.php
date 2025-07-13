@@ -169,7 +169,7 @@ class PaymentController extends Controller
             }
 
             // Begin transaction to ensure all operations are atomic
-            DB::beginTransaction();
+            \Illuminate\Support\Facades\DB::beginTransaction();
             
             try {
                 // Update order payment status
@@ -179,12 +179,18 @@ class PaymentController extends Controller
                     'payment_reference' => $session->id,
                 ]);
                 
-                // Now that payment is confirmed, we can safely reduce inventory
-                foreach ($order->items as $item) {
-                    $product = Product::find($item->product_id);
-                    if ($product && $product->track_inventory) {
-                        $product->decrement('inventory', $item->quantity);
+                // Only reduce inventory if it hasn't been reduced yet
+                if (!$order->inventory_reduced) {
+                    // Now that payment is confirmed, we can safely reduce inventory
+                    foreach ($order->items as $item) {
+                        $product = \App\Models\Product::find($item->product_id);
+                        if ($product && $product->track_inventory) {
+                            $product->decrement('inventory', $item->quantity);
+                        }
                     }
+                    
+                    // Mark inventory as reduced
+                    $order->update(['inventory_reduced' => true]);
                 }
                 
                 // If there's a coupon code used, mark it as used now
@@ -195,9 +201,9 @@ class PaymentController extends Controller
                     }
                 }
                 
-                DB::commit();
+                \Illuminate\Support\Facades\DB::commit();
             } catch (\Exception $e) {
-                DB::rollBack();
+                \Illuminate\Support\Facades\DB::rollBack();
                 Log::error('Failed to process successful payment: ' . $e->getMessage(), [
                     'order_id' => $order->id,
                     'session_id' => $session->id,

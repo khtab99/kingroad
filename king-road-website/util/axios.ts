@@ -125,6 +125,17 @@ export const endpoints = {
     products: "/api/v1/categories/", // For category products: /api/v1/categories/{id}/products
   },
 
+  cart: {
+    list: "/api/v1/cart",
+    add: "/api/v1/cart/add",
+    update: "/api/v1/cart/update/",
+    remove: "/api/v1/cart/remove/",
+    count: "/api/v1/cart/count",
+    total: "/api/v1/cart/total",
+    clear: "/api/v1/cart/clear",
+    validate: "/api/v1/cart/validate",
+  },
+
   order: {
     list: "/api/v1/orders",
     details: "/api/v1/orders/",

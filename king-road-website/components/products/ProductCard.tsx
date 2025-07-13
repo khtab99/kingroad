@@ -25,14 +25,36 @@ export function ProductCard({
   const { language, addToCart } = useStore();
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
+  // Track current cart quantity for this product
+  const { cartItems } = useStore();
+  const currentCartQuantity = useMemo(() => {
+    const cartItem = cartItems.find(item => item.id === product.id);
+    return cartItem ? cartItem.quantity : 0;
+  }, [cartItems, product.id]);
+
+  // Calculate remaining inventory after considering cart
+  const availableInventory = useMemo(() => {
+    if (!product.track_inventory) return Infinity;
+    return Math.max(0, product.inventory - currentCartQuantity);
+  }, [product.inventory, product.track_inventory, currentCartQuantity]);
+
+  // Check if product can be added to cart
+  const canAddToCart = useMemo(() => {
+    return product.is_in_stock && availableInventory > 0;
+  }, [product.is_in_stock, availableInventory]);
+
   const productName = language === "ar" ? product.name_ar : product.name_en;
   const isOutOfStock = !product.is_in_stock;
 
   const handleAddToCart = async () => {
-    if (isOutOfStock) {
-      toast.error(
-        language === "ar" ? "المنتج غير متوفر" : "Product out of stock"
-      );
+    if (isOutOfStock || !canAddToCart) {
+      const message = isOutOfStock 
+        ? (language === "ar" ? "المنتج غير متوفر" : "Product out of stock")
+        : (language === "ar" 
+            ? `لا يمكن إضافة المزيد. متبقي ${availableInventory} فقط` 
+            : `Cannot add more. Only ${availableInventory} left`);
+      
+      toast.error(message);
       return;
     }
 
@@ -73,10 +95,14 @@ export function ProductCard({
   };
 
   const handleBuyNow = () => {
-    if (isOutOfStock) {
-      toast.error(
-        language === "ar" ? "المنتج غير متوفر" : "Product out of stock"
-      );
+    if (isOutOfStock || !canAddToCart) {
+      const message = isOutOfStock 
+        ? (language === "ar" ? "المنتج غير متوفر" : "Product out of stock")
+        : (language === "ar" 
+            ? `لا يمكن إضافة المزيد. متبقي ${availableInventory} فقط` 
+            : `Cannot add more. Only ${availableInventory} left`);
+      
+      toast.error(message);
       return;
     }
 
@@ -248,9 +274,9 @@ export function ProductCard({
         {/* Low Stock Warning */}
         {!isOutOfStock && product.is_low_stock && (
           <div className="absolute bottom-2 right-2 bg-orange-500 text-white px-2 py-1 text-xs rounded">
-            {language === "ar"
-              ? `${product.inventory} متبقي`
-              : `${product.inventory} left`}
+            {language === "ar" 
+              ? `${availableInventory} متبقي` 
+              : `${availableInventory} left`}
           </div>
         )}
       </div>
@@ -337,7 +363,7 @@ export function ProductCard({
             variant="outline"
             size="sm"
             className="flex-1"
-            disabled={isOutOfStock}
+            disabled={isOutOfStock || !canAddToCart}
             onClick={handleBuyNow}
           >
             {language === "ar" ? "اشتري الآن" : "Buy Now"}
@@ -346,15 +372,15 @@ export function ProductCard({
             variant="outline"
             size="sm"
             className="flex-1"
-            disabled={isOutOfStock || isAddingToCart}
+            disabled={isOutOfStock || !canAddToCart || isAddingToCart}
             onClick={handleAddToCart}
           >
             {isAddingToCart ? (
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600" />
             ) : language === "ar" ? (
-              "+ أضف"
+              availableInventory > 0 ? "+ أضف" : "نفذت الكمية"
             ) : (
-              "+ Add"
+              availableInventory > 0 ? "+ Add" : "Out of stock"
             )}
           </Button>
         </div>

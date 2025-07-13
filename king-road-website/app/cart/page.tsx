@@ -122,7 +122,12 @@ export default function CartPage() {
                     <div className="flex items-center justify-end gap-3 mb-2">
                       <button
                         onClick={() =>
-                          updateQuantity(item.id, item.quantity + 1)
+                          updateQuantity(
+                            item.id, 
+                            // In a real app, we would check inventory here
+                            // For now, we'll just increment
+                            item.quantity + 1
+                          )
                         }
                         className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
                       >

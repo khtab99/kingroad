@@ -29,7 +29,22 @@ export default function CheckoutConfirmPage() {
   const [isProcessingOrder, setIsProcessingOrder] = useState(false);
   const router = useRouter();
 
-  const checkoutData = useCheckoutData(language);
+  // Try to get checkout data from localStorage first, then from sessionStorage if not found
+  const checkoutDataFromStorage = useMemo(() => {
+    if (typeof window === 'undefined') return null;
+    
+    // First try localStorage (normal flow)
+    const localData = localStorage.getItem("checkoutData");
+    if (localData) return JSON.parse(localData);
+    
+    // Then try sessionStorage (for users who navigated back from Stripe)
+    const sessionData = sessionStorage.getItem("checkoutData");
+    if (sessionData) return JSON.parse(sessionData);
+    
+    return null;
+  }, []);
+  
+  const checkoutData = useCheckoutData(language, checkoutDataFromStorage);
   const paymentMethods = usePaymentMethods();
   const { handlePayment, isProcessing } = usePaymentHandler(language);
 
@@ -61,6 +76,26 @@ export default function CheckoutConfirmPage() {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isProcessingOrder]);
+
+  // Check for pending payment when returning from Stripe
+  useEffect(() => {
+    const pendingOrderId = sessionStorage.getItem("pendingOrderId");
+    const pendingPaymentTime = sessionStorage.getItem("pendingPaymentTime");
+    
+    if (pendingOrderId && pendingPaymentTime) {
+      const timeElapsed = Date.now() - parseInt(pendingPaymentTime);
+      
+      // If it's been less than 30 minutes, show a message
+      if (timeElapsed < 30 * 60 * 1000) {
+        toast.info(
+          language === "ar"
+            ? "يبدو أنك عدت من صفحة الدفع. يمكنك المحاولة مرة أخرى أو اختيار طريقة دفع أخرى."
+            : "It looks like you returned from the payment page. You can try again or choose another payment method."
+        );
+      }
+    }
+  }, [language]);
+
   if (!checkoutData) {
     return <LoadingSpinner language={language} />;
   }

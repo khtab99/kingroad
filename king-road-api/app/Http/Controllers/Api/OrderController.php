@@ -46,9 +46,9 @@ public function store(CreateOrderRequest $request)
         foreach ($data['items'] as $item) {
             $product = Product::findOrFail($item['product_id']);
 
-            // Check inventory before processing
+            // Validate inventory availability without reducing it yet
             if ($product->track_inventory && $product->inventory < $item['quantity']) {
-                return handleErrorResponse(0, "Insufficient inventory for product: {$product->name}");
+                return handleErrorResponse(0, "Insufficient inventory for product: {$product->name}. Only {$product->inventory} available.");
             }
 
             $price = $product->current_price;
@@ -102,6 +102,7 @@ public function store(CreateOrderRequest $request)
             'customer_notes' => $data['customer_notes'] ?? null,
             'status' => $data['payment_method'] === 'cash_on_delivery' ? 'confirmed' : 'pending',
             'payment_status' => $data['payment_method'] === 'cash_on_delivery' ? 'pending' : 'pending',
+            'inventory_reduced' => $data['payment_method'] === 'cash_on_delivery',
         ]);
 
         // Only decrement inventory for cash on delivery orders

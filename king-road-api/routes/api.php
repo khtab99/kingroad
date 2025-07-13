@@ -34,9 +34,23 @@ Route::prefix('v1')->group(function () {
         Route::get('/{category}/products', [CategoryController::class, 'products']);
     });
 
-            Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
+    // Payment webhook
+    Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
 
-            Route::prefix('orders')->group(function () {
+    // Cart routes
+    Route::prefix('cart')->group(function () {
+        Route::get('/', [CartController::class, 'index']);
+        Route::post('/add', [CartController::class, 'add']);
+        Route::put('/update/{id}', [CartController::class, 'update']);
+        Route::delete('/remove/{id}', [CartController::class, 'remove']);
+        Route::get('/count', [CartController::class, 'count']);
+        Route::get('/total', [CartController::class, 'total']);
+        Route::post('/clear', [CartController::class, 'clear']);
+        Route::get('/validate', [CartController::class, 'validate']);
+    });
+
+    // Order routes
+    Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
         Route::post('/lookup', [OrderController::class, 'lookup']);

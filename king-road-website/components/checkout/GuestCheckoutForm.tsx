@@ -429,7 +429,7 @@ export default function GuestCheckoutForm({
                   Placing Order...
                 </>
               ) : (
-                `Place Order - AED ${finalTotal.toFixed(2)}`
+                `Place Order - AED ${finalTotal}`
               )}
             </Button>
           </form>
@@ -467,12 +467,10 @@ export default function GuestCheckoutForm({
                         {item.product.name}
                       </p>
                       <p className="text-sm text-gray-500">
-                        AED {item.price.toFixed(2)} each
+                        AED {item.price} each
                       </p>
                     </div>
-                    <p className="text-sm font-medium">
-                      AED {item.total.toFixed(2)}
-                    </p>
+                    <p className="text-sm font-medium">AED {item.total}</p>
                   </div>
                 ))}
               </div>
@@ -483,7 +481,7 @@ export default function GuestCheckoutForm({
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal ({cartTotal.item_count} items)</span>
-                  <span>AED {cartTotal.subtotal.toFixed(2)}</span>
+                  <span>AED {cartTotal.subtotal}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Delivery Fee</span>
@@ -494,7 +492,7 @@ export default function GuestCheckoutForm({
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total</span>
-                  <span>AED {finalTotal.toFixed(2)}</span>
+                  <span>AED {finalTotal}</span>
                 </div>
               </div>
 

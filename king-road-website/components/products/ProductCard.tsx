@@ -122,12 +122,12 @@ export function ProductCard({
           {/* Price */}
           <div className="flex items-center gap-2 mb-2">
             <span className="text-lg font-semibold text-gray-900">
-              {Number(product.current_price)?.toFixed(2)}{" "}
+              {Number(product.current_price)}{" "}
               {language === "ar" ? "د.إ" : "AED"}
             </span>
             {product.is_on_sale && product.sale_price && (
               <span className="text-sm text-gray-500 line-through">
-                {product?.price?.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                {product?.price} {language === "ar" ? "د.إ" : "AED"}
               </span>
             )}
           </div>
@@ -286,12 +286,12 @@ export function ProductCard({
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <span className="text-lg font-semibold text-gray-900">
-              {Number(product.current_price)?.toFixed(2)}{" "}
+              {Number(product.current_price)}{" "}
               {language === "ar" ? "د.إ" : "AED"}
             </span>
             {product.is_on_sale && product.sale_price && (
               <span className="text-sm text-gray-500 line-through">
-                {product.price.toFixed(2)}
+                {product.price}
               </span>
             )}
           </div>

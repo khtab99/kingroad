@@ -152,7 +152,7 @@ export default function CartPage() {
                   {/* Price */}
                   <div className="text-left ml-4">
                     <span className="text-gray-800 font-medium">
-                      {(item.price * item.quantity).toFixed(2)}{" "}
+                      {item.price * item.quantity}{" "}
                       {language === "ar" ? "د.إ" : "AED"}
                     </span>
                   </div>
@@ -204,7 +204,7 @@ export default function CartPage() {
           <div className="space-y-3">
             <div className="flex justify-between items-center">
               <span className="text-gray-800">
-                {subtotal.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                {subtotal} {language === "ar" ? "د.إ" : "AED"}
               </span>
               <span className="text-gray-600">
                 {language === "ar" ? "المجموع الفرعي" : "Subtotal"}
@@ -213,7 +213,7 @@ export default function CartPage() {
 
             <div className="flex justify-between items-center">
               <span className="text-gray-800">
-                {deliveryFee.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                {deliveryFee} {language === "ar" ? "د.إ" : "AED"}
               </span>
               <span className="text-gray-600">
                 {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
@@ -223,7 +223,7 @@ export default function CartPage() {
             <div className="border-t border-gray-200 pt-3">
               <div className="flex justify-between items-center">
                 <span className="text-gray-800 font-medium text-lg">
-                  {total.toFixed(2)} {language === "ar" ? "د.إ" : "AED"}
+                  {total} {language === "ar" ? "د.إ" : "AED"}
                 </span>
                 <span className="text-gray-800 font-medium">
                   {language === "ar" ? "المجموع" : "Total"}

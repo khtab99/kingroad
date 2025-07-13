@@ -16,10 +16,10 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
-import { guestApi } from "@/api/guest";
 import { paymentApi } from "@/api/payment";
 import Link from "next/link";
 import { lookupOrder } from "@/api/order";
+import { useStore } from "@/store/useStore";
 
 interface Order {
   id: number;
@@ -79,13 +79,13 @@ export default function CheckoutSuccessContent() {
       // Check if we have a pending order in session storage
       const pendingOrderId = sessionStorage.getItem("pendingOrderId");
       const pendingPaymentTime = sessionStorage.getItem("pendingPaymentTime");
-      
+
       // If we came from checkout flow (localStorage has checkout data)
       if (localStorage.getItem("checkoutData")) {
         setIsValidAccess(true);
         return true;
       }
-      
+
       // If we have a recent pending order (within last 30 minutes)
       if (pendingOrderId && pendingPaymentTime) {
         const timeElapsed = Date.now() - parseInt(pendingPaymentTime);
@@ -95,7 +95,7 @@ export default function CheckoutSuccessContent() {
           return true;
         }
       }
-      
+
       // Default to allowing the lookup, but we'll be more strict about showing details
       return true;
     };
@@ -237,11 +237,12 @@ export default function CheckoutSuccessContent() {
           <Alert className="mb-8">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              <strong>Warning:</strong> This order information is being viewed outside the normal checkout flow.
-              If you did not place this order, please contact customer support.
+              <strong>Warning:</strong> This order information is being viewed
+              outside the normal checkout flow. If you did not place this order,
+              please contact customer support.
             </AlertDescription>
           </Alert>
-          
+
           {/* Rest of the order display */}
           {/* ... */}
         </div>

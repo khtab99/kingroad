@@ -1,15 +1,12 @@
 // components/checkout/CheckoutHeader.tsx
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 interface CheckoutHeaderProps {
   language: string;
 }
 
 export function CheckoutHeader({ language }: CheckoutHeaderProps) {
-  const router = useRouter();
-  
   const handleBack = () => {
     router.back();
   };

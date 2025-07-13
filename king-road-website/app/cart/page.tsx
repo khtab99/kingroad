@@ -89,11 +89,11 @@ export default function CartPage() {
           {cartItems.map((item: any) => {
             console.log("item", item);
 
-            const cleanImageUrl = item?.featured_image?.includes(
+            const cleanImageUrl = item?.image?.includes(
               "assets/images/product/"
             )
-              ? item.featured_image.replace("http://localhost:8000", "")
-              : item?.featured_image || "/assets/images/product/1.jpg";
+              ? item.image.replace("http://localhost:8000", "")
+              : item?.image || "/assets/images/product/1.jpg";
             return (
               <div
                 key={item.id}

@@ -30,10 +30,12 @@ class Order extends Model
         'subtotal',
         'delivery_fee',
         'discount',
+       'coupon_code',
         'total',
         'status',
         'payment_method',
         'payment_status',
+       'inventory_reduced',
         'payment_reference',
         'shipping_method',
         'tracking_number',
@@ -52,6 +54,7 @@ class Order extends Model
         'discount' => 'decimal:2',
         'total' => 'decimal:2',
         'estimated_delivery' => 'datetime',
+       'inventory_reduced' => 'boolean',
     ];
 
     public function user(): BelongsTo

@@ -1,6 +1,7 @@
 // components/checkout/CheckoutHeader.tsx
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface CheckoutHeaderProps {
   language: string;
@@ -8,11 +9,16 @@ interface CheckoutHeaderProps {
 
 export function CheckoutHeader({ language }: CheckoutHeaderProps) {
   const router = useRouter();
+  
+  const handleBack = () => {
+    router.back();
+  };
+  const router = useRouter();
 
   return (
     <div className="flex items-center justify-between mb-6">
       <button
-        onClick={() => router.back()}
+        onClick={handleBack}
         className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
       >
         {language === "ar" ? (

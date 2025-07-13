@@ -133,6 +133,10 @@ class PaymentController extends Controller
                     $session = $event->data->object;
                     $this->handleExpiredPayment($session);
                     break;
+               case 'checkout.session.async_payment_failed':
+                   $session = $event->data->object;
+                   $this->handleFailedPayment($session);
+                   break;
                 default:
                     Log::info('Unhandled Stripe event: ' . $event->type);
             }
@@ -164,12 +168,42 @@ class PaymentController extends Controller
                 return;
             }
 
-            // Update order payment status
-            $order->update([
-                'payment_status' => 'paid',
-                'status' => 'confirmed', // Automatically confirm paid orders
-                'payment_reference' => $session->id,
-            ]);
+            // Begin transaction to ensure all operations are atomic
+            DB::beginTransaction();
+            
+            try {
+                // Update order payment status
+                $order->update([
+                    'payment_status' => 'paid',
+                    'status' => 'confirmed', // Automatically confirm paid orders
+                    'payment_reference' => $session->id,
+                ]);
+                
+                // Now that payment is confirmed, we can safely reduce inventory
+                foreach ($order->items as $item) {
+                    $product = Product::find($item->product_id);
+                    if ($product && $product->track_inventory) {
+                        $product->decrement('inventory', $item->quantity);
+                    }
+                }
+                
+                // If there's a coupon code used, mark it as used now
+                if (!empty($order->coupon_code)) {
+                    $coupon = \App\Models\Coupon::where('code', $order->coupon_code)->first();
+                    if ($coupon) {
+                        $coupon->incrementUsage();
+                    }
+                }
+                
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Failed to process successful payment: ' . $e->getMessage(), [
+                    'order_id' => $order->id,
+                    'session_id' => $session->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
 
             Log::info('Payment successful for order', [
                 'order_id' => $order->id,
@@ -201,6 +235,7 @@ class PaymentController extends Controller
             // Update order payment status
             $order->update([
                 'payment_status' => 'failed',
+               'status' => 'cancelled',
             ]);
 
             Log::info('Payment session expired for order', [
@@ -210,6 +245,39 @@ class PaymentController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('Error handling expired payment: ' . $e->getMessage(), [
+                'session_id' => $session->id ?? null,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+    
+    private function handleFailedPayment($session)
+    {
+        try {
+            $orderNumber = $session->client_reference_id;
+            $order = Order::where('order_number', $orderNumber)->first();
+
+            if (!$order) {
+                Log::error('Order not found for failed payment session', [
+                    'session_id' => $session->id,
+                    'order_number' => $orderNumber,
+                ]);
+                return;
+            }
+
+            // Update order payment status
+            $order->update([
+                'payment_status' => 'failed',
+                'status' => 'cancelled',
+            ]);
+
+            Log::info('Payment failed for order', [
+                'order_id' => $order->id,
+                'order_number' => $order->order_number,
+                'session_id' => $session->id,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error handling failed payment: ' . $e->getMessage(), [
                 'session_id' => $session->id ?? null,
                 'error' => $e->getMessage(),
             ]);

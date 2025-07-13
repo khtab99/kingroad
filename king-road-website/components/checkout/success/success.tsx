@@ -52,13 +52,58 @@ export default function CheckoutSuccessContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
+  const [isValidAccess, setIsValidAccess] = useState(false);
   const [paymentVerified, setPaymentVerified] = useState(false);
+  const { clearCart } = useStore();
 
   const orderNumber = searchParams.get("order");
   const customerPhone = searchParams.get("phone");
   const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
+    // Validate if this is a legitimate success page access
+    const validateAccess = () => {
+      // Check if we have order parameters
+      if (!orderNumber || !customerPhone) {
+        setError("Invalid order information");
+        setLoading(false);
+        return false;
+      }
+
+      // If we have a session ID, this is likely a redirect from Stripe
+      if (sessionId) {
+        setIsValidAccess(true);
+        return true;
+      }
+
+      // Check if we have a pending order in session storage
+      const pendingOrderId = sessionStorage.getItem("pendingOrderId");
+      const pendingPaymentTime = sessionStorage.getItem("pendingPaymentTime");
+      
+      // If we came from checkout flow (localStorage has checkout data)
+      if (localStorage.getItem("checkoutData")) {
+        setIsValidAccess(true);
+        return true;
+      }
+      
+      // If we have a recent pending order (within last 30 minutes)
+      if (pendingOrderId && pendingPaymentTime) {
+        const timeElapsed = Date.now() - parseInt(pendingPaymentTime);
+        // 30 minutes in milliseconds
+        if (timeElapsed < 30 * 60 * 1000) {
+          setIsValidAccess(true);
+          return true;
+        }
+      }
+      
+      // Default to allowing the lookup, but we'll be more strict about showing details
+      return true;
+    };
+
+    if (!validateAccess()) {
+      return;
+    }
+
     if (orderNumber && customerPhone) {
       loadOrderDetails();
     } else {
@@ -81,6 +126,12 @@ export default function CheckoutSuccessContent() {
 
           if (paymentResponse.status === 1) {
             setPaymentVerified(true);
+            // Clear cart and checkout data after successful payment
+            clearCart();
+            localStorage.removeItem("checkoutData");
+            // Clear pending order data
+            sessionStorage.removeItem("pendingOrderId");
+            sessionStorage.removeItem("pendingPaymentTime");
           }
         } catch (error) {
           console.error("Payment verification failed:", error);
@@ -96,6 +147,11 @@ export default function CheckoutSuccessContent() {
 
       if (response.status === 1) {
         setOrder(response.data);
+        // If this is a valid order and we came from checkout, clear cart
+        if (localStorage.getItem("checkoutData")) {
+          clearCart();
+          localStorage.removeItem("checkoutData");
+        }
       } else {
         throw new Error(response.message || "Failed to load order details");
       }
@@ -173,6 +229,25 @@ export default function CheckoutSuccessContent() {
     );
   }
 
+  // Show a warning if this page was accessed directly without valid context
+  if (!isValidAccess && order) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto p-6">
+          <Alert className="mb-8">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              <strong>Warning:</strong> This order information is being viewed outside the normal checkout flow.
+              If you did not place this order, please contact customer support.
+            </AlertDescription>
+          </Alert>
+          
+          {/* Rest of the order display */}
+          {/* ... */}
+        </div>
+      </div>
+    );
+  }
   if (!order) {
     return null;
   }

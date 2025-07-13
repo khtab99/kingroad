@@ -91,6 +91,10 @@ export function usePaymentHandler(language: string) {
         });
 
         if (stripeResponse.status === 1 && stripeResponse.data.checkout_url) {
+          // Don't clear cart or checkout data yet - only after successful payment
+          // Store the order ID in session storage for verification on return
+          sessionStorage.setItem("pendingOrderId", orderId);
+          sessionStorage.setItem("pendingPaymentTime", Date.now().toString());
           window.location.href = stripeResponse.data.checkout_url;
         } else {
           throw new Error(
@@ -103,8 +107,11 @@ export function usePaymentHandler(language: string) {
       toast.error(
         language === "ar" ? "فشل في تأكيد الطلب" : "Failed to confirm order"
       );
-    } finally {
+      // Reset processing state to allow retry
       setIsProcessing(false);
+    } finally {
+      // Don't reset processing state here - it will be reset after redirect
+      // or in the catch block for errors
     }
   };
 

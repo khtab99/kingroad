@@ -47,6 +47,14 @@ export default function CheckoutPage() {
     }
   }, [cartCount, language, router]);
 
+  // Validate direct access to checkout page
+  useEffect(() => {
+    // Check if user navigated here directly without cart items
+    if (typeof window !== 'undefined' && cartCount === 0) {
+      router.push("/");
+    }
+  }, [cartCount, router]);
+
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({
       ...prev,
@@ -100,6 +108,7 @@ export default function CheckoutPage() {
 
     const checkoutData = {
       checkoutSessionId: uuidv4(), // ✅ Generate unique session ID
+      timestamp: Date.now(), // Add timestamp for session expiry checking
       addressType: selectedAddressType,
       ...formData,
       cartItems,

@@ -68,11 +68,12 @@ public function store(CreateOrderRequest $request)
 
         // Handle coupon
         $discount = 0;
+        $coupon = null;
         if (!empty($data['coupon_code'])) {
             $coupon = \App\Models\Coupon::where('code', $data['coupon_code'])->valid()->first();
             if ($coupon) {
                 $discount = $coupon->calculateDiscount($subtotal);
-                $coupon->incrementUsage();
+                // Don't increment usage yet - will do after payment confirmation
             }
         }
 
@@ -99,13 +100,23 @@ public function store(CreateOrderRequest $request)
             'total' => $total,
             'payment_method' => $data['payment_method'] ?? null,
             'customer_notes' => $data['customer_notes'] ?? null,
+            'status' => $data['payment_method'] === 'cash_on_delivery' ? 'confirmed' : 'pending',
+            'payment_status' => $data['payment_method'] === 'cash_on_delivery' ? 'pending' : 'pending',
         ]);
 
-        // Only decrement inventory after successful order creation
-        foreach ($data['items'] as $item) {
-            $product = Product::findOrFail($item['product_id']);
-            if ($product->track_inventory) {
-                $product->decrement('inventory', $item['quantity']);
+        // Only decrement inventory for cash on delivery orders
+        // For online payments, we'll decrement inventory after payment confirmation
+        if ($data['payment_method'] === 'cash_on_delivery') {
+            foreach ($data['items'] as $item) {
+                $product = Product::findOrFail($item['product_id']);
+                if ($product->track_inventory) {
+                    $product->decrement('inventory', $item['quantity']);
+                }
+            }
+            
+            // Only mark coupon as used for cash on delivery
+            if ($coupon) {
+                $coupon->incrementUsage();
             }
         }
 

@@ -3,6 +3,7 @@
 import CheckoutSuccessContent from "@/components/checkout/success/success";
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useStore } from "@/store/useStore";
 
 export default function SuccessPage() {
   const router = useRouter();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
@@ -31,19 +31,19 @@ export default function CheckoutConfirmPage() {
 
   // Try to get checkout data from localStorage first, then from sessionStorage if not found
   const checkoutDataFromStorage = useMemo(() => {
-    if (typeof window === 'undefined') return null;
-    
+    if (typeof window === "undefined") return null;
+
     // First try localStorage (normal flow)
     const localData = localStorage.getItem("checkoutData");
     if (localData) return JSON.parse(localData);
-    
+
     // Then try sessionStorage (for users who navigated back from Stripe)
     const sessionData = sessionStorage.getItem("checkoutData");
     if (sessionData) return JSON.parse(sessionData);
-    
+
     return null;
   }, []);
-  
+
   const checkoutData = useCheckoutData(language, checkoutDataFromStorage);
   const paymentMethods = usePaymentMethods();
   const { handlePayment, isProcessing } = usePaymentHandler(language);
@@ -51,10 +51,13 @@ export default function CheckoutConfirmPage() {
   // Validate direct access to confirm page
   useEffect(() => {
     // Check if user navigated here directly without checkout data
-    if (typeof window !== 'undefined' && !localStorage.getItem("checkoutData")) {
+    if (
+      typeof window !== "undefined" &&
+      !localStorage.getItem("checkoutData")
+    ) {
       toast.error(
-        language === "ar" 
-          ? "يجب إكمال معلومات الشحن أولاً" 
+        language === "ar"
+          ? "يجب إكمال معلومات الشحن أولاً"
           : "You must complete shipping information first"
       );
       router.push("/checkout");
@@ -67,13 +70,13 @@ export default function CheckoutConfirmPage() {
       if (isProcessingOrder) {
         // This will show a confirmation dialog when user tries to leave during processing
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [isProcessingOrder]);
 
@@ -81,10 +84,10 @@ export default function CheckoutConfirmPage() {
   useEffect(() => {
     const pendingOrderId = sessionStorage.getItem("pendingOrderId");
     const pendingPaymentTime = sessionStorage.getItem("pendingPaymentTime");
-    
+
     if (pendingOrderId && pendingPaymentTime) {
       const timeElapsed = Date.now() - parseInt(pendingPaymentTime);
-      
+
       // If it's been less than 30 minutes, show a message
       if (timeElapsed < 30 * 60 * 1000) {
         toast.info(

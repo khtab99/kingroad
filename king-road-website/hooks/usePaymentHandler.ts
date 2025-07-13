@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useStore } from "@/store/useStore";
 import { createNewOrder } from "@/api/order";
 import { paymentApi } from "@/api/payment";
+import { cartApi } from "@/api/cart";
 
 export function usePaymentHandler(language: string) {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -29,23 +30,26 @@ export function usePaymentHandler(language: string) {
 
     try {
       // Validate cart before proceeding
-      const cartValidation = await fetch("/api/v1/cart/validate");
-      const validationData = await cartValidation.json();
-      
+
+      const validationData = await cartApi.validateCart();
+
       if (!validationData.data.valid) {
         toast.error(
           language === "ar"
             ? "هناك مشكلة في سلة التسوق الخاصة بك"
             : "There's an issue with your cart"
         );
-        
+
         // Show specific errors
-        if (validationData.data.errors && validationData.data.errors.length > 0) {
+        if (
+          validationData.data.errors &&
+          validationData.data.errors.length > 0
+        ) {
           validationData.data.errors.forEach((error: string) => {
             toast.error(error);
           });
         }
-        
+
         setIsProcessing(false);
         return;
       }

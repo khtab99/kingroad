@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
@@ -34,8 +35,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/{category}/products', [CategoryController::class, 'products']);
     });
 
-    // Payment webhook
-    Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
+ 
 
     // Cart routes
     Route::prefix('cart')->group(function () {
@@ -46,7 +46,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/count', [CartController::class, 'count']);
         Route::get('/total', [CartController::class, 'total']);
         Route::post('/clear', [CartController::class, 'clear']);
-        Route::get('/validate', [CartController::class, 'validate']);
+        Route::get('/validate', [CartController::class, 'check']);
     });
 
     // Order routes
@@ -63,7 +63,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/create-checkout-session', [PaymentController::class, 'createCheckoutSession']);
         Route::post('/verify', [PaymentController::class, 'verifyPayment']);
     });
-
+   // Payment webhook
+    Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
 
 });
 

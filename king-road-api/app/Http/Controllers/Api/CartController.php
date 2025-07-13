@@ -329,8 +329,7 @@ class CartController extends Controller
     /**
      * Validate cart items (check inventory, etc.)
      */
-    public function validate()
-    {
+    public function check(){
         try {
             $errors = [];
             $isValid = true;

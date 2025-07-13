@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 use Stripe\Exception\ApiErrorException;
+use Stripe\Webhook;
 
 class PaymentController extends Controller
 {
@@ -110,6 +110,7 @@ class PaymentController extends Controller
 
     public function handleWebhook(Request $request)
     {
+         Log::info('🔥 Stripe Webhook hit');
         $payload = $request->getContent();
         $sigHeader = $request->header('Stripe-Signature');
         $endpointSecret = env('STRIPE_WEBHOOK_SECRET');
@@ -119,9 +120,11 @@ class PaymentController extends Controller
             Stripe::setApiKey(env('STRIPE_SECRET'));
 
             // Verify webhook signature
-            $event = \Stripe\Webhook::constructEvent(
+            $event = Webhook::constructEvent(
                 $payload, $sigHeader, $endpointSecret
             );
+
+            Log::info('Received Stripe event: ' . $event->type);
 
             // Handle the event
             switch ($event->type) {
@@ -161,12 +164,12 @@ class PaymentController extends Controller
             $order = Order::where('order_number', $orderNumber)->first();
 
             if (!$order) {
-                Log::error('Order not found for payment session', [
-                    'session_id' => $session->id,
-                    'order_number' => $orderNumber,
-                ]);
-                return;
+
+
+                return handleErrorResponse(0, 'Order not found');
             }
+
+
 
             // Begin transaction to ensure all operations are atomic
             \Illuminate\Support\Facades\DB::beginTransaction();
@@ -178,6 +181,8 @@ class PaymentController extends Controller
                     'status' => 'confirmed', // Automatically confirm paid orders
                     'payment_reference' => $session->id,
                 ]);
+
+                
                 
                 // Only reduce inventory if it hasn't been reduced yet
                 if (!$order->inventory_reduced) {

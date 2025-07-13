@@ -23,21 +23,33 @@ class OrderController extends Controller
         return OrderResource::collection($orders);
     }
 
-  public function store(CreateOrderRequest $request)
+public function store(CreateOrderRequest $request)
 {
     return DB::transaction(function () use ($request) {
         $data = $request->validated();
 
-        $subtotal = 0;
+        // Check if order already exists for this checkout session
+        $existingOrder = Order::where('checkout_session_id', $request->checkout_session_id)
+                             ->where('created_at', '>', now()->subHours(2)) // 2 hour window
+                             ->first();
+
+        if ($existingOrder) {
+            return response()->json([
+                'message' => 'Order already exists for this session',
+                'order' => new OrderResource($existingOrder),
+            ], 200);
+        }
+
+        $subtotal = 0;  
         $orderItems = [];
 
         foreach ($data['items'] as $item) {
             $product = Product::findOrFail($item['product_id']);
 
-            // Optional inventory check (disabled)
-            // if ($product->track_inventory && $product->inventory < $item['quantity']) {
-            //     throw new \Exception("Insufficient inventory for product: {$product->name}");
-            // }
+            // Check inventory before processing
+            if ($product->track_inventory && $product->inventory < $item['quantity']) {
+                return handleErrorResponse(0, "Insufficient inventory for product: {$product->name}");
+            }
 
             $price = $product->current_price;
             $total = $price * $item['quantity'];
@@ -52,10 +64,6 @@ class OrderController extends Controller
                 'price' => $price,
                 'total' => $total,
             ];
-
-            if ($product->track_inventory) {
-                $product->decrement('inventory', $item['quantity']);
-            }
         }
 
         // Handle coupon
@@ -72,12 +80,11 @@ class OrderController extends Controller
         $total = $subtotal + $deliveryFee - $discount;
 
         $order = Order::create([
-         'user_id' => auth()->check() ? auth()->id() : null,
-
-
+            'user_id' => auth()->check() ? auth()->id() : null,
+            'checkout_session_id' => $data['checkout_session_id'],
             'customer_name' => $data['customer_name'],
             'customer_phone' => $data['customer_phone'],
-'customer_email' => $data['customer_email'] ?? (auth()->check() ? auth()->user()->email : null),
+            'customer_email' => $data['customer_email'] ?? (auth()->check() ? auth()->user()->email : null),
             'address_type' => $data['address_type'],
             'street' => $data['street'],
             'house_number' => $data['house_number'] ?? null,
@@ -93,6 +100,14 @@ class OrderController extends Controller
             'payment_method' => $data['payment_method'] ?? null,
             'customer_notes' => $data['customer_notes'] ?? null,
         ]);
+
+        // Only decrement inventory after successful order creation
+        foreach ($data['items'] as $item) {
+            $product = Product::findOrFail($item['product_id']);
+            if ($product->track_inventory) {
+                $product->decrement('inventory', $item['quantity']);
+            }
+        }
 
         // Attach items
         foreach ($orderItems as $item) {

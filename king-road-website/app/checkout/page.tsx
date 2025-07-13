@@ -11,6 +11,7 @@ import AddressTypeSelection from "../../components/checkout/AddressTypeSelection
 import AddressForm from "../../components/checkout/AddressForm";
 import DeliveryTab from "../../components/checkout/DeliveryTab";
 import { Button } from "@/components/ui/button";
+import { v4 as uuidv4 } from "uuid"; // ✅ Import uuid
 
 export default function CheckoutPage() {
   const { cartItems, language, cartCount } = useStore();
@@ -56,7 +57,6 @@ export default function CheckoutPage() {
   const isFormValid = () => {
     if (!selectedAddressType) return false;
 
-    // Common required fields
     if (
       !formData.street.trim() ||
       !formData.name.trim() ||
@@ -65,7 +65,6 @@ export default function CheckoutPage() {
       return false;
     }
 
-    // Address type specific validation
     switch (selectedAddressType) {
       case "house":
         return formData.houseNumber.trim() !== "";
@@ -100,6 +99,7 @@ export default function CheckoutPage() {
     }
 
     const checkoutData = {
+      checkoutSessionId: uuidv4(), // ✅ Generate unique session ID
       addressType: selectedAddressType,
       ...formData,
       cartItems,

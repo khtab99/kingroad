@@ -125,25 +125,6 @@ export const endpoints = {
     products: "/api/v1/categories/", // For category products: /api/v1/categories/{id}/products
   },
 
-  cart: {
-    list: "/api/v1/cart",
-    add: "/api/v1/cart/add",
-    update: "/api/v1/cart/update",
-    remove: "/api/v1/cart/remove",
-    clear: "/api/v1/cart/clear",
-    count: "/api/v1/cart/count",
-    total: "/api/v1/cart/total",
-    transferGuest: "/api/v1/cart/transfer-guest",
-  },
-  address: {
-    list: "/api/v1/addresses",
-    create: "/api/v1/addresses",
-    details: "/api/v1/addresses/",
-    update: "/api/v1/addresses/",
-    delete: "/api/v1/addresses/",
-    default: "/api/v1/addresses/default",
-    setDefault: "/api/v1/addresses/", // + {id}/set-default
-  },
   order: {
     list: "/api/v1/orders",
     details: "/api/v1/orders/",

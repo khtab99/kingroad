@@ -38,6 +38,7 @@ return new class extends Migration
             $table->timestamp('estimated_delivery')->nullable();
             $table->text('customer_notes')->nullable();
             $table->text('internal_notes')->nullable();
+            $table->string('checkout_session_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');

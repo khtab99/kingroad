@@ -40,6 +40,10 @@ class Order extends Model
         'estimated_delivery',
         'customer_notes',
         'internal_notes',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'checkout_session_id',
     ];
 
     protected $casts = [

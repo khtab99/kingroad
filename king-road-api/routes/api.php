@@ -6,11 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
-use App\Http\Controllers\Api\CartController;
-use App\Http\Controllers\Api\AddressController;
-use App\Http\Controllers\Api\GuestOrderController;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Session\Middleware\StartSession;
+
 
 
 
@@ -38,31 +34,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/{category}/products', [CategoryController::class, 'products']);
     });
 
-    Route::middleware([
-        'api',
-        EncryptCookies::class,
-        StartSession::class,
-    ])->group(function () {
-        Route::prefix('cart')->group(function () {
-        Route::get('/', [CartController::class, 'index']);
-        Route::post('/add', [CartController::class, 'addToCart']);
-        Route::put('/update/{cartItemId}', [CartController::class, 'updateQuantity']); 
-        Route::delete('/remove/{cartItemId}', [CartController::class, 'removeFromCart']); 
-        Route::delete('/clear', [CartController::class, 'clearCart']); 
-        Route::get('/count', [CartController::class, 'getCartCount']);
-        Route::get('/total', [CartController::class, 'getCartTotal']);
-        Route::post('/validate', [CartController::class, 'validateCart']);
-        });
-
-        // Guest checkout routes
-        Route::prefix('guest')->group(function () {
-            Route::post('/orders', [GuestOrderController::class, 'store']);
-            Route::post('/orders/lookup', [GuestOrderController::class, 'show']);
-            Route::post('/orders/cancel', [GuestOrderController::class, 'cancel']);
-        });
-        
-        // Webhook route (no CSRF protection)
-        Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
+            Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
 
             Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
@@ -77,7 +49,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/create-checkout-session', [PaymentController::class, 'createCheckoutSession']);
         Route::post('/verify', [PaymentController::class, 'verifyPayment']);
     });
-    });
+
+
 });
 
 
@@ -90,23 +63,6 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::delete('account', [AuthController::class, 'deleteAccount']);
     });
-
-    // Cart transfer from guest session to authenticated user (requires authentication)
-    Route::prefix('cart')->group(function () {
-        Route::post('/transfer-guest', [CartController::class, 'transferGuestCart']);
-    });
-
-    // Addresses
-    Route::prefix('addresses')->group(function () {
-        Route::get('/', [AddressController::class, 'index']);
-        Route::post('/', [AddressController::class, 'store']);
-        Route::get('/default', [AddressController::class, 'getDefault']);
-        Route::get('/{address}', [AddressController::class, 'show']);
-        Route::put('/{address}', [AddressController::class, 'update']);
-        Route::delete('/{address}', [AddressController::class, 'destroy']);
-        Route::post('/{address}/set-default', [AddressController::class, 'setDefault']);
-    });
-
-    // Orders
+// Orders
 
 });

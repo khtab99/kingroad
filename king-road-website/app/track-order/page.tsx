@@ -21,8 +21,9 @@ import {
   Clock,
   Truck,
 } from "lucide-react";
-import { guestApi, OrderLookupData } from "@/api/guest";
+
 import { useToast } from "@/hooks/use-toast";
+import { lookupOrder } from "@/api/order";
 
 interface Order {
   id: number;
@@ -62,15 +63,15 @@ export default function TrackOrderPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<OrderLookupData>();
+  } = useForm();
 
-  const onSubmit = async (data: OrderLookupData) => {
+  const onSubmit = async (data: any) => {
     setLoading(true);
     setError(null);
     setOrder(null);
 
     try {
-      const response = await guestApi.lookupOrder(data);
+      const response = await lookupOrder(data);
 
       if (response.status === 1) {
         setOrder(response.data);

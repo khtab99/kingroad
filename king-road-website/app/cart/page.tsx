@@ -174,77 +174,83 @@ export default function CartPage() {
         </div>
 
         {/* Discount Code */}
-        <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
-          <h3 className="text-gray-800 font-medium mb-4 text-right">
-            {language === "ar" ? "كود الخصم" : "Discount Code"}
-          </h3>
+        {cartItems.length > 0 && (
+          <>
+            <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
+              <h3 className="text-gray-800 font-medium mb-4 text-right">
+                {language === "ar" ? "كود الخصم" : "Discount Code"}
+              </h3>
 
-          <div className="flex gap-3">
-            <Button
-              variant="default"
-              className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-2 rounded-md"
-            >
-              {language === "ar" ? "تأكيد" : "Apply"}
-            </Button>
+              <div className="flex gap-3">
+                <Button
+                  variant="default"
+                  className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-2 rounded-md"
+                >
+                  {language === "ar" ? "تأكيد" : "Apply"}
+                </Button>
 
-            <Input
-              value={discountCode}
-              onChange={(e) => setDiscountCode(e.target.value)}
-              placeholder={
-                language === "ar" ? "أدخل كود الخصم" : "Enter discount code"
-              }
-              className="flex-1 text-right border-gray-300 rounded-md"
-              dir="rtl"
-            />
-          </div>
-        </div>
-
-        {/* Order Summary */}
-        <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-800">
-                {subtotal} {language === "ar" ? "د.إ" : "AED"}
-              </span>
-              <span className="text-gray-600">
-                {language === "ar" ? "المجموع الفرعي" : "Subtotal"}
-              </span>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <span className="text-gray-800">
-                {deliveryFee} {language === "ar" ? "د.إ" : "AED"}
-              </span>
-              <span className="text-gray-600">
-                {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
-              </span>
-            </div>
-
-            <div className="border-t border-gray-200 pt-3">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-800 font-medium text-lg">
-                  {total} {language === "ar" ? "د.إ" : "AED"}
-                </span>
-                <span className="text-gray-800 font-medium">
-                  {language === "ar" ? "المجموع" : "Total"}
-                </span>
+                <Input
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value)}
+                  placeholder={
+                    language === "ar" ? "أدخل كود الخصم" : "Enter discount code"
+                  }
+                  className="flex-1 text-right border-gray-300 rounded-md"
+                  dir="rtl"
+                />
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Checkout Button */}
-        <Button
-          onClick={handleCheckout}
-          disabled={cartItems.length === 0}
-          className={`w-full py-4 text-lg font-medium rounded-md ${
-            cartItems.length > 0
-              ? "bg-gray-600 hover:bg-gray-700 text-white"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
-        >
-          {language === "ar" ? "الذهاب لإتمام الطلب" : "Proceed to Checkout"}
-        </Button>
+            {/* Order Summary */}
+            <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-800">
+                    {subtotal} {language === "ar" ? "د.إ" : "AED"}
+                  </span>
+                  <span className="text-gray-600">
+                    {language === "ar" ? "المجموع الفرعي" : "Subtotal"}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-800">
+                    {deliveryFee} {language === "ar" ? "د.إ" : "AED"}
+                  </span>
+                  <span className="text-gray-600">
+                    {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
+                  </span>
+                </div>
+
+                <div className="border-t border-gray-200 pt-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-800 font-medium text-lg">
+                      {total} {language === "ar" ? "د.إ" : "AED"}
+                    </span>
+                    <span className="text-gray-800 font-medium">
+                      {language === "ar" ? "المجموع" : "Total"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Checkout Button */}
+            <Button
+              onClick={handleCheckout}
+              disabled={cartItems.length === 0}
+              className={`w-full py-4 text-lg font-medium rounded-md ${
+                cartItems.length > 0
+                  ? "bg-gray-600 hover:bg-gray-700 text-white"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+            >
+              {language === "ar"
+                ? "الذهاب لإتمام الطلب"
+                : "Proceed to Checkout"}
+            </Button>
+          </>
+        )}
       </div>
 
       <Footer />

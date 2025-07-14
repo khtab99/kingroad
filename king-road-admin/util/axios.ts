@@ -10,6 +10,7 @@ const axiosInstance = axios.create({
   baseURL: HOST_API,
   headers: {
     "Accept-Language": "en", // Default to 'en', can be changed to 'ar'
+    Accept: "application/json",
   },
 });
 

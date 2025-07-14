@@ -1,11 +1,11 @@
 import "./globals.css";
-import { AdminAuthProvider } from "@/contexts/admin-auth-context";
 import type { Metadata } from "next";
 import { Amiri, Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { VendorAuthProvider } from "@/contexts/vendor-auth-context";
+import { AdminAuthProvider } from "@/contexts/admin-auth-context";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,9 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${amiri.variable} antialiased`}>
-        <AdminAuthProvider>
-          {children}
-        </AdminAuthProvider>
+        <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
@@ -44,7 +42,7 @@ export default function RootLayout({
         >
           <LanguageProvider>
             <VendorAuthProvider>
-              {children}
+              <AdminAuthProvider>{children} </AdminAuthProvider>
               <Toaster />
             </VendorAuthProvider>
           </LanguageProvider>

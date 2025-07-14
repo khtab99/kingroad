@@ -1,10 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/layout/admin-layout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState, useEffect } from "react";
+import { AdminLayout } from "@/components/layout/admin-layout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,18 +18,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Search, Eye, Edit } from 'lucide-react';
-import Link from 'next/link';
-import { useAdminAuth } from '@/contexts/admin-auth-context';
+} from "@/components/ui/select";
+import { Search, Eye, Edit } from "lucide-react";
+import Link from "next/link";
+import { useAdminAuth } from "@/contexts/admin-auth-context";
+import { useGetOrderList } from "@/api/order";
 
 interface Order {
   id: number;
@@ -40,77 +47,59 @@ interface Order {
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [paymentStatusFilter, setPaymentStatusFilter] = useState('all');
-  const { token } = useAdminAuth();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [paymentStatusFilter, setPaymentStatusFilter] = useState("all");
+
+  const { orderList, orderEmpty, orderLoading, orderValidating } =
+    useGetOrderList();
 
   useEffect(() => {
-    fetchOrders();
+    setOrders(orderList);
   }, [statusFilter, paymentStatusFilter]);
-
-  const fetchOrders = async () => {
-    try {
-      let url = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/orders`;
-      const params = new URLSearchParams();
-      
-      if (statusFilter !== 'all') {
-        params.append('filter[status]', statusFilter);
-      }
-      if (paymentStatusFilter !== 'all') {
-        params.append('filter[payment_status]', paymentStatusFilter);
-      }
-      
-      if (params.toString()) {
-        url += `?${params.toString()}`;
-      }
-
-      const response = await fetch(url, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      const data = await response.json();
-      if (data.success) {
-        setOrders(data.data.data || []);
-      }
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'default';
-      case 'confirmed': return 'default';
-      case 'processing': return 'default';
-      case 'shipped': return 'default';
-      case 'delivered': return 'default';
-      case 'cancelled': return 'destructive';
-      default: return 'secondary';
+      case "pending":
+        return "default";
+      case "confirmed":
+        return "default";
+      case "processing":
+        return "default";
+      case "shipped":
+        return "default";
+      case "delivered":
+        return "default";
+      case "cancelled":
+        return "destructive";
+      default:
+        return "secondary";
     }
   };
 
   const getPaymentStatusColor = (status: string) => {
     switch (status) {
-      case 'paid': return 'default';
-      case 'pending': return 'secondary';
-      case 'failed': return 'destructive';
-      case 'refunded': return 'outline';
-      default: return 'secondary';
+      case "paid":
+        return "default";
+      case "pending":
+        return "secondary";
+      case "failed":
+        return "destructive";
+      case "refunded":
+        return "outline";
+      default:
+        return "secondary";
     }
   };
 
-  const filteredOrders = orders.filter(order =>
-    order.order_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.customer_phone.includes(searchTerm) ||
-    (order.customer_email && order.customer_email.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredOrders = orders.filter(
+    (order) =>
+      order.order_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.customer_phone.includes(searchTerm) ||
+      (order.customer_email &&
+        order.customer_email.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -141,7 +130,7 @@ export default function OrdersPage() {
                   className="max-w-sm"
                 />
               </div>
-              
+
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filter by status" />
@@ -157,7 +146,10 @@ export default function OrdersPage() {
                 </SelectContent>
               </Select>
 
-              <Select value={paymentStatusFilter} onValueChange={setPaymentStatusFilter}>
+              <Select
+                value={paymentStatusFilter}
+                onValueChange={setPaymentStatusFilter}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Payment status" />
                 </SelectTrigger>
@@ -184,7 +176,7 @@ export default function OrdersPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {loading ? (
+                {orderLoading ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center">
                       Loading...
@@ -204,7 +196,9 @@ export default function OrdersPage() {
                       </TableCell>
                       <TableCell>
                         <div>
-                          <div className="font-medium">{order.customer_name}</div>
+                          <div className="font-medium">
+                            {order.customer_name}
+                          </div>
                           <div className="text-sm text-muted-foreground">
                             {order.customer_phone}
                           </div>
@@ -217,7 +211,9 @@ export default function OrdersPage() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge variant={getPaymentStatusColor(order.payment_status)}>
+                        <Badge
+                          variant={getPaymentStatusColor(order.payment_status)}
+                        >
                           {order.payment_status}
                         </Badge>
                       </TableCell>

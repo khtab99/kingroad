@@ -29,11 +29,16 @@ import {
   Sun,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { getAdminData } from "@/util/storage";
 
 export function VendorHeader() {
   const { language, setLanguage, t } = useLanguage();
   const { user, logout } = useVendorAuth();
   const [notifications] = useState(3);
+
+  const adminData = localStorage.getItem("admin_data");
+  const admin = JSON.parse(adminData || "{}");
+  console.log(admin);
 
   const { theme, setTheme } = useTheme();
 
@@ -84,25 +89,25 @@ export function VendorHeader() {
               <Button variant="ghost" className="flex items-center gap-2 px-2">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user?.avatar} />
-                  <AvatarFallback className="text-sm">
-                    {user?.name
+                  <AvatarFallback className="text-sm bg-muted">
+                    {admin?.name
                       ?.split(" ")
-                      .map((n) => n[0])
+                      .map((n: string) => n[0])
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <div className="hidden md:block text-left">
-                  <p className="text-sm font-medium">{user?.name}</p>
-                  <p className="text-xs text-muted-foreground">Vendor</p>
-                </div>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem asChild>
-                <Link href="/profile" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Profile
-                </Link>
+                <div className="flex items-center flex-col gap-2 border-b border-border">
+                  <p className="text-sm font-medium leading-none">
+                    {admin?.name}
+                  </p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    {admin?.email}
+                  </p>
+                </div>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/settings" className="flex items-center gap-2">

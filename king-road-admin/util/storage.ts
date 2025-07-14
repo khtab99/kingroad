@@ -17,21 +17,21 @@ export const deleteToken = () => {
   }
 };
 
-export const setUserData = (user: any) => {
+export const setAdminData = (user: any) => {
   if (typeof window !== "undefined") {
-    window.localStorage.setItem("user", JSON.stringify(user));
+    window.localStorage.setItem("admin-data", JSON.stringify(user));
   }
 };
 
-export const getUserData = () => {
+export const getAdminData = () => {
   if (typeof window !== "undefined") {
-    return window.localStorage.getItem("user");
+    return window.localStorage.getItem("admin-data");
   }
   return null;
 };
 
-export const deleteUserData = () => {
+export const deleteAdminData = () => {
   if (typeof window !== "undefined") {
-    window.localStorage.removeItem("user");
+    window.localStorage.removeItem("admin-data");
   }
 };

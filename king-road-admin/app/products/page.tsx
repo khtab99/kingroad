@@ -52,7 +52,7 @@ export default function ProductsPage() {
     if (productList) {
       setProducts(productList);
     }
-  }, []);
+  }, [productList]);
 
   const filteredProducts = products.filter(
     (product) =>

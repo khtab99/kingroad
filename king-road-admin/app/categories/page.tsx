@@ -1,10 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/layout/admin-layout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState, useEffect } from "react";
+import { AdminLayout } from "@/components/layout/admin-layout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,8 +18,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -22,18 +28,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Plus, Search, Edit, Trash2 } from 'lucide-react';
-import { useAdminAuth } from '@/contexts/admin-auth-context';
+} from "@/components/ui/select";
+import { Plus, Search, Edit, Trash2 } from "lucide-react";
+import { useAdminAuth } from "@/contexts/admin-auth-context";
+import { useGetSubCategories, useGetSuperCategory } from "@/api/category";
 
 interface Category {
   id: number;
@@ -50,76 +57,63 @@ interface Category {
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+
+  const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const { token } = useAdminAuth();
 
   const [formData, setFormData] = useState({
-    name_en: '',
-    name_ar: '',
-    description_en: '',
-    description_ar: '',
-    parent_id: '',
+    name_en: "",
+    name_ar: "",
+    description_en: "",
+    description_ar: "",
+    parent_id: "",
     sort_order: 0,
     is_active: true,
   });
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const {
+    superCategoryList,
+    superCategoryLoading,
+    superCategoryError,
+    revalidateSuperCategory,
+  } = useGetSuperCategory();
 
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/categories`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      const data = await response.json();
-      if (data.success) {
-        setCategories(data.data.data || []);
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    setCategories(superCategoryList);
+  }, [superCategoryList]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
-      const url = editingCategory 
+      const url = editingCategory
         ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/categories/${editingCategory.id}`
         : `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/categories`;
-      
-      const method = editingCategory ? 'PUT' : 'POST';
-      
+
+      const method = editingCategory ? "PUT" : "POST";
+
       const response = await fetch(url, {
         method,
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...formData,
           parent_id: formData.parent_id || null,
         }),
       });
-      
+
       const data = await response.json();
       if (data.success) {
-        fetchCategories();
+        revalidateSuperCategory();
         setIsDialogOpen(false);
         resetForm();
       }
     } catch (error) {
-      console.error('Error saving category:', error);
+      console.error("Error saving category:", error);
     }
   };
 
@@ -128,9 +122,9 @@ export default function CategoriesPage() {
     setFormData({
       name_en: category.name_en,
       name_ar: category.name_ar,
-      description_en: '',
-      description_ar: '',
-      parent_id: category.parent_id?.toString() || '',
+      description_en: "",
+      description_ar: "",
+      parent_id: category.parent_id?.toString() || "",
       sort_order: category.sort_order,
       is_active: category.is_active,
     });
@@ -138,45 +132,49 @@ export default function CategoriesPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this category?')) return;
-    
+    if (!confirm("Are you sure you want to delete this category?")) return;
+
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/categories/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/categories/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       const data = await response.json();
       if (data.success) {
-        fetchCategories();
+        revalidateSuperCategory();
       }
     } catch (error) {
-      console.error('Error deleting category:', error);
+      console.error("Error deleting category:", error);
     }
   };
 
   const resetForm = () => {
     setFormData({
-      name_en: '',
-      name_ar: '',
-      description_en: '',
-      description_ar: '',
-      parent_id: '',
+      name_en: "",
+      name_ar: "",
+      description_en: "",
+      description_ar: "",
+      parent_id: "",
       sort_order: 0,
       is_active: true,
     });
     setEditingCategory(null);
   };
 
-  const filteredCategories = categories.filter(category =>
-    category.name_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    category.name_ar.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCategories = categories.filter(
+    (category) =>
+      category.name_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      category.name_ar.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const parentCategories = categories.filter(cat => !cat.parent_id);
+  const parentCategories = categories.filter((cat) => !cat.parent_id);
 
   return (
     <AdminLayout>
@@ -199,10 +197,12 @@ export default function CategoriesPage() {
               <form onSubmit={handleSubmit}>
                 <DialogHeader>
                   <DialogTitle>
-                    {editingCategory ? 'Edit Category' : 'Add New Category'}
+                    {editingCategory ? "Edit Category" : "Add New Category"}
                   </DialogTitle>
                   <DialogDescription>
-                    {editingCategory ? 'Update category information' : 'Create a new category for your products'}
+                    {editingCategory
+                      ? "Update category information"
+                      : "Create a new category for your products"}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -213,7 +213,9 @@ export default function CategoriesPage() {
                     <Input
                       id="name_en"
                       value={formData.name_en}
-                      onChange={(e) => setFormData({...formData, name_en: e.target.value})}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name_en: e.target.value })
+                      }
                       className="col-span-3"
                       required
                     />
@@ -225,7 +227,9 @@ export default function CategoriesPage() {
                     <Input
                       id="name_ar"
                       value={formData.name_ar}
-                      onChange={(e) => setFormData({...formData, name_ar: e.target.value})}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name_ar: e.target.value })
+                      }
                       className="col-span-3"
                       required
                     />
@@ -236,15 +240,22 @@ export default function CategoriesPage() {
                     </Label>
                     <Select
                       value={formData.parent_id}
-                      onValueChange={(value) => setFormData({...formData, parent_id: value})}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, parent_id: value })
+                      }
                     >
                       <SelectTrigger className="col-span-3">
                         <SelectValue placeholder="Select parent category" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">No Parent (Main Category)</SelectItem>
+                        <SelectItem value="">
+                          No Parent (Main Category)
+                        </SelectItem>
                         {parentCategories.map((category) => (
-                          <SelectItem key={category.id} value={category.id.toString()}>
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
                             {category.name_en}
                           </SelectItem>
                         ))}
@@ -259,14 +270,19 @@ export default function CategoriesPage() {
                       id="sort_order"
                       type="number"
                       value={formData.sort_order}
-                      onChange={(e) => setFormData({...formData, sort_order: parseInt(e.target.value)})}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          sort_order: parseInt(e.target.value),
+                        })
+                      }
                       className="col-span-3"
                     />
                   </div>
                 </div>
                 <DialogFooter>
                   <Button type="submit">
-                    {editingCategory ? 'Update' : 'Create'} Category
+                    {editingCategory ? "Update" : "Create"} Category
                   </Button>
                 </DialogFooter>
               </form>
@@ -275,13 +291,7 @@ export default function CategoriesPage() {
         </div>
 
         <Card>
-          <CardHeader>
-            <CardTitle>Category List</CardTitle>
-            <CardDescription>
-              Manage your product categories and subcategories
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="mt-6">
             <div className="flex items-center space-x-2 mb-4">
               <Search className="h-4 w-4 text-muted-foreground" />
               <Input
@@ -304,7 +314,7 @@ export default function CategoriesPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {loading ? (
+                {superCategoryLoading ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center">
                       Loading...
@@ -329,12 +339,18 @@ export default function CategoriesPage() {
                       </TableCell>
                       <TableCell>{category.slug}</TableCell>
                       <TableCell>
-                        {category.parent ? category.parent.name_en : 'Main Category'}
+                        {category.parent
+                          ? category.parent.name_en
+                          : "Main Category"}
                       </TableCell>
                       <TableCell>{category.sort_order}</TableCell>
                       <TableCell>
-                        <Badge variant={category.is_active ? 'default' : 'secondary'}>
-                          {category.is_active ? 'Active' : 'Inactive'}
+                        <Badge
+                          className={
+                            category.is_active ? "bg-green-500" : "bg-red-500"
+                          }
+                        >
+                          {category.is_active ? "Active" : "Inactive"}
                         </Badge>
                       </TableCell>
                       <TableCell>

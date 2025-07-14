@@ -73,30 +73,32 @@ services:
     depends_on:
       - mysql
 
-  king-road-website:
+  # king-road-website:
+  #   build:
+  #     context: ./king-road-website
+  #     dockerfile: Dockerfile
+  #   container_name: king-road-website
+  #   volumes:
+  #     - ./king-road-website:/app
+  #     - /app/node_modules # prevents overwriting node_modules
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - CHOKIDAR_USEPOLLING=true
+  #   command: npm run dev
+
+  king-road-admin:
     build:
-      context: ./king-road-website
+      context: ./king-road-admin
       dockerfile: Dockerfile
-    container_name: king-road-website
-    volumes:
-      - ./king-road-website:/app
-      - /app/node_modules # prevents overwriting node_modules
+    container_name: king-road-admin
     ports:
-      - "3000:3000"
+      - "3001:3001"
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
     command: npm run dev
-
-  # king-road-admin:
-  #   build:
-  #     context: ./king-road-admin
-  #     dockerfile: Dockerfile
-  #   container_name: king-road-admin
-  #   ports:
-  #     - "3001:3001"
-  #   environment:
-  #     - NODE_ENV=production
 
 # ⬇️ Move this block to the bottom (outside services)
 volumes:

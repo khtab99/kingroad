@@ -19,19 +19,19 @@ export const deleteToken = () => {
 
 export const setAdminData = (user: any) => {
   if (typeof window !== "undefined") {
-    window.localStorage.setItem("admin-data", JSON.stringify(user));
+    window.localStorage.setItem("admin_data", JSON.stringify(user));
   }
 };
 
 export const getAdminData = () => {
   if (typeof window !== "undefined") {
-    return window.localStorage.getItem("admin-data");
+    return window.localStorage.getItem("admin_data");
   }
   return null;
 };
 
 export const deleteAdminData = () => {
   if (typeof window !== "undefined") {
-    window.localStorage.removeItem("admin-data");
+    window.localStorage.removeItem("admin_data");
   }
 };

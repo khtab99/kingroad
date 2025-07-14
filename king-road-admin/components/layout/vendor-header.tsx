@@ -29,13 +29,20 @@ import {
   Sun,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { getAdminData } from "@/util/storage";
+import { deleteAdminData, deleteToken, getAdminData } from "@/util/storage";
+import { useRouter } from "next/navigation";
 
 export function VendorHeader() {
   const { language, setLanguage, t } = useLanguage();
-  const { user, logout } = useVendorAuth();
-  const [notifications] = useState(3);
+  const { user } = useVendorAuth();
 
+  const router = useRouter();
+
+  const handleLogout = () => {
+    deleteToken();
+    deleteAdminData();
+    window.location.reload();
+  };
   const adminData = localStorage.getItem("admin_data");
   const admin = JSON.parse(adminData || "{}");
 
@@ -133,7 +140,7 @@ export function VendorHeader() {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={logout}
+                onClick={handleLogout}
                 className="flex items-center gap-2 text-destructive"
               >
                 <LogOut className="h-4 w-4" />

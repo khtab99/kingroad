@@ -6,6 +6,8 @@ import { useAdminAuth } from "@/contexts/admin-auth-context";
 import { AdminHeader } from "./admin-header";
 import { AdminSidebar } from "./admin-sidebar";
 import { Loader2 } from "lucide-react";
+import { VendorHeader } from "./vendor-header";
+import { VendorSidebar } from "./vendor-sidebar";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -35,9 +37,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <div className="flex h-screen ">
-      <AdminSidebar />
+      <VendorSidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <AdminHeader />
+        <VendorHeader />
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>

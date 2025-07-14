@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   Package,
@@ -11,43 +11,28 @@ import {
   FolderTree,
   BarChart3,
   Settings,
-} from 'lucide-react';
+} from "lucide-react";
 
 const navigation = [
   {
-    name: 'Dashboard',
-    href: '/',
+    name: "Dashboard",
+    href: "/",
     icon: LayoutDashboard,
   },
   {
-    name: 'Products',
-    href: '/products',
+    name: "Products",
+    href: "/products",
     icon: Package,
   },
   {
-    name: 'Orders',
-    href: '/orders',
+    name: "Orders",
+    href: "/orders",
     icon: ShoppingCart,
   },
   {
-    name: 'Categories',
-    href: '/categories',
+    name: "Categories",
+    href: "/categories",
     icon: FolderTree,
-  },
-  {
-    name: 'Customers',
-    href: '/customers',
-    icon: Users,
-  },
-  {
-    name: 'Analytics',
-    href: '/analytics',
-    icon: BarChart3,
-  },
-  {
-    name: 'Settings',
-    href: '/settings',
-    icon: Settings,
   },
 ];
 
@@ -67,16 +52,18 @@ export function AdminSidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                "group flex items-center px-2 py-2 text-sm font-medium rounded-md",
                 isActive
-                  ? 'bg-gray-800 text-white'
-                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  ? "bg-gray-800 text-white"
+                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
               )}
             >
               <item.icon
                 className={cn(
-                  'mr-3 h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'
+                  "mr-3 h-5 w-5 flex-shrink-0",
+                  isActive
+                    ? "text-white"
+                    : "text-gray-400 group-hover:text-white"
                 )}
               />
               {item.name}

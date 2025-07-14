@@ -1,10 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/layout/admin-layout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState, useEffect } from "react";
+import { AdminLayout } from "@/components/layout/admin-layout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,11 +18,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Search, Edit, Trash2 } from 'lucide-react';
-import Link from 'next/link';
-import { useAdminAuth } from '@/contexts/admin-auth-context';
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Plus, Search, Edit, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useAdminAuth } from "@/contexts/admin-auth-context";
+import { useGetAllProducts } from "@/api/product";
 
 interface Product {
   id: number;
@@ -33,38 +40,25 @@ interface Product {
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const { token } = useAdminAuth();
+
+  console.log(products);
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { productList, productLoading, productError, revalidateProducts } =
+    useGetAllProducts();
 
   useEffect(() => {
-    fetchProducts();
+    if (productList) {
+      setProducts(productList);
+    }
   }, []);
 
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/products`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      const data = await response.json();
-      if (data.success) {
-        setProducts(data.data.data || []);
-      }
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filteredProducts = products.filter(product =>
-    product.name_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.name_ar.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.sku.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProducts = products.filter(
+    (product) =>
+      product.name_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.name_ar.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.sku.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -116,7 +110,7 @@ export default function ProductsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {loading ? (
+                {productLoading ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center">
                       Loading...
@@ -143,13 +137,19 @@ export default function ProductsPage() {
                       <TableCell>{product.category?.name_en}</TableCell>
                       <TableCell>AED {product.price}</TableCell>
                       <TableCell>
-                        <Badge variant={product.inventory > 0 ? 'default' : 'destructive'}>
+                        <Badge
+                          variant={
+                            product.inventory > 0 ? "default" : "destructive"
+                          }
+                        >
                           {product.inventory}
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge variant={product.is_active ? 'default' : 'secondary'}>
-                          {product.is_active ? 'Active' : 'Inactive'}
+                        <Badge
+                          variant={product.is_active ? "default" : "secondary"}
+                        >
+                          {product.is_active ? "Active" : "Inactive"}
                         </Badge>
                       </TableCell>
                       <TableCell>

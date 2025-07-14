@@ -88,15 +88,15 @@ services:
       - CHOKIDAR_USEPOLLING=true
     command: npm run dev
 
-  king-road-admin:
-    build:
-      context: ./king-road-admin
-      dockerfile: Dockerfile
-    container_name: king-road-admin
-    ports:
-      - "3001:3001"
-    environment:
-      - NODE_ENV=production
+  # king-road-admin:
+  #   build:
+  #     context: ./king-road-admin
+  #     dockerfile: Dockerfile
+  #   container_name: king-road-admin
+  #   ports:
+  #     - "3001:3001"
+  #   environment:
+  #     - NODE_ENV=production
 
 # ⬇️ Move this block to the bottom (outside services)
 volumes:

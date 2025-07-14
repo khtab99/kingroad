@@ -25,31 +25,21 @@ import {
   Globe,
   MessageSquare,
   HelpCircle,
+  Moon,
+  Sun,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export function VendorHeader() {
   const { language, setLanguage, t } = useLanguage();
   const { user, logout } = useVendorAuth();
   const [notifications] = useState(3);
 
+  const { theme, setTheme } = useTheme();
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40">
       <div className="flex h-16 items-center justify-between px-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center text-white font-bold">
-            <Store className="h-5 w-5" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold text-primary">
-              {language === "ar" ? "كورة" : "kingroad"}
-            </span>
-            <span className="text-xs text-muted-foreground -mt-1">
-              Dashboard
-            </span>
-          </div>
-        </Link>
-
         {/* Search */}
         <div className="hidden md:flex flex-1 max-w-md mx-8">
           <div className="relative w-full">
@@ -75,24 +65,17 @@ export function VendorHeader() {
             {t("nav.language")}
           </Button>
 
-          {/* Notifications */}
-          <Button variant="ghost" size="sm" className="relative">
-            <Bell className="h-5 w-5" />
-            {notifications > 0 && (
-              <Badge
-                variant="destructive"
-                className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-              >
-                {notifications}
-              </Badge>
-            )}
-          </Button>
-
-          {/* Messages */}
+          {/* Theme Toggle */}
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/messages">
-              <MessageSquare className="h-5 w-5" />
-            </Link>
+            {theme === "dark" ? (
+              <button onClick={() => setTheme("light")}>
+                <Sun className="h-4 w-4" />
+              </button>
+            ) : (
+              <button onClick={() => setTheme("dark")}>
+                <Moon className="h-4 w-4" />
+              </button>
+            )}
           </Button>
 
           {/* User Menu */}

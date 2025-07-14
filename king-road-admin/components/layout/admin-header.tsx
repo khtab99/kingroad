@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useAdminAuth } from '@/contexts/admin-auth-context';
-import { Button } from '@/components/ui/button';
+import { useAdminAuth } from "@/contexts/admin-auth-context";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,9 +9,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { LogOut, User, Settings } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LogOut, User, Settings } from "lucide-react";
 
 export function AdminHeader() {
   const { admin, logout } = useAdminAuth();
@@ -19,18 +19,22 @@ export function AdminHeader() {
   if (!admin) return null;
 
   return (
-    <header className="border-b bg-white">
+    <header className="border-b  ">
       <div className="flex h-16 items-center px-4 gap-4">
         <div className="flex-1">
-          <h1 className="text-xl font-semibold">King Road Admin</h1>
+          {/* <h1 className="text-xl font-semibold">King Road Admin</h1> */}
         </div>
-        
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
               <Avatar className="h-8 w-8">
                 <AvatarFallback>
-                  {admin.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                  {admin.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()}
                 </AvatarFallback>
               </Avatar>
             </Button>
@@ -43,7 +47,7 @@ export function AdminHeader() {
                   {admin.email}
                 </p>
                 <p className="text-xs leading-none text-muted-foreground capitalize">
-                  {admin.role.replace('_', ' ')}
+                  {admin.role.replace("_", " ")}
                 </p>
               </div>
             </DropdownMenuLabel>

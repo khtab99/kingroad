@@ -21,6 +21,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Boxes,
+  FolderTree,
 } from "lucide-react";
 import { useLanguage } from "../providers/language-provider";
 
@@ -40,24 +41,24 @@ export function VendorSidebar() {
       title: "Products",
       href: "/products",
       icon: Package,
-      badge: "45",
+      badge: null,
     },
     {
       title: "Orders",
       href: "/orders",
       icon: ShoppingCart,
-      badge: "12",
-    },
-    {
-      title: "Customers",
-      href: "/customers",
-      icon: Users,
       badge: null,
     },
+    // {
+    //   title: "Customers",
+    //   href: "/customers",
+    //   icon: Users,
+    //   badge: null,
+    // },
     {
-      title: "Inventory",
-      href: "/inventory",
-      icon: Boxes,
+      title: "Categories",
+      href: "/categories",
+      icon: FolderTree,
       badge: null,
     },
     // {
@@ -78,7 +79,7 @@ export function VendorSidebar() {
       {/* Logo */}
 
       <div className="flex flex-col h-full">
-        <Link href="/" className="flex justify-center items-start gap-2 ">
+        <Link href="/" className="flex justify-center items-s gap-2 ">
           <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center text-white font-bold">
             <Store className="h-5 w-5" />
           </div>

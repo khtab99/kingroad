@@ -13,23 +13,23 @@ import {
 
 // ----------------------------------------------------------------------
 
-export function useGetOrderList({ page, per_page, search }: any = {}) {
+export function useGetOrderList(filters = {}) {
   const queryParams = useMemo(() => {
-    const params: Record<string, any> = {};
+    const params = new URLSearchParams();
 
-    if (page) params.page = page;
-    if (per_page) params.per_page = per_page;
-    if (search) params.search = search;
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value && value !== "all") params.append(key, value);
+    });
 
-    return params;
-  }, [page, per_page, search]);
+    return params.toString();
+  }, [filters]);
 
   const fullUrl = useMemo(
-    () => `${endpoints.order.list}?${new URLSearchParams(queryParams)}`,
+    () => `${endpoints.order.list}?${queryParams}`,
     [queryParams]
   );
 
-  const { data, error, isLoading, isValidating } = useSWR(
+  const { data, error, isLoading, isValidating, mutate } = useSWR(
     fullUrl,
     kingRoadFetcher,
     {
@@ -37,33 +37,20 @@ export function useGetOrderList({ page, per_page, search }: any = {}) {
     }
   );
 
-  const revalidateOrder = () => {
-    mutate(fullUrl);
-  };
+  const orderData = data?.data || [];
 
-  // Memoize the return value for performance
-  const memoizedValue = useMemo(() => {
-    const orderData = data?.data?.data || [];
-    return {
+  return useMemo(
+    () => ({
       orderList: orderData,
       orderLoading: isLoading,
       orderError: error,
       orderValidating: isValidating,
       orderEmpty: orderData.length === 0,
       totalPages: data?.data?.meta?.total || 0,
-    };
-  }, [
-    data?.data?.data,
-    data?.data?.meta?.total,
-    error,
-    isLoading,
-    isValidating,
-  ]);
-
-  return {
-    ...memoizedValue,
-    revalidateOrder,
-  };
+      revalidateOrder: () => mutate(),
+    }),
+    [orderData, isLoading, error, isValidating, data?.data?.meta?.total, mutate]
+  );
 }
 
 export function useGetOrderById(id: any) {

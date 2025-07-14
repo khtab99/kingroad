@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { AdminLayout } from "@/components/layout/admin-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,61 +46,53 @@ interface Order {
 }
 
 export default function OrdersPage() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [filters, setFilters] = useState({
+    search: "",
+    status: "all",
+    payment_status: "all",
+  });
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [paymentStatusFilter, setPaymentStatusFilter] = useState("all");
+  const { orderList, orderLoading, orderEmpty } = useGetOrderList(filters);
 
-  const { orderList, orderEmpty, orderLoading, orderValidating } =
-    useGetOrderList();
-
-  useEffect(() => {
-    setOrders(orderList);
-  }, [statusFilter, paymentStatusFilter]);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "pending":
-        return "default";
-      case "confirmed":
-        return "default";
-      case "processing":
-        return "default";
-      case "shipped":
-        return "default";
-      case "delivered":
-        return "default";
-      case "cancelled":
-        return "destructive";
-      default:
-        return "secondary";
-    }
+  const handleFilterChange = (key, value) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  const getPaymentStatusColor = (status: string) => {
-    switch (status) {
-      case "paid":
-        return "default";
-      case "pending":
-        return "secondary";
-      case "failed":
-        return "destructive";
-      case "refunded":
-        return "outline";
-      default:
-        return "secondary";
-    }
+  const getStatusColor = (status) => {
+    const colorMap = {
+      pending: "default",
+      confirmed: "default",
+      processing: "default",
+      shipped: "default",
+      delivered: "default",
+      cancelled: "destructive",
+    };
+    return colorMap[status] || "secondary";
   };
 
-  const filteredOrders = orders.filter(
-    (order) =>
-      order.order_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customer_phone.includes(searchTerm) ||
-      (order.customer_email &&
-        order.customer_email.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const getPaymentStatusColor = (status) => {
+    const colorMap = {
+      paid: "default",
+      pending: "secondary",
+      failed: "destructive",
+      refunded: "outline",
+    };
+    return colorMap[status] || "secondary";
+  };
+
+  const filteredOrders = useMemo(() => {
+    const { search } = filters;
+    return orderList.filter((order) =>
+      [
+        order.order_number,
+        order.customer_name,
+        order.customer_phone,
+        order.customer_email,
+      ]
+        .filter(Boolean)
+        .some((field) => field.toLowerCase().includes(search.toLowerCase()))
+    );
+  }, [orderList, filters]);
 
   return (
     <AdminLayout>
@@ -125,40 +117,53 @@ export default function OrdersPage() {
                 <Search className="h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search orders..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  value={filters.search}
+                  onChange={(e) => handleFilterChange("search", e.target.value)}
                   className="max-w-sm"
                 />
               </div>
 
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <Select
+                value={filters.status}
+                onValueChange={(value) => handleFilterChange("status", value)}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="confirmed">Confirmed</SelectItem>
-                  <SelectItem value="processing">Processing</SelectItem>
-                  <SelectItem value="shipped">Shipped</SelectItem>
-                  <SelectItem value="delivered">Delivered</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                  {[
+                    "all",
+                    "pending",
+                    "confirmed",
+                    "processing",
+                    "shipped",
+                    "delivered",
+                    "cancelled",
+                  ].map((status) => (
+                    <SelectItem key={status} value={status}>
+                      {status[0].toUpperCase() + status.slice(1)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
 
               <Select
-                value={paymentStatusFilter}
-                onValueChange={setPaymentStatusFilter}
+                value={filters.payment_status}
+                onValueChange={(value) =>
+                  handleFilterChange("payment_status", value)
+                }
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Payment status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Payments</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="paid">Paid</SelectItem>
-                  <SelectItem value="failed">Failed</SelectItem>
-                  <SelectItem value="refunded">Refunded</SelectItem>
+                  {["all", "pending", "paid", "failed", "refunded"].map(
+                    (status) => (
+                      <SelectItem key={status} value={status}>
+                        {status[0].toUpperCase() + status.slice(1)}
+                      </SelectItem>
+                    )
+                  )}
                 </SelectContent>
               </Select>
             </div>

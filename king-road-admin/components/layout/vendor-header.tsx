@@ -38,7 +38,6 @@ export function VendorHeader() {
 
   const adminData = localStorage.getItem("admin_data");
   const admin = JSON.parse(adminData || "{}");
-  console.log(admin);
 
   const { theme, setTheme } = useTheme();
 

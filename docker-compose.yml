@@ -96,9 +96,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true
-    command: npm run dev
+      - NODE_ENV=production
 
 # ⬇️ Move this block to the bottom (outside services)
 volumes:

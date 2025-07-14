@@ -49,24 +49,24 @@ Route::prefix('v1/admin')->group(function () {
 
         // Categories management
         Route::prefix('categories')->group(function () {
-            // Route::get('/', [AdminCategoryController::class, 'index']);
-            // Route::post('/', [AdminCategoryController::class, 'store']);
-            // Route::get('/{category}', [AdminCategoryController::class, 'show']);
-            // Route::put('/{category}', [AdminCategoryController::class, 'update']);
-            // Route::delete('/{category}', [AdminCategoryController::class, 'destroy']);
-            // Route::post('/{category}/reorder', [AdminCategoryController::class, 'reorder']);
+            Route::get('/', [AdminCategoryController::class, 'index']);
+            Route::post('/', [AdminCategoryController::class, 'store']);
+            Route::get('/{category}', [AdminCategoryController::class, 'show']);
+            Route::put('/{category}', [AdminCategoryController::class, 'update']);
+            Route::delete('/{category}', [AdminCategoryController::class, 'destroy']);
+            Route::post('/{category}/reorder', [AdminCategoryController::class, 'reorder']);
         });
 
         // Orders management
         Route::prefix('orders')->group(function () {
-            // Route::get('/', [AdminOrderController::class, 'index']);
-            // Route::get('/{order}', [AdminOrderController::class, 'show']);
-            // Route::put('/{order}', [AdminOrderController::class, 'update']);
-            // Route::post('/{order}/update-status', [AdminOrderController::class, 'updateStatus']);
-            // Route::post('/{order}/add-tracking', [AdminOrderController::class, 'addTracking']);
-            // Route::post('/{order}/send-notification', [AdminOrderController::class, 'sendNotification']);
-            // Route::get('/{order}/invoice', [AdminOrderController::class, 'generateInvoice']);
-            // Route::get('/export', [AdminOrderController::class, 'export']);
+            Route::get('/', [AdminOrderController::class, 'index']);
+            Route::get('/{order}', [AdminOrderController::class, 'show']);
+            Route::put('/{order}', [AdminOrderController::class, 'update']);
+            Route::post('/{order}/update-status', [AdminOrderController::class, 'updateStatus']);
+            Route::post('/{order}/add-tracking', [AdminOrderController::class, 'addTracking']);
+            Route::post('/{order}/send-notification', [AdminOrderController::class, 'sendNotification']);
+            Route::get('/{order}/invoice', [AdminOrderController::class, 'generateInvoice']);
+            Route::get('/export', [AdminOrderController::class, 'export']);
         });
 
         // Customers management

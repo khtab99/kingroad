@@ -1,4 +1,5 @@
 import "./globals.css";
+import { AdminAuthProvider } from "@/contexts/admin-auth-context";
 import type { Metadata } from "next";
 import { Amiri, Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
@@ -33,7 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${amiri.variable} antialiased`}>
-        <ThemeProvider
+        <AdminAuthProvider>
+          {children}
+        </AdminAuthProvider>
           attribute="class"
           defaultTheme="light"
           enableSystem

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAdminAuth } from '@/contexts/admin-auth-context';
-import { AdminHeader } from './admin-header';
-import { AdminSidebar } from './admin-sidebar';
-import { Loader2 } from 'lucide-react';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAdminAuth } from "@/contexts/admin-auth-context";
+import { AdminHeader } from "./admin-header";
+import { AdminSidebar } from "./admin-sidebar";
+import { Loader2 } from "lucide-react";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push('/login');
+      router.push("/login");
     }
   }, [isAuthenticated, isLoading, router]);
 
@@ -34,13 +34,11 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen ">
       <AdminSidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <AdminHeader />
-        <main className="flex-1 overflow-y-auto p-6">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
   );

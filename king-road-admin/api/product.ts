@@ -5,6 +5,8 @@ import {
   kingRoadCreatorForm,
   kingRoadFetcher,
   kingRoadSmasher,
+  kingRoadUpdatePatch,
+  kingRoadUpdatePut,
 } from "@/util/axios";
 import { Product, ProductFilters } from "@/util/type";
 
@@ -255,6 +257,11 @@ export function useIncrementProductViews() {
 export function createNewProduct(body: any) {
   const URL = endpoints.product.create;
   const response = kingRoadCreatorForm([URL, body]);
+  return response;
+}
+export function updateProduct(body: any, id: any) {
+  const URL = endpoints.product.update + id;
+  const response = kingRoadUpdatePut([URL, body]);
   return response;
 }
 

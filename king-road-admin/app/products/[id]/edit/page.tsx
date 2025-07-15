@@ -37,7 +37,11 @@ import {
 } from "lucide-react";
 import { Category, ProductFormData } from "@/util/type";
 import { useGetSuperCategory } from "@/api/category";
-import { createNewProduct, useGetProductById } from "@/api/product";
+import {
+  createNewProduct,
+  updateProduct,
+  useGetProductById,
+} from "@/api/product";
 import { AdminLayout } from "@/components/layout/admin-layout";
 
 // Types
@@ -48,7 +52,6 @@ interface FormErrors {
 
 export default function ProductEdit() {
   const { id } = useParams();
-  console.log(id);
 
   const { t, language } = useLanguage();
   const router = useRouter();
@@ -60,7 +63,7 @@ export default function ProductEdit() {
 
   const { productDetails: product } = useGetProductById(id);
 
-  const [formData, setFormData] = useState<ProductFormData>({
+  const initialValues = {
     name_en: product?.name_en || "",
     name_ar: product?.name_ar || "",
     slug: product?.slug || "",
@@ -88,7 +91,13 @@ export default function ProductEdit() {
     tags: product?.tags || [],
     meta_title: product?.meta_title || "",
     meta_description: product?.meta_description || "",
-  });
+  };
+
+  const [formData, setFormData] = useState<ProductFormData>(initialValues);
+
+  useEffect(() => {
+    setFormData(initialValues);
+  }, [product]);
 
   // Fetch categories on component mount
 
@@ -117,7 +126,6 @@ export default function ProductEdit() {
       const selectedCategory = categories.find(
         (cat) => cat.id.toString() === formData.category_id
       );
-      console.log(selectedCategory);
 
       setSubcategories(selectedCategory?.children || []);
       updateFormData("subcategory_id", "");
@@ -285,21 +293,17 @@ export default function ProductEdit() {
         }
       });
 
-      const response = await createNewProduct(formDataToSend);
+      const response: any = await updateProduct(formDataToSend, id);
+
+      console.log(response);
 
       if (response) {
-        toast.success("Product created successfully!");
+        toast.success("Product updated successfully!");
         router.push("/products");
       } else {
-        // Handle validation errors from backend
-        if (response.errors) {
-          setErrors(response.errors);
-        }
-        toast.error(response.message || "Failed to create product");
+        throw new Error("Failed to update product");
       }
     } catch (error) {
-      console.error("Error creating product:", error);
-      toast.error("Failed to create product. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

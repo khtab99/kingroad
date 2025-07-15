@@ -47,8 +47,6 @@ export default function ProductsPage() {
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  console.log(products);
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const { productList, productLoading, productError, revalidateProducts } =

@@ -84,38 +84,37 @@ class AdminProductController extends Controller
         return new ProductResource($product);
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
-    {
-        $data = $request->validated();
-        
-        // Handle image uploads
-        if ($request->hasFile('images')) {
-            // Delete old images
-            if ($product->images) {
-                foreach ($product->images as $image) {
-                    $path = str_replace('/storage/', '', $image);
-                    Storage::disk('public')->delete($path);
-                }
-            }
+public function update(UpdateProductRequest $request, Product $product)
+{
+ 
 
-            $images = [];
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('products', 'public');
-                $images[] = Storage::url($path);
+    $data = $request->validated();
+
+    if ($request->hasFile('images')) {
+        // Delete old images
+        if ($product->images) {
+            foreach ($product->images as $image) {
+                $path = str_replace('/storage/', '', $image);
+                Storage::disk('public')->delete($path);
             }
-            $data['images'] = $images;
-            $data['featured_image'] = $images[0] ?? null;
         }
 
-        $product->update($data);
-        $product->load(['category', 'subcategory']);
-
-        return handleSuccessReponse(
-         [   1,
-            'Product updated successfully',
-            new ProductResource($product)])
-        ;
+        $images = [];
+        foreach ($request->file('images') as $image) {
+            $path = $image->store('products', 'public');
+            $images[] = Storage::url($path);
+        }
+        $data['images'] = $images;
+        $data['featured_image'] = $images[0] ?? null;
     }
+
+    $product->update($data);
+    $product->load(['category', 'subcategory']);
+
+    return handleSuccessReponse(1, 'Product updated successfully', new ProductResource($product));
+}
+
+
 
     public function destroy(Product $product)
     {

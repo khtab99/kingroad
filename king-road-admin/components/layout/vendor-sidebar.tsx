@@ -80,12 +80,12 @@ export function VendorSidebar() {
 
       <div className="flex flex-col h-full">
         <Link href="/" className="flex justify-center items-s gap-2 ">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center text-white font-bold">
+          <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-primary/80 rounded-lg flex items-center justify-center text-white font-bold">
             <Store className="h-5 w-5" />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold text-primary">
-              {language === "ar" ? "كورة" : "kingroad"}
+            <span className="text-lg font-bold text-red-600">
+              {language === "ar" ? "kingroad" : "kingroad"}
             </span>
             <span className="text-xs text-muted-foreground -mt-1">
               Dashboard

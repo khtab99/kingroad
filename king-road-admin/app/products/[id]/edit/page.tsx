@@ -77,9 +77,9 @@ export default function ProductEdit() {
     inventory: product?.inventory || "",
     low_stock_threshold: product?.low_stock_threshold || "",
     track_inventory: product?.track_inventory || false,
-    category_id: product?.category_id || "",
-    subcategory_id: product?.subcategory_id || "",
-    images: product?.images || [],
+    category_id: product?.category?.id ?? "",
+    subcategory_id: product?.subcategory?.id || "",
+    images: product?.images?.map((image: any) => image.url) || [],
     weight: product?.weight || "",
     dimensions: {
       length: "",
@@ -494,7 +494,7 @@ export default function ProductEdit() {
                 <div>
                   <Label htmlFor="category_id">Category *</Label>
                   <Select
-                    value={categories.id}
+                    value={formData.category_id}
                     onValueChange={(value) =>
                       updateFormData("category_id", value)
                     }
@@ -768,159 +768,6 @@ export default function ProductEdit() {
             </CardContent>
           </Card>
 
-          {/* Physical Properties */}
-          <Card className="border-0 shadow-md">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Package className="h-5 w-5" />
-                Physical Properties
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <Label htmlFor="weight">Weight (kg)</Label>
-                <Input
-                  id="weight"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  placeholder="0.00"
-                  value={formData.weight}
-                  onChange={(e) => updateFormData("weight", e.target.value)}
-                />
-              </div>
-
-              <div>
-                <Label className="text-base font-medium">Dimensions (cm)</Label>
-                <div className="grid grid-cols-3 gap-4 mt-2">
-                  <div>
-                    <Label htmlFor="length" className="text-sm">
-                      Length
-                    </Label>
-                    <Input
-                      id="length"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      placeholder="0.00"
-                      value={formData.dimensions.length}
-                      onChange={(e) =>
-                        updateDimensions("length", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="width" className="text-sm">
-                      Width
-                    </Label>
-                    <Input
-                      id="width"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      placeholder="0.00"
-                      value={formData.dimensions.width}
-                      onChange={(e) =>
-                        updateDimensions("width", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="height" className="text-sm">
-                      Height
-                    </Label>
-                    <Input
-                      id="height"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      placeholder="0.00"
-                      value={formData.dimensions.height}
-                      onChange={(e) =>
-                        updateDimensions("height", e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* SEO & Tags */}
-          <Card className="border-0 shadow-md">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart className="h-5 w-5" />
-                SEO & Tags
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <Label htmlFor="tag-input">Tags</Label>
-                <Input
-                  id="tag-input"
-                  placeholder="Type a tag and press Enter or comma"
-                  onKeyDown={handleTagInput}
-                />
-                {formData.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {formData.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md text-sm"
-                      >
-                        {tag}
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-4 w-4 p-0 hover:bg-destructive/20"
-                          onClick={() => removeTag(tag)}
-                          type="button"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <p className="text-xs text-muted-foreground mt-1">
-                  Help customers find your product with relevant tags
-                </p>
-              </div>
-
-              <div>
-                <Label htmlFor="meta_title">Meta Title</Label>
-                <Input
-                  id="meta_title"
-                  placeholder="SEO title for search engines"
-                  value={formData.meta_title}
-                  onChange={(e) => updateFormData("meta_title", e.target.value)}
-                  maxLength={255}
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {formData.meta_title?.length || 0}/255 characters
-                </p>
-              </div>
-
-              <div>
-                <Label htmlFor="meta_description">Meta Description</Label>
-                <Textarea
-                  id="meta_description"
-                  placeholder="Brief description for search engines"
-                  value={formData.meta_description}
-                  onChange={(e) =>
-                    updateFormData("meta_description", e.target.value)
-                  }
-                  rows={3}
-                  maxLength={500}
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {formData.meta_description?.length || 0}/500 characters
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
           {/* Product Status */}
           <Card className="border-0 shadow-md">
             <CardHeader>
@@ -955,26 +802,6 @@ export default function ProductEdit() {
                   Feature this product on your storefront
                 </Label>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Shipping Info */}
-          <Card className="border-0 shadow-md">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Truck className="h-5 w-5" />
-                Shipping
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                This product will use your default shipping settings. Weight and
-                dimensions will be used to calculate shipping costs
-                automatically.
-              </p>
-              <Button variant="outline" type="button">
-                Configure Shipping Settings
-              </Button>
             </CardContent>
           </Card>
 

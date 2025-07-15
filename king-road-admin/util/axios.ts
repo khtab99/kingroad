@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 import { getToken } from "./storage";
+import { create } from "node:domain";
 
 // ----------------------------------------------------------------------
 
@@ -119,6 +120,7 @@ export const endpoints = {
   product: {
     all: "/api/v1/admin/products",
     details: "/api/v1/admin/products/",
+    create: "/api/v1/admin/products",
   },
   category: {
     all: "/api/v1/admin/categories",

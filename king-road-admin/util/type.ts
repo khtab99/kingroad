@@ -33,4 +33,5 @@ export interface Category {
   name_en: string;
   name_ar: string;
   subcategories?: Category[];
+  children?: Category[];
 }

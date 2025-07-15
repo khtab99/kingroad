@@ -1,6 +1,6 @@
 import useSWR, { mutate } from "swr";
 import { useMemo } from "react";
-import { endpoints, kingRoadFetcher } from "@/util/axios";
+import { endpoints, kingRoadCreatorForm, kingRoadFetcher } from "@/util/axios";
 
 // Types
 export interface Product {
@@ -309,4 +309,10 @@ export function useIncrementProductViews() {
   };
 
   return { incrementViews };
+}
+
+export function createNewProduct(body: any) {
+  const URL = endpoints.product.create;
+  const response = kingRoadCreatorForm([URL, body]);
+  return response;
 }

@@ -37,6 +37,7 @@ import {
 } from "lucide-react";
 import { Category, ProductFormData } from "@/util/type";
 import { useGetSuperCategory } from "@/api/category";
+import { createNewProduct } from "@/api/product";
 
 // Types
 
@@ -87,16 +88,11 @@ export default function NewProductPage() {
 
   const { superCategoryList } = useGetSuperCategory();
 
-  console.log(superCategoryList);
-
   useEffect(() => {
     setCategories(
       superCategoryList.filter((cat: any) => cat.parent_id === null)
     );
-    setSubcategories(
-      superCategoryList.filter((cat: any) => cat.parent_id !== null)
-    );
-  }, []);
+  }, [superCategoryList]);
 
   // Generate slug from English name
   useEffect(() => {
@@ -115,7 +111,9 @@ export default function NewProductPage() {
       const selectedCategory = categories.find(
         (cat) => cat.id.toString() === formData.category_id
       );
-      setSubcategories(selectedCategory?.subcategories || []);
+      console.log(selectedCategory);
+
+      setSubcategories(selectedCategory?.children || []);
       updateFormData("subcategory_id", "");
     }
   }, [formData.category_id, categories]);
@@ -281,10 +279,7 @@ export default function NewProductPage() {
         }
       });
 
-      const response = await fetch("/api/products", {
-        method: "POST",
-        body: formDataToSend,
-      });
+      const response = await createNewProduct(formDataToSend);
 
       const result = await response.json();
 
@@ -349,7 +344,7 @@ export default function NewProductPage() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Basic Information */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Package className="h-5 w-5" />
@@ -369,7 +364,7 @@ export default function NewProductPage() {
                     </Label>
                     <Input
                       id="name_en"
-                      placeholder="e.g. Traditional Sudanese Thob"
+                      placeholder="Add product name"
                       value={formData.name_en}
                       onChange={(e) =>
                         updateFormData("name_en", e.target.value)
@@ -395,7 +390,7 @@ export default function NewProductPage() {
                     </Label>
                     <Input
                       id="name_ar"
-                      placeholder="e.g. ثوب سوداني تقليدي"
+                      placeholder="آدخل اسم المنتج"
                       value={formData.name_ar}
                       onChange={(e) =>
                         updateFormData("name_ar", e.target.value)
@@ -498,7 +493,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* Categories */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Tag className="h-5 w-5" />
@@ -510,7 +505,7 @@ export default function NewProductPage() {
                   <div>
                     <Label htmlFor="category_id">Category *</Label>
                     <Select
-                      value={formData.category_id}
+                      value={categories.id}
                       onValueChange={(value) =>
                         updateFormData("category_id", value)
                       }
@@ -549,7 +544,7 @@ export default function NewProductPage() {
                       Subcategory (Optional)
                     </Label>
                     <Select
-                      value={formData.subcategory_id}
+                      value={subcategories.id}
                       onValueChange={(value) =>
                         updateFormData("subcategory_id", value)
                       }
@@ -577,7 +572,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* Pricing */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <DollarSign className="h-5 w-5" />
@@ -669,7 +664,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* Inventory */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Archive className="h-5 w-5" />
@@ -736,7 +731,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* Images */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ImagePlus className="h-5 w-5" />
@@ -793,7 +788,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* Physical Properties */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Package className="h-5 w-5" />
@@ -873,7 +868,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* SEO & Tags */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <BarChart className="h-5 w-5" />
@@ -950,7 +945,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* Product Status */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Tag className="h-5 w-5" />
@@ -987,7 +982,7 @@ export default function NewProductPage() {
             </Card>
 
             {/* Shipping Info */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Truck className="h-5 w-5" />

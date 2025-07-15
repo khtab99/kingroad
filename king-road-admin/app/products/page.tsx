@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Search, Edit, Trash2 } from "lucide-react";
+import { Plus, Search, Edit, Trash2, Edit2Icon, Edit2 } from "lucide-react";
 import Link from "next/link";
 import { useAdminAuth } from "@/contexts/admin-auth-context";
 import { deleteProduct, useGetAllProducts } from "@/api/product";
@@ -236,7 +236,7 @@ export default function ProductsPage() {
                             <div className="flex items-center space-x-2">
                               <Link href={`/products/${product.id}/edit`}>
                                 <Button variant="outline" size="sm">
-                                  <Edit className="h-4 w-4" />
+                                  <Edit2 className="h-4 w-4" />
                                 </Button>
                               </Link>
                               <Button

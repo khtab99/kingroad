@@ -34,7 +34,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${amiri.variable} antialiased overflow-hidden`}
+        className={`${inter.variable} ${amiri.variable} antialiased overflow-hidden `}
+        cz-shortcut-listen="true"
       >
         <ThemeProvider
           attribute="class"

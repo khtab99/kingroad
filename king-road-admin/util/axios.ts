@@ -165,4 +165,9 @@ export const endpoints = {
     profile: "/api/v1/admin/user/profile",
     refresh: "/api/v1/admin/auth/refresh",
   },
+  statistics: {
+    all: "api/v1/admin/dashboard/stats",
+    recentOrders: "api/v1/admin/dashboard/recent-orders",
+    topProducts: "api/v1/admin/dashboard/top-products",
+  },
 };

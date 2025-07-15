@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import { useLanguage } from '@/components/providers/language-provider'
-import { VendorHeader } from '@/components/layout/vendor-header'
-import { VendorSidebar } from '@/components/layout/vendor-sidebar'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useState } from "react";
+import { useLanguage } from "@/components/providers/language-provider";
+import { VendorHeader } from "@/components/layout/vendor-header";
+import { VendorSidebar } from "@/components/layout/vendor-sidebar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from "@/components/ui/select";
 import {
   BarChart3,
   TrendingUp,
@@ -28,12 +28,12 @@ import {
   Download,
   Calendar,
   Target,
-  Award
-} from 'lucide-react'
+  Award,
+} from "lucide-react";
 
 export default function AnalyticsPage() {
-  const { t } = useLanguage()
-  const [timeRange, setTimeRange] = useState('30d')
+  const { t } = useLanguage();
+  const [timeRange, setTimeRange] = useState("30d");
 
   // Mock analytics data
   const analytics = {
@@ -42,64 +42,79 @@ export default function AnalyticsPage() {
       previous: 13250,
       growth: 16.4,
       data: [
-        { period: 'Week 1', value: 3200 },
-        { period: 'Week 2', value: 3800 },
-        { period: 'Week 3', value: 4100 },
-        { period: 'Week 4', value: 4320 }
-      ]
+        { period: "Week 1", value: 3200 },
+        { period: "Week 2", value: 3800 },
+        { period: "Week 3", value: 4100 },
+        { period: "Week 4", value: 4320 },
+      ],
     },
     orders: {
       current: 156,
       previous: 142,
       growth: 9.9,
       data: [
-        { period: 'Week 1', value: 35 },
-        { period: 'Week 2', value: 42 },
-        { period: 'Week 3', value: 38 },
-        { period: 'Week 4', value: 41 }
-      ]
+        { period: "Week 1", value: 35 },
+        { period: "Week 2", value: 42 },
+        { period: "Week 3", value: 38 },
+        { period: "Week 4", value: 41 },
+      ],
     },
     customers: {
       current: 89,
       previous: 76,
       growth: 17.1,
       returning: 34,
-      newCustomers: 55
+      newCustomers: 55,
     },
     products: {
       views: 2340,
       viewsGrowth: 12.5,
       topProducts: [
-        { name: 'Traditional Sudanese Thob', sales: 23, revenue: 6877, views: 456 },
-        { name: 'Handwoven Basket Set', sales: 18, revenue: 2322, views: 389 },
-        { name: 'Sudanese Spice Collection', sales: 15, revenue: 1335, views: 298 },
-        { name: 'Gold Plated Bracelet', sales: 12, revenue: 2388, views: 267 },
-        { name: 'Traditional Coffee Set', sales: 9, revenue: 1431, views: 234 }
-      ]
+        {
+          name: "Dashboard Shell 88-97 Gray New",
+          sales: 23,
+          revenue: 6877,
+          views: 456,
+        },
+        {
+          name: "Lighter Illumination Green Color",
+          sales: 18,
+          revenue: 2322,
+          views: 389,
+        },
+        {
+          name: "Door Handle Set Spiral",
+          sales: 15,
+          revenue: 1335,
+          views: 298,
+        },
+        { name: "Gold Plated Bracelet", sales: 12, revenue: 2388, views: 267 },
+        { name: "Traditional Coffee Set", sales: 9, revenue: 1431, views: 234 },
+      ],
     },
     performance: {
       conversionRate: 3.8,
       averageOrderValue: 187,
       customerSatisfaction: 4.8,
-      returnRate: 2.1
-    }
-  }
+      returnRate: 2.1,
+    },
+  };
 
   const formatCurrency = (amount: number) => {
-    return `${amount.toLocaleString()} AED`
-  }
+    return `${amount.toLocaleString()} AED`;
+  };
 
   const formatPercentage = (value: number) => {
-    return `${value > 0 ? '+' : ''}${value.toFixed(1)}%`
-  }
+    return `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/10">
       <VendorHeader />
-      
+
       <div className="flex">
         <VendorSidebar />
-        
+
         <main className="flex-1 p-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
@@ -132,13 +147,17 @@ export default function AnalyticsPage() {
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {/* Revenue */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                     <DollarSign className="h-6 w-6 text-white" />
                   </div>
-                  <Badge variant={analytics.revenue.growth > 0 ? 'default' : 'destructive'}>
+                  <Badge
+                    variant={
+                      analytics.revenue.growth > 0 ? "default" : "destructive"
+                    }
+                  >
                     {analytics.revenue.growth > 0 ? (
                       <TrendingUp className="h-3 w-3 mr-1" />
                     ) : (
@@ -148,8 +167,12 @@ export default function AnalyticsPage() {
                   </Badge>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Revenue</p>
-                  <p className="text-2xl font-bold">{formatCurrency(analytics.revenue.current)}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Total Revenue
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {formatCurrency(analytics.revenue.current)}
+                  </p>
                   <p className="text-xs text-muted-foreground mt-1">
                     vs {formatCurrency(analytics.revenue.previous)} last period
                   </p>
@@ -158,13 +181,17 @@ export default function AnalyticsPage() {
             </Card>
 
             {/* Orders */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
                     <ShoppingCart className="h-6 w-6 text-white" />
                   </div>
-                  <Badge variant={analytics.orders.growth > 0 ? 'default' : 'destructive'}>
+                  <Badge
+                    variant={
+                      analytics.orders.growth > 0 ? "default" : "destructive"
+                    }
+                  >
                     {analytics.orders.growth > 0 ? (
                       <TrendingUp className="h-3 w-3 mr-1" />
                     ) : (
@@ -174,8 +201,12 @@ export default function AnalyticsPage() {
                   </Badge>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Orders</p>
-                  <p className="text-2xl font-bold">{analytics.orders.current}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Total Orders
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {analytics.orders.current}
+                  </p>
                   <p className="text-xs text-muted-foreground mt-1">
                     vs {analytics.orders.previous} last period
                   </p>
@@ -184,13 +215,17 @@ export default function AnalyticsPage() {
             </Card>
 
             {/* Customers */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-500 rounded-xl flex items-center justify-center">
                     <Users className="h-6 w-6 text-white" />
                   </div>
-                  <Badge variant={analytics.customers.growth > 0 ? 'default' : 'destructive'}>
+                  <Badge
+                    variant={
+                      analytics.customers.growth > 0 ? "default" : "destructive"
+                    }
+                  >
                     {analytics.customers.growth > 0 ? (
                       <TrendingUp className="h-3 w-3 mr-1" />
                     ) : (
@@ -200,23 +235,34 @@ export default function AnalyticsPage() {
                   </Badge>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Customers</p>
-                  <p className="text-2xl font-bold">{analytics.customers.current}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Total Customers
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {analytics.customers.current}
+                  </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {analytics.customers.newCustomers} new, {analytics.customers.returning} returning
+                    {analytics.customers.newCustomers} new,{" "}
+                    {analytics.customers.returning} returning
                   </p>
                 </div>
               </CardContent>
             </Card>
 
             {/* Product Views */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
                     <Eye className="h-6 w-6 text-white" />
                   </div>
-                  <Badge variant={analytics.products.viewsGrowth > 0 ? 'default' : 'destructive'}>
+                  <Badge
+                    variant={
+                      analytics.products.viewsGrowth > 0
+                        ? "default"
+                        : "destructive"
+                    }
+                  >
                     {analytics.products.viewsGrowth > 0 ? (
                       <TrendingUp className="h-3 w-3 mr-1" />
                     ) : (
@@ -226,8 +272,12 @@ export default function AnalyticsPage() {
                   </Badge>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Product Views</p>
-                  <p className="text-2xl font-bold">{analytics.products.views.toLocaleString()}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Product Views
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {analytics.products.views.toLocaleString()}
+                  </p>
                   <p className="text-xs text-muted-foreground mt-1">
                     Across all products
                   </p>
@@ -238,19 +288,24 @@ export default function AnalyticsPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             {/* Revenue Chart */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle>Revenue Trend</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {analytics.revenue.data.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">{item.period}</span>
+                    <div
+                      key={index}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-sm text-muted-foreground">
+                        {item.period}
+                      </span>
                       <div className="flex items-center gap-3">
                         <div className="w-32 bg-muted rounded-full h-2">
-                          <div 
-                            className="bg-primary h-2 rounded-full" 
+                          <div
+                            className="bg-primary h-2 rounded-full"
                             style={{ width: `${(item.value / 5000) * 100}%` }}
                           />
                         </div>
@@ -265,7 +320,7 @@ export default function AnalyticsPage() {
             </Card>
 
             {/* Performance Metrics */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle>Performance Metrics</CardTitle>
               </CardHeader>
@@ -277,8 +332,12 @@ export default function AnalyticsPage() {
                       <span className="font-medium">Conversion Rate</span>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold">{analytics.performance.conversionRate}%</div>
-                      <div className="text-xs text-muted-foreground">Industry avg: 2.5%</div>
+                      <div className="font-bold">
+                        {analytics.performance.conversionRate}%
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Industry avg: 2.5%
+                      </div>
                     </div>
                   </div>
 
@@ -288,8 +347,14 @@ export default function AnalyticsPage() {
                       <span className="font-medium">Avg. Order Value</span>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold">{formatCurrency(analytics.performance.averageOrderValue)}</div>
-                      <div className="text-xs text-muted-foreground">+12% vs last month</div>
+                      <div className="font-bold">
+                        {formatCurrency(
+                          analytics.performance.averageOrderValue
+                        )}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        +12% vs last month
+                      </div>
                     </div>
                   </div>
 
@@ -299,8 +364,12 @@ export default function AnalyticsPage() {
                       <span className="font-medium">Customer Satisfaction</span>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold">{analytics.performance.customerSatisfaction}/5.0</div>
-                      <div className="text-xs text-muted-foreground">Based on 234 reviews</div>
+                      <div className="font-bold">
+                        {analytics.performance.customerSatisfaction}/5.0
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Based on 234 reviews
+                      </div>
                     </div>
                   </div>
 
@@ -310,8 +379,12 @@ export default function AnalyticsPage() {
                       <span className="font-medium">Return Rate</span>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold">{analytics.performance.returnRate}%</div>
-                      <div className="text-xs text-muted-foreground">Industry avg: 8.9%</div>
+                      <div className="font-bold">
+                        {analytics.performance.returnRate}%
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Industry avg: 8.9%
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -320,7 +393,7 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Top Products */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-md">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Top Performing Products</CardTitle>
@@ -330,11 +403,16 @@ export default function AnalyticsPage() {
             <CardContent>
               <div className="space-y-4">
                 {analytics.products.topProducts.map((product, index) => (
-                  <div key={index} className="flex items-center gap-4 p-4 border rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center gap-4 p-4 border rounded-lg"
+                  >
                     <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <span className="font-bold text-primary">#{index + 1}</span>
+                      <span className="font-bold text-primary">
+                        #{index + 1}
+                      </span>
                     </div>
-                    
+
                     <div className="w-12 h-12 rounded-lg overflow-hidden bg-gradient-to-br from-primary/5 to-accent/5 flex-shrink-0">
                       <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                         <div className="text-lg opacity-40">🏺</div>
@@ -351,8 +429,12 @@ export default function AnalyticsPage() {
                     </div>
 
                     <div className="text-right">
-                      <div className="font-bold text-primary">{formatCurrency(product.revenue)}</div>
-                      <div className="text-sm text-muted-foreground">Revenue</div>
+                      <div className="font-bold text-primary">
+                        {formatCurrency(product.revenue)}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Revenue
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -362,5 +444,5 @@ export default function AnalyticsPage() {
         </main>
       </div>
     </div>
-  )
+  );
 }

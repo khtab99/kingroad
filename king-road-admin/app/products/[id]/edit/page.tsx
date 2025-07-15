@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useLanguage } from "@/components/providers/language-provider";
 import { VendorHeader } from "@/components/layout/vendor-header";
@@ -31,155 +31,284 @@ import {
   Trash2,
   Plus,
   Loader2,
+  Globe,
+  BarChart,
+  Archive,
 } from "lucide-react";
+import { Category, ProductFormData } from "@/util/type";
+import { useGetSuperCategory } from "@/api/category";
+import { createNewProduct, useGetProductById } from "@/api/product";
 
-export default function EditProductPage() {
-  const { t } = useLanguage();
-  const params = useParams();
+// Types
+
+interface FormErrors {
+  [key: string]: string[];
+}
+
+export default function ProductEdit() {
+  const { id } = useParams();
+  console.log(id);
+
+  const { t, language } = useLanguage();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    sku: "",
-    category: "",
-    description: "",
-    price: "",
-    compareAtPrice: "",
-    costPrice: "",
-    quantity: "",
-    weight: "",
-    tags: "",
-    isFeatured: false,
-    isActive: true,
-    images: [] as string[],
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategories, setSubcategories] = useState<any>([]);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [imagePreview, setImagePreview] = useState<string[]>([]);
+
+  const { product } = useGetProductById(id);
+
+  console.log(product);
+
+  const [formData, setFormData] = useState<ProductFormData>({
+    name_en: product?.name_en || "",
+    name_ar: product?.name_ar || "",
+    slug: product?.slug || "",
+    description_en: product?.description_en || "",
+    description_ar: product?.description_ar || "",
+    sku: product?.sku || "",
+    barcode: product?.barcode || "",
+    price: product?.price || "",
+    sale_price: product?.sale_price || "",
+    cost_price: product?.cost_price || "",
+    inventory: product?.inventory || "",
+    low_stock_threshold: product?.low_stock_threshold || "",
+    track_inventory: product?.track_inventory || false,
+    category_id: product?.category_id || "",
+    subcategory_id: product?.subcategory_id || "",
+    images: product?.images || [],
+    weight: product?.weight || "",
+    dimensions: {
+      length: "",
+      width: "",
+      height: "",
+    },
+    is_active: product?.is_active || false,
+    is_featured: product?.is_featured || false,
+    tags: product?.tags || [],
+    meta_title: product?.meta_title || "",
+    meta_description: product?.meta_description || "",
   });
 
-  const categories = [
-    "Traditional Crafts",
-    "Food & Previlege",
-    "Traditional Clothing",
-    "Jewelry",
-    "Home & Kitchen",
-    "Art & Decor",
-  ];
+  // Fetch categories on component mount
 
-  // Fetch product data
+  const { superCategoryList } = useGetSuperCategory();
+
   useEffect(() => {
-    const fetchProduct = async () => {
-      setIsLoading(true);
-      try {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 800));
+    setCategories(
+      superCategoryList.filter((cat: any) => cat.parent_id === null)
+    );
+  }, [superCategoryList]);
 
-        // Mock product data
-        const mockProduct = {
-          id: parseInt(params.id as string),
-          name: "Traditional Sudanese Thob",
-          sku: "TST-001",
-          category: "Traditional Clothing",
-          description:
-            "This authentic Sudanese thob is handcrafted by skilled artisans using traditional techniques passed down through generations. Made from premium cotton fabric, it features intricate embroidery and cultural patterns that celebrate Sudanese heritage.",
-          price: "299",
-          compareAtPrice: "399",
-          costPrice: "150",
-          quantity: "12",
-          weight: "0.5",
-          tags: "traditional, clothing, handmade, cotton",
-          isFeatured: true,
-          isActive: true,
-          images: [
-            "https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=300",
-            "https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=300",
-            "https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=300",
-          ],
-        };
+  // Generate slug from English name
+  useEffect(() => {
+    if (formData.name_en) {
+      const slug = formData.name_en
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      updateFormData("slug", slug);
+    }
+  }, [formData.name_en]);
 
-        setFormData(mockProduct);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-        toast.error("Failed to load product details");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // Update subcategories when category changes
+  useEffect(() => {
+    if (formData.category_id) {
+      const selectedCategory = categories.find(
+        (cat) => cat.id.toString() === formData.category_id
+      );
+      console.log(selectedCategory);
 
-    fetchProduct();
-  }, [params.id]);
+      setSubcategories(selectedCategory?.children || []);
+      updateFormData("subcategory_id", "");
+    }
+  }, [formData.category_id, categories]);
 
-  const updateFormData = (
-    field: string,
-    value: string | boolean | string[]
-  ) => {
+  const updateFormData = (field: keyof ProductFormData, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear errors for this field
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: [] }));
+    }
   };
 
-  const handleAddImage = () => {
-    // In a real app, this would open a file picker or media library
-    // For demo purposes, we'll add a placeholder image
-    const placeholderImage = `https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&placeholder=${Date.now()}`;
-    updateFormData("images", [...formData.images, placeholderImage]);
+  const updateDimensions = (
+    dimension: keyof ProductFormData["dimensions"],
+    value: string
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      dimensions: { ...prev.dimensions, [dimension]: value },
+    }));
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    if (formData.images.length + files.length > 8) {
+      toast.error("You can only upload up to 8 images");
+      return;
+    }
+
+    // Validate file types and sizes
+    const validFiles = files.filter((file) => {
+      const isValidType = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/gif",
+      ].includes(file.type);
+      const isValidSize = file.size <= 2048 * 1024; // 2MB
+
+      if (!isValidType) {
+        toast.error(`${file.name} is not a valid image type`);
+        return false;
+      }
+      if (!isValidSize) {
+        toast.error(`${file.name} is too large (max 2MB)`);
+        return false;
+      }
+      return true;
+    });
+
+    if (validFiles.length > 0) {
+      updateFormData("images", [...formData.images, ...validFiles]);
+
+      // Generate previews
+      validFiles.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreview((prev) => [...prev, e.target?.result as string]);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
   };
 
   const handleRemoveImage = (index: number) => {
     const newImages = [...formData.images];
     newImages.splice(index, 1);
     updateFormData("images", newImages);
+
+    const newPreviews = [...imagePreview];
+    newPreviews.splice(index, 1);
+    setImagePreview(newPreviews);
+  };
+
+  const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      const input = e.target as HTMLInputElement;
+      const tag = input.value.trim();
+
+      if (tag && !formData.tags.includes(tag)) {
+        updateFormData("tags", [...formData.tags, tag]);
+        input.value = "";
+      }
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    updateFormData(
+      "tags",
+      formData.tags.filter((tag) => tag !== tagToRemove)
+    );
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    // Required fields validation
+    if (!formData.name_en) newErrors.name_en = ["English name is required"];
+    if (!formData.name_ar) newErrors.name_ar = ["Arabic name is required"];
+    if (!formData.sku) newErrors.sku = ["SKU is required"];
+    if (!formData.price) newErrors.price = ["Price is required"];
+    if (!formData.inventory) newErrors.inventory = ["Inventory is required"];
+    if (!formData.category_id) newErrors.category_id = ["Category is required"];
+
+    // Price validation
+    if (formData.price && parseFloat(formData.price) < 0) {
+      newErrors.price = ["Price must be 0 or greater"];
+    }
+    if (
+      formData.sale_price &&
+      parseFloat(formData.sale_price) >= parseFloat(formData.price)
+    ) {
+      newErrors.sale_price = ["Sale price must be less than regular price"];
+    }
+
+    // Inventory validation
+    if (formData.inventory && parseInt(formData.inventory) < 0) {
+      newErrors.inventory = ["Inventory must be 0 or greater"];
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fix the validation errors");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const formDataToSend = new FormData();
 
-      toast.success("Product updated successfully!");
-      router.push(`/products/${params.id}`);
+      // Add all form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === "images") {
+          // Handle file uploads
+          (value as File[]).forEach((file, index) => {
+            formDataToSend.append(`images[${index}]`, file);
+          });
+        } else if (key === "dimensions") {
+          // Handle dimensions object
+          Object.entries(value).forEach(([dimKey, dimValue]) => {
+            if (dimValue) {
+              formDataToSend.append(`dimensions[${dimKey}]`, dimValue);
+            }
+          });
+        } else if (key === "tags") {
+          // Handle tags array
+          (value as string[]).forEach((tag, index) => {
+            formDataToSend.append(`tags[${index}]`, tag);
+          });
+        } else if (typeof value === "boolean") {
+          formDataToSend.append(key, value ? "1" : "0");
+        } else if (value !== null && value !== undefined && value !== "") {
+          formDataToSend.append(key, value.toString());
+        }
+      });
+
+      const response = await createNewProduct(formDataToSend);
+
+      if (response) {
+        toast.success("Product created successfully!");
+        router.push("/products");
+      } else {
+        // Handle validation errors from backend
+        if (response.errors) {
+          setErrors(response.errors);
+        }
+        toast.error(response.message || "Failed to create product");
+      }
     } catch (error) {
-      toast.error("Failed to update product. Please try again.");
+      console.error("Error creating product:", error);
+      toast.error("Failed to create product. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/10">
-        <VendorHeader />
-        <div className="flex">
-          <VendorSidebar />
-          <main className="flex-1 p-8">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-bold">Loading Product...</h1>
-                <p className="text-muted-foreground">
-                  Please wait while we fetch the product details
-                </p>
-              </div>
-            </div>
-            <div className="space-y-8">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="border-0 shadow-lg">
-                  <CardHeader>
-                    <div className="h-6 w-48 bg-muted rounded animate-pulse" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="h-4 w-full bg-muted rounded animate-pulse" />
-                      <div className="h-4 w-3/4 bg-muted rounded animate-pulse" />
-                      <div className="h-4 w-1/2 bg-muted rounded animate-pulse" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </main>
-        </div>
-      </div>
-    );
-  }
+  const getFieldError = (field: string) => {
+    return errors[field]?.[0];
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/10">
@@ -211,7 +340,7 @@ export default function EditProductPage() {
                 ) : (
                   <>
                     <Save className="h-4 w-4 mr-2" />
-                    Save Changes
+                    Save Product
                   </>
                 )}
               </Button>
@@ -220,7 +349,7 @@ export default function EditProductPage() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Basic Information */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Package className="h-5 w-5" />
@@ -228,75 +357,231 @@ export default function EditProductPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-4">
+                {/* Multilingual Names */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Product Name *</Label>
+                    <Label
+                      htmlFor="name_en"
+                      className="flex items-center gap-2"
+                    >
+                      <Globe className="h-4 w-4" />
+                      Product Name (English) *
+                    </Label>
                     <Input
-                      id="name"
-                      placeholder="e.g. Traditional Sudanese Thob"
-                      value={formData.name}
-                      onChange={(e) => updateFormData("name", e.target.value)}
-                      required
+                      id="name_en"
+                      placeholder="Add product name"
+                      value={formData.name_en}
+                      onChange={(e) =>
+                        updateFormData("name_en", e.target.value)
+                      }
+                      className={
+                        getFieldError("name_en") ? "border-destructive" : ""
+                      }
+                    />
+                    {getFieldError("name_en") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("name_en")}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="name_ar"
+                      className="flex items-center gap-2"
+                    >
+                      <Globe className="h-4 w-4" />
+                      Product Name (Arabic) *
+                    </Label>
+                    <Input
+                      id="name_ar"
+                      placeholder="آدخل اسم المنتج"
+                      value={formData.name_ar}
+                      onChange={(e) =>
+                        updateFormData("name_ar", e.target.value)
+                      }
+                      className={
+                        getFieldError("name_ar") ? "border-destructive" : ""
+                      }
+                      dir="rtl"
+                    />
+                    {getFieldError("name_ar") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("name_ar")}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* SKU and Slug */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="sku">SKU (Stock Keeping Unit) *</Label>
+                    <Input
+                      id="sku"
+                      placeholder="e.g. TST-001"
+                      value={formData.sku}
+                      onChange={(e) => updateFormData("sku", e.target.value)}
+                      className={
+                        getFieldError("sku") ? "border-destructive" : ""
+                      }
+                    />
+                    {getFieldError("sku") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("sku")}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="slug">URL Slug</Label>
+                    <Input
+                      id="slug"
+                      placeholder="Auto-generated from English name"
+                      value={formData.slug}
+                      onChange={(e) => updateFormData("slug", e.target.value)}
+                      className={
+                        getFieldError("slug") ? "border-destructive" : ""
+                      }
+                    />
+                    {getFieldError("slug") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("slug")}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Barcode */}
+                <div>
+                  <Label htmlFor="barcode">Barcode (Optional)</Label>
+                  <Input
+                    id="barcode"
+                    placeholder="e.g. 1234567890123"
+                    value={formData.barcode}
+                    onChange={(e) => updateFormData("barcode", e.target.value)}
+                  />
+                </div>
+
+                {/* Descriptions */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="description_en">
+                      Description (English)
+                    </Label>
+                    <Textarea
+                      id="description_en"
+                      placeholder="Describe your product in English..."
+                      value={formData.description_en}
+                      onChange={(e) =>
+                        updateFormData("description_en", e.target.value)
+                      }
+                      rows={5}
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="sku">SKU (Stock Keeping Unit) *</Label>
-                      <Input
-                        id="sku"
-                        placeholder="e.g. TST-001"
-                        value={formData.sku}
-                        onChange={(e) => updateFormData("sku", e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="category">Category *</Label>
-                      <Select
-                        value={formData.category}
-                        onValueChange={(value) =>
-                          updateFormData("category", value)
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {categories.map((category) => (
-                            <SelectItem key={category} value={category}>
-                              {category}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
                   <div>
-                    <Label htmlFor="description">Description *</Label>
+                    <Label htmlFor="description_ar">Description (Arabic)</Label>
                     <Textarea
-                      id="description"
-                      placeholder="Describe your product in detail..."
-                      value={formData.description}
+                      id="description_ar"
+                      placeholder="وصف المنتج باللغة العربية..."
+                      value={formData.description_ar}
                       onChange={(e) =>
-                        updateFormData("description", e.target.value)
+                        updateFormData("description_ar", e.target.value)
                       }
                       rows={5}
-                      required
+                      dir="rtl"
                     />
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Pricing & Inventory */}
-            <Card className="border-0 shadow-lg">
+            {/* Categories */}
+            <Card className="border-0 shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Tag className="h-5 w-5" />
+                  Categories
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="category_id">Category *</Label>
+                    <Select
+                      value={categories.id}
+                      onValueChange={(value) =>
+                        updateFormData("category_id", value)
+                      }
+                    >
+                      <SelectTrigger
+                        className={
+                          getFieldError("category_id")
+                            ? "border-destructive"
+                            : ""
+                        }
+                      >
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {language === "ar"
+                              ? category.name_ar
+                              : category.name_en}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {getFieldError("category_id") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("category_id")}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="subcategory_id">
+                      Subcategory (Optional)
+                    </Label>
+                    <Select
+                      value={subcategories.id}
+                      onValueChange={(value) =>
+                        updateFormData("subcategory_id", value)
+                      }
+                      disabled={!formData.category_id}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a subcategory" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {subcategories.map((subcategory: any) => (
+                          <SelectItem
+                            key={subcategory.id}
+                            value={subcategory.id.toString()}
+                          >
+                            {language === "ar"
+                              ? subcategory.name_ar
+                              : subcategory.name_en}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Pricing */}
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <DollarSign className="h-5 w-5" />
-                  Pricing & Inventory
+                  Pricing
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -308,50 +593,69 @@ export default function EditProductPage() {
                       <Input
                         id="price"
                         type="number"
+                        step="0.01"
+                        min="0"
                         placeholder="0.00"
                         value={formData.price}
                         onChange={(e) =>
                           updateFormData("price", e.target.value)
                         }
-                        className="pl-10"
-                        required
+                        className={`pl-10 ${
+                          getFieldError("price") ? "border-destructive" : ""
+                        }`}
                       />
                     </div>
+                    {getFieldError("price") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("price")}
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <Label htmlFor="compareAtPrice">
-                      Compare-at Price (AED)
-                    </Label>
+                    <Label htmlFor="sale_price">Sale Price (AED)</Label>
                     <div className="relative">
                       <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
-                        id="compareAtPrice"
+                        id="sale_price"
                         type="number"
+                        step="0.01"
+                        min="0"
                         placeholder="0.00"
-                        value={formData.compareAtPrice}
+                        value={formData.sale_price}
                         onChange={(e) =>
-                          updateFormData("compareAtPrice", e.target.value)
+                          updateFormData("sale_price", e.target.value)
                         }
-                        className="pl-10"
+                        className={`pl-10 ${
+                          getFieldError("sale_price")
+                            ? "border-destructive"
+                            : ""
+                        }`}
                       />
                     </div>
+                    {getFieldError("sale_price") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("sale_price")}
+                      </p>
+                    )}
                     <p className="text-xs text-muted-foreground mt-1">
-                      Original price if the product is on sale
+                      Discounted price (must be less than regular price)
                     </p>
                   </div>
 
                   <div>
-                    <Label htmlFor="costPrice">Cost Price (AED)</Label>
+                    <Label htmlFor="cost_price">Cost Price (AED)</Label>
                     <div className="relative">
                       <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
-                        id="costPrice"
+                        id="cost_price"
                         type="number"
+                        step="0.01"
+                        min="0"
                         placeholder="0.00"
-                        value={formData.costPrice}
+                        value={formData.cost_price}
                         onChange={(e) =>
-                          updateFormData("costPrice", e.target.value)
+                          updateFormData("cost_price", e.target.value)
                         }
                         className="pl-10"
                       />
@@ -361,40 +665,78 @@ export default function EditProductPage() {
                     </p>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
 
-                <Separator />
-
+            {/* Inventory */}
+            <Card className="border-0 shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Archive className="h-5 w-5" />
+                  Inventory Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="quantity">Quantity *</Label>
+                    <Label htmlFor="inventory">Stock Quantity *</Label>
                     <Input
-                      id="quantity"
+                      id="inventory"
                       type="number"
+                      min="0"
                       placeholder="0"
-                      value={formData.quantity}
+                      value={formData.inventory}
                       onChange={(e) =>
-                        updateFormData("quantity", e.target.value)
+                        updateFormData("inventory", e.target.value)
                       }
-                      required
+                      className={
+                        getFieldError("inventory") ? "border-destructive" : ""
+                      }
                     />
+                    {getFieldError("inventory") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("inventory")}
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <Label htmlFor="weight">Weight (kg)</Label>
+                    <Label htmlFor="low_stock_threshold">
+                      Low Stock Threshold
+                    </Label>
                     <Input
-                      id="weight"
+                      id="low_stock_threshold"
                       type="number"
-                      placeholder="0.00"
-                      value={formData.weight}
-                      onChange={(e) => updateFormData("weight", e.target.value)}
+                      min="0"
+                      placeholder="5"
+                      value={formData.low_stock_threshold}
+                      onChange={(e) =>
+                        updateFormData("low_stock_threshold", e.target.value)
+                      }
                     />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Get notified when stock falls below this level
+                    </p>
                   </div>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="track_inventory"
+                    checked={formData.track_inventory}
+                    onCheckedChange={(checked) =>
+                      updateFormData("track_inventory", checked)
+                    }
+                  />
+                  <Label htmlFor="track_inventory" className="cursor-pointer">
+                    Track inventory levels for this product
+                  </Label>
                 </div>
               </CardContent>
             </Card>
 
             {/* Images */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ImagePlus className="h-5 w-5" />
@@ -403,93 +745,249 @@ export default function EditProductPage() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {formData.images.map((image, index) => (
+                  {imagePreview.map((preview, index) => (
                     <div
                       key={index}
-                      className="relative aspect-square rounded-lg overflow-hidden border bg-muted"
+                      className="relative aspect-square rounded-lg overflow-hidden border"
                     >
-                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                        <div className="text-4xl opacity-20">🏺</div>
-                      </div>
+                      <img
+                        src={preview}
+                        alt={`Product ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
                       <Button
                         variant="destructive"
                         size="sm"
                         className="absolute top-2 right-2 w-8 h-8 p-0"
                         onClick={() => handleRemoveImage(index)}
+                        type="button"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   ))}
 
-                  <Button
-                    variant="outline"
-                    className="aspect-square flex flex-col items-center justify-center gap-2 border-dashed"
-                    onClick={handleAddImage}
-                  >
-                    <Plus className="h-6 w-6" />
-                    <span className="text-sm">Add Image</span>
-                  </Button>
+                  {imagePreview.length < 8 && (
+                    <Label
+                      htmlFor="image-upload"
+                      className="aspect-square flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50"
+                    >
+                      <Plus className="h-6 w-6" />
+                      <span className="text-sm">Add Image</span>
+                      <Input
+                        id="image-upload"
+                        type="file"
+                        accept="image/jpeg,image/png,image/jpg,image/gif"
+                        multiple
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+                    </Label>
+                  )}
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Add up to 8 images. First image will be used as the product
-                  thumbnail.
+                  Upload up to 8 images (JPEG, PNG, JPG, GIF - max 2MB each).
+                  First image will be the main product image.
                 </p>
               </CardContent>
             </Card>
 
-            {/* Organization */}
-            <Card className="border-0 shadow-lg">
+            {/* Physical Properties */}
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Tag className="h-5 w-5" />
-                  Organization
+                  <Package className="h-5 w-5" />
+                  Physical Properties
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="tags">Tags</Label>
+                  <Label htmlFor="weight">Weight (kg)</Label>
                   <Input
-                    id="tags"
-                    placeholder="e.g. traditional, handmade, cotton (comma separated)"
-                    value={formData.tags}
-                    onChange={(e) => updateFormData("tags", e.target.value)}
+                    id="weight"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                    value={formData.weight}
+                    onChange={(e) => updateFormData("weight", e.target.value)}
                   />
+                </div>
+
+                <div>
+                  <Label className="text-base font-medium">
+                    Dimensions (cm)
+                  </Label>
+                  <div className="grid grid-cols-3 gap-4 mt-2">
+                    <div>
+                      <Label htmlFor="length" className="text-sm">
+                        Length
+                      </Label>
+                      <Input
+                        id="length"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        value={formData.dimensions.length}
+                        onChange={(e) =>
+                          updateDimensions("length", e.target.value)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="width" className="text-sm">
+                        Width
+                      </Label>
+                      <Input
+                        id="width"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        value={formData.dimensions.width}
+                        onChange={(e) =>
+                          updateDimensions("width", e.target.value)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="height" className="text-sm">
+                        Height
+                      </Label>
+                      <Input
+                        id="height"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        value={formData.dimensions.height}
+                        onChange={(e) =>
+                          updateDimensions("height", e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* SEO & Tags */}
+            <Card className="border-0 shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart className="h-5 w-5" />
+                  SEO & Tags
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label htmlFor="tag-input">Tags</Label>
+                  <Input
+                    id="tag-input"
+                    placeholder="Type a tag and press Enter or comma"
+                    onKeyDown={handleTagInput}
+                  />
+                  {formData.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md text-sm"
+                        >
+                          {tag}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-4 w-4 p-0 hover:bg-destructive/20"
+                            onClick={() => removeTag(tag)}
+                            type="button"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <p className="text-xs text-muted-foreground mt-1">
-                    Help customers find your product
+                    Help customers find your product with relevant tags
                   </p>
                 </div>
 
+                <div>
+                  <Label htmlFor="meta_title">Meta Title</Label>
+                  <Input
+                    id="meta_title"
+                    placeholder="SEO title for search engines"
+                    value={formData.meta_title}
+                    onChange={(e) =>
+                      updateFormData("meta_title", e.target.value)
+                    }
+                    maxLength={255}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {formData.meta_title?.length || 0}/255 characters
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="meta_description">Meta Description</Label>
+                  <Textarea
+                    id="meta_description"
+                    placeholder="Brief description for search engines"
+                    value={formData.meta_description}
+                    onChange={(e) =>
+                      updateFormData("meta_description", e.target.value)
+                    }
+                    rows={3}
+                    maxLength={500}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {formData.meta_description?.length || 0}/500 characters
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Product Status */}
+            <Card className="border-0 shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Tag className="h-5 w-5" />
+                  Product Status
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <div className="flex items-center space-x-2">
                   <Checkbox
-                    id="isFeatured"
-                    checked={formData.isFeatured}
+                    id="is_active"
+                    checked={formData.is_active}
                     onCheckedChange={(checked) =>
-                      updateFormData("isFeatured", checked as boolean)
+                      updateFormData("is_active", checked)
                     }
                   />
-                  <Label htmlFor="isFeatured" className="cursor-pointer">
-                    Feature this product on your storefront
+                  <Label htmlFor="is_active" className="cursor-pointer">
+                    Product is active and available for purchase
                   </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Checkbox
-                    id="isActive"
-                    checked={formData.isActive}
+                    id="is_featured"
+                    checked={formData.is_featured}
                     onCheckedChange={(checked) =>
-                      updateFormData("isActive", checked as boolean)
+                      updateFormData("is_featured", checked)
                     }
                   />
-                  <Label htmlFor="isActive" className="cursor-pointer">
-                    Product is active and ready to sell
+                  <Label htmlFor="is_featured" className="cursor-pointer">
+                    Feature this product on your storefront
                   </Label>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Shipping */}
-            <Card className="border-0 shadow-lg">
+            {/* Shipping Info */}
+            <Card className="border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Truck className="h-5 w-5" />
@@ -498,8 +996,9 @@ export default function EditProductPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  This product will use your default shipping settings. You can
-                  customize shipping rates in your store settings.
+                  This product will use your default shipping settings. Weight
+                  and dimensions will be used to calculate shipping costs
+                  automatically.
                 </p>
                 <Button variant="outline" type="button">
                   Configure Shipping Settings
@@ -508,11 +1007,12 @@ export default function EditProductPage() {
             </Card>
 
             {/* Submit Buttons */}
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 pt-6">
               <Button
                 variant="outline"
                 type="button"
                 onClick={() => router.back()}
+                disabled={isSubmitting}
               >
                 Cancel
               </Button>
@@ -520,12 +1020,12 @@ export default function EditProductPage() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Saving...
+                    Creating Product...
                   </>
                 ) : (
                   <>
                     <Save className="h-4 w-4 mr-2" />
-                    Save Changes
+                    Create Product
                   </>
                 )}
               </Button>

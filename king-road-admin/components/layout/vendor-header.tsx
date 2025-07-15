@@ -43,7 +43,7 @@ export function VendorHeader() {
     deleteAdminData();
     window.location.reload();
   };
-  const adminData = localStorage.getItem("admin_data");
+  const adminData = getAdminData();
   const admin = JSON.parse(adminData || "{}");
 
   const { theme, setTheme } = useTheme();

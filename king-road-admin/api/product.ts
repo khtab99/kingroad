@@ -126,7 +126,7 @@ export function useGetProductsByCategory(
 }
 
 // Hook for fetching single product by ID
-export function useGetProductById(id: string | null) {
+export function useGetProductById(id: any) {
   const URL = id ? `${endpoints.product.details}${id}` : null;
 
   const { data, isLoading, error, isValidating } = useSWR(
@@ -146,7 +146,7 @@ export function useGetProductById(id: string | null) {
 
   const memoizedValue = useMemo(
     () => ({
-      product: data?.data as Product | null,
+      product: data?.data,
       productLoading: isLoading,
       productError: error,
       productValidating: isValidating,

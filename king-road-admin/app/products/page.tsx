@@ -197,7 +197,7 @@ export default function ProductsPage() {
                         <TableCell>
                           <Link
                             href={`/products/${product.id}`}
-                            className="font-medium hover:underline text-primary"
+                            className="font-medium hover:underline "
                           >
                             {product.name_en}
                           </Link>

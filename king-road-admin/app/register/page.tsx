@@ -129,7 +129,7 @@ export default function VendorRegisterPage() {
           </Link>
         </div>
 
-        <Card className="border-0 shadow-xl">
+        <Card className="border-0 shadow-lg">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-bold">
               Join kingroad as a Vendor

@@ -59,7 +59,7 @@ export default function ProductDetailPage() {
         // Mock product data
         const mockProduct = {
           id: parseInt(params.id as string),
-          name: "Traditional Sudanese Thob",
+          name: "Dashboard Shell 88-97 Gray New",
           sku: "TST-001",
           category: "Traditional Clothing",
           description:
@@ -144,7 +144,7 @@ export default function ProductDetailPage() {
             </div>
             <div className="space-y-8">
               {[1, 2, 3].map((i) => (
-                <Card key={i} className="border-0 shadow-lg">
+                <Card key={i} className="border-0 shadow-md">
                   <CardHeader>
                     <div className="h-6 w-48 bg-muted rounded animate-pulse" />
                   </CardHeader>
@@ -277,7 +277,7 @@ export default function ProductDetailPage() {
             {/* Product Details */}
             <div className="lg:col-span-2 space-y-8">
               {/* Basic Information */}
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-md">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Package className="h-5 w-5" />
@@ -349,7 +349,7 @@ export default function ProductDetailPage() {
               </Card>
 
               {/* Images */}
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-md">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <ImagePlus className="h-5 w-5" />
@@ -376,7 +376,7 @@ export default function ProductDetailPage() {
             {/* Sidebar */}
             <div className="space-y-8">
               {/* Performance Stats */}
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-md">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <BarChart3 className="h-5 w-5" />
@@ -440,7 +440,7 @@ export default function ProductDetailPage() {
               </Card>
 
               {/* Quick Actions */}
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-md">
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
                 </CardHeader>
@@ -490,7 +490,7 @@ export default function ProductDetailPage() {
               </Card>
 
               {/* Metadata */}
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-md">
                 <CardHeader>
                   <CardTitle>Metadata</CardTitle>
                 </CardHeader>

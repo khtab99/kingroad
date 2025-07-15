@@ -49,7 +49,7 @@ export default function DashboardPage() {
     {
       id: "ORD-001",
       customer: "Ahmed Hassan",
-      product: "Traditional Sudanese Thob",
+      product: "Dashboard Shell 88-97 Gray New",
       amount: 299,
       status: "pending",
       date: "2024-01-15",
@@ -57,7 +57,7 @@ export default function DashboardPage() {
     {
       id: "ORD-002",
       customer: "Fatima Al-Rashid",
-      product: "Handwoven Basket Set",
+      product: "Lighter Illumination Green Color",
       amount: 129,
       status: "shipped",
       date: "2024-01-14",
@@ -65,7 +65,7 @@ export default function DashboardPage() {
     {
       id: "ORD-003",
       customer: "Omar Khalil",
-      product: "Sudanese Spice Collection",
+      product: "Door Handle Set Spiral",
       amount: 89,
       status: "delivered",
       date: "2024-01-13",
@@ -75,7 +75,7 @@ export default function DashboardPage() {
   const topProducts = [
     {
       id: 1,
-      name: "Traditional Sudanese Thob",
+      name: "Dashboard Shell 88-97 Gray New",
       sales: 23,
       revenue: 6877,
       rating: 4.9,
@@ -83,7 +83,7 @@ export default function DashboardPage() {
     },
     {
       id: 2,
-      name: "Handwoven Basket Set",
+      name: "Lighter Illumination Green Color",
       sales: 18,
       revenue: 2322,
       rating: 4.8,
@@ -91,7 +91,7 @@ export default function DashboardPage() {
     },
     {
       id: 3,
-      name: "Sudanese Spice Collection",
+      name: "Door Handle Set Spiral",
       sales: 15,
       revenue: 1335,
       rating: 4.7,
@@ -126,39 +126,11 @@ export default function DashboardPage() {
         </div>
 
         {/* Profile Completion Alert */}
-        {vendorStats.profileCompletion < 100 && (
-          <Card className="mb-8 border-amber-200 bg-amber-50 dark:bg-amber-950/20">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <AlertTriangle className="h-8 w-8 text-amber-600" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-amber-800 dark:text-amber-200">
-                    Complete Your Profile
-                  </h3>
-                  <p className="text-sm text-amber-700 dark:text-amber-300 mb-3">
-                    Your profile is {vendorStats.profileCompletion}% complete.
-                    Complete it to increase visibility.
-                  </p>
-                  <Progress
-                    value={vendorStats.profileCompletion}
-                    className="mb-3"
-                  />
-                  <Button size="sm" variant="outline" asChild>
-                    <Link href="/profile">
-                      Complete Profile
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Revenue */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-md">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -183,7 +155,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Orders */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-md">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -208,7 +180,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Products */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-md">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -232,7 +204,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Rating */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-md">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -258,7 +230,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Orders */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-md">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Recent Orders</CardTitle>
@@ -302,7 +274,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Top Products */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-md">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Top Products</CardTitle>
@@ -357,7 +329,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <Card className="mt-8 border-0 shadow-lg">
+        <Card className="mt-8 border-0 shadow-md">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
           </CardHeader>

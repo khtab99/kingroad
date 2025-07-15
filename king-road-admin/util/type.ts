@@ -74,7 +74,7 @@ export interface Product {
 }
 
 export interface Category {
-  id: string;
+  id: any;
   name_en: string;
   name_ar: string;
   name: string;

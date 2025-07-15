@@ -146,7 +146,7 @@ export function useGetProductById(id: any) {
 
   const memoizedValue = useMemo(
     () => ({
-      product: data?.data,
+      productDetails: data?.data,
       productLoading: isLoading,
       productError: error,
       productValidating: isValidating,

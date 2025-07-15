@@ -26,6 +26,7 @@ import { useAdminAuth } from "@/contexts/admin-auth-context";
 import { deleteProduct, useGetAllProducts } from "@/api/product";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 interface Product {
   id: number;
@@ -42,6 +43,9 @@ interface Product {
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   console.log(products);
 
@@ -74,7 +78,7 @@ export default function ProductsPage() {
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete: any = async (id: number) => {
     try {
       const respose = await deleteProduct(id);
       if (respose) {
@@ -102,157 +106,171 @@ export default function ProductsPage() {
   };
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Products</h2>
-            <p className="text-muted-foreground">
-              Manage your product inventory
-            </p>
+    <>
+      <AdminLayout>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight">Products</h2>
+              <p className="text-muted-foreground">
+                Manage your product inventory
+              </p>
+            </div>
+            <Link href="/products/new">
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Add Product
+              </Button>
+            </Link>
           </div>
-          <Link href="/products/new">
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Product
-            </Button>
-          </Link>
-        </div>
 
-        <Card>
-          {/* <CardHeader>
+          <Card>
+            {/* <CardHeader>
             <CardTitle>Product List</CardTitle>
             <CardDescription>
               A list of all products in your store
             </CardDescription>
           </CardHeader> */}
-          <CardContent className="mt-10">
-            <div className="flex items-center space-x-2 mb-4">
-              <Search className="h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-sm"
-              />
-            </div>
+            <CardContent className="mt-10">
+              <div className="flex items-center space-x-2 mb-4">
+                <Search className="h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="max-w-sm"
+                />
+              </div>
 
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Image</TableHead>
-                  <TableHead>Product</TableHead>
-                  <TableHead>SKU</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Inventory</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {productLoading ? (
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center">
-                      Loading...
-                    </TableCell>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Image</TableHead>
+                    <TableHead>Product</TableHead>
+                    <TableHead>SKU</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead>Inventory</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
-                ) : filteredProducts.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center">
-                      No products found
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filteredProducts.map((product: any) => {
-                    const cleanImageUrl = product?.featured_image?.includes(
-                      "assets/images/product/"
-                    )
-                      ? product.featured_image.replace(
-                          "http://localhost:8000",
-                          ""
-                        )
-                      : product?.featured_image ||
-                        "/assets/images/product/1.jpg";
-                    return (
-                      <TableRow key={product.id}>
-                        <TableCell>{product.id}</TableCell>
-                        <TableCell>
-                          <Avatar className="h-16 w-16 shadow-sm">
-                            <AvatarImage
-                              src={cleanImageUrl}
-                              alt={product.name_en}
-                            />
-                            <AvatarFallback>
-                              {product.name_en
-                                .split(" ")
-                                .map((n: string) => n[0])
-                                .join("")
-                                .toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
-                        </TableCell>
-                        {/* go to details page on click the name */}
-                        <TableCell>
-                          <Link
-                            href={`/products/${product.id}`}
-                            className="font-medium hover:underline "
-                          >
-                            {product.name_en}
-                          </Link>
-                          <p className="text-sm text-muted-foreground">
-                            {product.name_ar}
-                          </p>
-                        </TableCell>
-                        <TableCell>{product.sku}</TableCell>
-
-                        <TableCell>{product.category?.name_en}</TableCell>
-                        <TableCell>AED {product.price}</TableCell>
-                        <TableCell>
-                          <div
-                            className={`${getInventoryColor(
-                              product.inventory
-                            )} text-xs font-medium w-10 px-2 py-1 rounded-full border border-border/90 shadow-sm text-center`}
-                          >
-                            {product.inventory || 0}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div
-                            className={`${getActivityColor(
-                              product.is_active
-                            )} text-xs font-medium px-2 py-1 rounded-full border border-border/90 shadow-sm text-center`}
-                          >
-                            {product.is_active ? "Active" : "Inactive"}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center space-x-2">
-                            <Link href={`/products/${product.id}/edit`}>
-                              <Button variant="outline" size="sm">
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                            </Link>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="hover:bg-red-600 hover:text-white"
-                              onClick={() => handleDelete(product.id)}
+                </TableHeader>
+                <TableBody>
+                  {productLoading ? (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center">
+                        Loading...
+                      </TableCell>
+                    </TableRow>
+                  ) : filteredProducts.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center">
+                        No products found
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    filteredProducts.map((product: any) => {
+                      const cleanImageUrl = product?.featured_image?.includes(
+                        "assets/images/product/"
+                      )
+                        ? product.featured_image.replace(
+                            "http://localhost:8000",
+                            ""
+                          )
+                        : product?.featured_image ||
+                          "/assets/images/product/1.jpg";
+                      return (
+                        <TableRow key={product.id}>
+                          <TableCell>{product.id}</TableCell>
+                          <TableCell>
+                            <Avatar className="h-16 w-16 shadow-sm">
+                              <AvatarImage
+                                src={cleanImageUrl}
+                                alt={product.name_en}
+                              />
+                              <AvatarFallback>
+                                {product.name_en
+                                  .split(" ")
+                                  .map((n: string) => n[0])
+                                  .join("")
+                                  .toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                          </TableCell>
+                          {/* go to details page on click the name */}
+                          <TableCell>
+                            <Link
+                              href={`/products/${product.id}`}
+                              className="font-medium hover:underline "
                             >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-                )}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      </div>
-    </AdminLayout>
+                              {product.name_en}
+                            </Link>
+                            <p className="text-sm text-muted-foreground">
+                              {product.name_ar}
+                            </p>
+                          </TableCell>
+                          <TableCell>{product.sku}</TableCell>
+
+                          <TableCell>{product.category?.name_en}</TableCell>
+                          <TableCell>AED {product.price}</TableCell>
+                          <TableCell>
+                            <div
+                              className={`${getInventoryColor(
+                                product.inventory
+                              )} text-xs font-medium w-10 px-2 py-1 rounded-full border border-border/90 shadow-sm text-center`}
+                            >
+                              {product.inventory || 0}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div
+                              className={`${getActivityColor(
+                                product.is_active
+                              )} text-xs font-medium px-2 py-1 rounded-full border border-border/90 shadow-sm text-center`}
+                            >
+                              {product.is_active ? "Active" : "Inactive"}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center space-x-2">
+                              <Link href={`/products/${product.id}/edit`}>
+                                <Button variant="outline" size="sm">
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                              </Link>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="hover:bg-red-600 hover:text-white"
+                                onClick={() => {
+                                  setDeleteDialogOpen(true);
+                                  setSelectedProduct(product.id);
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </div>
+      </AdminLayout>
+      <ConfirmDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        title="Are you sure?"
+        description={`This action cannot be undone. This will permanently delete the product  and remove it from your store.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={() => handleDelete(selectedProduct)}
+      />
+    </>
   );
 }

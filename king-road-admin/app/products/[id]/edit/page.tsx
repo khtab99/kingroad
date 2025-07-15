@@ -58,9 +58,7 @@ export default function ProductEdit() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [imagePreview, setImagePreview] = useState<string[]>([]);
 
-  const { product } = useGetProductById(id);
-
-  console.log(product);
+  const { productDetails: product } = useGetProductById(id);
 
   const [formData, setFormData] = useState<ProductFormData>({
     name_en: product?.name_en || "",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/providers/language-provider";
 import { VendorHeader } from "@/components/layout/vendor-header";
@@ -31,72 +31,283 @@ import {
   Trash2,
   Plus,
   Loader2,
+  Globe,
+  BarChart,
+  Archive,
 } from "lucide-react";
+import { Category, ProductFormData } from "@/util/type";
+import { useGetSuperCategory } from "@/api/category";
+
+// Types
+
+interface FormErrors {
+  [key: string]: string[];
+}
 
 export default function NewProductPage() {
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategories, setSubcategories] = useState<Category[]>([]);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [imagePreview, setImagePreview] = useState<string[]>([]);
+
+  const [formData, setFormData] = useState<ProductFormData>({
+    name_en: "",
+    name_ar: "",
+    slug: "",
+    description_en: "",
+    description_ar: "",
     sku: "",
-    category: "",
-    description: "",
+    barcode: "",
     price: "",
-    compareAtPrice: "",
-    costPrice: "",
-    quantity: "",
+    sale_price: "",
+    cost_price: "",
+    inventory: "",
+    low_stock_threshold: "5",
+    track_inventory: true,
+    category_id: "",
+    subcategory_id: "",
+    images: [],
     weight: "",
-    tags: "",
-    isFeatured: false,
-    isActive: true,
-    images: [] as string[],
+    dimensions: {
+      length: "",
+      width: "",
+      height: "",
+    },
+    is_active: true,
+    is_featured: false,
+    tags: [],
+    meta_title: "",
+    meta_description: "",
   });
 
-  const categories = [
-    "Traditional Crafts",
-    "Food & Previlege",
-    "Traditional Clothing",
-    "Jewelry",
-    "Home & Kitchen",
-    "Art & Decor",
-  ];
+  // Fetch categories on component mount
 
-  const updateFormData = (
-    field: string,
-    value: string | boolean | string[]
-  ) => {
+  const { superCategoryList } = useGetSuperCategory();
+
+  console.log(superCategoryList);
+
+  useEffect(() => {
+    setCategories(
+      superCategoryList.filter((cat: any) => cat.parent_id === null)
+    );
+    setSubcategories(
+      superCategoryList.filter((cat: any) => cat.parent_id !== null)
+    );
+  }, []);
+
+  // Generate slug from English name
+  useEffect(() => {
+    if (formData.name_en) {
+      const slug = formData.name_en
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      updateFormData("slug", slug);
+    }
+  }, [formData.name_en]);
+
+  // Update subcategories when category changes
+  useEffect(() => {
+    if (formData.category_id) {
+      const selectedCategory = categories.find(
+        (cat) => cat.id.toString() === formData.category_id
+      );
+      setSubcategories(selectedCategory?.subcategories || []);
+      updateFormData("subcategory_id", "");
+    }
+  }, [formData.category_id, categories]);
+
+  const updateFormData = (field: keyof ProductFormData, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear errors for this field
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: [] }));
+    }
   };
 
-  const handleAddImage = () => {
-    // In a real app, this would open a file picker or media library
-    // For demo purposes, we'll add a placeholder image
-    const placeholderImage = `https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&placeholder=${Date.now()}`;
-    updateFormData("images", [...formData.images, placeholderImage]);
+  const updateDimensions = (
+    dimension: keyof ProductFormData["dimensions"],
+    value: string
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      dimensions: { ...prev.dimensions, [dimension]: value },
+    }));
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    if (formData.images.length + files.length > 8) {
+      toast.error("You can only upload up to 8 images");
+      return;
+    }
+
+    // Validate file types and sizes
+    const validFiles = files.filter((file) => {
+      const isValidType = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/gif",
+      ].includes(file.type);
+      const isValidSize = file.size <= 2048 * 1024; // 2MB
+
+      if (!isValidType) {
+        toast.error(`${file.name} is not a valid image type`);
+        return false;
+      }
+      if (!isValidSize) {
+        toast.error(`${file.name} is too large (max 2MB)`);
+        return false;
+      }
+      return true;
+    });
+
+    if (validFiles.length > 0) {
+      updateFormData("images", [...formData.images, ...validFiles]);
+
+      // Generate previews
+      validFiles.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreview((prev) => [...prev, e.target?.result as string]);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
   };
 
   const handleRemoveImage = (index: number) => {
     const newImages = [...formData.images];
     newImages.splice(index, 1);
     updateFormData("images", newImages);
+
+    const newPreviews = [...imagePreview];
+    newPreviews.splice(index, 1);
+    setImagePreview(newPreviews);
+  };
+
+  const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      const input = e.target as HTMLInputElement;
+      const tag = input.value.trim();
+
+      if (tag && !formData.tags.includes(tag)) {
+        updateFormData("tags", [...formData.tags, tag]);
+        input.value = "";
+      }
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    updateFormData(
+      "tags",
+      formData.tags.filter((tag) => tag !== tagToRemove)
+    );
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    // Required fields validation
+    if (!formData.name_en) newErrors.name_en = ["English name is required"];
+    if (!formData.name_ar) newErrors.name_ar = ["Arabic name is required"];
+    if (!formData.sku) newErrors.sku = ["SKU is required"];
+    if (!formData.price) newErrors.price = ["Price is required"];
+    if (!formData.inventory) newErrors.inventory = ["Inventory is required"];
+    if (!formData.category_id) newErrors.category_id = ["Category is required"];
+
+    // Price validation
+    if (formData.price && parseFloat(formData.price) < 0) {
+      newErrors.price = ["Price must be 0 or greater"];
+    }
+    if (
+      formData.sale_price &&
+      parseFloat(formData.sale_price) >= parseFloat(formData.price)
+    ) {
+      newErrors.sale_price = ["Sale price must be less than regular price"];
+    }
+
+    // Inventory validation
+    if (formData.inventory && parseInt(formData.inventory) < 0) {
+      newErrors.inventory = ["Inventory must be 0 or greater"];
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fix the validation errors");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const formDataToSend = new FormData();
 
-      toast.success("Product created successfully!");
-      router.push("/products");
+      // Add all form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === "images") {
+          // Handle file uploads
+          (value as File[]).forEach((file, index) => {
+            formDataToSend.append(`images[${index}]`, file);
+          });
+        } else if (key === "dimensions") {
+          // Handle dimensions object
+          Object.entries(value).forEach(([dimKey, dimValue]) => {
+            if (dimValue) {
+              formDataToSend.append(`dimensions[${dimKey}]`, dimValue);
+            }
+          });
+        } else if (key === "tags") {
+          // Handle tags array
+          (value as string[]).forEach((tag, index) => {
+            formDataToSend.append(`tags[${index}]`, tag);
+          });
+        } else if (typeof value === "boolean") {
+          formDataToSend.append(key, value ? "1" : "0");
+        } else if (value !== null && value !== undefined && value !== "") {
+          formDataToSend.append(key, value.toString());
+        }
+      });
+
+      const response = await fetch("/api/products", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast.success("Product created successfully!");
+        router.push("/products");
+      } else {
+        // Handle validation errors from backend
+        if (result.errors) {
+          setErrors(result.errors);
+        }
+        toast.error(result.message || "Failed to create product");
+      }
     } catch (error) {
+      console.error("Error creating product:", error);
       toast.error("Failed to create product. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const getFieldError = (field: string) => {
+    return errors[field]?.[0];
   };
 
   return (
@@ -146,75 +357,231 @@ export default function NewProductPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-4">
+                {/* Multilingual Names */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Product Name *</Label>
+                    <Label
+                      htmlFor="name_en"
+                      className="flex items-center gap-2"
+                    >
+                      <Globe className="h-4 w-4" />
+                      Product Name (English) *
+                    </Label>
                     <Input
-                      id="name"
+                      id="name_en"
                       placeholder="e.g. Traditional Sudanese Thob"
-                      value={formData.name}
-                      onChange={(e) => updateFormData("name", e.target.value)}
-                      required
+                      value={formData.name_en}
+                      onChange={(e) =>
+                        updateFormData("name_en", e.target.value)
+                      }
+                      className={
+                        getFieldError("name_en") ? "border-destructive" : ""
+                      }
+                    />
+                    {getFieldError("name_en") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("name_en")}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="name_ar"
+                      className="flex items-center gap-2"
+                    >
+                      <Globe className="h-4 w-4" />
+                      Product Name (Arabic) *
+                    </Label>
+                    <Input
+                      id="name_ar"
+                      placeholder="e.g. ثوب سوداني تقليدي"
+                      value={formData.name_ar}
+                      onChange={(e) =>
+                        updateFormData("name_ar", e.target.value)
+                      }
+                      className={
+                        getFieldError("name_ar") ? "border-destructive" : ""
+                      }
+                      dir="rtl"
+                    />
+                    {getFieldError("name_ar") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("name_ar")}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* SKU and Slug */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="sku">SKU (Stock Keeping Unit) *</Label>
+                    <Input
+                      id="sku"
+                      placeholder="e.g. TST-001"
+                      value={formData.sku}
+                      onChange={(e) => updateFormData("sku", e.target.value)}
+                      className={
+                        getFieldError("sku") ? "border-destructive" : ""
+                      }
+                    />
+                    {getFieldError("sku") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("sku")}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="slug">URL Slug</Label>
+                    <Input
+                      id="slug"
+                      placeholder="Auto-generated from English name"
+                      value={formData.slug}
+                      onChange={(e) => updateFormData("slug", e.target.value)}
+                      className={
+                        getFieldError("slug") ? "border-destructive" : ""
+                      }
+                    />
+                    {getFieldError("slug") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("slug")}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Barcode */}
+                <div>
+                  <Label htmlFor="barcode">Barcode (Optional)</Label>
+                  <Input
+                    id="barcode"
+                    placeholder="e.g. 1234567890123"
+                    value={formData.barcode}
+                    onChange={(e) => updateFormData("barcode", e.target.value)}
+                  />
+                </div>
+
+                {/* Descriptions */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="description_en">
+                      Description (English)
+                    </Label>
+                    <Textarea
+                      id="description_en"
+                      placeholder="Describe your product in English..."
+                      value={formData.description_en}
+                      onChange={(e) =>
+                        updateFormData("description_en", e.target.value)
+                      }
+                      rows={5}
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="sku">SKU (Stock Keeping Unit) *</Label>
-                      <Input
-                        id="sku"
-                        placeholder="e.g. TST-001"
-                        value={formData.sku}
-                        onChange={(e) => updateFormData("sku", e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="category">Category *</Label>
-                      <Select
-                        value={formData.category}
-                        onValueChange={(value) =>
-                          updateFormData("category", value)
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {categories.map((category) => (
-                            <SelectItem key={category} value={category}>
-                              {category}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
                   <div>
-                    <Label htmlFor="description">Description *</Label>
+                    <Label htmlFor="description_ar">Description (Arabic)</Label>
                     <Textarea
-                      id="description"
-                      placeholder="Describe your product in detail..."
-                      value={formData.description}
+                      id="description_ar"
+                      placeholder="وصف المنتج باللغة العربية..."
+                      value={formData.description_ar}
                       onChange={(e) =>
-                        updateFormData("description", e.target.value)
+                        updateFormData("description_ar", e.target.value)
                       }
                       rows={5}
-                      required
+                      dir="rtl"
                     />
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Pricing & Inventory */}
+            {/* Categories */}
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Tag className="h-5 w-5" />
+                  Categories
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="category_id">Category *</Label>
+                    <Select
+                      value={formData.category_id}
+                      onValueChange={(value) =>
+                        updateFormData("category_id", value)
+                      }
+                    >
+                      <SelectTrigger
+                        className={
+                          getFieldError("category_id")
+                            ? "border-destructive"
+                            : ""
+                        }
+                      >
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {currentLanguage === "ar"
+                              ? category.name_ar
+                              : category.name_en}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {getFieldError("category_id") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("category_id")}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="subcategory_id">
+                      Subcategory (Optional)
+                    </Label>
+                    <Select
+                      value={formData.subcategory_id}
+                      onValueChange={(value) =>
+                        updateFormData("subcategory_id", value)
+                      }
+                      disabled={!formData.category_id}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a subcategory" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {subcategories.map((subcategory) => (
+                          <SelectItem
+                            key={subcategory.id}
+                            value={subcategory.id.toString()}
+                          >
+                            {currentLanguage === "ar"
+                              ? subcategory.name_ar
+                              : subcategory.name_en}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Pricing */}
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <DollarSign className="h-5 w-5" />
-                  Pricing & Inventory
+                  Pricing
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -226,50 +593,69 @@ export default function NewProductPage() {
                       <Input
                         id="price"
                         type="number"
+                        step="0.01"
+                        min="0"
                         placeholder="0.00"
                         value={formData.price}
                         onChange={(e) =>
                           updateFormData("price", e.target.value)
                         }
-                        className="pl-10"
-                        required
+                        className={`pl-10 ${
+                          getFieldError("price") ? "border-destructive" : ""
+                        }`}
                       />
                     </div>
+                    {getFieldError("price") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("price")}
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <Label htmlFor="compareAtPrice">
-                      Compare-at Price (AED)
-                    </Label>
+                    <Label htmlFor="sale_price">Sale Price (AED)</Label>
                     <div className="relative">
                       <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
-                        id="compareAtPrice"
+                        id="sale_price"
                         type="number"
+                        step="0.01"
+                        min="0"
                         placeholder="0.00"
-                        value={formData.compareAtPrice}
+                        value={formData.sale_price}
                         onChange={(e) =>
-                          updateFormData("compareAtPrice", e.target.value)
+                          updateFormData("sale_price", e.target.value)
                         }
-                        className="pl-10"
+                        className={`pl-10 ${
+                          getFieldError("sale_price")
+                            ? "border-destructive"
+                            : ""
+                        }`}
                       />
                     </div>
+                    {getFieldError("sale_price") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("sale_price")}
+                      </p>
+                    )}
                     <p className="text-xs text-muted-foreground mt-1">
-                      Original price if the product is on sale
+                      Discounted price (must be less than regular price)
                     </p>
                   </div>
 
                   <div>
-                    <Label htmlFor="costPrice">Cost Price (AED)</Label>
+                    <Label htmlFor="cost_price">Cost Price (AED)</Label>
                     <div className="relative">
                       <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
-                        id="costPrice"
+                        id="cost_price"
                         type="number"
+                        step="0.01"
+                        min="0"
                         placeholder="0.00"
-                        value={formData.costPrice}
+                        value={formData.cost_price}
                         onChange={(e) =>
-                          updateFormData("costPrice", e.target.value)
+                          updateFormData("cost_price", e.target.value)
                         }
                         className="pl-10"
                       />
@@ -279,34 +665,72 @@ export default function NewProductPage() {
                     </p>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
 
-                <Separator />
-
+            {/* Inventory */}
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Archive className="h-5 w-5" />
+                  Inventory Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="quantity">Quantity *</Label>
+                    <Label htmlFor="inventory">Stock Quantity *</Label>
                     <Input
-                      id="quantity"
+                      id="inventory"
                       type="number"
+                      min="0"
                       placeholder="0"
-                      value={formData.quantity}
+                      value={formData.inventory}
                       onChange={(e) =>
-                        updateFormData("quantity", e.target.value)
+                        updateFormData("inventory", e.target.value)
                       }
-                      required
+                      className={
+                        getFieldError("inventory") ? "border-destructive" : ""
+                      }
                     />
+                    {getFieldError("inventory") && (
+                      <p className="text-destructive text-sm mt-1">
+                        {getFieldError("inventory")}
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <Label htmlFor="weight">Weight (kg)</Label>
+                    <Label htmlFor="low_stock_threshold">
+                      Low Stock Threshold
+                    </Label>
                     <Input
-                      id="weight"
+                      id="low_stock_threshold"
                       type="number"
-                      placeholder="0.00"
-                      value={formData.weight}
-                      onChange={(e) => updateFormData("weight", e.target.value)}
+                      min="0"
+                      placeholder="5"
+                      value={formData.low_stock_threshold}
+                      onChange={(e) =>
+                        updateFormData("low_stock_threshold", e.target.value)
+                      }
                     />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Get notified when stock falls below this level
+                    </p>
                   </div>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="track_inventory"
+                    checked={formData.track_inventory}
+                    onCheckedChange={(checked) =>
+                      updateFormData("track_inventory", checked)
+                    }
+                  />
+                  <Label htmlFor="track_inventory" className="cursor-pointer">
+                    Track inventory levels for this product
+                  </Label>
                 </div>
               </CardContent>
             </Card>
@@ -321,92 +745,248 @@ export default function NewProductPage() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {formData.images.map((image, index) => (
+                  {imagePreview.map((preview, index) => (
                     <div
                       key={index}
-                      className="relative aspect-square rounded-lg overflow-hidden border bg-muted"
+                      className="relative aspect-square rounded-lg overflow-hidden border"
                     >
-                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                        <div className="text-4xl opacity-20">🏺</div>
-                      </div>
+                      <img
+                        src={preview}
+                        alt={`Product ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
                       <Button
                         variant="destructive"
                         size="sm"
                         className="absolute top-2 right-2 w-8 h-8 p-0"
                         onClick={() => handleRemoveImage(index)}
+                        type="button"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   ))}
 
-                  <Button
-                    variant="outline"
-                    className="aspect-square flex flex-col items-center justify-center gap-2 border-dashed"
-                    onClick={handleAddImage}
-                  >
-                    <Plus className="h-6 w-6" />
-                    <span className="text-sm">Add Image</span>
-                  </Button>
+                  {imagePreview.length < 8 && (
+                    <Label
+                      htmlFor="image-upload"
+                      className="aspect-square flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50"
+                    >
+                      <Plus className="h-6 w-6" />
+                      <span className="text-sm">Add Image</span>
+                      <Input
+                        id="image-upload"
+                        type="file"
+                        accept="image/jpeg,image/png,image/jpg,image/gif"
+                        multiple
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+                    </Label>
+                  )}
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Add up to 8 images. First image will be used as the product
-                  thumbnail.
+                  Upload up to 8 images (JPEG, PNG, JPG, GIF - max 2MB each).
+                  First image will be the main product image.
                 </p>
               </CardContent>
             </Card>
 
-            {/* Organization */}
+            {/* Physical Properties */}
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Tag className="h-5 w-5" />
-                  Organization
+                  <Package className="h-5 w-5" />
+                  Physical Properties
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="tags">Tags</Label>
+                  <Label htmlFor="weight">Weight (kg)</Label>
                   <Input
-                    id="tags"
-                    placeholder="e.g. traditional, handmade, cotton (comma separated)"
-                    value={formData.tags}
-                    onChange={(e) => updateFormData("tags", e.target.value)}
+                    id="weight"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                    value={formData.weight}
+                    onChange={(e) => updateFormData("weight", e.target.value)}
                   />
+                </div>
+
+                <div>
+                  <Label className="text-base font-medium">
+                    Dimensions (cm)
+                  </Label>
+                  <div className="grid grid-cols-3 gap-4 mt-2">
+                    <div>
+                      <Label htmlFor="length" className="text-sm">
+                        Length
+                      </Label>
+                      <Input
+                        id="length"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        value={formData.dimensions.length}
+                        onChange={(e) =>
+                          updateDimensions("length", e.target.value)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="width" className="text-sm">
+                        Width
+                      </Label>
+                      <Input
+                        id="width"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        value={formData.dimensions.width}
+                        onChange={(e) =>
+                          updateDimensions("width", e.target.value)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="height" className="text-sm">
+                        Height
+                      </Label>
+                      <Input
+                        id="height"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        value={formData.dimensions.height}
+                        onChange={(e) =>
+                          updateDimensions("height", e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* SEO & Tags */}
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart className="h-5 w-5" />
+                  SEO & Tags
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label htmlFor="tag-input">Tags</Label>
+                  <Input
+                    id="tag-input"
+                    placeholder="Type a tag and press Enter or comma"
+                    onKeyDown={handleTagInput}
+                  />
+                  {formData.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md text-sm"
+                        >
+                          {tag}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-4 w-4 p-0 hover:bg-destructive/20"
+                            onClick={() => removeTag(tag)}
+                            type="button"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <p className="text-xs text-muted-foreground mt-1">
-                    Help customers find your product
+                    Help customers find your product with relevant tags
                   </p>
                 </div>
 
+                <div>
+                  <Label htmlFor="meta_title">Meta Title</Label>
+                  <Input
+                    id="meta_title"
+                    placeholder="SEO title for search engines"
+                    value={formData.meta_title}
+                    onChange={(e) =>
+                      updateFormData("meta_title", e.target.value)
+                    }
+                    maxLength={255}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {formData.meta_title?.length || 0}/255 characters
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="meta_description">Meta Description</Label>
+                  <Textarea
+                    id="meta_description"
+                    placeholder="Brief description for search engines"
+                    value={formData.meta_description}
+                    onChange={(e) =>
+                      updateFormData("meta_description", e.target.value)
+                    }
+                    rows={3}
+                    maxLength={500}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {formData.meta_description?.length || 0}/500 characters
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Product Status */}
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Tag className="h-5 w-5" />
+                  Product Status
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <div className="flex items-center space-x-2">
                   <Checkbox
-                    id="isFeatured"
-                    checked={formData.isFeatured}
+                    id="is_active"
+                    checked={formData.is_active}
                     onCheckedChange={(checked) =>
-                      updateFormData("isFeatured", checked as boolean)
+                      updateFormData("is_active", checked)
                     }
                   />
-                  <Label htmlFor="isFeatured" className="cursor-pointer">
-                    Feature this product on your storefront
+                  <Label htmlFor="is_active" className="cursor-pointer">
+                    Product is active and available for purchase
                   </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Checkbox
-                    id="isActive"
-                    checked={formData.isActive}
+                    id="is_featured"
+                    checked={formData.is_featured}
                     onCheckedChange={(checked) =>
-                      updateFormData("isActive", checked as boolean)
+                      updateFormData("is_featured", checked)
                     }
                   />
-                  <Label htmlFor="isActive" className="cursor-pointer">
-                    Product is active and ready to sell
+                  <Label htmlFor="is_featured" className="cursor-pointer">
+                    Feature this product on your storefront
                   </Label>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Shipping */}
+            {/* Shipping Info */}
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -416,8 +996,9 @@ export default function NewProductPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  This product will use your default shipping settings. You can
-                  customize shipping rates in your store settings.
+                  This product will use your default shipping settings. Weight
+                  and dimensions will be used to calculate shipping costs
+                  automatically.
                 </p>
                 <Button variant="outline" type="button">
                   Configure Shipping Settings
@@ -426,11 +1007,12 @@ export default function NewProductPage() {
             </Card>
 
             {/* Submit Buttons */}
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 pt-6">
               <Button
                 variant="outline"
                 type="button"
                 onClick={() => router.back()}
+                disabled={isSubmitting}
               >
                 Cancel
               </Button>
@@ -438,12 +1020,12 @@ export default function NewProductPage() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Saving...
+                    Creating Product...
                   </>
                 ) : (
                   <>
                     <Save className="h-4 w-4 mr-2" />
-                    Save Product
+                    Create Product
                   </>
                 )}
               </Button>

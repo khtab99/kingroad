@@ -72,40 +72,47 @@ export function VendorSidebar() {
   return (
     <aside
       className={cn(
-        "sticky top-16 h-[calc(100vh-4rem)] bg-background border-r border-border/40 transition-all duration-300",
-        isCollapsed ? "w-16" : "w-64"
+        "sticky top-16 h-screen bg-background border-r border-border/40 transition-all duration-300 z-50 ",
+        isCollapsed ? "w-20" : "w-64"
       )}
     >
       {/* Logo */}
 
-      <div className="flex flex-col h-full">
-        <Link href="/" className="flex justify-center items-s gap-2 ">
-          <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-primary/80 rounded-lg flex items-center justify-center text-white font-bold">
-            <Store className="h-5 w-5" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold text-red-600">
-              {language === "ar" ? "kingroad" : "kingroad"}
-            </span>
-            <span className="text-xs text-muted-foreground -mt-1">
-              Dashboard
-            </span>
-          </div>
-        </Link>
+      <div className="flex flex-col h-full mt-4 ">
         {/* Toggle Button */}
-        <div className="flex justify-end p-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="w-8 h-8 p-0"
-          >
-            {isCollapsed ? (
-              <ChevronRight className="h-4 w-4" />
-            ) : (
-              <ChevronLeft className="h-4 w-4" />
-            )}
-          </Button>
+        <div className="flex justify-between items-center pl-4 mb-4 pb-4">
+          {isCollapsed ? (
+            <Link href="/" className="flex justify-center items-s gap-2 ">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-primary/80 rounded-lg flex items-center justify-center text-white font-bold">
+                <Store className="h-7 w-7" />
+              </div>
+            </Link>
+          ) : (
+            <Link href="/" className="flex justify-center items-s gap-2 ">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-primary/80 rounded-lg flex items-center justify-center text-white font-bold">
+                <Store className="h-7 w-7" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-red-600">
+                  {language === "ar" ? "kingroad" : "kingroad"}
+                </span>
+              </div>
+            </Link>
+          )}
+          <div className="flex justify-end p-4 absolute top-10 -right-8 z-100 ">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="w-8 h-8 p-0 border border-border"
+            >
+              {isCollapsed ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <ChevronLeft className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
         </div>
 
         {/* Navigation */}
@@ -142,7 +149,7 @@ export function VendorSidebar() {
 
         {/* Help Section */}
         {!isCollapsed && (
-          <div className="p-4 border-t border-border/40">
+          <div className="p-4 border-t border-border/40 mb-10">
             <div className="bg-primary/5 rounded-lg p-4">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">

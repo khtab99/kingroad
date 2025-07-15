@@ -23,8 +23,9 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Search, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useAdminAuth } from "@/contexts/admin-auth-context";
-import { useGetAllProducts } from "@/api/product";
+import { deleteProduct, useGetAllProducts } from "@/api/product";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { toast } from "sonner";
 
 interface Product {
   id: number;
@@ -70,6 +71,20 @@ export default function ProductsPage() {
         return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const respose = await deleteProduct(id);
+      if (respose) {
+        toast.success("Product deleted successfully");
+        revalidateProducts();
+      } else {
+        toast.error("Failed to delete product");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -223,6 +238,7 @@ export default function ProductsPage() {
                               variant="outline"
                               size="sm"
                               className="hover:bg-red-600 hover:text-white"
+                              onClick={() => handleDelete(product.id)}
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>

@@ -281,17 +281,15 @@ export default function NewProductPage() {
 
       const response = await createNewProduct(formDataToSend);
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (response) {
         toast.success("Product created successfully!");
         router.push("/products");
       } else {
         // Handle validation errors from backend
-        if (result.errors) {
-          setErrors(result.errors);
+        if (response.errors) {
+          setErrors(response.errors);
         }
-        toast.error(result.message || "Failed to create product");
+        toast.error(response.message || "Failed to create product");
       }
     } catch (error) {
       console.error("Error creating product:", error);

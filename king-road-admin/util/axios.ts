@@ -121,6 +121,8 @@ export const endpoints = {
     all: "/api/v1/admin/products",
     details: "/api/v1/admin/products/",
     create: "/api/v1/admin/products",
+    update: "/api/v1/admin/products/",
+    delete: "/api/v1/admin/products/",
   },
   category: {
     all: "/api/v1/admin/categories",

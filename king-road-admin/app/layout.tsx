@@ -33,7 +33,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${amiri.variable} antialiased`}>
+      <body
+        className={`${inter.variable} ${amiri.variable} antialiased overflow-hidden`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -36,7 +36,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex max-h-screen overflow-hidden ">
       <VendorSidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <VendorHeader />

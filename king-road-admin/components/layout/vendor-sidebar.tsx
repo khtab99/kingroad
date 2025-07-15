@@ -114,11 +114,11 @@ export function VendorSidebar() {
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
               return (
-                <Link key={item.href} href={item.href}>
+                <Link key={item.href} href={item.href} className="">
                   <Button
                     variant={isActive ? "default" : "ghost"}
                     className={cn(
-                      "w-full justify-start gap-3 h-11",
+                      "w-full justify-start gap-3 h-11 mt-1 ",
                       isCollapsed && "px-2 justify-center"
                     )}
                   >

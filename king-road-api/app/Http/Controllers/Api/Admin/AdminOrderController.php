@@ -5,57 +5,27 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Services\RepositoryService;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
 
 class AdminOrderController extends Controller
 {
+
+       protected $repository;
+    public function __construct()
+    {
+        $this->repository = RepositoryService::setModel(new Order());
+    }
     public function index(Request $request)
     {
-        $orders = QueryBuilder::for(Order::class)
-            ->with(['items.product', 'user'])
-            ->allowedFilters([
-                'status',
-                'payment_status',
-                'payment_method',
-                'customer_name',
-                'customer_phone',
-                'customer_email',
-                AllowedFilter::exact('status'),
-                AllowedFilter::exact('payment_status'),
-                AllowedFilter::exact('payment_method'),
-                AllowedFilter::callback('search', function ($query, $value) {
-                    $query->where(function ($q) use ($value) {
-                        $q->where('order_number', 'like', "%{$value}%")
-                          ->orWhere('customer_name', 'like', "%{$value}%")
-                          ->orWhere('customer_phone', 'like', "%{$value}%")
-                          ->orWhere('customer_email', 'like', "%{$value}%");
-                    });
-                }),
-                AllowedFilter::callback('date_range', function ($query, $value) {
-                    $dates = explode(',', $value);
-                    if (count($dates) === 2) {
-                        $query->whereBetween('created_at', [$dates[0], $dates[1]]);
-                    }
-                }),
-                AllowedFilter::callback('total_range', function ($query, $value) {
-                    $range = explode(',', $value);
-                    if (count($range) === 2) {
-                        $query->whereBetween('total', [$range[0], $range[1]]);
-                    }
-                }),
-            ])
-            ->allowedSorts([
-                'order_number',
-                'customer_name',
-                'total',
-                'status',
-                'payment_status',
-                'created_at',
-                'updated_at'
-            ])
+        $orders = $this->repository->applyWith(['items.product', 'user'])
+            ->applyFilters([
+                'status' => ['in', ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled']],
+                'payment_status' => ['in', ['pending', 'paid', 'failed', 'refunded']],
+                ])
+            ->applySearch($request->get('search'), ['order_number', 'customer_name'])
             ->orderBy('created_at', 'desc')
+            
             ->paginate($request->get('per_page', 15));
 
         return OrderResource::collection($orders);

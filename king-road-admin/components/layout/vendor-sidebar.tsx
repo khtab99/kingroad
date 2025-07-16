@@ -137,7 +137,7 @@ export function VendorSidebar() {
                 </div>
               </div>
               <Button size="sm" variant="outline" className="w-full" asChild>
-                <Link href="/help">Contact Support</Link>
+                <Link href="/">Contact Support</Link>
               </Button>
             </div>
           </div>

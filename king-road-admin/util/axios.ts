@@ -148,11 +148,8 @@ export const endpoints = {
   order: {
     list: "/api/v1/admin/orders",
     details: "/api/v1/admin/orders/",
-    create: "/api/v1/admin/orders",
-    cancel: "/api/v1/admin/orders/", // + {id}/cancel
     update: "/api/v1/admin/orders/",
-    delete: "/api/v1/admin/orders/",
-    lookup: "/api/v1/admin/orders/lookup",
+    updateStatus: "/api/v1/admin/orders/",
   },
   auth: {
     login: "/api/v1/admin/auth/login",

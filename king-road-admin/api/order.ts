@@ -2,10 +2,12 @@ import useSWR, { mutate } from "swr";
 import { useMemo } from "react";
 import {
   endpoints,
+  kingRoadCreator,
   kingRoadCreatorForm,
   kingRoadFetcher,
   kingRoadSmasher,
   kingRoadUpdatePatch,
+  kingRoadUpdatePut,
 } from "@/util/axios";
 // utils
 
@@ -74,25 +76,18 @@ export function useGetOrderById(id: any) {
   return { ...memoizedValue, revalidateOrder };
 }
 
-export function createNewOrder(body: any) {
-  const URL = endpoints.order.create;
-  const response = kingRoadCreatorForm([URL, body]);
-  return response;
-}
-export function lookupOrder(body: any) {
-  const URL = endpoints.order.lookup;
-  const response = kingRoadCreatorForm([URL, body]);
-  return response;
-}
-
-export function updateOrderStatus(id: any, body: any) {
+export function updateOrder(id: any, body: any) {
   const URL = endpoints.order.update + id;
-  const response = kingRoadUpdatePatch([URL, body]);
+  const response = kingRoadUpdatePut([URL, body]);
   return response;
 }
-
-export function deleteOrderStatus(id: any) {
-  const URL = endpoints.order.delete + id;
-  const response = kingRoadSmasher(URL);
+export function updateOrderStatus(id: any, body: any) {
+  const URL = `${endpoints.order.updateStatus}/${id}/update-status`;
+  const response = kingRoadCreator([URL, body]);
+  return response;
+}
+export function addOrderTracking(id: any, body: any) {
+  const URL = `${endpoints.order.updateStatus}/${id}/add-tracking`;
+  const response = kingRoadCreator([URL, body]);
   return response;
 }

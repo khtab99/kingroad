@@ -1,0 +1,134 @@
+[
+  {
+    "id": "1",
+    "nameAr": "قشرة طبلون 88-97 لون رمادي جديد",
+    "nameEn": "Dashboard Shell 88-97 Gray New",
+    "price": 980.0,
+    "image": "/assets/images/product/1.jpg",
+    "category": "internal",
+    "subcategory": "dashboard",
+    "isAvailable": true,
+    "inventory": 5
+  },
+  {
+    "id": "2",
+    "nameAr": "اضاءة الولاعه باللون الاخضر",
+    "nameEn": "Lighter Illumination Green Color",
+    "price": 40.0,
+    "image": "/assets/images/product/2.jpg",
+    "category": "internal",
+    "subcategory": "dashboard",
+    "isAvailable": false,
+    "inventory": 0
+  },
+  {
+    "id": "3",
+    "nameAr": "طقم مسكة الباب اللولبي",
+    "nameEn": "Door Handle Set Spiral",
+    "price": 320.0,
+    "image": "/assets/images/product/3.jpg",
+    "category": "internal",
+    "subcategory": "door-panels",
+    "isAvailable": true,
+    "inventory": 3
+  },
+  {
+    "id": "4",
+    "nameAr": "عداد حراره 88-91",
+    "nameEn": "Temperature Gauge 88-91",
+    "price": 420.0,
+    "image": "/assets/images/product/4.jpg",
+    "category": "internal",
+    "subcategory": "dashboard",
+    "isAvailable": true,
+    "inventory": 2
+  },
+  {
+    "id": "5",
+    "nameAr": "مصد أمامي 88-97",
+    "nameEn": "Front Bumper 88-97",
+    "price": 1200.0,
+    "image": "/assets/images/product/5.jpg",
+    "category": "external",
+    "subcategory": "bumpers",
+    "isAvailable": true,
+    "inventory": 4
+  },
+  {
+    "id": "6",
+    "nameAr": "فانوس خلفي يمين",
+    "nameEn": "Right Tail Light",
+    "price": 250.0,
+    "image": "/assets/images/product/6.jpg",
+    "category": "external",
+    "subcategory": "lights",
+    "isAvailable": false,
+    "inventory": 0
+  },
+  {
+    "id": "7",
+    "nameAr": "ضاغط مكيف",
+    "nameEn": "AC Compressor",
+    "price": 850.0,
+    "image": "/assets/images/product/7.jpg",
+    "category": "air-conditioning",
+    "subcategory": "compressor",
+    "isAvailable": true,
+    "inventory": 6
+  },
+  {
+    "id": "8",
+    "nameAr": "سجادة أرضية",
+    "nameEn": "Floor Mat Set",
+    "price": 180.0,
+    "image": "/assets/images/product/8.jpg",
+    "category": "accessories",
+    "subcategory": "floor-mats",
+    "isAvailable": true,
+    "inventory": 10
+  },
+  {
+    "id": "9",
+    "nameAr": "مرآة جانبية يسار",
+    "nameEn": "Left Side Mirror",
+    "price": 380.0,
+    "image": "/assets/images/product/9.jpg",
+    "category": "external",
+    "subcategory": "mirrors",
+    "isAvailable": true,
+    "inventory": 7
+  },
+  {
+    "id": "10",
+    "nameAr": "مقعد أمامي يمين",
+    "nameEn": "Front Right Seat",
+    "price": 1500.0,
+    "image": "/assets/images/product/10.jpg",
+    "category": "internal",
+    "subcategory": "seats",
+    "isAvailable": false,
+    "inventory": 0
+  },
+  {
+    "id": "11",
+    "nameAr": "فلتر مكيف",
+    "nameEn": "AC Filter",
+    "price": 65.0,
+    "image": "/assets/images/product/11.jpg",
+    "category": "air-conditioning",
+    "subcategory": "filters",
+    "isAvailable": true,
+    "inventory": 15
+  },
+  {
+    "id": "12",
+    "nameAr": "غطاء مقود",
+    "nameEn": "Steering Wheel Cover",
+    "price": 95.0,
+    "image": "/assets/images/product/12.jpg",
+    "category": "accessories",
+    "subcategory": "covers",
+    "isAvailable": true,
+    "inventory": 8
+  }
+]

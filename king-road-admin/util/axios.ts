@@ -96,6 +96,8 @@ export const kingRoadUpdatePut = async (args: any) => {
   const [url, config] = Array.isArray(args) ? args : [args];
 
   const res = await axiosInstance.put(url, config);
+
+  return res.data;
 };
 
 // ----------------------------------------------------------------------

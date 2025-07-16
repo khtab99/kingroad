@@ -215,6 +215,7 @@ export function createNewCategory(body: any) {
 export function updateCategory(body: any, id: any) {
   const URL = endpoints.category.update + id;
   const response = kingRoadUpdatePut([URL, body]);
+
   return response;
 }
 

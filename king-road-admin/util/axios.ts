@@ -129,18 +129,11 @@ export const endpoints = {
     all: "/api/v1/admin/categories",
     details: "/api/v1/admin/categories/",
     products: "/api/v1/admin/categories/", // For category products: /api/v1/admin/categories/{id}/products
+    create: "/api/v1/admin/categories",
+    update: "/api/v1/admin/categories/",
+    delete: "/api/v1/admin/categories/",
   },
 
-  cart: {
-    list: "/api/v1/admin/cart",
-    add: "/api/v1/admin/cart/add",
-    update: "/api/v1/admin/cart/update",
-    remove: "/api/v1/admin/cart/remove",
-    clear: "/api/v1/admin/cart/clear",
-    count: "/api/v1/admin/cart/count",
-    total: "/api/v1/admin/cart/total",
-    transferGuest: "/api/v1/admin/cart/transfer-guest",
-  },
   address: {
     list: "/api/v1/admin/addresses",
     create: "/api/v1/admin/addresses",

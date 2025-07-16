@@ -1,6 +1,12 @@
 import useSWR, { mutate } from "swr";
 import { useMemo } from "react";
-import { endpoints, kingRoadFetcher } from "@/util/axios";
+import {
+  endpoints,
+  kingRoadCreatorForm,
+  kingRoadFetcher,
+  kingRoadSmasher,
+  kingRoadUpdatePut,
+} from "@/util/axios";
 
 // Types
 export interface Category {
@@ -199,4 +205,21 @@ export function useGetCategoryTree() {
     ...memoizedValue,
     revalidateCategoryTree,
   };
+}
+
+export function createNewCategory(body: any) {
+  const URL = endpoints.category.create;
+  const response = kingRoadCreatorForm([URL, body]);
+  return response;
+}
+export function updateCategory(body: any, id: any) {
+  const URL = endpoints.category.update + id;
+  const response = kingRoadUpdatePut([URL, body]);
+  return response;
+}
+
+export function deleteCategory(id: any) {
+  const URL = endpoints.category.delete + id;
+  const response = kingRoadSmasher(URL);
+  return response;
 }

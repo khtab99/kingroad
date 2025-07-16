@@ -18,14 +18,30 @@ class AdminOrderController extends Controller
     }
     public function index(Request $request)
     {
+        $filters = [];
+        
+        // Add status filter if provided
+        if ($request->has('status')) {
+            $filters['status'] = ['in', (array) $request->get('status')];
+        }
+        
+        // Add payment_status filter if provided
+        if ($request->has('payment_status')) {
+            $filters['payment_status'] = ['in', (array) $request->get('payment_status')];
+        }
+        
+        // Add date range filters if provided
+        if ($request->has('date_from')) {
+            $filters['created_at'] = ['>=', $request->get('date_from')];
+        }
+        if ($request->has('date_to')) {
+            $filters['created_at'] = ['<=', $request->get('date_to')];
+        }
+        
         $orders = $this->repository->applyWith(['items.product', 'user'])
-            ->applyFilters([
-                'status' => ['in', ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled']],
-                'payment_status' => ['in', ['pending', 'paid', 'failed', 'refunded']],
-                ])
+            ->applyFilters($filters)
             ->applySearch($request->get('search'), ['order_number', 'customer_name'])
             ->orderBy('created_at', 'desc')
-            
             ->paginate($request->get('per_page', 15));
 
         return OrderResource::collection($orders);

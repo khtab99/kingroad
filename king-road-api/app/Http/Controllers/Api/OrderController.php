@@ -82,6 +82,7 @@ public function store(CreateOrderRequest $request)
 
         $order = Order::create([
             'user_id' => auth()->check() ? auth()->id() : null,
+            'is_guest_order' => auth()->check() ? false : true,
             'checkout_session_id' => $data['checkout_session_id'],
             'customer_name' => $data['customer_name'],
             'customer_phone' => $data['customer_phone'],
@@ -128,10 +129,7 @@ public function store(CreateOrderRequest $request)
 
         $order->load(['items.product']);
 
-        return response()->json([
-            'message' => 'Order created successfully',
-            'order' => new OrderResource($order),
-        ], 201);
+        return handleSuccessReponse(1, 'Order created successfully', new OrderResource($order));
     });
 }
 

@@ -12,11 +12,11 @@ export interface VerifyPaymentParams {
 
 export const paymentApi = {
   // Create Stripe checkout session
-  createCheckoutSession: async (params: CreateCheckoutSessionParams) => {
+  createCheckoutSession: async (body: CreateCheckoutSessionParams) => {
     try {
       const response = await axiosInstance.post(
         "/api/v1/payment/create-checkout-session",
-        params
+        body
       );
       return response.data;
     } catch (error: any) {
@@ -28,7 +28,10 @@ export const paymentApi = {
   // Verify payment status
   verifyPayment: async (params: VerifyPaymentParams) => {
     try {
-      const response = await axiosInstance.post("/api/v1/payment/verify", params);
+      const response = await axiosInstance.post(
+        "/api/v1/payment/verify",
+        params
+      );
       return response.data;
     } catch (error: any) {
       console.error("Failed to verify payment:", error);

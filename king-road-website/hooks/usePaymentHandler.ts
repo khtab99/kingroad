@@ -77,7 +77,9 @@ export function usePaymentHandler(language: string) {
       };
 
       const orderResponse = await createNewOrder(orderBody);
-      const orderId = orderResponse?.order?.id;
+      const orderId = orderResponse?.data?.id;
+
+      console.log("Order response:", orderResponse);
 
       if (selectedPaymentMethod === "cash_on_delivery") {
         toast.success(

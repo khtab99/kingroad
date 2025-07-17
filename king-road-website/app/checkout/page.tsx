@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useStore } from "@/store/useStore";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -12,14 +12,29 @@ import AddressForm from "../../components/checkout/AddressForm";
 import DeliveryTab from "../../components/checkout/DeliveryTab";
 import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid"; // ✅ Import uuid
+import { getToken, getUserData } from "@/util/storage";
 
 export default function CheckoutPage() {
   const { cartItems, language, cartCount } = useStore();
   const router = useRouter();
 
   const [selectedAddressType, setSelectedAddressType] = useState("");
+
+  const token = getToken(); // however you're checking auth
+
+  const [parsedUserData, setParsedUserData] = useState({});
+
+  useEffect(() => {
+    try {
+      const raw = getUserData();
+      setParsedUserData(JSON.parse(raw) || {});
+    } catch {
+      setParsedUserData({});
+    }
+  }, []);
+
   const [formData, setFormData] = useState({
-    country: "",
+    country: "UAE",
     city: "",
     street: "",
     houseNumber: "",
@@ -33,6 +48,18 @@ export default function CheckoutPage() {
     email: "",
     createAccount: false,
   });
+
+  // Update name/email/phone only after login
+  useEffect(() => {
+    if (token && parsedUserData?.name) {
+      setFormData((prev) => ({
+        ...prev,
+        name: parsedUserData.name || "",
+        phone: parsedUserData.phone || "",
+        email: parsedUserData.email || "",
+      }));
+    }
+  }, [token, parsedUserData]);
 
   // Redirect if cart is empty
   useEffect(() => {
@@ -50,7 +77,7 @@ export default function CheckoutPage() {
   // Validate direct access to checkout page
   useEffect(() => {
     // Check if user navigated here directly without cart items
-    if (typeof window !== 'undefined' && cartCount === 0) {
+    if (typeof window !== "undefined" && cartCount === 0) {
       router.push("/");
     }
   }, [cartCount, router]);
@@ -139,7 +166,7 @@ export default function CheckoutPage() {
         <CheckoutHeader
           language={language}
           onBack={() => router.back()}
-          title={language === "ar" ? "تأكيد الطلب" : "Confirm Order"}
+          title={language === "ar" ? "تأكيد الطلب" : "Checkout"}
         />
 
         <DeliveryTab language={language} />

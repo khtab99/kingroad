@@ -71,10 +71,10 @@ Route::prefix('v1/admin')->group(function () {
 
         // Customers management
         Route::prefix('customers')->group(function () {
-            // Route::get('/', [AdminCustomerController::class, 'index']);
-            // Route::get('/{user}', [AdminCustomerController::class, 'show']);
-            // Route::put('/{user}', [AdminCustomerController::class, 'update']);
-            // Route::delete('/{user}', [AdminCustomerController::class, 'destroy']);
+            Route::get('/', [AdminCustomerController::class, 'index']);
+            Route::get('/{id}', [AdminCustomerController::class, 'show']);
+            Route::put('/{id}', [AdminCustomerController::class, 'update']);
+            Route::delete('/{id}', [AdminCustomerController::class, 'destroy']);
             // Route::get('/{user}/orders', [AdminCustomerController::class, 'orders']);
             // Route::get('/{user}/reviews', [AdminCustomerController::class, 'reviews']);
             // Route::post('/{user}/send-email', [AdminCustomerController::class, 'sendEmail']);

@@ -16,12 +16,16 @@ import axios from "axios";
 
 // ----------------------------------------------------------------------
 
-export function useGetOrderList(filters = {}) {
+type Filters = Record<string, string | number | undefined>;
+
+export function useGetOrderList(filters: any) {
   const queryParams = useMemo(() => {
     const params = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, value]) => {
-      if (value && value !== "all") params.append(key, value);
+      if (value && value !== "all") {
+        params.append(key, value.toString());
+      }
     });
 
     return params.toString();

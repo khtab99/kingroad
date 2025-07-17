@@ -33,8 +33,8 @@ import { Category } from "@/util/type";
 interface CategoryDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  form: ReturnType<typeof useForm<CategoryFormValues>>;
-  onSubmit: (data: CategoryFormValues) => void;
+  form: any;
+  onSubmit: any;
   isEditing: boolean;
   parentCategories: Category[];
 }

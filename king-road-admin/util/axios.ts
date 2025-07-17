@@ -163,4 +163,14 @@ export const endpoints = {
     recentOrders: "api/v1/admin/dashboard/recent-orders",
     topProducts: "api/v1/admin/dashboard/top-products",
   },
+  cart: {
+    list: "/api/v1/admin/carts",
+    count: "/api/v1/admin/carts/count",
+    total: "/api/v1/admin/carts/total",
+    add: "/api/v1/admin/carts",
+    remove: "/api/v1/admin/carts",
+    update: "/api/v1/admin/carts",
+    clear: "/api/v1/admin/carts",
+    transferGuest: "/api/v1/admin/carts/transfer-guest",
+  },
 };

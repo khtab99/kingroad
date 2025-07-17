@@ -4,6 +4,8 @@ import CheckoutSuccessContent from "@/components/checkout/success/success";
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useStore } from "@/store/useStore";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export default function SuccessPage() {
   const router = useRouter();
@@ -37,7 +39,11 @@ export default function SuccessPage() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <CheckoutSuccessContent />
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <CheckoutSuccessContent />
+        <Footer />
+      </div>
     </Suspense>
   );
 }

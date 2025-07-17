@@ -6,12 +6,7 @@ import {
   kingRoadCreatorForm,
   kingRoadFetcher,
 } from "@/util/axios";
-import {
-  setToken,
-  deleteToken,
-  setUserData,
-  deleteUserData,
-} from "@/util/storage";
+import { setToken, deleteToken, deleteAdminData } from "@/util/storage";
 
 // Types
 export interface User {
@@ -112,7 +107,7 @@ export async function logout(): Promise<void> {
   } finally {
     // Always clear local storage regardless of API call success
     deleteToken();
-    deleteUserData();
+    deleteAdminData();
 
     // Clear all cached data
     mutate(() => true, undefined, { revalidate: false });

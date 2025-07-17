@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetSubCategories } from "@/api/category";
+import { useGetCategoryTree, useGetSubCategories } from "@/api/category";
 import { SubCategoryList } from "@/components/category/SubCategoryList";
 import { useStore } from "@/store/useStore";
 
@@ -20,7 +20,6 @@ export function ProductsSidebar({
   onSortChange,
 }: ProductsSidebarProps) {
   const { language } = useStore();
-
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6">

@@ -1,6 +1,10 @@
 "use client";
 
-import { useGetCategoryById, useGetSubCategories } from "@/api/category";
+import {
+  useGetCategoryById,
+  useGetCategoryTree,
+  useGetSubCategories,
+} from "@/api/category";
 import { CategorySkeleton } from "./CategorySkeleton";
 import { CategoryError } from "./CategoryError";
 import { useStore } from "@/store/useStore";
@@ -53,7 +57,7 @@ export function SubCategoryList({
     );
   }
 
-  if (!categoryList.length) {
+  if (!categoryList.length && parentCategoryId !== null) {
     return (
       <div className="text-center py-4 text-gray-500 text-sm">
         {language === "ar"

@@ -156,7 +156,7 @@ public function store(CreateOrderRequest $request)
         try {
             $order = Order::where('order_number', $request->order_number)
                 ->where('customer_phone', $request->customer_phone)
-                ->whereNull('user_id') // Ensure it's a guest order
+                // ->whereNull('user_id') // Ensure it's a guest order
                 ->with(['items.product'])
                 ->first();
 

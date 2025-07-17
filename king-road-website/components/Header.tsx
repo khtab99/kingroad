@@ -5,10 +5,13 @@ import { MobileMenu } from "./MobileMenu";
 import { Logo } from "./logo";
 import translations from "@/data/translations.json";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Menu, Search, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AuthModal } from "./auth/AuthModal";
+
+import { AuthButton } from "./AuthButton";
 
 function SearchInput({
   placeholder = "Search",
@@ -31,6 +34,7 @@ function SearchInput({
 function LanguageToggle() {
   const language = useStore((s) => s.language);
   const toggleLanguage = useStore((s) => s.toggleLanguage);
+
   return (
     <Button
       variant="ghost"
@@ -60,6 +64,8 @@ export function Header() {
   const { cartCount, language, isMenuOpen, setMenuOpen } = useStore();
   const t = translations[language];
   const dir = language === "ar" ? "rtl" : "ltr";
+
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   return (
     <>
@@ -99,19 +105,16 @@ export function Header() {
                   dir === "rtl" ? "flex-row-reverse" : ""
                 }`}
               >
-                {[
-                  t.topNav.branches,
-                  t.topNav.whoAreWe,
-                  t.topNav.privacyPolicy,
-                  t.topNav.registration,
-                ].map((label, idx) => (
-                  <span
-                    key={idx}
-                    className="cursor-pointer hover:text-gray-900 font-medium"
-                  >
-                    {label}
-                  </span>
-                ))}
+                <span className="cursor-pointer hover:text-gray-900 font-medium">
+                  {t.topNav.branches}
+                </span>
+                <span className="cursor-pointer hover:text-gray-900 font-medium">
+                  {t.topNav.whoAreWe}
+                </span>
+                <span className="cursor-pointer hover:text-gray-900 font-medium">
+                  {t.topNav.privacyPolicy}
+                </span>
+                <AuthButton setAuthModalOpen={setAuthModalOpen} />
               </nav>
 
               {/* Right Section */}
@@ -134,6 +137,10 @@ export function Header() {
       </header>
 
       <MobileMenu />
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
     </>
   );
 }

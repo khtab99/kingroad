@@ -17,7 +17,8 @@
       "privacyPolicy": "Privacy Policy",
       "registration": "Registration",
       "login": "Login",
-      "english": "English"
+      "english": "English",
+      "logout": "Logout"
     },
     "hero": {
       "brandName": "KING ROAD",
@@ -30,7 +31,7 @@
     "categories": {
       "external": "External",
       "externalCount": "52 Products",
-      "others": "Others", 
+      "others": "Others",
       "othersCount": "241 Products"
     },
     "cta": {
@@ -41,7 +42,7 @@
       "privacyPolicy": "Privacy Policy",
       "whoAreWe": "Who are we",
       "orderTracking": "Order Tracking",
-      "menu": "Menu", 
+      "menu": "Menu",
       "supportedBy": "Powered By",
       "deliveryTime": "Delivery time: 2 days"
     }
@@ -64,7 +65,8 @@
       "privacyPolicy": "سياسة الخصوصية",
       "registration": "تسجيل دخول",
       "login": "دخول",
-      "english": "English"
+      "english": "English",
+      "logout": "تسجيل خروج"
     },
     "hero": {
       "brandName": "كينج رود",
@@ -85,7 +87,7 @@
     },
     "footer": {
       "branches": "الفروع",
-      "privacyPolicy": "سياسة الخصوصية", 
+      "privacyPolicy": "سياسة الخصوصية",
       "whoAreWe": "من نحن",
       "orderTracking": "حالة الطلب",
       "menu": "القائمة",

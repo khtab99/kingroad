@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -51,7 +51,13 @@ export default function TrackOrderPage() {
   } = useForm();
 
   const token = getToken();
-  const phone = getPhoneData()?.replace(/^"|"$/g, "");
+
+  const [phone, setPhone] = useState<any>();
+
+  useEffect(() => {
+    const data = getPhoneData();
+    setPhone(data?.replace(/^"|"$/g, ""));
+  }, []);
 
   console.log("Phone:", phone);
 
@@ -148,7 +154,7 @@ export default function TrackOrderPage() {
       ) : orderError ? (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
-          {/* <AlertDescription>{orderError}</AlertDescription> */}
+          <NoOrders />
         </Alert>
       ) : orderList && orderList.length > 0 ? (
         <div className="space-y-4">
@@ -545,15 +551,12 @@ export default function TrackOrderPage() {
       <Header />
       <div className="max-w-4xl mx-auto p-6">
         {/* Render no Auth view */}
-        {!token || phone ? (
-          <NoOrders />
-        ) : (
-          <div className="mt-4">
-            {viewMode === "list" && renderOrderList()}
-            {viewMode === "search" && renderSearchForm()}
-            {viewMode === "details" && renderOrderDetails()}
-          </div>
-        )}
+
+        <div className="mt-4">
+          {viewMode === "list" && renderOrderList()}
+          {viewMode === "search" && renderSearchForm()}
+          {viewMode === "details" && renderOrderDetails()}
+        </div>
       </div>
       <Footer />
     </div>

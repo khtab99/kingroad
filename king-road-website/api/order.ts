@@ -35,6 +35,9 @@ export function useGetOrderList({ page, per_page, search, phone }: any = {}) {
     kingRoadFetcher,
     {
       revalidateOnFocus: false,
+      dedupingInterval: 60000, // Cache for 1 minute
+      errorRetryCount: 3,
+      errorRetryInterval: 7000,
     }
   );
 

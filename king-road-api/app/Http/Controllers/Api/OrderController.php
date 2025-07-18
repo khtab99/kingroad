@@ -7,21 +7,52 @@ use App\Http\Requests\Order\CreateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\RepositoryService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index(Request $request)
-    {
-        $orders = auth()->user()
-            ->orders()
-            ->with(['items.product'])
-            ->orderBy('created_at', 'desc')
-            ->paginate($request->get('per_page', 15));
 
-        return OrderResource::collection($orders);
+       protected $repository;
+    public function __construct()
+    {
+        $this->repository = RepositoryService::setModel(new Order());
     }
+
+
+public function index(Request $request)
+{
+    $search = $request->get('search');
+    $perPage = $request->get('per_page', 15);
+
+    // Initialize base query with relationships
+    $query = $this->repository
+        ->applyWith(['items.product', 'user']);
+
+    if ($request->user()) {
+        // Authenticated user: filter by user_id
+        $userId = $request->user()->id;
+        $query->applyFilters(['user_id' => $userId]);
+    } else {
+        // Guest user: filter by phone number
+        $phone = $request->get('phone'); // e.g. ?phone=0501234567
+        if ($phone) {
+            $query->applyFilters(['customer_phone' => $phone]);
+        } else {
+            return response()->json(['error' => 'Phone number is required for guest users.'], 400);
+        }
+    }
+
+    // Apply search and sorting
+    $orders = $query
+        ->applySearch($search, ['order_number', 'customer_name'])
+        ->orderBy('created_at', 'desc')
+        ->paginate($perPage);
+
+    return OrderResource::collection($orders);
+}
+
 
 public function store(CreateOrderRequest $request)
 {

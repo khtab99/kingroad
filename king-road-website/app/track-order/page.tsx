@@ -23,10 +23,11 @@ import {
 } from "lucide-react";
 
 import { useToast } from "@/hooks/use-toast";
-import { lookupOrder } from "@/api/order";
+import { lookupOrder, useGetOrderList } from "@/api/order";
 import { Order } from "@/util/type";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { getToken } from "@/util/storage";
 
 export default function TrackOrderPage() {
   const [order, setOrder] = useState<Order | null>(null);
@@ -152,6 +153,13 @@ export default function TrackOrderPage() {
       current: index === currentIndex,
     }));
   };
+
+  const token = getToken();
+
+  const phone = localStorage.getItem("phone");
+
+  const { orderList, orderLoading, orderError, revalidateOrder } =
+    useGetOrderList({ phone: !token && phone });
 
   return (
     <div className="min-h-screen bg-gray-50 ">

@@ -95,7 +95,8 @@ export default function CheckoutPage() {
     if (
       !formData.street.trim() ||
       !formData.name.trim() ||
-      !formData.phone.trim()
+      !formData.phone.trim() ||
+      !formData.email.trim()
     ) {
       return false;
     }
@@ -152,6 +153,7 @@ export default function CheckoutPage() {
     };
 
     localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+    localStorage.setItem("phone", formData.phone);
     router.push("/checkout/confirm");
   };
 

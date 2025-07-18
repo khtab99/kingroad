@@ -1,5 +1,5 @@
 "use client";
-import { deleteToken, getToken } from "@/util/storage";
+import { deleteToken, deleteUserData, getToken } from "@/util/storage";
 import { useEffect, useState } from "react";
 import { useStore } from "@/store/useStore";
 import translations from "@/data/translations.json";
@@ -25,6 +25,7 @@ export const AuthButton = ({ setAuthModalOpen }: any) => {
       onClick={() => {
         if (token) {
           deleteToken();
+          deleteUserData();
           window.location.reload();
         } else {
           setAuthModalOpen(true);

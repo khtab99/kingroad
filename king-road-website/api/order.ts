@@ -13,16 +13,17 @@ import {
 
 // ----------------------------------------------------------------------
 
-export function useGetOrderList({ page, per_page, search }: any = {}) {
+export function useGetOrderList({ page, per_page, search, phone }: any = {}) {
   const queryParams = useMemo(() => {
     const params: Record<string, any> = {};
 
     if (page) params.page = page;
     if (per_page) params.per_page = per_page;
     if (search) params.search = search;
+    if (phone) params.phone = phone;
 
     return params;
-  }, [page, per_page, search]);
+  }, [page, per_page, search, phone]);
 
   const fullUrl = useMemo(
     () => `${endpoints.order.list}?${new URLSearchParams(queryParams)}`,
@@ -43,7 +44,7 @@ export function useGetOrderList({ page, per_page, search }: any = {}) {
 
   // Memoize the return value for performance
   const memoizedValue = useMemo(() => {
-    const orderData = data?.data?.data || [];
+    const orderData = data?.data || [];
     return {
       orderList: orderData,
       orderLoading: isLoading,
@@ -52,13 +53,7 @@ export function useGetOrderList({ page, per_page, search }: any = {}) {
       orderEmpty: orderData.length === 0,
       totalPages: data?.data?.meta?.total || 0,
     };
-  }, [
-    data?.data?.data,
-    data?.data?.meta?.total,
-    error,
-    isLoading,
-    isValidating,
-  ]);
+  }, [data?.data, error, isLoading, isValidating]);
 
   return {
     ...memoizedValue,

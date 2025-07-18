@@ -219,10 +219,10 @@ export default function OrderDetailsPage() {
               Back to Orders
             </Button> */}
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-300">
                   Order #{order?.order_number}
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-400">
                   Created on {formatDate(order?.created_at)}
                 </p>
               </div>

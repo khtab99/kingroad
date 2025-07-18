@@ -24,34 +24,9 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { lookupOrder } from "@/api/order";
-
-interface Order {
-  id: number;
-  order_number: string;
-  customer_name: string;
-  customer_phone: string;
-  customer_email?: string;
-  status: string;
-  payment_method: string;
-  payment_status: string;
-  subtotal: number;
-  delivery_fee: number;
-  total: number;
-  formatted_address: string;
-  customer_notes?: string;
-  created_at: string;
-  tracking_number?: string;
-  estimated_delivery?: string;
-  items: Array<{
-    id: number;
-    product_name: string;
-    product_sku: string;
-    product_image?: string;
-    quantity: number;
-    price: number;
-    total: number;
-  }>;
-}
+import { Order } from "@/util/type";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export default function TrackOrderPage() {
   const [order, setOrder] = useState<Order | null>(null);
@@ -179,10 +154,11 @@ export default function TrackOrderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 ">
+      <Header />
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 mt-4">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Track Your Order
           </h1>
@@ -482,6 +458,7 @@ export default function TrackOrderPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

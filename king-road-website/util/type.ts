@@ -63,3 +63,31 @@ export interface ProductFilters {
   in_stock?: boolean;
   sort?: string; // "price", "-price", "name", "-name", "created_at", "-created_at"
 }
+
+export interface Order {
+  id: number;
+  order_number: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_email?: string;
+  status: string;
+  payment_method: string;
+  payment_status: string;
+  subtotal: number;
+  delivery_fee: number;
+  total: number;
+  formatted_address: string;
+  customer_notes?: string;
+  created_at: string;
+  tracking_number?: string;
+  estimated_delivery?: string;
+  items: Array<{
+    id: number;
+    product_name: string;
+    product_sku: string;
+    product_image?: string;
+    quantity: number;
+    price: number;
+    total: number;
+  }>;
+}

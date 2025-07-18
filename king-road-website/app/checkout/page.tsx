@@ -132,6 +132,7 @@ export default function CheckoutPage() {
       );
       return;
     }
+    const deliveryfee = 35;
 
     const checkoutData = {
       checkoutSessionId: uuidv4(), // ✅ Generate unique session ID
@@ -143,9 +144,9 @@ export default function CheckoutPage() {
         (sum, item) => sum + item.price * item.quantity,
         0
       ),
-      deliveryFee: 35,
+      deliveryFee: deliveryfee,
       total: cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
+        (sum, item) => sum + item.price * item.quantity + deliveryfee,
         0
       ),
     };

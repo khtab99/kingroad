@@ -271,10 +271,10 @@ export default function DashboardPage() {
                         </p>
                         <Badge
                           variant={
-                            product.inventory > 10 ? "secondary" : "destructive"
+                            product.inventory >= 5 ? "secondary" : "destructive"
                           }
                         >
-                          {product.inventory > 10 ? "In Stock" : "Low Stock"}
+                          {product.inventory >= 5 ? "In Stock" : "Low Stock"}
                         </Badge>
                       </div>
                     </div>

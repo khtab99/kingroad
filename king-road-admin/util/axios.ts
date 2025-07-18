@@ -173,4 +173,11 @@ export const endpoints = {
     clear: "/api/v1/admin/carts",
     transferGuest: "/api/v1/admin/carts/transfer-guest",
   },
+  customer: {
+    all: "/api/v1/admin/customers",
+    details: "/api/v1/admin/customers/",
+    create: "/api/v1/admin/customers",
+    update: "/api/v1/admin/customers/",
+    delete: "/api/v1/admin/customers/",
+  },
 };

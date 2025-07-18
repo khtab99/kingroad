@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Store,
   HelpCircle,
+  Users,
 } from "lucide-react";
 import { useLanguage } from "../providers/language-provider";
 
@@ -46,6 +47,12 @@ export function VendorSidebar() {
       title: "Orders",
       href: "/orders",
       icon: ShoppingCart,
+      badge: null,
+    },
+    {
+      title: "Customers",
+      href: "/customers",
+      icon: Users,
       badge: null,
     },
   ];

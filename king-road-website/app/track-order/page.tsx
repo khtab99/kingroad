@@ -158,7 +158,7 @@ export default function TrackOrderPage() {
         </Alert>
       ) : orderList && orderList.length > 0 ? (
         <div className="space-y-4">
-          {orderList.map((order) => (
+          {orderList.map((order: any) => (
             <Card
               key={order.id}
               className="cursor-pointer hover:shadow-md transition-shadow"

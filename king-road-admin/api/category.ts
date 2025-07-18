@@ -29,6 +29,21 @@ export interface Category {
   created_at: string;
   updated_at: string;
 }
+export interface CategoryData {
+  id: number;
+  name_en: string;
+  name_ar: string;
+  slug: string;
+  description_en?: string | null;
+  description_ar?: string | null;
+  parent_id: number | null;
+  is_active: boolean;
+  sort_order: number;
+  image?: string | null;
+  parent?: {
+    name_en: string;
+  };
+}
 
 export interface CategoryResponse {
   data: Category[];

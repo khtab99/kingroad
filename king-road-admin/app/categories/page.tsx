@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Edit, Trash2, Plus } from "lucide-react";
 import { useAdminAuth } from "@/contexts/admin-auth-context";
 import {
+  CategoryData,
   createNewCategory,
   deleteCategory,
   updateCategory,
@@ -45,28 +46,14 @@ const categorySchema = z.object({
 
 type CategoryFormData = z.infer<typeof categorySchema>;
 
-interface Category {
-  id: number;
-  name_en: string;
-  name_ar: string;
-  slug: string;
-  description_en?: string | null;
-  description_ar?: string | null;
-  parent_id: number | null;
-  is_active: boolean;
-  sort_order: number;
-  image?: string | null;
-  parent?: {
-    name_en: string;
-  };
-}
-
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
+  const [currentCategory, setCurrentCategory] = useState<CategoryData | null>(
+    null
+  );
 
   const { token } = useAdminAuth();
   const {

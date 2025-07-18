@@ -30,7 +30,7 @@ import { lookupOrder, useGetOrderList } from "@/api/order";
 import { Order } from "@/util/type";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { getToken } from "@/util/storage";
+import { getPhoneData, getToken } from "@/util/storage";
 import { getStatusColor, getStatusIcon, getStatusSteps } from "@/util/static";
 
 type ViewMode = "list" | "search" | "details";
@@ -50,7 +50,7 @@ export default function TrackOrderPage() {
   } = useForm();
 
   const token = getToken();
-  const phone = localStorage.getItem("phone");
+  const phone = token ? "" : getPhoneData();
 
   const { orderList, orderLoading, orderError, revalidateOrder } =
     useGetOrderList({ phone: !token && phone });

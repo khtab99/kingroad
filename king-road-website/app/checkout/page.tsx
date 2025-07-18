@@ -12,7 +12,7 @@ import AddressForm from "../../components/checkout/AddressForm";
 import DeliveryTab from "../../components/checkout/DeliveryTab";
 import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid"; // ✅ Import uuid
-import { getToken, getUserData } from "@/util/storage";
+import { getToken, getUserData, setPhoneData } from "@/util/storage";
 
 export default function CheckoutPage() {
   const { cartItems, language, cartCount } = useStore();
@@ -153,7 +153,7 @@ export default function CheckoutPage() {
     };
 
     localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
-    localStorage.setItem("phone", formData.phone);
+    setPhoneData(formData.phone);
     router.push("/checkout/confirm");
   };
 

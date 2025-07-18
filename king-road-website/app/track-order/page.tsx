@@ -32,6 +32,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getPhoneData, getToken } from "@/util/storage";
 import { getStatusColor, getStatusIcon, getStatusSteps } from "@/util/static";
+import NoOrders from "@/components/NoOrder";
 
 type ViewMode = "list" | "search" | "details";
 
@@ -50,7 +51,9 @@ export default function TrackOrderPage() {
   } = useForm();
 
   const token = getToken();
-  const phone = token ? "" : getPhoneData();
+  const phone = getPhoneData()?.replace(/^"|"$/g, "");
+
+  console.log("Phone:", phone);
 
   const { orderList, orderLoading, orderError, revalidateOrder } =
     useGetOrderList({ phone: !token && phone });
@@ -145,7 +148,7 @@ export default function TrackOrderPage() {
       ) : orderError ? (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{orderError}</AlertDescription>
+          {/* <AlertDescription>{orderError}</AlertDescription> */}
         </Alert>
       ) : orderList && orderList.length > 0 ? (
         <div className="space-y-4">
@@ -203,24 +206,7 @@ export default function TrackOrderPage() {
           ))}
         </div>
       ) : (
-        <Card>
-          <CardContent className="text-center py-12">
-            <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No orders found
-            </h3>
-            <p className="text-gray-600 mb-4">
-              You haven't placed any orders yet.
-            </p>
-            <Button
-              onClick={handleSearchMode}
-              className="flex items-center gap-2"
-            >
-              <Search className="h-4 w-4" />
-              Search by Order Number
-            </Button>
-          </CardContent>
-        </Card>
+        <NoOrders />
       )}
     </div>
   );
@@ -558,11 +544,16 @@ export default function TrackOrderPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="max-w-4xl mx-auto p-6">
-        <div className="mt-4">
-          {viewMode === "list" && renderOrderList()}
-          {viewMode === "search" && renderSearchForm()}
-          {viewMode === "details" && renderOrderDetails()}
-        </div>
+        {/* Render no Auth view */}
+        {!token || phone ? (
+          <NoOrders />
+        ) : (
+          <div className="mt-4">
+            {viewMode === "list" && renderOrderList()}
+            {viewMode === "search" && renderSearchForm()}
+            {viewMode === "details" && renderOrderDetails()}
+          </div>
+        )}
       </div>
       <Footer />
     </div>

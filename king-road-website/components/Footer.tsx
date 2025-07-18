@@ -40,15 +40,30 @@ export function Footer() {
               language === "ar" ? "flex-row-reverse" : ""
             }`}
           >
-            {footerLinks.map((link, index) => (
-              <a
-                key={index}
-                href="#"
-                className="text-gray-300 hover:text-white transition-colors cursor-pointer font-medium"
-              >
-                {link}
-              </a>
-            ))}
+            <a
+              href="#"
+              className="text-gray-300 hover:text-white transition-colors cursor-pointer font-medium"
+            >
+              {t.footer.privacyPolicy}
+            </a>
+            <a
+              href="#"
+              className="text-gray-300 hover:text-white transition-colors cursor-pointer font-medium"
+            >
+              {t.footer.whoAreWe}
+            </a>
+            <a
+              href="/track-order"
+              className="text-gray-300 hover:text-white transition-colors cursor-pointer font-medium"
+            >
+              {t.footer.orderTracking}
+            </a>
+            <a
+              href="#"
+              className="text-gray-300 hover:text-white transition-colors cursor-pointer font-medium"
+            >
+              {t.footer.menu}
+            </a>
           </div>
 
           {/* Social Media Icons */}

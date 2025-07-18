@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Mail, Lock, User, Phone, ChevronDown, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { login, register } from "@/api/auth";
-import { setToken, setUserData } from "@/util/storage";
+import { deletePhoneData, setToken, setUserData } from "@/util/storage";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -105,6 +105,7 @@ export function AuthModal({
         toast.success(response?.message);
 
         onClose();
+        deletePhoneData();
         onSuccess?.();
       } else {
         toast.error(
@@ -161,6 +162,7 @@ export function AuthModal({
         );
 
         onClose();
+        deletePhoneData();
         onSuccess?.();
       } else {
         throw new Error(response?.data.message);

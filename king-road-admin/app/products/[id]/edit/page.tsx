@@ -278,7 +278,10 @@ export default function ProductEdit() {
           // Handle dimensions object
           Object.entries(value).forEach(([dimKey, dimValue]) => {
             if (dimValue) {
-              formDataToSend.append(`dimensions[${dimKey}]`, dimValue);
+              formDataToSend.append(
+                `dimensions[${dimKey}]`,
+                JSON.stringify(dimValue)
+              );
             }
           });
         } else if (key === "tags") {

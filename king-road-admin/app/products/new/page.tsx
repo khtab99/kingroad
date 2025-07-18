@@ -47,11 +47,11 @@ interface FormErrors {
 }
 
 export default function NewProductPage() {
-  const { t, currentLanguage } = useLanguage();
+  const { t, language } = useLanguage();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [subcategories, setSubcategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<any>([]);
+  const [subcategories, setSubcategories] = useState<any>([]);
   const [errors, setErrors] = useState<FormErrors>({});
   const [imagePreview, setImagePreview] = useState<string[]>([]);
 
@@ -110,7 +110,7 @@ export default function NewProductPage() {
   useEffect(() => {
     if (formData.category_id) {
       const selectedCategory = categories.find(
-        (cat) => cat.id.toString() === formData.category_id
+        (cat: any) => cat.id.toString() === formData.category_id
       );
 
       setSubcategories(selectedCategory?.children || []);
@@ -264,7 +264,10 @@ export default function NewProductPage() {
           // Handle dimensions object
           Object.entries(value).forEach(([dimKey, dimValue]) => {
             if (dimValue) {
-              formDataToSend.append(`dimensions[${dimKey}]`, dimValue);
+              formDataToSend.append(
+                `dimensions[${dimKey}]`,
+                JSON.stringify(dimValue)
+              );
             }
           });
         } else if (key === "tags") {
@@ -497,12 +500,12 @@ export default function NewProductPage() {
                       <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories.map((category) => (
+                      {categories.map((category: any) => (
                         <SelectItem
                           key={category.id}
                           value={category.id.toString()}
                         >
-                          {currentLanguage === "ar"
+                          {language === "ar"
                             ? category.name_ar
                             : category.name_en}
                         </SelectItem>
@@ -529,12 +532,12 @@ export default function NewProductPage() {
                       <SelectValue placeholder="Select a subcategory" />
                     </SelectTrigger>
                     <SelectContent>
-                      {subcategories.map((subcategory) => (
+                      {subcategories.map((subcategory: any) => (
                         <SelectItem
                           key={subcategory.id}
                           value={subcategory.id.toString()}
                         >
-                          {currentLanguage === "ar"
+                          {language === "ar"
                             ? subcategory.name_ar
                             : subcategory.name_en}
                         </SelectItem>

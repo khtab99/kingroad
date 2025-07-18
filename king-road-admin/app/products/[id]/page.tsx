@@ -165,7 +165,7 @@ export default function ProductDetailPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {product.images?.map((img, i) => (
+                    {product.images?.map((img: string, i: number) => (
                       <img
                         key={i}
                         src={img}

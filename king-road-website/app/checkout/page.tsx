@@ -143,7 +143,7 @@ export default function CheckoutPage() {
         (sum, item) => sum + item.price * item.quantity,
         0
       ),
-      deliveryFee: 0,
+      deliveryFee: 35,
       total: cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0

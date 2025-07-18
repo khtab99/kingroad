@@ -55,7 +55,7 @@ export function usePaymentHandler(language: string) {
       }
 
       const orderBody = {
-        customer_phone: `+971${checkoutData.phone}`,
+        customer_phone: `${checkoutData.phone}`,
         customer_name: checkoutData.name,
         checkout_session_id: checkoutData.checkoutSessionId,
         customer_email: checkoutData.email || "",

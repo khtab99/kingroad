@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Services\RepositoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -36,7 +37,7 @@ public function index(Request $request)
         $query->applyFilters(['user_id' => $userId]);
     } else {
         // Guest user: filter by phone number
-        $phone = $request->get('phone'); // e.g. ?phone=0501234567
+     $phone = $request->query('phone');
         if ($phone) {
             $query->applyFilters(['customer_phone' => $phone]);
         } else {

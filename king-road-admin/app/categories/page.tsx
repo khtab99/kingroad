@@ -205,7 +205,7 @@ export default function CategoriesPage() {
                       <TableCell>
                         <Avatar className="h-16 w-16 shadow-sm">
                           <AvatarImage
-                            src={`http://localhost:8000${category.image || ""}`}
+                            src={category.image}
                             alt={category.name_en}
                           />
                           <AvatarFallback>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -49,6 +50,11 @@ class Category extends Model
         return $this->hasMany(Product::class, 'subcategory_id');
     }
 
+    public function sub_subcategoryProducts(): HasMany
+    {
+        return $this->hasMany(Product::class, 'sub_subcategory_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
@@ -73,4 +79,12 @@ class Category extends Model
     {
         return app()->getLocale() === 'ar' ? $this->description_ar : $this->description_en;
     }
+    protected static function booted()
+{
+    static::creating(function ($category) {
+        if (empty($category->slug)) {
+            $category->slug = Str::slug($category->name_en);
+        }
+    });
+}
 }

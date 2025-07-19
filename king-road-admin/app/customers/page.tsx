@@ -85,7 +85,7 @@ export default function CustomersPage() {
     revalidateCustomers,
   } = useGetCustomers();
 
-  const form = useForm<CustomerFormData>({
+  const form = useForm<any>({
     resolver: zodResolver(customerSchema),
     defaultValues: {
       name: "",
@@ -300,7 +300,7 @@ export default function CustomersPage() {
                             <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
                               {customer.name
                                 .split(" ")
-                                .map((n) => n[0])
+                                .map((n: string) => n[0])
                                 .join("")
                                 .toUpperCase()}
                             </AvatarFallback>
@@ -398,7 +398,7 @@ export default function CustomersPage() {
                               <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
                                 {customer.name
                                   .split(" ")
-                                  .map((n) => n[0])
+                                  .map((n: string) => n[0])
                                   .join("")
                                   .toUpperCase()}
                               </AvatarFallback>

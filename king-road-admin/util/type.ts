@@ -14,6 +14,7 @@ export interface ProductFormData {
   track_inventory: boolean;
   category_id: string;
   subcategory_id?: string;
+  sub_subcategory_id?: string;
   images: File[];
   weight?: string;
   dimensions: {
@@ -89,6 +90,7 @@ export interface ProductFilters {
   search?: string;
   category_id?: string;
   subcategory_id?: string;
+  sub_subcategory_id?: string;
   price_range?: string; // "min,max"
   is_featured?: boolean;
   is_on_sale?: boolean;

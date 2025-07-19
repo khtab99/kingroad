@@ -42,6 +42,7 @@ class UpdateProductRequest extends FormRequest
             'track_inventory' => 'boolean',
             'category_id' => 'sometimes|exists:categories,id',
             'subcategory_id' => 'nullable|exists:categories,id',
+            'sub_subcategory_id' => 'nullable|exists:categories,id',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'weight' => 'nullable|numeric|min:0',

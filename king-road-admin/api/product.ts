@@ -44,6 +44,9 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
     if (filters.subcategory_id && filters.subcategory_id !== "all") {
       params["filter[subcategory_id]"] = filters.subcategory_id;
     }
+    if (filters.sub_subcategory_id) {
+      params["filter[sub_subcategory_id]"] = filters.sub_subcategory_id;
+    }
     if (filters.price_range) {
       params["filter[price_range]"] = filters.price_range;
     }

@@ -63,7 +63,7 @@ export default function CategoriesPage() {
     revalidateSuperCategory,
   } = useGetSuperCategory();
 
-  const form = useForm<CategoryFormData>({
+  const form = useForm<any>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name_en: "",
@@ -78,7 +78,7 @@ export default function CategoriesPage() {
     },
   });
 
-  const handleEdit = (category: Category) => {
+  const handleEdit = (category: any) => {
     setCurrentCategory(category);
     form.reset({
       ...category,
@@ -199,7 +199,7 @@ export default function CategoriesPage() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  filteredCategories.map((category: Category) => (
+                  filteredCategories.map((category: any) => (
                     <TableRow key={category.id}>
                       <TableCell>{category.id}</TableCell>
                       <TableCell>
@@ -211,7 +211,7 @@ export default function CategoriesPage() {
                           <AvatarFallback>
                             {category.name_en
                               .split(" ")
-                              .map((n) => n[0])
+                              .map((n: string) => n[0])
                               .join("")
                               .toUpperCase()}
                           </AvatarFallback>

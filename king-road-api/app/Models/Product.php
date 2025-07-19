@@ -27,6 +27,7 @@ class Product extends Model
         'track_inventory',
         'category_id',
         'subcategory_id',
+        'sub_subcategory_id',
         'images',
         'featured_image',
         'weight',
@@ -64,6 +65,11 @@ class Product extends Model
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'subcategory_id');
+    }
+
+    public function sub_subcategory(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'sub_subcategory_id');
     }
 
     public function orderItems(): HasMany

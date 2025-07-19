@@ -29,6 +29,7 @@ class ProductResource extends JsonResource
             'track_inventory' => $this->track_inventory,
             'category' => new CategoryResource($this->whenLoaded('category')),
             'subcategory' => new CategoryResource($this->whenLoaded('subcategory')),
+            'sub_subcategory' => new CategoryResource($this->whenLoaded('sub_subcategory')),
             'images' => $this->images,
       'featured_image' => $this->featured_image ? url($this->featured_image) : null,
             'weight' => $this->weight,

@@ -71,6 +71,8 @@ export default function NewProductPage() {
     track_inventory: true,
     category_id: "",
     subcategory_id: "",
+    sub_subcategory_id: "",
+
     images: [],
     weight: "",
     dimensions: {

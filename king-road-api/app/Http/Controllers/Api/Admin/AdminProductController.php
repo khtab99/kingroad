@@ -17,17 +17,19 @@ class AdminProductController extends Controller
     public function index(Request $request)
     {
         $products = QueryBuilder::for(Product::class)
-            ->with(['category', 'subcategory'])
+            ->with(['category', 'subcategory', 'sub_subcategory'])
             ->allowedFilters(filters: [
                 'name_en',
                 'name_ar',
                 'sku',
                 'category_id',
                 'subcategory_id',
+                'sub_subcategory_id',
                 'is_active',
                 'is_featured',
                 AllowedFilter::exact('category_id'),
                 AllowedFilter::exact('subcategory_id'),
+                AllowedFilter::exact('sub_subcategory_id'),
                 AllowedFilter::scope('in_stock'),
                 AllowedFilter::scope('low_stock'),
                 AllowedFilter::scope('out_of_stock'),
@@ -69,7 +71,7 @@ class AdminProductController extends Controller
         }
 
         $product = Product::create($data);
-        $product->load(['category', 'subcategory']);
+        $product->load(['category', 'subcategory',"sub_subcategory"]);
 
         return response()->json([
             'message' => 'Product created successfully',

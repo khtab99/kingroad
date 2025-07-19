@@ -28,7 +28,7 @@ export function ProductsSidebar({
       </h3>
 
       <SubCategoryList
-        parentCategoryId={selectedCategory === "all" ? null : selectedCategory}
+        parentCategoryId={selectedCategory}
         selectedSubcategories={selectedSubcategories}
         onSubcategoryChange={onSubcategoryChange}
         variant="radio"

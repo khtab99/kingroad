@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  useGetCategoryById,
-  useGetCategoryTree,
-  useGetSubCategories,
-} from "@/api/category";
+import { useGetCategoryById } from "@/api/category";
 import { CategorySkeleton } from "./CategorySkeleton";
 import { CategoryError } from "./CategoryError";
 import { useStore } from "@/store/useStore";
@@ -33,9 +29,9 @@ export function SubCategoryList({
       onSubcategoryChange([subcategoryId]);
     } else {
       // Multiple selection
-      if (selectedSubcategories.includes(subcategoryId)) {
+      if (selectedSubcategories?.includes(subcategoryId)) {
         onSubcategoryChange(
-          selectedSubcategories.filter((id) => id !== subcategoryId)
+          selectedSubcategories?.filter((id) => id !== subcategoryId)
         );
       } else {
         onSubcategoryChange([...selectedSubcategories, subcategoryId]);
@@ -57,7 +53,7 @@ export function SubCategoryList({
     );
   }
 
-  if (!categoryList.length && parentCategoryId !== null) {
+  if (!categoryList?.children?.length && parentCategoryId !== null) {
     return (
       <div className="text-center py-4 text-gray-500 text-sm">
         {language === "ar"
@@ -69,27 +65,11 @@ export function SubCategoryList({
 
   return (
     <div className="space-y-3">
-      {/* All option for radio variant */}
-      {variant === "radio" && (
-        <label className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
-          <input
-            type="radio"
-            name="subcategory"
-            checked={selectedSubcategories.includes("all")}
-            onChange={() => handleSubcategoryChange("all")}
-            className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
-          />
-          <span className="text-gray-700 text-sm">
-            {language === "ar" ? "الكل" : "All"}
-          </span>
-        </label>
-      )}
-
       {/* Subcategories */}
-      {categoryList.map((subcategory: any) => {
+      {categoryList?.children?.map((subcategory: any) => {
         const subcategoryName =
           language === "ar" ? subcategory.name_ar : subcategory.name_en;
-        const isSelected = selectedSubcategories.includes(subcategory.id);
+        const isSelected = selectedSubcategories?.includes(subcategory.id);
 
         return (
           <label

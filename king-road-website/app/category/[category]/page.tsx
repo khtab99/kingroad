@@ -23,26 +23,22 @@ import {
 export default function ProductsPage() {
   const params = useParams();
   const { language } = useStore();
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([
-    "all",
-  ]);
+  const [selectedCategory, setSelectedCategory] = useState<any>();
+  const [selectedSubcategories, setSelectedSubcategories] = useState<any>(null);
+
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const category = params.category as string;
 
-  useEffect(() => {
-    if (category && category !== "all") {
-      setSelectedCategory(category);
-      // Reset subcategories to "all" when category changes
-      setSelectedSubcategories(["all"]);
-    } else {
-      setSelectedCategory("all");
-      setSelectedSubcategories(["all"]);
-    }
-  }, [category]);
+  const categoryId = category;
+
+  const categoryFilters = {
+    superCategoryId: parseInt(categoryId),
+    categoryId: selectedCategory,
+    subCategoryId: selectedSubcategories,
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -50,6 +46,7 @@ export default function ProductsPage() {
 
       {/* Category Navigation */}
       <CategoryNavigation
+        categoryId={categoryId}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
       />
@@ -116,8 +113,8 @@ export default function ProductsPage() {
           {/* Products Grid */}
           <div className="flex-1">
             <ProductsGrid
-              selectedCategory={selectedCategory}
-              selectedSubcategories={selectedSubcategories}
+              categoryFilters={categoryFilters}
+              selectedCategories={selectedCategory}
               sortBy={sortBy}
               currentPage={currentPage}
               onPageChange={setCurrentPage}

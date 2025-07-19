@@ -55,13 +55,25 @@ export interface ProductFilters {
   page?: number;
   per_page?: number;
   search?: string;
-  category_id?: string;
-  subcategory_id?: string;
-  price_range?: string; // "min,max"
+
+  // 3-Level Category Hierarchy
+  category_id?: string; // Super Category (Level 1)
+  subcategory_id?: string; // Category (Level 2)
+  subSubcategory_id?: string; // Sub Category (Level 3)
+
+  // Other filters
+  price_range?: string;
   is_featured?: boolean;
   is_on_sale?: boolean;
   in_stock?: boolean;
-  sort?: string; // "price", "-price", "name", "-name", "created_at", "-created_at"
+  sort?: string;
+
+  // Additional filters for more flexibility
+  brand_id?: string;
+  min_price?: number;
+  max_price?: number;
+  rating_min?: number;
+  tags?: string[];
 }
 
 export interface Order {

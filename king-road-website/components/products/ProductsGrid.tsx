@@ -5,21 +5,32 @@ import { ProductSkeleton } from "./ProductSkeleton";
 import { ProductError } from "./ProductError";
 import { ProductCard } from "./ProductCard";
 import { useStore } from "@/store/useStore";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 
+interface CategoryFilters {
+  superCategoryId?: string;
+  categoryId?: string;
+  subCategoryId?: string;
+}
+
 interface ProductsGridProps {
-  selectedCategory: string;
-  selectedSubcategories: string[];
+  // Updated to support 3-level hierarchy
+  categoryFilters: CategoryFilters;
+  selectedCategories: {
+    superCategory?: string;
+    category?: string;
+    subCategory?: string;
+  };
   sortBy: string;
   currentPage: number;
   onPageChange: (page: number) => void;
 }
 
 export function ProductsGrid({
-  selectedCategory,
-  selectedSubcategories,
+  categoryFilters,
+  selectedCategories,
   sortBy,
   currentPage,
   onPageChange,
@@ -27,24 +38,22 @@ export function ProductsGrid({
   const { language } = useStore();
   const router = useRouter();
 
-  // Prepare filters for API call
+  console.log("categoryFilters", categoryFilters);
+
+  // Prepare filters for API call with 3-level category support
   const filters = useMemo(() => {
     const apiFilters: any = {
       page: currentPage,
       per_page: 12,
     };
 
-    // Category filter
-    if (selectedCategory && selectedCategory !== "all") {
-      apiFilters.category_id = selectedCategory;
-    }
-
-    // Subcategory filter
-    if (
-      selectedSubcategories.length > 0 &&
-      !selectedSubcategories.includes("all")
-    ) {
-      apiFilters.subcategory_id = selectedSubcategories[0]; // Take first selected subcategory
+    // 3-Level Category filters - apply the most specific level available
+    if (categoryFilters.subCategoryId) {
+      apiFilters.subSubcategory_id = categoryFilters.subCategoryId;
+    } else if (categoryFilters.categoryId) {
+      apiFilters.subcategory_id = categoryFilters.categoryId;
+    } else if (categoryFilters.superCategoryId) {
+      apiFilters.category_id = categoryFilters.superCategoryId;
     }
 
     // Sort filter
@@ -68,9 +77,20 @@ export function ProductsGrid({
     }
 
     return apiFilters;
-  }, [selectedCategory, selectedSubcategories, sortBy, currentPage, language]);
+  }, [categoryFilters, sortBy, currentPage, language]);
 
-  // Fetch products using the API
+  // Determine which category ID to use for the API call
+  const effectiveCategoryId = useMemo(() => {
+    // Use the most specific category available
+    return (
+      categoryFilters.subCategoryId ||
+      categoryFilters.categoryId ||
+      categoryFilters.superCategoryId ||
+      "all"
+    );
+  }, [categoryFilters]);
+
+  // Fetch products using the updated API
   const {
     productList,
     productLoading,
@@ -80,10 +100,9 @@ export function ProductsGrid({
     currentPage: apiCurrentPage,
     lastPage,
     revalidateProducts,
-  } = useGetProductsByCategory(
-    selectedCategory === "all" ? "" : selectedCategory,
-    filters
-  );
+  } = useGetProductsByCategory(effectiveCategoryId, filters);
+
+  console.log("productList", productList);
 
   const handleBuyNow = (product: any) => {
     router.push("/cart");
@@ -93,6 +112,20 @@ export function ProductsGrid({
     if (apiCurrentPage < lastPage) {
       onPageChange(apiCurrentPage + 1);
     }
+  };
+
+  // Get display name for current category level
+  const getCategoryDisplayName = () => {
+    if (selectedCategories?.subCategory) {
+      return selectedCategories?.subCategory;
+    }
+    if (selectedCategories?.category) {
+      return selectedCategories?.category;
+    }
+    if (selectedCategories?.superCategory) {
+      return selectedCategories?.superCategory;
+    }
+    return language === "ar" ? "جميع المنتجات" : "All Products";
   };
 
   // Loading state
@@ -150,17 +183,26 @@ export function ProductsGrid({
       {/* Products Header */}
       <div className="mb-6">
         <h2 className="text-xl font-semibold text-gray-800 mb-2 capitalize">
-          {selectedCategory === "all"
-            ? language === "ar"
-              ? "جميع المنتجات"
-              : "All Products"
-            : language === "ar"
-            ? "المنتجات"
-            : "Products"}
+          {getCategoryDisplayName()}
         </h2>
         <p className="text-gray-600 text-sm">
           {totalProducts} {language === "ar" ? "منتج" : "products"}
         </p>
+
+        {/* Category Breadcrumb */}
+        <div className="mt-2 text-sm text-gray-500">
+          {/* {selectedCategories.superCategory && (
+            <span>
+              {selectedCategories.superCategory}
+              {selectedCategories.category && (
+                <span> → {selectedCategories.category}</span>
+              )}
+              {selectedCategories.subCategory && (
+                <span> → {selectedCategories.subCategory}</span>
+              )}
+            </span>
+          )} */}
+        </div>
       </div>
 
       {/* Products Grid */}

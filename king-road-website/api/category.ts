@@ -136,7 +136,7 @@ export function useGetSubCategories(parentId: string | null) {
 }
 
 // Hook for fetching single category by ID
-export function useGetCategoryById(id: string | null) {
+export function useGetCategoryById(id: any) {
   const URL = id ? `${endpoints.category.details}${id}` : null;
 
   const { data, isLoading, error, isValidating } = useSWR(
@@ -156,12 +156,12 @@ export function useGetCategoryById(id: string | null) {
 
   const memoizedValue = useMemo(
     () => ({
-      categoryList: data?.data?.children || [],
+      categoryList: data?.data || [],
       categoryLoading: isLoading,
       categoryError: error,
       categoryValidating: isValidating,
     }),
-    [data?.data?.children, error, isLoading, isValidating]
+    [data?.data, error, isLoading, isValidating]
   );
 
   return { ...memoizedValue, revalidateCategory };
@@ -189,7 +189,7 @@ export function useGetCategoryTree() {
     return {
       categoryTree,
       categoryTreeLoading: isLoading,
-      categoryTreeError: error,
+      categoryError: error,
       categoryTreeValidating: isValidating,
       categoryTreeEmpty: categoryTree.length === 0,
     };

@@ -9,125 +9,219 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        // Main categories
-        $external = Category::create([
-            'name_en' => 'External',
-            'name_ar' => 'خارجيه',
-            'slug' => 'external',
-            'description_en' => 'External car parts and accessories',
-            'description_ar' => 'قطع غيار خارجية وملحقات السيارة',
+        // First level categories (Grandparents)
+        $category1 = Category::create([
+            'name_en' => 'Category 1',
+            'name_ar' => 'التصنيف 1',
+            'slug' => 'category-1',
             'sort_order' => 1,
         ]);
 
-        $internal = Category::create([
-            'name_en' => 'Internal',
-            'name_ar' => 'داخليه',
-            'slug' => 'internal',
-            'description_en' => 'Internal car parts and accessories',
-            'description_ar' => 'قطع غيار داخلية وملحقات السيارة',
+        $category2 = Category::create([
+            'name_en' => 'Category 2',
+            'name_ar' => 'التصنيف 2',
+            'slug' => 'category-2',
             'sort_order' => 2,
         ]);
 
-        $airConditioning = Category::create([
-            'name_en' => 'Air Conditioning',
-            'name_ar' => 'جوض المكيفه',
-            'slug' => 'air-conditioning',
-            'description_en' => 'Air conditioning parts and components',
-            'description_ar' => 'قطع غيار ومكونات المكيف',
+        // Second level categories (Children of Category 1)
+        $sub1_1 = Category::create([
+            'name_en' => 'Subcategory 1.1',
+            'name_ar' => 'الفئة الفرعية 1.1',
+            'slug' => 'subcategory-1-1',
+            'parent_id' => $category1->id,
+            'sort_order' => 1,
+        ]);
+
+        $sub1_2 = Category::create([
+            'name_en' => 'Subcategory 1.2',
+            'name_ar' => 'الفئة الفرعية 1.2',
+            'slug' => 'subcategory-1-2',
+            'parent_id' => $category1->id,
+            'sort_order' => 2,
+        ]);
+
+        $sub1_3 = Category::create([
+            'name_en' => 'Subcategory 1.3',
+            'name_ar' => 'الفئة الفرعية 1.3',
+            'slug' => 'subcategory-1-3',
+            'parent_id' => $category1->id,
             'sort_order' => 3,
         ]);
 
-        $accessories = Category::create([
-            'name_en' => 'Accessories',
-            'name_ar' => 'ملحقات',
-            'slug' => 'accessories',
-            'description_en' => 'Car accessories and add-ons',
-            'description_ar' => 'ملحقات وإضافات السيارة',
-            'sort_order' => 4,
-        ]);
-
-        // Subcategories for External
-        Category::create([
-            'name_en' => 'Bumpers',
-            'name_ar' => 'مصدات',
-            'slug' => 'bumpers',
-            'parent_id' => $external->id,
+        // Second level categories (Children of Category 2)
+        $sub2_1 = Category::create([
+            'name_en' => 'Subcategory 2.1',
+            'name_ar' => 'الفئة الفرعية 2.1',
+            'slug' => 'subcategory-2-1',
+            'parent_id' => $category2->id,
             'sort_order' => 1,
         ]);
 
-        Category::create([
-            'name_en' => 'Lights',
-            'name_ar' => 'أضواء',
-            'slug' => 'lights',
-            'parent_id' => $external->id,
+        $sub2_2 = Category::create([
+            'name_en' => 'Subcategory 2.2',
+            'name_ar' => 'الفئة الفرعية 2.2',
+            'slug' => 'subcategory-2-2',
+            'parent_id' => $category2->id,
             'sort_order' => 2,
         ]);
 
-        Category::create([
-            'name_en' => 'Mirrors',
-            'name_ar' => 'مرايا',
-            'slug' => 'mirrors',
-            'parent_id' => $external->id,
+        $sub2_3 = Category::create([
+            'name_en' => 'Subcategory 2.3',
+            'name_ar' => 'الفئة الفرعية 2.3',
+            'slug' => 'subcategory-2-3',
+            'parent_id' => $category2->id,
             'sort_order' => 3,
         ]);
 
-        // Subcategories for Internal
+        // Third level categories (Children of Subcategory 1.1)
         Category::create([
-            'name_en' => 'Dashboard',
-            'name_ar' => 'لوحة القيادة',
-            'slug' => 'dashboard',
-            'parent_id' => $internal->id,
+            'name_en' => 'Subcategory 1.1.1',
+            'name_ar' => 'الفئة الفرعية 1.1.1',
+            'slug' => 'subcategory-1-1-1',
+            'parent_id' => $sub1_1->id,
             'sort_order' => 1,
         ]);
 
         Category::create([
-            'name_en' => 'Seats',
-            'name_ar' => 'مقاعد',
-            'slug' => 'seats',
-            'parent_id' => $internal->id,
+            'name_en' => 'Subcategory 1.1.2',
+            'name_ar' => 'الفئة الفرعية 1.1.2',
+            'slug' => 'subcategory-1-1-2',
+            'parent_id' => $sub1_1->id,
             'sort_order' => 2,
         ]);
 
         Category::create([
-            'name_en' => 'Door Panels',
-            'name_ar' => 'ألواح الأبواب',
-            'slug' => 'door-panels',
-            'parent_id' => $internal->id,
+            'name_en' => 'Subcategory 1.1.3',
+            'name_ar' => 'الفئة الفرعية 1.1.3',
+            'slug' => 'subcategory-1-1-3',
+            'parent_id' => $sub1_1->id,
             'sort_order' => 3,
         ]);
 
-        // Subcategories for Air Conditioning
+        // Third level categories (Children of Subcategory 1.2)
         Category::create([
-            'name_en' => 'Compressor',
-            'name_ar' => 'ضاغط',
-            'slug' => 'compressor',
-            'parent_id' => $airConditioning->id,
+            'name_en' => 'Subcategory 1.2.1',
+            'name_ar' => 'الفئة الفرعية 1.2.1',
+            'slug' => 'subcategory-1-2-1',
+            'parent_id' => $sub1_2->id,
             'sort_order' => 1,
         ]);
 
         Category::create([
-            'name_en' => 'Filters',
-            'name_ar' => 'فلاتر',
-            'slug' => 'filters',
-            'parent_id' => $airConditioning->id,
+            'name_en' => 'Subcategory 1.2.2',
+            'name_ar' => 'الفئة الفرعية 1.2.2',
+            'slug' => 'subcategory-1-2-2',
+            'parent_id' => $sub1_2->id,
             'sort_order' => 2,
         ]);
 
-        // Subcategories for Accessories
         Category::create([
-            'name_en' => 'Floor Mats',
-            'name_ar' => 'سجاد أرضية',
-            'slug' => 'floor-mats',
-            'parent_id' => $accessories->id,
+            'name_en' => 'Subcategory 1.2.3',
+            'name_ar' => 'الفئة الفرعية 1.2.3',
+            'slug' => 'subcategory-1-2-3',
+            'parent_id' => $sub1_2->id,
+            'sort_order' => 3,
+        ]);
+
+        // Third level categories (Children of Subcategory 1.3)
+        Category::create([
+            'name_en' => 'Subcategory 1.3.1',
+            'name_ar' => 'الفئة الفرعية 1.3.1',
+            'slug' => 'subcategory-1-3-1',
+            'parent_id' => $sub1_3->id,
             'sort_order' => 1,
         ]);
 
         Category::create([
-            'name_en' => 'Covers',
-            'name_ar' => 'أغطية',
-            'slug' => 'covers',
-            'parent_id' => $accessories->id,
+            'name_en' => 'Subcategory 1.3.2',
+            'name_ar' => 'الفئة الفرعية 1.3.2',
+            'slug' => 'subcategory-1-3-2',
+            'parent_id' => $sub1_3->id,
             'sort_order' => 2,
+        ]);
+
+        Category::create([
+            'name_en' => 'Subcategory 1.3.3',
+            'name_ar' => 'الفئة الفرعية 1.3.3',
+            'slug' => 'subcategory-1-3-3',
+            'parent_id' => $sub1_3->id,
+            'sort_order' => 3,
+        ]);
+
+        // Third level categories (Children of Subcategory 2.1)
+        Category::create([
+            'name_en' => 'Subcategory 2.1.1',
+            'name_ar' => 'الفئة الفرعية 2.1.1',
+            'slug' => 'subcategory-2-1-1',
+            'parent_id' => $sub2_1->id,
+            'sort_order' => 1,
+        ]);
+
+        Category::create([
+            'name_en' => 'Subcategory 2.1.2',
+            'name_ar' => 'الفئة الفرعية 2.1.2',
+            'slug' => 'subcategory-2-1-2',
+            'parent_id' => $sub2_1->id,
+            'sort_order' => 2,
+        ]);
+
+        Category::create([
+            'name_en' => 'Subcategory 2.1.3',
+            'name_ar' => 'الفئة الفرعية 2.1.3',
+            'slug' => 'subcategory-2-1-3',
+            'parent_id' => $sub2_1->id,
+            'sort_order' => 3,
+        ]);
+
+        // Third level categories (Children of Subcategory 2.2)
+        Category::create([
+            'name_en' => 'Subcategory 2.2.1',
+            'name_ar' => 'الفئة الفرعية 2.2.1',
+            'slug' => 'subcategory-2-2-1',
+            'parent_id' => $sub2_2->id,
+            'sort_order' => 1,
+        ]);
+
+        Category::create([
+            'name_en' => 'Subcategory 2.2.2',
+            'name_ar' => 'الفئة الفرعية 2.2.2',
+            'slug' => 'subcategory-2-2-2',
+            'parent_id' => $sub2_2->id,
+            'sort_order' => 2,
+        ]);
+
+        Category::create([
+            'name_en' => 'Subcategory 2.2.3',
+            'name_ar' => 'الفئة الفرعية 2.2.3',
+            'slug' => 'subcategory-2-2-3',
+            'parent_id' => $sub2_2->id,
+            'sort_order' => 3,
+        ]);
+
+        // Third level categories (Children of Subcategory 2.3)
+        Category::create([
+            'name_en' => 'Subcategory 2.3.1',
+            'name_ar' => 'الفئة الفرعية 2.3.1',
+            'slug' => 'subcategory-2-3-1',
+            'parent_id' => $sub2_3->id,
+            'sort_order' => 1,
+        ]);
+
+        Category::create([
+            'name_en' => 'Subcategory 2.3.2',
+            'name_ar' => 'الفئة الفرعية 2.3.2',
+            'slug' => 'subcategory-2-3-2',
+            'parent_id' => $sub2_3->id,
+            'sort_order' => 2,
+        ]);
+
+        Category::create([
+            'name_en' => 'Subcategory 2.3.3',
+            'name_ar' => 'الفئة الفرعية 2.3.3',
+            'slug' => 'subcategory-2-3-3',
+            'parent_id' => $sub2_3->id,
+            'sort_order' => 3,
         ]);
     }
 }

@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('children')
+        $categories = Category::with('parent', 'children')
             ->active()
             ->parent()
             ->orderBy('sort_order')

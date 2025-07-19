@@ -28,18 +28,36 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
   const queryParams = useMemo(() => {
     const params: Record<string, any> = {};
 
+    // Pagination
     if (filters.page) params.page = filters.page;
     if (filters.per_page) params.per_page = filters.per_page;
+
+    // Search
     if (filters.search) params.search = filters.search;
-    if (filters.category_id && filters.category_id !== "all") {
+
+    // 3-Level Category Hierarchy Filters
+    if (filters.category_id) {
       params["filter[category_id]"] = filters.category_id;
     }
-    if (filters.subcategory_id && filters.subcategory_id !== "all") {
+    if (filters.subcategory_id) {
       params["filter[subcategory_id]"] = filters.subcategory_id;
     }
+    if (filters.subSubcategory_id) {
+      params["filter[subSubcategory_id]"] = filters.subSubcategory_id;
+    }
+
+    // Price filters
     if (filters.price_range) {
       params["filter[price_range]"] = filters.price_range;
     }
+    if (filters.min_price !== undefined) {
+      params["filter[min_price]"] = filters.min_price;
+    }
+    if (filters.max_price !== undefined) {
+      params["filter[max_price]"] = filters.max_price;
+    }
+
+    // Boolean filters
     if (filters.is_featured !== undefined) {
       params["filter[is_featured]"] = filters.is_featured ? "1" : "0";
     }
@@ -49,6 +67,19 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
     if (filters.in_stock !== undefined) {
       params["filter[in_stock]"] = filters.in_stock ? "1" : "0";
     }
+
+    // Additional filters
+    if (filters.brand_id) {
+      params["filter[brand_id]"] = filters.brand_id;
+    }
+    if (filters.rating_min) {
+      params["filter[rating_min]"] = filters.rating_min;
+    }
+    if (filters.tags && filters.tags.length > 0) {
+      params["filter[tags]"] = filters.tags.join(",");
+    }
+
+    // Sorting
     if (filters.sort) {
       params.sort = filters.sort;
     }
@@ -104,20 +135,108 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
   };
 }
 
-// Hook for fetching products by category
+// Enhanced hook for fetching products by category with 3-level support
 export function useGetProductsByCategory(
   categoryId: string,
-  filters: Omit<ProductFilters, "category_id"> = {}
+  additionalFilters: Partial<ProductFilters> = {}
 ) {
-  const productFilters = useMemo(
-    () => ({
-      ...filters,
-      category_id: categoryId,
-    }),
-    [categoryId, filters]
-  );
+  const productFilters = useMemo(() => {
+    // Determine which level this categoryId represents
+    // This is a flexible approach - you can also pass level info explicitly
+    const filters: ProductFilters = { ...additionalFilters };
+
+    // If categoryId is "all", don't add any category filter
+
+    // You can enhance this logic based on your category structure
+    // For now, we'll use the most specific filter provided
+    if (additionalFilters.subSubcategory_id) {
+      filters.subSubcategory_id = additionalFilters.subSubcategory_id;
+    } else if (additionalFilters.subcategory_id) {
+      filters.subcategory_id = additionalFilters.subcategory_id;
+    } else {
+      filters.category_id = categoryId;
+    }
+
+    return filters;
+  }, [categoryId, additionalFilters]);
 
   return useGetAllProducts(productFilters);
+}
+
+// New specialized hooks for each category level
+export function useGetProductsBySuperCategory(
+  superCategoryId: string,
+  additionalFilters: Partial<ProductFilters> = {}
+) {
+  const filters = useMemo(
+    () => ({
+      ...additionalFilters,
+      category_id: superCategoryId,
+    }),
+    [superCategoryId, additionalFilters]
+  );
+
+  return useGetAllProducts(filters);
+}
+
+export function useGetProductsBySubcategory(
+  subcategoryId: string,
+  additionalFilters: Partial<ProductFilters> = {}
+) {
+  const filters = useMemo(
+    () => ({
+      ...additionalFilters,
+      subcategory_id: subcategoryId,
+    }),
+    [subcategoryId, additionalFilters]
+  );
+
+  return useGetAllProducts(filters);
+}
+
+export function useGetProductsBySubSubcategory(
+  subSubcategoryId: string,
+  additionalFilters: Partial<ProductFilters> = {}
+) {
+  const filters = useMemo(
+    () => ({
+      ...additionalFilters,
+      subSubcategory_id: subSubcategoryId,
+    }),
+    [subSubcategoryId, additionalFilters]
+  );
+
+  return useGetAllProducts(filters);
+}
+
+// Flexible hook that can handle any combination of category levels
+export function useGetProductsByHierarchy({
+  superCategoryId,
+  categoryId,
+  subCategoryId,
+  additionalFilters = {},
+}: {
+  superCategoryId?: string;
+  categoryId?: string;
+  subCategoryId?: string;
+  additionalFilters?: Partial<ProductFilters>;
+}) {
+  const filters = useMemo(() => {
+    const hierarchyFilters: ProductFilters = { ...additionalFilters };
+
+    // Apply the most specific category level available
+    if (subCategoryId && subCategoryId !== "all") {
+      hierarchyFilters.subSubcategory_id = subCategoryId;
+    } else if (categoryId && categoryId !== "all") {
+      hierarchyFilters.subcategory_id = categoryId;
+    } else if (superCategoryId && superCategoryId !== "all") {
+      hierarchyFilters.category_id = superCategoryId;
+    }
+
+    return hierarchyFilters;
+  }, [superCategoryId, categoryId, subCategoryId, additionalFilters]);
+
+  return useGetAllProducts(filters);
 }
 
 // Hook for fetching single product by ID

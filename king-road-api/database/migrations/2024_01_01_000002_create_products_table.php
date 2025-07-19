@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('track_inventory')->default(true);
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('subcategory_id')->nullable();
+            $table->unsignedBigInteger('sub_subcategory_id')->nullable();
             $table->json('images')->nullable();
             $table->string('featured_image')->nullable();
             $table->decimal('weight', 8, 2)->nullable();
@@ -41,6 +42,7 @@ return new class extends Migration
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('subcategory_id')->references('id')->on('categories');
+            $table->foreign('sub_subcategory_id')->references('id')->on('categories');
             $table->index(['is_active', 'is_featured']);
             $table->index(['category_id', 'is_active']);
             $table->index('inventory');

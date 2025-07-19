@@ -59,7 +59,7 @@ export interface ProductFilters {
   // 3-Level Category Hierarchy
   category_id?: string; // Super Category (Level 1)
   subcategory_id?: string; // Category (Level 2)
-  subSubcategory_id?: string; // Sub Category (Level 3)
+  sub_subcategory_id?: string; // Sub Category (Level 3)
 
   // Other filters
   price_range?: string;

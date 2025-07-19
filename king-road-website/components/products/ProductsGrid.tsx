@@ -49,7 +49,7 @@ export function ProductsGrid({
 
     // 3-Level Category filters - apply the most specific level available
     if (categoryFilters.subCategoryId) {
-      apiFilters.subSubcategory_id = categoryFilters.subCategoryId;
+      apiFilters.sub_subcategory_id = categoryFilters.subCategoryId;
     } else if (categoryFilters.categoryId) {
       apiFilters.subcategory_id = categoryFilters.categoryId;
     } else if (categoryFilters.superCategoryId) {

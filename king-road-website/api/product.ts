@@ -42,8 +42,8 @@ export function useGetAllProducts(filters: ProductFilters = {}) {
     if (filters.subcategory_id) {
       params["filter[subcategory_id]"] = filters.subcategory_id;
     }
-    if (filters.subSubcategory_id) {
-      params["filter[subSubcategory_id]"] = filters.subSubcategory_id;
+    if (filters.sub_subcategory_id) {
+      params["filter[sub_subcategory_id]"] = filters.sub_subcategory_id;
     }
 
     // Price filters
@@ -149,8 +149,8 @@ export function useGetProductsByCategory(
 
     // You can enhance this logic based on your category structure
     // For now, we'll use the most specific filter provided
-    if (additionalFilters.subSubcategory_id) {
-      filters.subSubcategory_id = additionalFilters.subSubcategory_id;
+    if (additionalFilters.sub_subcategory_id) {
+      filters.sub_subcategory_id = additionalFilters.sub_subcategory_id;
     } else if (additionalFilters.subcategory_id) {
       filters.subcategory_id = additionalFilters.subcategory_id;
     } else {
@@ -201,7 +201,7 @@ export function useGetProductsBySubSubcategory(
   const filters = useMemo(
     () => ({
       ...additionalFilters,
-      subSubcategory_id: subSubcategoryId,
+      sub_subcategory_id: subSubcategoryId,
     }),
     [subSubcategoryId, additionalFilters]
   );
@@ -226,7 +226,7 @@ export function useGetProductsByHierarchy({
 
     // Apply the most specific category level available
     if (subCategoryId && subCategoryId !== "all") {
-      hierarchyFilters.subSubcategory_id = subCategoryId;
+      hierarchyFilters.sub_subcategory_id = subCategoryId;
     } else if (categoryId && categoryId !== "all") {
       hierarchyFilters.subcategory_id = categoryId;
     } else if (superCategoryId && superCategoryId !== "all") {

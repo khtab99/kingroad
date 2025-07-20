@@ -4,8 +4,11 @@ import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 import { CategorySection } from "@/components/CategorySection";
 import { FeaturedProducts } from "@/components/products/FeaturedProducts";
-import { SaleProducts } from "@/components/products/SaleProducts";
 import { Footer } from "@/components/Footer";
+import { StatsSection } from "@/components/StatsSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { WhyChooseUsSection } from "@/components/WhyChooseUsSection";
+import { NewsletterSection } from "@/components/NewsletterSection";
 
 export default function Home() {
   return (
@@ -13,9 +16,12 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
+        <StatsSection />
         <CategorySection />
         <FeaturedProducts limit={8} />
-        {/* <SaleProducts limit={8} /> */}
+        <WhyChooseUsSection />
+        <TestimonialsSection />
+        <NewsletterSection />
       </main>
       <Footer />
     </div>

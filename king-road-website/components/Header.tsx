@@ -5,12 +5,11 @@ import { MobileMenu } from "./MobileMenu";
 import { Logo } from "./logo";
 import translations from "@/data/translations.json";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { Menu, Search, ShoppingCart } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { Menu, Search, ShoppingCart, Phone, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthModal } from "./auth/AuthModal";
-
 import { AuthButton } from "./AuthButton";
 
 function SearchInput({
@@ -25,7 +24,7 @@ function SearchInput({
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
       <Input
         placeholder={placeholder}
-        className="pl-10 bg-white border-gray-300 rounded-md text-sm w-full"
+        className="pl-10 bg-white border-gray-300 rounded-full text-sm w-full focus:ring-2 focus:ring-red-500 focus:border-red-500"
       />
     </div>
   );
@@ -40,7 +39,7 @@ function LanguageToggle() {
       variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="text-sm font-medium text-gray-700 hover:text-gray-900"
+      className="text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-full px-4"
     >
       {language === "en" ? "عربي" : "English"}
     </Button>
@@ -49,13 +48,15 @@ function LanguageToggle() {
 
 function CartIcon({ count }: { count: number }) {
   return (
-    <Link href="/cart" className="relative flex items-center justify-center">
-      <ShoppingCart className="h-6 w-6 text-gray-700" />
-      {count > 0 && (
-        <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-          {count}
-        </span>
-      )}
+    <Link href="/cart" className="relative flex items-center justify-center group">
+      <div className="p-2 rounded-full hover:bg-red-50 transition-colors">
+        <ShoppingCart className="h-6 w-6 text-gray-700 group-hover:text-red-600" />
+        {count > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium animate-pulse">
+            {count}
+          </span>
+        )}
+      </div>
     </Link>
   );
 }
@@ -64,13 +65,49 @@ export function Header() {
   const { cartCount, language, isMenuOpen, setMenuOpen } = useStore();
   const t = translations[language];
   const dir = language === "ar" ? "rtl" : "ltr";
-
+  const [isScrolled, setIsScrolled] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
+      {/* Top Bar */}
+      <div className="bg-gray-900 text-white py-2 hidden md:block">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                <span>+971 50 123 4567</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                <span>Umm Al Quwain, UAE</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                <span>Mon - Sat: 8AM - 8PM</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <span>Free delivery on orders over 500 AED</span>
+              <LanguageToggle />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <header
-        className="bg-gray-100 border-b border-gray-200 sticky top-0 z-40"
+        className={`bg-white border-b border-gray-200 sticky top-0 z-40 transition-all duration-300 ${
+          isScrolled ? "shadow-lg" : ""
+        }`}
         dir={dir}
       >
         {/* Mobile */}
@@ -79,16 +116,16 @@ export function Header() {
             variant="ghost"
             size="icon"
             onClick={() => setMenuOpen(!isMenuOpen)}
-            className="text-gray-700 hover:bg-gray-200"
+            className="text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-full"
           >
             <Menu className="h-6 w-6" />
           </Button>
 
-          <div className="flex-1 mx-4">
-            <SearchInput placeholder={t.navigation.search} />
-          </div>
+          <Logo />
 
-          <CartIcon count={cartCount} />
+          <div className="flex items-center gap-2">
+            <CartIcon count={cartCount} />
+          </div>
         </div>
 
         {/* Desktop */}
@@ -99,27 +136,37 @@ export function Header() {
                 dir === "rtl" ? "flex-row-reverse" : ""
               }`}
             >
-              {/* Left Nav */}
+              {/* Logo */}
+              <div className="flex-shrink-0">
+                <Logo />
+              </div>
+
+              {/* Navigation */}
               <nav
-                className={`flex items-center gap-8 text-sm text-gray-700 ${
+                className={`flex items-center gap-8 text-sm font-medium ${
                   dir === "rtl" ? "flex-row-reverse" : ""
                 }`}
               >
-                <span className="cursor-pointer hover:text-gray-900 font-medium">
+                <Link href="/" className="text-gray-700 hover:text-red-600 transition-colors">
+                  {language === "ar" ? "الرئيسية" : "Home"}
+                </Link>
+                <Link href="/category/all" className="text-gray-700 hover:text-red-600 transition-colors">
+                  {language === "ar" ? "المنتجات" : "Products"}
+                </Link>
+                <span className="cursor-pointer text-gray-700 hover:text-red-600 transition-colors">
                   {t.topNav.branches}
                 </span>
-                <span className="cursor-pointer hover:text-gray-900 font-medium">
+                <span className="cursor-pointer text-gray-700 hover:text-red-600 transition-colors">
                   {t.topNav.whoAreWe}
                 </span>
-                <span className="cursor-pointer hover:text-gray-900 font-medium">
-                  {t.topNav.privacyPolicy}
-                </span>
-                <AuthButton setAuthModalOpen={setAuthModalOpen} />
+                <Link href="/track-order" className="text-gray-700 hover:text-red-600 transition-colors">
+                  {language === "ar" ? "تتبع الطلب" : "Track Order"}
+                </Link>
               </nav>
 
               {/* Right Section */}
               <div
-                className={`flex items-center gap-6 ${
+                className={`flex items-center gap-4 ${
                   dir === "rtl" ? "flex-row-reverse" : ""
                 }`}
               >
@@ -127,9 +174,8 @@ export function Header() {
                   placeholder={t.navigation.search}
                   className="w-64"
                 />
-                <LanguageToggle />
+                <AuthButton setAuthModalOpen={setAuthModalOpen} />
                 <CartIcon count={cartCount} />
-                <Logo />
               </div>
             </div>
           </div>

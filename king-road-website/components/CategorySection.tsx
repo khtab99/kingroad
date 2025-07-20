@@ -7,6 +7,7 @@ import { useStore } from "@/store/useStore";
 import translations from "@/data/translations.json";
 import { useGetSuperCategory } from "@/api/category";
 import { Skeleton } from "./ui/skeleton";
+import { ArrowRight } from "lucide-react";
 
 export function CategorySection() {
   const { language } = useStore();
@@ -28,8 +29,19 @@ export function CategorySection() {
   );
 
   return (
-    <section className="bg-white py-8 md:py-12">
+    <section className="bg-white py-16 md:py-20">
       <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            {language === "ar" ? "تسوق حسب الفئة" : "Shop by Category"}
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            {language === "ar"
+              ? "اكتشف مجموعتنا الواسعة من قطع غيار نيسان باترول الأصلية"
+              : "Discover our wide range of original Nissan Patrol spare parts"}
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 ">
           {superCategoryLoading && (
             <>
@@ -40,21 +52,22 @@ export function CategorySection() {
           {filteredCategoriesWithNoParent.map(
             (category: any, index: number) => (
               <Link key={index} href={`/category/${category.id}`}>
-                <div className="bg-white cursor-pointer hover:shadow-md rounded-md transition-shadow border border-gray-200">
-                  <div className="relative aspect-[4/3] overflow-hidden mb-3 border-b border-gray-200">
+                <div className="bg-white cursor-pointer hover:shadow-xl rounded-xl transition-all duration-300 border border-gray-200 group hover:-translate-y-2">
+                  <div className="relative aspect-[4/3] overflow-hidden mb-4 rounded-t-xl">
                     <Image
                       src={category?.image ?? "/assets/images/hero.jpg"}
                       alt={category.name_en}
                       fill
-                      className="object-contain"
+                      className="object-cover group-hover:scale-110 transition-transform duration-300"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
 
-                  <div className="text-center pb-3">
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-700 mb-1">
+                  <div className="text-center p-6">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
                       {category.name_en}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-1">
+                    <p className="text-sm text-gray-600 leading-relaxed">
                       {category.description_en}
                     </p>
                   </div>
@@ -67,11 +80,9 @@ export function CategorySection() {
         {/* CTA Button */}
         <div className="text-center">
           <Link href="/category/all">
-            <Button
-              size="lg"
-              className="bg-gray-600 hover:bg-gray-700 text-white px-16 py-6 text-lg rounded-sm font-medium w-full md:w-auto"
-            >
+            <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white px-16 py-6 text-lg rounded-full font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 group">
               {language === "ar" ? "ابدأ الطلب" : "Start Ordering"}
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
         </div>

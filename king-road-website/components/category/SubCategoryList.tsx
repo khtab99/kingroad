@@ -4,6 +4,7 @@ import { useGetCategoryById } from "@/api/category";
 import { CategorySkeleton } from "./CategorySkeleton";
 import { CategoryError } from "./CategoryError";
 import { useStore } from "@/store/useStore";
+import { Input } from "../ui/input";
 
 interface SubCategoryListProps {
   parentCategoryId: string | null;
@@ -14,7 +15,7 @@ interface SubCategoryListProps {
 
 export function SubCategoryList({
   parentCategoryId,
-  selectedSubcategories,
+  selectedSubcategories = [],
   onSubcategoryChange,
   variant = "radio",
 }: SubCategoryListProps) {
@@ -69,19 +70,20 @@ export function SubCategoryList({
       {categoryList?.children?.map((subcategory: any) => {
         const subcategoryName =
           language === "ar" ? subcategory.name_ar : subcategory.name_en;
-        const isSelected = selectedSubcategories?.includes(subcategory.id);
+        const isSelected =
+          selectedSubcategories?.includes(subcategory.id) ?? false;
 
         return (
           <label
             key={subcategory.id}
-            className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+            className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded "
           >
-            <input
+            <Input
               type={variant}
               name={variant === "radio" ? "subcategory" : undefined}
               checked={isSelected}
               onChange={() => handleSubcategoryChange(subcategory.id)}
-              className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+              className="w-4 h-4 text-red-600 focus:ring-red-500 accent-red-600"
             />
             <span className="text-gray-700 text-sm">
               {subcategoryName}

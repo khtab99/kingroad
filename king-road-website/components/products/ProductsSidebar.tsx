@@ -66,7 +66,7 @@ export function ProductsSidebar({
                 value={option.id}
                 checked={sortBy === option.id}
                 onChange={(e) => onSortChange(e.target.value)}
-                className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                className="w-4 h-4 text-red-600 focus:ring-red-500 accent-red-600"
               />
               <span className="text-gray-700 text-sm">
                 {language === "ar" ? option.nameAr : option.nameEn}
@@ -99,7 +99,7 @@ export function ProductsSidebar({
             >
               <input
                 type="checkbox"
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                className="w-4 h-4 text-red-600 focus:ring-red-500 accent-red-600"
               />
               <span className="text-gray-700 text-sm">
                 {language === "ar" ? range.nameAr : range.nameEn}
@@ -119,7 +119,7 @@ export function ProductsSidebar({
           <label className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
             <input
               type="checkbox"
-              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              className="w-4 h-4 text-red-600 focus:ring-red-500 accent-red-600"
             />
             <span className="text-gray-700 text-sm">
               {language === "ar" ? "متوفر" : "In Stock"}
@@ -128,7 +128,7 @@ export function ProductsSidebar({
           <label className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
             <input
               type="checkbox"
-              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              className="w-4 h-4 text-red-600 focus:ring-red-500 accent-red-600"
             />
             <span className="text-gray-700 text-sm">
               {language === "ar" ? "غير متوفر" : "Out of Stock"}

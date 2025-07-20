@@ -117,10 +117,7 @@ export function useGetSubCategories(parentId: string | null) {
   }, [parentId]);
 
   const fullUrl = useMemo(
-    () =>
-      parentId
-        ? `${endpoints.category.all}?${new URLSearchParams(queryParams)}`
-        : null,
+    () => (parentId ? `${endpoints.category.details}${parentId}` : null),
     [queryParams, parentId]
   );
 
@@ -140,7 +137,7 @@ export function useGetSubCategories(parentId: string | null) {
   };
 
   const memoizedValue = useMemo(() => {
-    const subCategoryData = data?.data || [];
+    const subCategoryData = data?.data.children || [];
     return {
       subCategoryList: subCategoryData,
       subCategoryLoading: isLoading,
@@ -148,7 +145,7 @@ export function useGetSubCategories(parentId: string | null) {
       subCategoryValidating: isValidating,
       subCategoryEmpty: subCategoryData.length === 0,
     };
-  }, [data?.data, error, isLoading, isValidating]);
+  }, [data?.data?.children, error, isLoading, isValidating]);
 
   return {
     ...memoizedValue,

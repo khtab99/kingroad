@@ -3,14 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/providers/language-provider";
-import { VendorHeader } from "@/components/layout/vendor-header";
-import { VendorSidebar } from "@/components/layout/vendor-sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import {
@@ -36,7 +33,7 @@ import {
   Archive,
 } from "lucide-react";
 import { Category, ProductFormData } from "@/util/type";
-import { useGetSuperCategory } from "@/api/category";
+import { useGetSubCategories, useGetSuperCategory } from "@/api/category";
 import { createNewProduct } from "@/api/product";
 import { AdminLayout } from "@/components/layout/admin-layout";
 
@@ -52,8 +49,15 @@ export default function NewProductPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState<any>([]);
   const [subcategories, setSubcategories] = useState<any>([]);
+  const [subSubcategories, setSubSubcategories] = useState<any>([]);
   const [errors, setErrors] = useState<FormErrors>({});
   const [imagePreview, setImagePreview] = useState<string[]>([]);
+
+  const [parentId, setParentId] = useState<any>();
+
+  const { subCategoryList } = useGetSubCategories(parentId);
+
+  console.log(subSubcategories);
 
   const [formData, setFormData] = useState<ProductFormData>({
     name_en: "",
@@ -116,9 +120,24 @@ export default function NewProductPage() {
       );
 
       setSubcategories(selectedCategory?.children || []);
+
       updateFormData("subcategory_id", "");
     }
   }, [formData.category_id, categories]);
+
+  // Update sub-subcategories when subcategory changes
+  useEffect(() => {
+    if (formData.subcategory_id) {
+      const selectedSubcategory = subCategoryList.find(
+        (cat: any) => cat.id.toString() === formData.subcategory_id
+      );
+      // console.log(selectedSubcategory);
+
+      setSubSubcategories(selectedSubcategory?.children || []);
+      setParentId(formData.subcategory_id);
+      updateFormData("sub_subcategory_id", "");
+    }
+  }, [formData.subcategory_id, subcategories]);
 
   const updateFormData = (field: keyof ProductFormData, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -485,7 +504,7 @@ export default function NewProductPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="category_id">Category *</Label>
                   <Select
@@ -535,6 +554,34 @@ export default function NewProductPage() {
                     </SelectTrigger>
                     <SelectContent>
                       {subcategories.map((subcategory: any) => (
+                        <SelectItem
+                          key={subcategory.id}
+                          value={subcategory.id.toString()}
+                        >
+                          {language === "ar"
+                            ? subcategory.name_ar
+                            : subcategory.name_en}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="sub_subcategory_id">
+                    Sub-Subcategory (Optional)
+                  </Label>
+                  <Select
+                    value={subSubcategories.id}
+                    onValueChange={(value) =>
+                      updateFormData("sub_subcategory_id", value)
+                    }
+                    disabled={!formData.subcategory_id}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a subcategory of your subcategory" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {subCategoryList.map((subcategory: any) => (
                         <SelectItem
                           key={subcategory.id}
                           value={subcategory.id.toString()}

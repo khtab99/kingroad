@@ -36,7 +36,7 @@ import {
   Archive,
 } from "lucide-react";
 import { Category, ProductFormData } from "@/util/type";
-import { useGetSuperCategory } from "@/api/category";
+import { useGetSubCategories, useGetSuperCategory } from "@/api/category";
 import {
   createNewProduct,
   updateProduct,
@@ -58,10 +58,16 @@ export default function ProductEdit() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<any>([]);
+
+  const [subSubcategories, setSubSubcategories] = useState<any>([]);
   const [errors, setErrors] = useState<FormErrors>({});
   const [imagePreview, setImagePreview] = useState<string[]>([]);
 
   const { productDetails: product } = useGetProductById(id);
+
+  const [parentId, setParentId] = useState<any>();
+
+  const { subCategoryList } = useGetSubCategories(parentId);
 
   const initialValues = {
     name_en: product?.name_en || "",
@@ -74,11 +80,12 @@ export default function ProductEdit() {
     price: product?.price || "",
     sale_price: product?.sale_price || "",
     cost_price: product?.cost_price || "",
-    inventory: product?.inventory || "",
+    inventory: product?.inventory || 0,
     low_stock_threshold: product?.low_stock_threshold || "",
     track_inventory: product?.track_inventory || false,
     category_id: product?.category?.id ?? "",
     subcategory_id: product?.subcategory?.id || "",
+    sub_subcategory_id: product?.subsubcategory?.id || "",
     images: product?.images?.map((image: any) => image.url) || [],
     weight: product?.weight || "",
     dimensions: {
@@ -131,6 +138,20 @@ export default function ProductEdit() {
       updateFormData("subcategory_id", "");
     }
   }, [formData.category_id, categories]);
+
+  // Update sub-subcategories when subcategory changes
+  useEffect(() => {
+    if (formData.subcategory_id) {
+      const selectedSubcategory = subCategoryList.find(
+        (cat: any) => cat.id.toString() === formData.subcategory_id
+      );
+      // console.log(selectedSubcategory);
+
+      setSubSubcategories(selectedSubcategory?.children || []);
+      setParentId(formData.subcategory_id);
+      updateFormData("sub_subcategory_id", "");
+    }
+  }, [formData.subcategory_id, subcategories]);
 
   const updateFormData = (field: keyof ProductFormData, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -246,7 +267,7 @@ export default function ProductEdit() {
     }
 
     // Inventory validation
-    if (formData.inventory && parseInt(formData.inventory) < 0) {
+    if (formData.inventory && formData.inventory < 0) {
       newErrors.inventory = ["Inventory must be 0 or greater"];
     }
 
@@ -493,7 +514,7 @@ export default function ProductEdit() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="category_id">Category *</Label>
                   <Select
@@ -555,6 +576,34 @@ export default function ProductEdit() {
                     </SelectContent>
                   </Select>
                 </div>
+                <div>
+                  <Label htmlFor="sub_subcategory_id">
+                    Sub-Subcategory (Optional)
+                  </Label>
+                  <Select
+                    value={subSubcategories.id}
+                    onValueChange={(value) =>
+                      updateFormData("sub_subcategory_id", value)
+                    }
+                    disabled={!formData.subcategory_id}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a subcategory of your subcategory" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {subCategoryList.map((subcategory: any) => (
+                        <SelectItem
+                          key={subcategory.id}
+                          value={subcategory.id.toString()}
+                        >
+                          {language === "ar"
+                            ? subcategory.name_ar
+                            : subcategory.name_en}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -576,6 +625,7 @@ export default function ProductEdit() {
                     <Input
                       id="price"
                       type="number"
+                      onWheel={(e) => e.currentTarget.blur()}
                       step="0.01"
                       min="0"
                       placeholder="0.00"
@@ -600,6 +650,7 @@ export default function ProductEdit() {
                     <Input
                       id="sale_price"
                       type="number"
+                      onWheel={(e) => e.currentTarget.blur()}
                       step="0.01"
                       min="0"
                       placeholder="0.00"
@@ -629,6 +680,7 @@ export default function ProductEdit() {
                     <Input
                       id="cost_price"
                       type="number"
+                      onWheel={(e) => e.currentTarget.blur()}
                       step="0.01"
                       min="0"
                       placeholder="0.00"
@@ -662,6 +714,7 @@ export default function ProductEdit() {
                   <Input
                     id="inventory"
                     type="number"
+                    onWheel={(e) => e.currentTarget.blur()}
                     min="0"
                     placeholder="0"
                     value={formData.inventory}
@@ -686,6 +739,7 @@ export default function ProductEdit() {
                   <Input
                     id="low_stock_threshold"
                     type="number"
+                    onWheel={(e) => e.currentTarget.blur()}
                     min="0"
                     placeholder="5"
                     value={formData.low_stock_threshold}

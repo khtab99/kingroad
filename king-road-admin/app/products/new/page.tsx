@@ -57,8 +57,6 @@ export default function NewProductPage() {
 
   const { subCategoryList } = useGetSubCategories(parentId);
 
-  console.log(subSubcategories);
-
   const [formData, setFormData] = useState<ProductFormData>({
     name_en: "",
     name_ar: "",
@@ -70,7 +68,7 @@ export default function NewProductPage() {
     price: "",
     sale_price: "",
     cost_price: "",
-    inventory: "",
+    inventory: 0,
     low_stock_threshold: "5",
     track_inventory: true,
     category_id: "",
@@ -140,6 +138,7 @@ export default function NewProductPage() {
   }, [formData.subcategory_id, subcategories]);
 
   const updateFormData = (field: keyof ProductFormData, value: any) => {
+    console.log(value);
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear errors for this field
     if (errors[field]) {
@@ -253,7 +252,7 @@ export default function NewProductPage() {
     }
 
     // Inventory validation
-    if (formData.inventory && parseInt(formData.inventory) < 0) {
+    if (formData.inventory && formData.inventory < 0) {
       newErrors.inventory = ["Inventory must be 0 or greater"];
     }
 
@@ -615,10 +614,11 @@ export default function NewProductPage() {
                     <Input
                       id="price"
                       type="number"
-                      step="0.01"
+                      step="0"
                       min="0"
                       placeholder="0.00"
                       value={formData.price}
+                      onWheel={(e) => e.currentTarget.blur()}
                       onChange={(e) => updateFormData("price", e.target.value)}
                       className={`pl-10 ${
                         getFieldError("price") ? "border-destructive" : ""
@@ -643,6 +643,7 @@ export default function NewProductPage() {
                       min="0"
                       placeholder="0.00"
                       value={formData.sale_price}
+                      onWheel={(e) => e.currentTarget.blur()}
                       onChange={(e) =>
                         updateFormData("sale_price", e.target.value)
                       }
@@ -671,6 +672,7 @@ export default function NewProductPage() {
                       step="0.01"
                       min="0"
                       placeholder="0.00"
+                      onWheel={(e) => e.currentTarget.blur()}
                       value={formData.cost_price}
                       onChange={(e) =>
                         updateFormData("cost_price", e.target.value)
@@ -704,6 +706,7 @@ export default function NewProductPage() {
                     min="0"
                     placeholder="0"
                     value={formData.inventory}
+                    onWheel={(e) => e.currentTarget.blur()}
                     onChange={(e) =>
                       updateFormData("inventory", e.target.value)
                     }
@@ -727,6 +730,7 @@ export default function NewProductPage() {
                     type="number"
                     min="0"
                     placeholder="5"
+                    onWheel={(e) => e.currentTarget.blur()}
                     value={formData.low_stock_threshold}
                     onChange={(e) =>
                       updateFormData("low_stock_threshold", e.target.value)
@@ -828,6 +832,7 @@ export default function NewProductPage() {
                   min="0"
                   placeholder="0.00"
                   value={formData.weight}
+                  onWheel={(e) => e.currentTarget.blur()}
                   onChange={(e) => updateFormData("weight", e.target.value)}
                 />
               </div>
@@ -845,6 +850,7 @@ export default function NewProductPage() {
                       step="0.01"
                       min="0"
                       placeholder="0.00"
+                      onWheel={(e) => e.currentTarget.blur()}
                       value={formData.dimensions.length}
                       onChange={(e) =>
                         updateDimensions("length", e.target.value)
@@ -861,6 +867,7 @@ export default function NewProductPage() {
                       step="0.01"
                       min="0"
                       placeholder="0.00"
+                      onWheel={(e) => e.currentTarget.blur()}
                       value={formData.dimensions.width}
                       onChange={(e) =>
                         updateDimensions("width", e.target.value)
@@ -877,6 +884,7 @@ export default function NewProductPage() {
                       step="0.01"
                       min="0"
                       placeholder="0.00"
+                      onWheel={(e) => e.currentTarget.blur()}
                       value={formData.dimensions.height}
                       onChange={(e) =>
                         updateDimensions("height", e.target.value)

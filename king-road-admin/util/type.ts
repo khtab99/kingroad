@@ -9,7 +9,7 @@ export interface ProductFormData {
   price: string;
   sale_price?: string;
   cost_price?: string;
-  inventory: string;
+  inventory: number;
   low_stock_threshold: string;
   track_inventory: boolean;
   category_id: string;

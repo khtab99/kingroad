@@ -274,7 +274,7 @@ export function AuthModal({
               <Button
                 onClick={handleLogin}
                 disabled={!isLoginFormValid() || isLoading}
-                className="w-full py-3 text-lg font-medium rounded-md"
+                className="w-full py-3 text-lg font-medium rounded-md bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">
@@ -456,10 +456,10 @@ export function AuthModal({
               <Button
                 onClick={handleRegister}
                 disabled={!isRegisterFormValid() || isLoading}
-                className="w-full py-3 text-lg font-medium rounded-md"
+                className="w-full py-3 text-lg font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 {isLoading ? (
-                  <div className="flex items-center justify-center gap-2">
+                  <div className="flex items-center justify-center gap-2 0">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     {language === "ar" ? "جاري الإنشاء..." : "Creating..."}
                   </div>

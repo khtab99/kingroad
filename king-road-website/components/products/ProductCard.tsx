@@ -193,7 +193,7 @@ export function ProductCard({
             <Button
               variant="outline"
               size="sm"
-              className="flex-1"
+              className="flex-1 bg-red-300 text-white hover:bg-red-400"
               disabled={isOutOfStock}
               onClick={handleBuyNow}
             >
@@ -202,12 +202,12 @@ export function ProductCard({
             <Button
               variant="outline"
               size="sm"
-              className="flex-1"
+              className="flex-1 bg-red-600 text-white hover:bg-red-700"
               disabled={isOutOfStock || isAddingToCart}
               onClick={handleAddToCart}
             >
               {isAddingToCart ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600" />
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600" />
               ) : (
                 <>
                   <ShoppingCart className="h-4 w-4 mr-1" />
@@ -366,7 +366,7 @@ export function ProductCard({
           <Button
             variant="outline"
             size="sm"
-            className="flex-1"
+            className="flex-1 border-red-600 text-red-600 hover:bg-red-50 hover:text-red-700"
             disabled={isOutOfStock || !canAddToCart}
             onClick={handleBuyNow}
           >
@@ -375,7 +375,7 @@ export function ProductCard({
           <Button
             variant="outline"
             size="sm"
-            className="flex-1"
+            className="flex-1 bg-red-600 text-white hover:bg-red-700 hover:text-white"
             disabled={isOutOfStock || !canAddToCart || isAddingToCart}
             onClick={handleAddToCart}
           >

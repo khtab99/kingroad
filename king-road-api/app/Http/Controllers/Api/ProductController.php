@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = QueryBuilder::for(Product::class)
-            ->with(['category', 'subcategory'])
+            ->with(['category', 'subcategory', 'sub_subcategory'])
             ->allowedFilters([
                 'name_en',
                 'name_ar',

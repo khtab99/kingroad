@@ -81,7 +81,7 @@ class AdminProductController extends Controller
 
     public function show(Product $product)
     {
-        $product->load(['category', 'subcategory', 'reviews.user']);
+        $product->load(['category', 'subcategory', 'sub_subcategory']);
         
         return new ProductResource($product);
     }

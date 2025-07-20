@@ -16,12 +16,12 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
-        <StatsSection />
         <CategorySection />
         <FeaturedProducts limit={8} />
+        <StatsSection />
         <WhyChooseUsSection />
         <TestimonialsSection />
-        <NewsletterSection />
+        {/* <NewsletterSection /> */}
       </main>
       <Footer />
     </div>

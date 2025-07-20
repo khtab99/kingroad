@@ -6,11 +6,20 @@ import { Logo } from "./logo";
 import translations from "@/data/translations.json";
 import Link from "next/link";
 import { useMemo, useState, useEffect } from "react";
-import { Menu, Search, ShoppingCart, Phone, MapPin, Clock } from "lucide-react";
+import {
+  Menu,
+  Search,
+  ShoppingCart,
+  Phone,
+  MapPin,
+  Clock,
+  Globe,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthModal } from "./auth/AuthModal";
 import { AuthButton } from "./AuthButton";
+import Image from "next/image";
 
 function SearchInput({
   placeholder = "Search",
@@ -39,16 +48,24 @@ function LanguageToggle() {
       variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-full px-4"
+      className="text-sm font-medium text-gray-700 hover:text-red-600 bg-white hover:bg-red-50 rounded-full px-4"
     >
-      {language === "en" ? "عربي" : "English"}
+      <Globe className="h-4 w-4 mr-2" />
+      {language === "en" ? (
+        <span className="hidden md:inline">عربي</span>
+      ) : (
+        <span className="hidden md:inline">English</span>
+      )}
     </Button>
   );
 }
 
 function CartIcon({ count }: { count: number }) {
   return (
-    <Link href="/cart" className="relative flex items-center justify-center group">
+    <Link
+      href="/cart"
+      className="relative flex items-center justify-center group"
+    >
       <div className="p-2 rounded-full hover:bg-red-50 transition-colors">
         <ShoppingCart className="h-6 w-6 text-gray-700 group-hover:text-red-600" />
         {count > 0 && (
@@ -97,7 +114,7 @@ export function Header() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <span>Free delivery on orders over 500 AED</span>
+              <span>Fixed delivery fee: AED 35 for all orders inside UAE</span>
               <LanguageToggle />
             </div>
           </div>
@@ -121,9 +138,25 @@ export function Header() {
             <Menu className="h-6 w-6" />
           </Button>
 
-          <Logo />
+          <div className="hidden md:block">
+            {" "}
+            <Logo />
+          </div>
+          <div className="lg:hidden flex-shrink-0">
+            {" "}
+            <Image
+              src="/assets/images/logo.png"
+              alt="King Road Logo"
+              width={55}
+              height={55}
+              className="object-contain p-2"
+            />
+          </div>
+
+          <div className="flex items-center gap-2"></div>
 
           <div className="flex items-center gap-2">
+            <LanguageToggle />
             <CartIcon count={cartCount} />
           </div>
         </div>
@@ -147,10 +180,16 @@ export function Header() {
                   dir === "rtl" ? "flex-row-reverse" : ""
                 }`}
               >
-                <Link href="/" className="text-gray-700 hover:text-red-600 transition-colors">
+                <Link
+                  href="/"
+                  className="text-gray-700 hover:text-red-600 transition-colors"
+                >
                   {language === "ar" ? "الرئيسية" : "Home"}
                 </Link>
-                <Link href="/category/all" className="text-gray-700 hover:text-red-600 transition-colors">
+                <Link
+                  href="/category/all"
+                  className="text-gray-700 hover:text-red-600 transition-colors"
+                >
                   {language === "ar" ? "المنتجات" : "Products"}
                 </Link>
                 <span className="cursor-pointer text-gray-700 hover:text-red-600 transition-colors">
@@ -159,7 +198,10 @@ export function Header() {
                 <span className="cursor-pointer text-gray-700 hover:text-red-600 transition-colors">
                   {t.topNav.whoAreWe}
                 </span>
-                <Link href="/track-order" className="text-gray-700 hover:text-red-600 transition-colors">
+                <Link
+                  href="/track-order"
+                  className="text-gray-700 hover:text-red-600 transition-colors"
+                >
                   {language === "ar" ? "تتبع الطلب" : "Track Order"}
                 </Link>
               </nav>
@@ -175,6 +217,7 @@ export function Header() {
                   className="w-64"
                 />
                 <AuthButton setAuthModalOpen={setAuthModalOpen} />
+
                 <CartIcon count={cartCount} />
               </div>
             </div>

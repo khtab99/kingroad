@@ -29,13 +29,13 @@ export function CategorySection() {
   );
 
   return (
-    <section className="bg-white py-16 md:py-20">
+    <section className="bg-white py-6 md:py-12 lg:py-20">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
             {language === "ar" ? "تسوق حسب الفئة" : "Shop by Category"}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-md md:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
             {language === "ar"
               ? "اكتشف مجموعتنا الواسعة من قطع غيار نيسان باترول الأصلية"
               : "Discover our wide range of original Nissan Patrol spare parts"}
@@ -80,7 +80,10 @@ export function CategorySection() {
         {/* CTA Button */}
         <div className="text-center">
           <Link href="/category/all">
-            <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white px-16 py-6 text-lg rounded-full font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 group">
+            <Button
+              size="lg"
+              className="bg-red-600 hover:bg-red-700 text-white px-16 py-6 text-lg rounded-full font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 group"
+            >
               {language === "ar" ? "ابدأ الطلب" : "Start Ordering"}
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>

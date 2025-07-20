@@ -67,8 +67,8 @@ export function MobileMenu() {
             <Image
               src="/assets/images/logo.png"
               alt="Logo"
-              width={150}
-              height={150}
+              width={120}
+              height={120}
               className=" "
             ></Image>
           </div>
@@ -89,17 +89,6 @@ export function MobileMenu() {
             ))}
 
             {/* Language Toggle */}
-            <button
-              onClick={toggleLanguage}
-              className={`w-full flex items-center gap-4 px-6 py-4 text-gray-700 hover:bg-gray-50 transition-colors ${
-                language === "ar" ? "flex-row-reverse text-right" : ""
-              }`}
-            >
-              <Globe className="h-5 w-5 text-gray-500" />
-              <span className="font-medium">
-                {language === "ar" ? "عربي" : "Arabic"}
-              </span>
-            </button>
           </div>
 
           {/* Footer */}
@@ -117,7 +106,12 @@ export function MobileMenu() {
             {/* Powered By */}
             <div className="text-center text-sm text-gray-600 mb-4">
               {language === "ar" ? "دعم من طرف" : "Powered By"}{" "}
-              <span className="font-semibold text-gray-800">Lwal Software</span>
+              <a href="https://lwalsoftware.ae/">
+                {" "}
+                <span className="font-semibold text-red-600 hover:underline transition-colors hover:text-red-400">
+                  Lwal Software
+                </span>
+              </a>
             </div>
 
             {/* Payment Methods */}

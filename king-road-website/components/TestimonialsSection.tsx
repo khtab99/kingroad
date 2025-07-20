@@ -1,7 +1,7 @@
 "use client";
 
 import { useStore } from "@/store/useStore";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, Shield } from "lucide-react";
 import Image from "next/image";
 
 export function TestimonialsSection() {
@@ -13,20 +13,26 @@ export function TestimonialsSection() {
       nameEn: "Ahmed Mohammed",
       locationAr: "دبي، الإمارات",
       locationEn: "Dubai, UAE",
-      reviewAr: "خدمة ممتازة وقطع غيار أصلية. حصلت على ما أحتاجه لسيارتي بسرعة وبجودة عالية.",
-      reviewEn: "Excellent service and original spare parts. Got what I needed for my car quickly and with high quality.",
+      reviewAr:
+        "خدمة ممتازة وقطع غيار أصلية. حصلت على ما أحتاجه لسيارتي بسرعة وبجودة عالية.",
+      reviewEn:
+        "Excellent service and original spare parts. Got what I needed for my car quickly and with high quality.",
       rating: 5,
-      image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      image:
+        "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
     },
     {
       nameAr: "سارة علي",
       nameEn: "Sara Ali",
       locationAr: "الشارقة، الإمارات",
       locationEn: "Sharjah, UAE",
-      reviewAr: "أفضل محل لقطع غيار نيسان في المنطقة. الأسعار معقولة والخدمة سريعة.",
-      reviewEn: "Best shop for Nissan spare parts in the region. Reasonable prices and fast service.",
+      reviewAr:
+        "أفضل محل لقطع غيار نيسان في المنطقة. الأسعار معقولة والخدمة سريعة.",
+      reviewEn:
+        "Best shop for Nissan spare parts in the region. Reasonable prices and fast service.",
       rating: 5,
-      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      image:
+        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
     },
     {
       nameAr: "محمد خالد",
@@ -34,9 +40,11 @@ export function TestimonialsSection() {
       locationAr: "أبوظبي، الإمارات",
       locationEn: "Abu Dhabi, UAE",
       reviewAr: "تعامل راقي وصدق في التعامل. أنصح الجميع بالتعامل مع كينج رود.",
-      reviewEn: "Professional dealing and honesty. I recommend everyone to deal with King Road.",
+      reviewEn:
+        "Professional dealing and honesty. I recommend everyone to deal with King Road.",
       rating: 5,
-      image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      image:
+        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
     },
   ];
 
@@ -77,7 +85,11 @@ export function TestimonialsSection() {
 
               {/* Review */}
               <p className="text-gray-700 mb-6 leading-relaxed italic">
-                "{language === "ar" ? testimonial.reviewAr : testimonial.reviewEn}"
+                "
+                {language === "ar"
+                  ? testimonial.reviewAr
+                  : testimonial.reviewEn}
+                "
               </p>
 
               {/* Customer Info */}
@@ -85,7 +97,11 @@ export function TestimonialsSection() {
                 <div className="w-12 h-12 rounded-full overflow-hidden">
                   <Image
                     src={testimonial.image}
-                    alt={language === "ar" ? testimonial.nameAr : testimonial.nameEn}
+                    alt={
+                      language === "ar"
+                        ? testimonial.nameAr
+                        : testimonial.nameEn
+                    }
                     width={48}
                     height={48}
                     className="w-full h-full object-cover"
@@ -93,10 +109,14 @@ export function TestimonialsSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">
-                    {language === "ar" ? testimonial.nameAr : testimonial.nameEn}
+                    {language === "ar"
+                      ? testimonial.nameAr
+                      : testimonial.nameEn}
                   </h4>
                   <p className="text-sm text-gray-600">
-                    {language === "ar" ? testimonial.locationAr : testimonial.locationEn}
+                    {language === "ar"
+                      ? testimonial.locationAr
+                      : testimonial.locationEn}
                   </p>
                 </div>
               </div>

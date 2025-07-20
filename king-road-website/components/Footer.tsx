@@ -1,6 +1,15 @@
 "use client";
 
-import { Instagram, MessageCircle, Phone, Mail, MapPin, Clock, Facebook, Twitter } from "lucide-react";
+import {
+  Instagram,
+  MessageCircle,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Facebook,
+  Twitter,
+} from "lucide-react";
 import { useStore } from "@/store/useStore";
 import translations from "@/data/translations.json";
 import Image from "next/image";
@@ -18,15 +27,35 @@ export function Footer() {
   ];
 
   const categories = [
-    { href: "/category/external", labelAr: "قطع خارجية", labelEn: "External Parts" },
-    { href: "/category/internal", labelAr: "قطع داخلية", labelEn: "Internal Parts" },
-    { href: "/category/air-conditioning", labelAr: "تكييف", labelEn: "Air Conditioning" },
-    { href: "/category/accessories", labelAr: "ملحقات", labelEn: "Accessories" },
+    {
+      href: "/category/external",
+      labelAr: "قطع خارجية",
+      labelEn: "External Parts",
+    },
+    {
+      href: "/category/internal",
+      labelAr: "قطع داخلية",
+      labelEn: "Internal Parts",
+    },
+    {
+      href: "/category/air-conditioning",
+      labelAr: "تكييف",
+      labelEn: "Air Conditioning",
+    },
+    {
+      href: "/category/accessories",
+      labelAr: "ملحقات",
+      labelEn: "Accessories",
+    },
   ];
 
   const policies = [
     { href: "/privacy", labelAr: "سياسة الخصوصية", labelEn: "Privacy Policy" },
-    { href: "/terms", labelAr: "الشروط والأحكام", labelEn: "Terms & Conditions" },
+    {
+      href: "/terms",
+      labelAr: "الشروط والأحكام",
+      labelEn: "Terms & Conditions",
+    },
     { href: "/returns", labelAr: "سياسة الإرجاع", labelEn: "Return Policy" },
     { href: "/warranty", labelAr: "الضمان", labelEn: "Warranty" },
   ];
@@ -55,7 +84,7 @@ export function Footer() {
                 </p>
               </div>
             </div>
-            
+
             <p className="text-gray-300 mb-6 leading-relaxed">
               {language === "ar"
                 ? "متخصصون في قطع غيار نيسان باترول الأصلية في أم القيوين. نقدم أفضل الخدمات وأعلى جودة."
@@ -66,13 +95,19 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-red-400" />
-                <a href="tel:+971501234567" className="hover:text-red-400 transition-colors">
+                <a
+                  href="tel:+971501234567"
+                  className="hover:text-red-400 transition-colors"
+                >
                   +971 50 123 4567
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-red-400" />
-                <a href="mailto:info@kingroad.ae" className="hover:text-red-400 transition-colors">
+                <a
+                  href="mailto:info@kingroad.ae"
+                  className="hover:text-red-400 transition-colors"
+                >
                   info@kingroad.ae
                 </a>
               </div>
@@ -87,7 +122,9 @@ export function Footer() {
               <div className="flex items-center gap-3">
                 <Clock className="h-5 w-5 text-red-400" />
                 <span className="text-gray-300">
-                  {language === "ar" ? "السبت - الخميس: 8ص - 8م" : "Sat - Thu: 8AM - 8PM"}
+                  {language === "ar"
+                    ? "السبت - الخميس: 8ص - 8م"
+                    : "Sat - Thu: 8AM - 8PM"}
                 </span>
               </div>
             </div>
@@ -194,7 +231,9 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
               <h5 className="font-semibold mb-3 text-red-400">
-                {language === "ar" ? "طرق الدفع المقبولة" : "Accepted Payment Methods"}
+                {language === "ar"
+                  ? "طرق الدفع المقبولة"
+                  : "Accepted Payment Methods"}
               </h5>
               <div className="flex items-center justify-center md:justify-start gap-4">
                 <div className="bg-white rounded-lg p-2">
@@ -230,7 +269,9 @@ export function Footer() {
                   <span className="text-xs font-bold">✓</span>
                 </div>
                 <span>
-                  {language === "ar" ? "معاملات آمنة 100%" : "100% Secure Transactions"}
+                  {language === "ar"
+                    ? "معاملات آمنة 100%"
+                    : "100% Secure Transactions"}
                 </span>
               </div>
             </div>
@@ -244,15 +285,22 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
             <div className="text-center md:text-left">
               <p>
-                © 2024 King Road Car Spare Parts. {language === "ar" ? "جميع الحقوق محفوظة" : "All rights reserved"}.
+                © 2025King Road Car Spare Parts.{" "}
+                {language === "ar"
+                  ? "جميع الحقوق محفوظة"
+                  : "All rights reserved"}
+                .
               </p>
             </div>
-            
+
             <div className="flex items-center gap-4">
-              <span>
-                {language === "ar" ? "دعم من طرف" : "Powered by"}
-              </span>
-              <span className="font-semibold text-white">Lwal Software</span>
+              <span>{language === "ar" ? "دعم من طرف" : "Powered by"}</span>
+              <a href="https://lwalsoftware.ae/">
+                {" "}
+                <span className="font-semibold text-white hover:underline transition-colors hover:text-red-400">
+                  Lwal Software
+                </span>
+              </a>
             </div>
           </div>
         </div>

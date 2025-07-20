@@ -79,7 +79,7 @@ export function CategorySection() {
 
         {/* CTA Button */}
         <div className="text-center">
-          <Link href="/category/all">
+          <Link href="/product">
             <Button
               size="lg"
               className="bg-red-600 hover:bg-red-700 text-white px-16 py-6 text-lg rounded-full font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 group"

@@ -187,7 +187,7 @@ export function Header() {
                   {language === "ar" ? "الرئيسية" : "Home"}
                 </Link>
                 <Link
-                  href="/category/all"
+                  href="/product"
                   className="text-gray-700 hover:text-red-600 transition-colors"
                 >
                   {language === "ar" ? "المنتجات" : "Products"}

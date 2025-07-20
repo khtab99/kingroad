@@ -71,7 +71,7 @@ export default function CheckoutPage() {
             ? "يجب إضافة منتجات للمتابعة"
             : "Please add products to continue",
       });
-      router.push("/category/all");
+      router.push("/product");
     }
   }, [cartCount, language, router]);
 

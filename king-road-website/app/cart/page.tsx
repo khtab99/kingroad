@@ -28,7 +28,7 @@ export default function CartPage() {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-  const deliveryFee = 0.0;
+  const deliveryFee = 35;
   const total = subtotal + deliveryFee;
 
   const handleCheckout = () => {
@@ -123,7 +123,7 @@ export default function CartPage() {
                       <button
                         onClick={() =>
                           updateQuantity(
-                            item.id, 
+                            item.id,
                             // In a real app, we would check inventory here
                             // For now, we'll just increment
                             item.quantity + 1

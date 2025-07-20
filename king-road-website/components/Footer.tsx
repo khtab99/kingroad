@@ -21,7 +21,7 @@ export function Footer() {
 
   const quickLinks = [
     { href: "/", labelAr: "الرئيسية", labelEn: "Home" },
-    { href: "/category/all", labelAr: "المنتجات", labelEn: "Products" },
+    { href: "/product", labelAr: "المنتجات", labelEn: "Products" },
     { href: "/track-order", labelAr: "تتبع الطلب", labelEn: "Track Order" },
     { href: "/contact", labelAr: "اتصل بنا", labelEn: "Contact Us" },
   ];

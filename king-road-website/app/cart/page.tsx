@@ -129,12 +129,12 @@ export default function CartPage() {
                             item.quantity + 1
                           )
                         }
-                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                        className="w-8 h-8 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50"
                       >
-                        <Plus className="h-4 w-4 text-gray-600" />
+                        <Plus className="h-4 w-4 text-red-600" />
                       </button>
 
-                      <span className="text-gray-800 font-medium min-w-[20px] text-center">
+                      <span className="text-red-800 font-medium min-w-[20px] text-center">
                         {item.quantity}
                       </span>
 
@@ -145,9 +145,9 @@ export default function CartPage() {
                             Math.max(0, item.quantity - 1)
                           )
                         }
-                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
+                        className="w-8 h-8 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50"
                       >
-                        <Minus className="h-4 w-4 text-gray-600" />
+                        <Minus className="h-4 w-4 text-red-600" />
                       </button>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ export default function CartPage() {
               <div className="flex gap-3">
                 <Button
                   variant="default"
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-2 rounded-md"
+                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-2 rounded-md"
                 >
                   {language === "ar" ? "تأكيد" : "Apply"}
                 </Button>
@@ -246,8 +246,8 @@ export default function CartPage() {
               disabled={cartItems.length === 0}
               className={`w-full py-4 text-lg font-medium rounded-md ${
                 cartItems.length > 0
-                  ? "bg-gray-600 hover:bg-gray-700 text-white"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  ? "bg-red-600 hover:bg-red-700 text-white"
+                  : "bg-red-300 text-red-500 cursor-not-allowed"
               }`}
             >
               {language === "ar"

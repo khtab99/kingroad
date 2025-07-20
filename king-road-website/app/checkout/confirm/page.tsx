@@ -139,8 +139,8 @@ export default function CheckoutConfirmPage() {
           disabled={!selectedPaymentMethod || isProcessing || isProcessingOrder}
           className={`w-full py-4 text-lg font-medium rounded-md ${
             selectedPaymentMethod && !isProcessing && !isProcessingOrder
-              ? "bg-gray-600 hover:bg-gray-700 text-white"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              ? "bg-red-600 hover:bg-red-700 text-white"
+              : "bg-red-300 text-red-500 cursor-not-allowed"
           }`}
         >
           {isProcessing || isProcessingOrder

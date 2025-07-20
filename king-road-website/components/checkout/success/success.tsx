@@ -488,7 +488,9 @@ export default function CheckoutSuccessContent() {
                 {/* Actions */}
                 <div className="space-y-3">
                   <Link href="/" className="block">
-                    <Button className="w-full">Continue Shopping</Button>
+                    <Button className="w-full bg-red-600 hover:bg-red-700">
+                      Continue Shopping
+                    </Button>
                   </Link>
                   <Link href="/track-order" className="block">
                     <Button variant="outline" className="w-full">

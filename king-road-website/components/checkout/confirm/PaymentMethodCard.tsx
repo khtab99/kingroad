@@ -20,8 +20,8 @@ export function PaymentMethodCard({
       onClick={() => onSelect(method.id)}
       className={`p-6 rounded-lg border-2 transition-all ${
         isSelected
-          ? "border-gray-800 bg-gray-50"
-          : "border-gray-200 hover:border-gray-300"
+          ? "border-red-800 bg-red-50"
+          : "border-red-200 hover:border-red-300"
       }`}
     >
       <div className="flex flex-col items-center gap-3">

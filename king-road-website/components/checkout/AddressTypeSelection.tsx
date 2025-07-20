@@ -43,13 +43,13 @@ export default function AddressTypeSelection({
               onClick={() => onSelectAddressType(type.id)}
               className={`p-6 rounded-lg border-2 transition-all ${
                 selectedAddressType === type.id
-                  ? "border-gray-800 bg-gray-50"
-                  : "border-gray-200 hover:border-gray-300"
+                  ? "border-red-800 bg-red-50"
+                  : "border-red-200 hover:border-red-300"
               }`}
             >
               <div className="flex flex-col items-center gap-3">
-                <Icon className="h-8 w-8 text-gray-600" />
-                <span className="text-sm font-medium text-gray-800">
+                <Icon className="h-8 w-8 text-red-600" />
+                <span className="text-sm font-medium text-red-800">
                   {language === "ar" ? type.nameAr : type.nameEn}
                 </span>
               </div>

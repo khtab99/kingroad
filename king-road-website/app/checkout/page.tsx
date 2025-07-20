@@ -194,8 +194,8 @@ export default function CheckoutPage() {
           disabled={!isFormValid()}
           className={`w-full py-4 text-lg font-medium rounded-md ${
             isFormValid()
-              ? "bg-gray-600 hover:bg-gray-700 text-white"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              ? "bg-red-600 hover:bg-red-700 text-white"
+              : "bg-red-400 text-white cursor-not-allowed"
           }`}
         >
           {language === "ar" ? "التالي" : "Next"}

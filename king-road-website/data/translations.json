@@ -18,6 +18,7 @@
       "registration": "Registration",
       "login": "Login",
       "english": "English",
+      "profile": "Profile",
       "logout": "Logout"
     },
     "hero": {
@@ -66,6 +67,7 @@
       "registration": "تسجيل دخول",
       "login": "دخول",
       "english": "English",
+      "profile": "الصفحة الشخصية",
       "logout": "تسجيل خروج"
     },
     "hero": {

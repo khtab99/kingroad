@@ -16,7 +16,7 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[url('/assets/images/pattern.svg')] bg-repeat"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 py-4 md:py-12 lg:py-24">
+      <div className="relative max-w-7xl mx-auto px-4 py-4 md:py-8 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="text-center lg:text-left hidden lg:block">

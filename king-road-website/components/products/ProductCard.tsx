@@ -5,7 +5,7 @@ import { Product } from "@/api/product";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ShoppingCart, Eye } from "lucide-react";
+import { Star, ShoppingCart, Eye, ShoppingCartIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useMemo, useState } from "react";
 
@@ -370,7 +370,7 @@ export function ProductCard({
             disabled={isOutOfStock || !canAddToCart}
             onClick={handleBuyNow}
           >
-            {language === "ar" ? "اشتري الآن" : "Buy Now"}
+            {language === "ar" ? "اشتري الآن" : "Buy Now +"}
           </Button>
           <Button
             variant="outline"
@@ -383,14 +383,22 @@ export function ProductCard({
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600" />
             ) : language === "ar" ? (
               availableInventory > 0 ? (
-                "+ أضف"
+                <div className="flex items-center gap-1">
+                  {" "}
+                  <span>اضافة</span>
+                  <ShoppingCartIcon className="h-4 w-4 " />
+                </div>
               ) : (
-                "نفذت الكمية"
+                <span>نفذ المخزون</span>
               )
             ) : availableInventory > 0 ? (
-              "+ Add"
+              <div className="flex items-center gap-1">
+                {" "}
+                <ShoppingCartIcon className="h-4 w-4 " />
+                <span>Add</span>
+              </div>
             ) : (
-              "Out of stock"
+              <span> Out of stock</span>
             )}
           </Button>
         </div>

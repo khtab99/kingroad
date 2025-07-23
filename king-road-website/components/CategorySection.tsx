@@ -7,7 +7,7 @@ import { useStore } from "@/store/useStore";
 import translations from "@/data/translations.json";
 import { useGetSuperCategory } from "@/api/category";
 import { Skeleton } from "./ui/skeleton";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export function CategorySection() {
   const { language } = useStore();
@@ -65,10 +65,12 @@ export function CategorySection() {
 
                   <div className="text-center p-6">
                     <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
-                      {category.name_en}
+                      {language === "ar" ? category.name_ar : category.name_en}
                     </h3>
                     <p className="text-sm text-gray-600 leading-relaxed">
-                      {category.description_en}
+                      {language === "ar"
+                        ? category.description_ar
+                        : category.description_en}
                     </p>
                   </div>
                 </div>
@@ -85,7 +87,11 @@ export function CategorySection() {
               className="bg-red-600 hover:bg-red-700 text-white px-16 py-6 text-lg rounded-full font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 group"
             >
               {language === "ar" ? "ابدأ الطلب" : "Start Ordering"}
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              {language === "ar" ? (
+                <ArrowLeft className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              ) : (
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              )}
             </Button>
           </Link>
         </div>

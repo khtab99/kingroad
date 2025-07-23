@@ -96,11 +96,11 @@ export function Header() {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-gray-900 text-white py-2 hidden md:block">
+      <div className="bg-gray-900 text-white py-2 hidden md:block  ">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between text-sm direction-ltr">
+            <div className="flex items-center gap-6" dir="ltr">
+              <div className="flex items-center gap-2 ">
                 <Phone className="h-4 w-4" />
                 <span>+971 50 123 4567</span>
               </div>
@@ -177,7 +177,7 @@ export function Header() {
               {/* Navigation */}
               <nav
                 className={`flex items-center gap-8 text-sm font-medium ${
-                  dir === "rtl" ? "flex-row-reverse" : ""
+                  dir === "rtl" ? "" : ""
                 }`}
               >
                 <Link

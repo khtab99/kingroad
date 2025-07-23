@@ -8,20 +8,20 @@ import {
   LogIn,
   Info,
   Shield,
-  Globe,
   Instagram,
-  MessageCircle,
 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/store/useStore";
 import translations from "@/data/translations.json";
-import Image from "next/image";
 
 export function MobileMenu() {
-  const { isMenuOpen, setMenuOpen, language, toggleLanguage } = useStore();
+  const { isMenuOpen, setMenuOpen, language } = useStore();
   const t = translations[language];
 
   if (!isMenuOpen) return null;
+
+  const isArabic = language === "ar";
 
   const menuItems = [
     { icon: Truck, label: t.navigation.orderStatus, href: "/order-status" },
@@ -40,13 +40,14 @@ export function MobileMenu() {
         onClick={() => setMenuOpen(false)}
       />
 
-      {/* Menu Panel */}
+      {/* Sliding Menu Panel */}
       <div
         className={`absolute top-0 ${
-          language === "ar" ? "right-0" : "left-0"
-        } w-80 h-full bg-white shadow-xl animate-slide-in-${
-          language === "ar" ? "right" : "left"
+          isArabic ? "right-0" : "left-0"
+        } w-80 h-full bg-white shadow-xl transition-transform duration-300 ease-in-out animate-slide-in-${
+          isArabic ? "right" : "left"
         }`}
+        dir={isArabic ? "rtl" : "ltr"}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
@@ -55,83 +56,37 @@ export function MobileMenu() {
               variant="ghost"
               size="icon"
               onClick={() => setMenuOpen(false)}
-              className="text-gray-600"
+              aria-label="Close menu"
             >
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 text-gray-600" />
             </Button>
           </div>
 
-          {/* Logo Section */}
-
-          <div className=" mx-auto  p-4 bg-white rounded-full">
+          {/* Logo */}
+          <div className="flex justify-center py-6">
             <Image
               src="/assets/images/logo.png"
               alt="Logo"
-              width={120}
-              height={120}
-              className=" "
-            ></Image>
+              width={100}
+              height={100}
+              className="rounded-full"
+            />
           </div>
 
           {/* Menu Items */}
-          <div className="flex-1 py-2">
-            {menuItems.map((item, index) => (
-              <button
-                key={index}
-                className={`w-full flex items-center gap-4 px-6 py-4 text-gray-700 hover:bg-gray-50 transition-colors ${
-                  language === "ar" ? "flex-row-reverse text-right" : ""
-                }`}
+          <nav className="flex-1 px-4">
+            {menuItems.map(({ icon: Icon, label, href }, idx) => (
+              <a
+                key={idx}
+                href={href}
+                className="flex items-center gap-4 w-full px-4 py-3 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
-                <item.icon className="h-5 w-5 text-gray-500" />
-                <span className="font-medium">{item.label}</span>
-              </button>
-            ))}
-
-            {/* Language Toggle */}
-          </div>
-
-          {/* Footer */}
-          <div className="p-6 border-t border-gray-200">
-            {/* Social Icons */}
-            <div className="flex justify-center gap-4 mb-4">
-              <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                <Instagram className="h-5 w-5 text-gray-600" />
-              </div>
-              <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                <MessageCircle className="h-5 w-5 text-white" />
-              </div>
-            </div>
-
-            {/* Powered By */}
-            <div className="text-center text-sm text-gray-600 mb-4">
-              {language === "ar" ? "دعم من طرف" : "Powered By"}{" "}
-              <a href="https://lwalsoftware.ae/">
-                {" "}
-                <span className="font-semibold text-red-600 hover:underline transition-colors hover:text-red-400">
-                  Lwal Software
-                </span>
+                <Icon className="h-5 w-5 text-gray-500" />
+                <span className="font-medium">{label}</span>
               </a>
-            </div>
-
-            {/* Payment Methods */}
-            <div className="flex items-center justify-center space-x-4 mt-4 md:mt-0">
-              <Image
-                src="/assets/icons/visa.svg"
-                alt="Visa"
-                className="h-12 w-12 opacity-100 "
-                width={32}
-                height={32}
-              />
-              <Image
-                src="/assets/icons/apple.svg"
-                alt="Mastercard"
-                className="h-12 w-12 opacity-100"
-                width={32}
-                height={32}
-              />
-            </div>
-          </div>
+            ))}
+          </nav>
         </div>
       </div>
     </div>

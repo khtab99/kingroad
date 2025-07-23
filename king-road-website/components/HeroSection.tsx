@@ -4,22 +4,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star, Shield, Truck } from "lucide-react";
+import { ArrowRight, Star, Shield, Truck, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function HeroSection() {
   const { language } = useStore();
+  const router = useRouter();
 
   return (
     <section className="relative bg-gradient-to-br from-gray-50 via-white to-red-50 overflow-hidden ">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      {/* <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[url('/assets/images/pattern.svg')] bg-repeat"></div>
-      </div>
+      </div> */}
 
       <div className="relative max-w-7xl mx-auto px-4 py-4 md:py-8 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="text-center lg:text-left hidden lg:block">
+          <div
+            className={`text-center  hidden lg:block ${
+              language === "ar" ? "lg:text-right" : "lg:text-left"
+            }`}
+          >
             <div className="mb-6">
               <span className="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-red-800 text-sm font-medium mb-4">
                 <Star className="h-4 w-4 mr-2" />
@@ -82,15 +88,18 @@ export function HeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start ">
-              <Link href="/product">
-                <Button
-                  size="lg"
-                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-                >
-                  {language === "ar" ? "تسوق الآن" : "Shop Now"}
+              <Button
+                size="lg"
+                className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                onClick={() => router.push("/product")}
+              >
+                {language === "ar" ? "تسوق الآن" : "Shop Now"}
+                {language === "ar" ? (
+                  <ArrowLeft className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                ) : (
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
+                )}
+              </Button>
 
               <Link href="/track-order">
                 <Button

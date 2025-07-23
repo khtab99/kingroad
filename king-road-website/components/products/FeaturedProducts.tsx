@@ -79,13 +79,14 @@ export function FeaturedProducts({ limit = 8 }: FeaturedProductsProps) {
               : "Discover our carefully selected best products"}
           </p>
         </div>
-
-        <Carousel opts={{ align: "start" }} className="w-full">
-          <CarouselContent className="-ml-4">
+        {/* implement next and prev button in carousel */}
+        <Carousel className="w-full overflow-hidden " dir="ltr">
+          <CarouselContent className="">
             {featuredProducts.map((product: any) => (
               <CarouselItem
                 key={product.id}
                 className="pl-4 basis-[80%] md:basis-1/2 lg:basis-1/4"
+                dir={language === "ar" ? "rtl" : "ltr"}
               >
                 <ProductCard
                   key={product.id}

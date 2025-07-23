@@ -98,6 +98,7 @@ export function Footer() {
                 <a
                   href="tel:+971501234567"
                   className="hover:text-red-400 transition-colors"
+                  dir="ltr"
                 >
                   +971 50 123 4567
                 </a>
@@ -207,17 +208,23 @@ export function Footer() {
                 >
                   <Facebook className="h-5 w-5 group-hover:scale-110 transition-transform" />
                 </a>
-                <a
+                {/* <a
                   href="#"
                   className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-400 transition-colors duration-300 group"
                 >
                   <Twitter className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                </a>
+                </a> */}
                 <a
                   href="https://wa.me/971501234567"
                   className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors duration-300 group"
                 >
-                  <MessageCircle className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                  <Image
+                    src="assets/icons/whatapp.svg"
+                    alt="whatsapp"
+                    height={24}
+                    width={24}
+                    className="h-5 w-5 group-hover:scale-110 transition-transform"
+                  />
                 </a>
               </div>
             </div>
@@ -236,7 +243,7 @@ export function Footer() {
                   : "Accepted Payment Methods"}
               </h5>
               <div className="flex items-center justify-center md:justify-start gap-4">
-                <div className="bg-white rounded-lg p-2">
+                <div className=" rounded-lg ">
                   <Image
                     src="/assets/icons/visa.svg"
                     alt="Visa"
@@ -245,7 +252,7 @@ export function Footer() {
                     className="object-contain"
                   />
                 </div>
-                <div className="bg-white rounded-lg p-2">
+                <div className=" rounded-lg">
                   <Image
                     src="/assets/icons/apple.svg"
                     alt="Apple Pay"
@@ -254,9 +261,9 @@ export function Footer() {
                     className="object-contain"
                   />
                 </div>
-                <div className="bg-gray-800 text-white rounded-lg px-3 py-2 text-sm font-medium">
+                {/* <div className="bg-gray-800 text-white rounded-lg px-3 py-2 text-sm font-medium">
                   {language === "ar" ? "الدفع عند التسليم" : "Cash on Delivery"}
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -285,7 +292,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
             <div className="text-center md:text-left">
               <p>
-                © 2025King Road Car Spare Parts.{" "}
+                © 2025King Road{" "}
                 {language === "ar"
                   ? "جميع الحقوق محفوظة"
                   : "All rights reserved"}

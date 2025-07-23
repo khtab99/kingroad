@@ -58,7 +58,7 @@ export default function CartPage() {
         </Button>
 
         <h1 className="text-lg font-medium text-gray-800">
-          {language === "ar" ? "قم بمراجعة الطلب" : "Review Order"}
+          {language === "ar" ? "مراجعة السلة" : "Cart Review"}
         </h1>
 
         <div></div>
@@ -66,9 +66,9 @@ export default function CartPage() {
 
       {/* Order Items */}
       <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
-        <h3 className="text-gray-800 font-medium mb-4 text-center">
+        {/* <h3 className="text-gray-800 font-medium mb-4 text-center">
           {language === "ar" ? "عناصر الطلب" : "Order Items"}
-        </h3>
+        </h3> */}
         {cartItems.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center py-12">
             <ShoppingBag className="h-16 w-16 text-gray-300 mb-4 animate-bounce" />

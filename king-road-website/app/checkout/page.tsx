@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useStore } from "@/store/useStore";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import CheckoutHeader from "../../components/checkout/CheckoutHeader";
@@ -13,7 +11,6 @@ import DeliveryTab from "../../components/checkout/DeliveryTab";
 import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid"; // ✅ Import uuid
 import { getToken, getUserData, setPhoneData } from "@/util/storage";
-import Link from "next/link";
 
 export default function CheckoutPage() {
   const { cartItems, language, cartCount } = useStore();
@@ -23,11 +20,11 @@ export default function CheckoutPage() {
 
   const token = getToken(); // however you're checking auth
 
-  const [parsedUserData, setParsedUserData] = useState({});
+  const [parsedUserData, setParsedUserData] = useState<any>({});
 
   useEffect(() => {
     try {
-      const raw = getUserData();
+      const raw: any = getUserData();
       setParsedUserData(JSON.parse(raw) || {});
     } catch {
       setParsedUserData({});

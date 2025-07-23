@@ -18,8 +18,6 @@ import {
   Loader2,
   AlertCircle,
   CheckCircle,
-  Clock,
-  Truck,
   ArrowLeft,
   Eye,
   ChevronRight,
@@ -28,8 +26,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { lookupOrder, useGetOrderList } from "@/api/order";
 import { Order } from "@/util/type";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { getPhoneData, getToken } from "@/util/storage";
 import { getStatusColor, getStatusIcon, getStatusSteps } from "@/util/static";
 import NoOrders from "@/components/NoOrder";

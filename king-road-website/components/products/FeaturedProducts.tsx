@@ -6,6 +6,7 @@ import { ProductError } from "./ProductError";
 import { ProductCard } from "./ProductCard";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 interface FeaturedProductsProps {
   limit?: number;
@@ -79,16 +80,23 @@ export function FeaturedProducts({ limit = 8 }: FeaturedProductsProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredProducts.map((product: any) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onBuyNow={handleBuyNow}
-              variant="grid"
-            />
-          ))}
-        </div>
+        <Carousel opts={{ align: "start" }} className="w-full">
+          <CarouselContent className="-ml-4">
+            {featuredProducts.map((product: any) => (
+              <CarouselItem
+                key={product.id}
+                className="pl-4 basis-[80%] md:basis-1/2 lg:basis-1/4"
+              >
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onBuyNow={handleBuyNow}
+                  variant="grid"
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </div>
     </section>
   );

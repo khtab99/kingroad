@@ -54,23 +54,37 @@ export const getStatusSteps = (currentStatus: string) => {
     {
       key: "pending",
       label: "Order Placed",
+      labelAr: "تم تقديم الطلب",
       description: "Your order has been received",
+      descriptionAr: "تم استلام طلبك",
     },
     {
       key: "confirmed",
       label: "Confirmed",
+      labelAr: "تم التأكيد",
       description: "Order confirmed and being prepared",
+      descriptionAr: "تم تأكيد الطلب وجاري التحضير",
     },
     {
       key: "processing",
       label: "Processing",
+      labelAr: "قيد المعالجة",
       description: "Items are being prepared",
+      descriptionAr: "جاري تحضير العناصر",
     },
-    { key: "shipped", label: "Shipped", description: "Order is on the way" },
+    {
+      key: "shipped",
+      label: "Shipped",
+      labelAr: "تم الشحن",
+      description: "Order is on the way",
+      descriptionAr: "الطلب في الطريق إليك",
+    },
     {
       key: "delivered",
       label: "Delivered",
+      labelAr: "تم التسليم",
       description: "Order has been delivered",
+      descriptionAr: "تم تسليم الطلب",
     },
   ];
 

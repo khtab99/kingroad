@@ -21,6 +21,7 @@ import {
   ArrowLeft,
   Eye,
   ChevronRight,
+  ArrowRight,
 } from "lucide-react";
 
 import { useToast } from "@/hooks/use-toast";
@@ -29,6 +30,7 @@ import { Order } from "@/util/type";
 import { getPhoneData, getToken } from "@/util/storage";
 import { getStatusColor, getStatusIcon, getStatusSteps } from "@/util/static";
 import NoOrders from "@/components/NoOrder";
+import { useStore } from "@/store/useStore";
 
 type ViewMode = "list" | "search" | "details";
 
@@ -38,6 +40,7 @@ export default function TrackOrderPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const { language } = useStore();
 
   const {
     register,
@@ -124,8 +127,14 @@ export default function TrackOrderPage() {
       {/* Header with search option */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Your Orders</h1>
-          <p className="text-gray-600 mt-1">View and track all your orders</p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            {language === "ar" ? "طلباتك" : "Your Orders"}
+          </h1>
+          <p className="text-gray-600 mt-1">
+            {language === "ar"
+              ? "عرض وتتبع جميع طلباتك"
+              : "View and track all your orders"}
+          </p>
         </div>
         <Button
           variant="outline"
@@ -133,7 +142,7 @@ export default function TrackOrderPage() {
           className="flex items-center gap-2"
         >
           <Search className="h-4 w-4" />
-          Search by Order Number
+          {language === "ar" ? "البحث برقم الطلب" : "Search by Order Number"}
         </Button>
       </div>
 
@@ -143,7 +152,11 @@ export default function TrackOrderPage() {
           <CardContent className="flex items-center justify-center py-12">
             <div className="text-center">
               <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-              <p className="text-gray-600">Loading your orders...</p>
+              <p className="text-gray-600">
+                {language === "ar"
+                  ? "جاري تحميل طلباتك..."
+                  : "Loading your orders..."}
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -166,24 +179,40 @@ export default function TrackOrderPage() {
                     <div className="flex-shrink-0">
                       {getStatusIcon(order.status)}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-2">
+                    <div
+                      className={`flex-1 min-w-0 ${
+                        language === "ar" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      <div
+                        className={`flex items-center gap-3 mb-2 ${
+                          language === "ar" ? "flex-row-reverse" : ""
+                        }`}
+                      >
                         <h3 className="font-semibold text-gray-900">
-                          Order #{order.order_number}
+                          {language === "ar" ? "الطلب #" : "Order #"}
+                          {order.order_number}
                         </h3>
                         <Badge className={getStatusColor(order.status)}>
                           {order.status.charAt(0).toUpperCase() +
                             order.status.slice(1)}
                         </Badge>
                       </div>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-600">
+                      <div
+                        className={`flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-600 ${
+                          language === "ar" ? "flex-row-reverse" : ""
+                        }`}
+                      >
                         <div className="flex items-center gap-1">
                           <Calendar className="h-4 w-4" />
-                          {new Date(order.created_at).toLocaleDateString()}
+                          {new Date(order.created_at).toLocaleDateString(
+                            language === "ar" ? "ar-AE" : "en-US"
+                          )}
                         </div>
                         <div className="flex items-center gap-1">
                           <Package className="h-4 w-4" />
-                          {order.items?.length || 0} items
+                          {order.items?.length || 0}{" "}
+                          {language === "ar" ? "عناصر" : "items"}
                         </div>
                         <div className="font-medium text-gray-900">
                           AED {order.total}
@@ -198,7 +227,9 @@ export default function TrackOrderPage() {
                       className="flex items-center gap-1"
                     >
                       <Eye className="h-4 w-4" />
-                      <span className="hidden sm:inline">View Details</span>
+                      <span className="hidden sm:inline">
+                        {language === "ar" ? "عرض التفاصيل" : "View Details"}
+                      </span>
                     </Button>
                     <ChevronRight className="h-5 w-5 text-gray-400" />
                   </div>
@@ -212,14 +243,17 @@ export default function TrackOrderPage() {
       )}
     </div>
   );
-
   // Render search form view
   const renderSearchForm = () => (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="sm" onClick={handleBack}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
+          {language === "ar" ? (
+            <ArrowRight className="h-4 w-4 mr-2" />
+          ) : (
+            <ArrowLeft className="h-4 w-4 mr-2" />
+          )}
           Back to Orders
         </Button>
       </div>
@@ -315,8 +349,12 @@ export default function TrackOrderPage() {
         {/* Header */}
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="sm" onClick={handleBack}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Orders
+            {language === "ar" ? (
+              <ArrowRight className="h-4 w-4 mr-2" />
+            ) : (
+              <ArrowLeft className="h-4 w-4 mr-2" />
+            )}
+            {language === "ar" ? "العودة إلى الطلبات" : "Back to Orders"}
           </Button>
         </div>
 
@@ -326,7 +364,8 @@ export default function TrackOrderPage() {
             <CardTitle className="flex items-center justify-between">
               <span className="flex items-center gap-2">
                 {getStatusIcon(selectedOrder.status)}
-                Order #{selectedOrder.order_number}
+                {language === "ar" ? "الطلب #" : "Order #"}
+                {selectedOrder.order_number}
               </span>
               <Badge className={getStatusColor(selectedOrder.status)}>
                 {selectedOrder.status.charAt(0).toUpperCase() +
@@ -337,7 +376,9 @@ export default function TrackOrderPage() {
           <CardContent>
             {/* Status Timeline */}
             <div className="space-y-4">
-              <h4 className="font-medium">Order Progress</h4>
+              <h4 className="font-medium">
+                {language === "ar" ? "تقدم الطلب" : "Order Progress"}
+              </h4>
               <div className="space-y-3">
                 {getStatusSteps(selectedOrder.status).map((step, index) => (
                   <div key={step.key} className="flex items-center gap-4">
@@ -364,10 +405,12 @@ export default function TrackOrderPage() {
                             : "text-gray-500"
                         }`}
                       >
-                        {step.label}
+                        {language === "ar" ? step.labelAr : step.label}
                       </p>
                       <p className="text-sm text-gray-600">
-                        {step.description}
+                        {language === "ar"
+                          ? step.descriptionAr
+                          : step.description}
                       </p>
                     </div>
                     {step.current && (
@@ -375,7 +418,7 @@ export default function TrackOrderPage() {
                         variant="outline"
                         className="text-blue-600 border-blue-600"
                       >
-                        Current
+                        {language === "ar" ? "حالي" : "Current"}
                       </Badge>
                     )}
                   </div>
@@ -387,20 +430,24 @@ export default function TrackOrderPage() {
             {selectedOrder.tracking_number && (
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <h4 className="font-medium text-blue-900 mb-2">
-                  Tracking Information
+                  {language === "ar"
+                    ? "معلومات التتبع"
+                    : "Tracking Information"}
                 </h4>
                 <p className="text-sm text-blue-800">
-                  Tracking Number:{" "}
+                  {language === "ar" ? "رقم التتبع: " : "Tracking Number: "}
                   <span className="font-mono">
                     {selectedOrder.tracking_number}
                   </span>
                 </p>
                 {selectedOrder.estimated_delivery && (
                   <p className="text-sm text-blue-800 mt-1">
-                    Estimated Delivery:{" "}
+                    {language === "ar"
+                      ? "موعد التسليم المتوقع: "
+                      : "Estimated Delivery: "}
                     {new Date(
                       selectedOrder.estimated_delivery
-                    ).toLocaleDateString()}
+                    ).toLocaleDateString(language === "ar" ? "ar-AE" : "en-US")}
                   </p>
                 )}
               </div>
@@ -416,7 +463,9 @@ export default function TrackOrderPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Phone className="h-5 w-5" />
-                  Customer Information
+                  {language === "ar"
+                    ? "معلومات العميل"
+                    : "Customer Information"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -438,7 +487,7 @@ export default function TrackOrderPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5" />
-                  Delivery Address
+                  {language === "ar" ? "عنوان التوصيل" : "Delivery Address"}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -452,44 +501,60 @@ export default function TrackOrderPage() {
           {/* Order Summary */}
           <Card>
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>
+                {language === "ar" ? "ملخص الطلب" : "Order Summary"}
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span>Order Date</span>
                   <span>
-                    {new Date(selectedOrder.created_at).toLocaleDateString()}
+                    {language === "ar" ? "تاريخ الطلب" : "Order Date"}
+                  </span>
+                  <span>
+                    {new Date(selectedOrder.created_at).toLocaleDateString(
+                      language === "ar" ? "ar-AE" : "en-US"
+                    )}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Payment Method</span>
+                  <span>
+                    {language === "ar" ? "طريقة الدفع" : "Payment Method"}
+                  </span>
                   <span>
                     {selectedOrder.payment_method === "cash_on_delivery"
-                      ? "Cash on Delivery"
+                      ? language === "ar"
+                        ? "الدفع عند الاستلام"
+                        : "Cash on Delivery"
                       : selectedOrder.payment_method}
                   </span>
                 </div>
                 <Separator />
                 <div className="flex justify-between">
-                  <span>Subtotal</span>
+                  <span>
+                    {language === "ar" ? "المجموع الفرعي" : "Subtotal"}
+                  </span>
                   <span>AED {selectedOrder.subtotal}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Delivery Fee</span>
+                  <span>
+                    {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
+                  </span>
                   <span
                     className={
                       selectedOrder.delivery_fee === 0 ? "text-green-600" : ""
                     }
                   >
                     {selectedOrder.delivery_fee === 0
-                      ? "FREE"
+                      ? language === "ar"
+                        ? "مجاناً"
+                        : "FREE"
                       : `AED ${selectedOrder.delivery_fee}`}
                   </span>
                 </div>
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
-                  <span>Total</span>
+                  <span>{language === "ar" ? "الإجمالي" : "Total"}</span>
                   <span>AED {selectedOrder.total}</span>
                 </div>
               </div>
@@ -500,7 +565,9 @@ export default function TrackOrderPage() {
         {/* Order Items */}
         <Card>
           <CardHeader>
-            <CardTitle>Order Items</CardTitle>
+            <CardTitle>
+              {language === "ar" ? "عناصر الطلب" : "Order Items"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -524,10 +591,12 @@ export default function TrackOrderPage() {
                       {item.product_name}
                     </h4>
                     <p className="text-sm text-gray-500">
-                      SKU: {item.product_sku}
+                      {language === "ar" ? "الرقم التسلسلي: " : "SKU: "}
+                      {item.product_sku}
                     </p>
                     <p className="text-sm text-gray-600">
-                      Quantity: {item.quantity} × AED {item.price}
+                      {language === "ar" ? "الكمية: " : "Quantity: "}
+                      {item.quantity} × AED {item.price}
                     </p>
                   </div>
                   <div className="text-right">

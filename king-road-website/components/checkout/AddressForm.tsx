@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { User, Mail } from "lucide-react";
+import { User, Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import {
   Select,
@@ -56,33 +56,33 @@ export default function AddressForm({
         return (
           <>
             {/* Street and House Number */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 ">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "الشارع" : "Street"}
                 </label>
                 <Input
                   value={formData.street}
                   onChange={(e) => onInputChange("street", e.target.value)}
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "رقم المنزل" : "House No."}
                 </label>
                 <Input
                   value={formData.houseNumber}
                   onChange={(e) => onInputChange("houseNumber", e.target.value)}
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
             </div>
@@ -95,21 +95,21 @@ export default function AddressForm({
             {/* Street and Building Number */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "الشارع" : "Street"}
                 </label>
                 <Input
                   value={formData.street}
                   onChange={(e) => onInputChange("street", e.target.value)}
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "رقم المبنى" : "Building No."}
                 </label>
                 <Input
@@ -118,10 +118,10 @@ export default function AddressForm({
                     onInputChange("buildingNumber", e.target.value)
                   }
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
             </div>
@@ -129,21 +129,21 @@ export default function AddressForm({
             {/* Floor and Apartment Number */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "الطابق" : "Floor"}
                 </label>
                 <Input
                   value={formData.floor}
                   onChange={(e) => onInputChange("floor", e.target.value)}
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "رقم الشقة" : "Apartment No."}
                 </label>
                 <Input
@@ -152,10 +152,10 @@ export default function AddressForm({
                     onInputChange("apartmentNumber", e.target.value)
                   }
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
             </div>
@@ -168,21 +168,21 @@ export default function AddressForm({
             {/* Street and Building Number */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "الشارع" : "Street"}
                 </label>
                 <Input
                   value={formData.street}
                   onChange={(e) => onInputChange("street", e.target.value)}
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "رقم المبنى" : "Building No."}
                 </label>
                 <Input
@@ -191,10 +191,10 @@ export default function AddressForm({
                     onInputChange("buildingNumber", e.target.value)
                   }
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
             </div>
@@ -202,21 +202,21 @@ export default function AddressForm({
             {/* Floor and Office Number/Name */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar" ? "الطابق" : "Floor"}
                 </label>
                 <Input
                   value={formData.floor}
                   onChange={(e) => onInputChange("floor", e.target.value)}
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "ar"
                     ? "رقم المكتب / الاسم"
                     : "Office No. / Name"}
@@ -227,10 +227,10 @@ export default function AddressForm({
                     onInputChange("officeNumber", e.target.value)
                   }
                   disabled={disabled}
-                  className={`text-right ${
-                    disabled ? "bg-gray-100 text-gray-400" : ""
-                  }`}
-                  dir="rtl"
+                  className={`${
+                    language === "ar" ? "text-right" : "text-left"
+                  } ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                  dir="ltr"
                 />
               </div>
             </div>
@@ -246,7 +246,7 @@ export default function AddressForm({
     return (
       <>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             {language === "ar" ? "الدولة" : "Country"}
           </label>
           <Select
@@ -255,10 +255,10 @@ export default function AddressForm({
             disabled={disabled}
           >
             <SelectTrigger
-              className={`text-right ${
+              className={`${language === "ar" ? "text-right" : "text-left"} ${
                 disabled ? "bg-gray-100 text-gray-400" : ""
               }`}
-              dir="rtl"
+              dir="ltr"
             >
               <SelectValue
                 placeholder={
@@ -275,7 +275,7 @@ export default function AddressForm({
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             {language === "ar" ? "المدينة" : "City"}
           </label>
           <Select
@@ -284,10 +284,10 @@ export default function AddressForm({
             disabled={disabled}
           >
             <SelectTrigger
-              className={`text-right ${
+              className={`${language === "ar" ? "text-right" : "text-left"} ${
                 disabled ? "bg-gray-100 text-gray-400" : ""
               }`}
-              dir="rtl"
+              dir="ltr"
             >
               <SelectValue
                 placeholder={
@@ -336,7 +336,7 @@ export default function AddressForm({
         {/* Special Directions - Common for all types */}
         {selectedAddressType && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               {language === "ar"
                 ? "توجيهات خاصة (اختياري)"
                 : "Special Directions (Optional)"}
@@ -350,17 +350,17 @@ export default function AddressForm({
                 language === "ar" ? "أدخل التوجيهات" : "Enter Directions"
               }
               disabled={disabled}
-              className={`text-right ${
+              className={`${language === "ar" ? "text-right" : "text-left"} ${
                 disabled ? "bg-gray-100 text-gray-400" : ""
               }`}
-              dir="rtl"
+              dir="ltr"
             />
           </div>
         )}
         {/* Name and Phone */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               {language === "ar" ? "رقم الهاتف" : "Phone Number"}
             </label>
             <div className="relative">
@@ -371,18 +371,22 @@ export default function AddressForm({
                   language === "ar" ? "أدخل رقم هاتفك" : "Enter your phone"
                 }
                 disabled={disabled}
-                className={`text-right pr-16 ${
-                  disabled ? "bg-gray-100 text-gray-400" : ""
-                }`}
-                dir="rtl"
+                className={`${
+                  language === "ar" ? "text-right" : "text-left  "
+                } pr-16 ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                dir="ltr"
               />
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                +971
+              <div
+                className={`absolute  top-1/2 transform -translate-y-1/2 text-gray-500 text-sm ${
+                  language === "ar" ? "left-3" : "right-3"
+                }`}
+              >
+                <Phone className="h-4 w-4" />
               </div>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               {language === "ar" ? "الاسم" : "Name"}
             </label>
             <div className="relative">
@@ -393,18 +397,22 @@ export default function AddressForm({
                   language === "ar" ? "أدخل اسمك" : "Enter your name"
                 }
                 disabled={disabled}
-                className={`text-right pr-10 ${
-                  disabled ? "bg-gray-100 text-gray-400" : ""
-                }`}
-                dir="rtl"
+                className={`${
+                  language === "ar" ? "text-right" : "text-left "
+                } pr-10 ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+                dir="ltr"
               />
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <User
+                className={`absolute  top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 ${
+                  language === "ar" ? "left-3" : "right-3"
+                }`}
+              />
             </div>
           </div>
         </div>
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             {language === "ar"
               ? "البريد الإلكتروني (اختياري)"
               : "Email (Optional)"}
@@ -418,12 +426,16 @@ export default function AddressForm({
                 language === "ar" ? "أدخل بريدك الإلكتروني" : "Enter your email"
               }
               disabled={disabled}
-              className={`text-right pr-10 ${
-                disabled ? "bg-gray-100 text-gray-400" : ""
-              }`}
-              dir="rtl"
+              className={`${
+                language === "ar" ? "text-right" : "text-left pl-3 "
+              } pr-10 ${disabled ? "bg-gray-100 text-gray-400" : ""}`}
+              dir="ltr"
             />
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Mail
+              className={`absolute  top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400  ${
+                language === "ar" ? "left-3" : "right-3"
+              } `}
+            />
           </div>
         </div>
         {/* Create Account Checkbox */}

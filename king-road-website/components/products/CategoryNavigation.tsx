@@ -54,7 +54,9 @@ export function CategoryNavigation({
               </button>
             </div>
             <div className="text-lg font-medium text-gray-600">
-              {superCategory?.name_en}
+              {language === "ar"
+                ? superCategory?.name_ar
+                : superCategory?.name_en}
             </div>
             <button
               className="p-1 hover:bg-gray-100 rounded"
@@ -99,7 +101,9 @@ export function CategoryNavigation({
           </div>
 
           <div className="text-lg font-medium text-gray-600">
-            {superCategory?.name_en}
+            {language === "ar"
+              ? superCategory?.name_ar
+              : superCategory?.name_en}
           </div>
 
           <button

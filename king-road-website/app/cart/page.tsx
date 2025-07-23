@@ -84,8 +84,6 @@ export default function CartPage() {
         )}
 
         {cartItems.map((item: any) => {
-          console.log("item", item);
-
           const cleanImageUrl = item?.image?.includes("assets/images/product/")
             ? item.image.replace("http://localhost:8000", "")
             : item?.image || "/assets/images/product/1.jpg";

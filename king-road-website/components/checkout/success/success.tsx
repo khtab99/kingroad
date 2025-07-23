@@ -54,7 +54,7 @@ export default function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const [isValidAccess, setIsValidAccess] = useState(false);
   const [paymentVerified, setPaymentVerified] = useState(false);
-  const { clearCart } = useStore();
+  const { clearCart, language } = useStore();
 
   const orderNumber = searchParams.get("order");
   const customerPhone = searchParams.get("phone");
@@ -261,12 +261,20 @@ export default function CheckoutSuccessContent() {
           <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {order.payment_status === "paid" || paymentVerified
-              ? "Payment Successful!"
+              ? language === "ar"
+                ? "تم الدفع بنجاح!"
+                : "Payment Successful!"
+              : language === "ar"
+              ? "تم تقديم الطلب بنجاح!"
               : "Order Placed Successfully!"}
           </h1>
           <p className="text-gray-600">
             {order.payment_status === "paid" || paymentVerified
-              ? "Thank you for your payment. Your order has been confirmed and will be processed shortly."
+              ? language === "ar"
+                ? "شكرًا لك على الدفع. تم تأكيد طلبك وسيتم معالجته قريبًا."
+                : "Thank you for your payment. Your order has been confirmed and will be processed shortly."
+              : language === "ar"
+              ? "شكرًا لك على طلبك. سنرسل لك تحديثات حول توصيلك."
               : "Thank you for your order. We'll send you updates about your delivery."}
           </p>
         </div>
@@ -281,7 +289,8 @@ export default function CheckoutSuccessContent() {
                 <CardTitle className="flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     <Package className="h-5 w-5" />
-                    Order #{order.order_number}
+                    {language === "ar" ? "الطلب #" : "Order #"}
+                    {order.order_number}
                   </span>
                   <div className="flex gap-2">
                     <Badge className={getStatusColor(order.status)}>
@@ -300,22 +309,31 @@ export default function CheckoutSuccessContent() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-gray-500">Order Date</p>
+                    <p className="text-gray-500">
+                      {language === "ar" ? "تاريخ الطلب" : "Order Date"}
+                    </p>
                     <p className="font-medium">
-                      {new Date(order.created_at).toLocaleDateString("en-AE", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {new Date(order.created_at).toLocaleDateString(
+                        language === "ar" ? "ar-AE" : "en-AE",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }
+                      )}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Payment Method</p>
+                    <p className="text-gray-500">
+                      {language === "ar" ? "طريقة الدفع" : "Payment Method"}
+                    </p>
                     <p className="font-medium">
                       {order.payment_method === "cash_on_delivery"
-                        ? "Cash on Delivery"
+                        ? language === "ar"
+                          ? "الدفع عند الاستلام"
+                          : "Cash on Delivery"
                         : order.payment_method}
                     </p>
                   </div>
@@ -323,7 +341,9 @@ export default function CheckoutSuccessContent() {
 
                 {order.customer_notes && (
                   <div>
-                    <p className="text-gray-500 text-sm">Order Notes</p>
+                    <p className="text-gray-500 text-sm">
+                      {language === "ar" ? "ملاحظات الطلب" : "Order Notes"}
+                    </p>
                     <p className="text-sm bg-gray-50 p-3 rounded">
                       {order.customer_notes}
                     </p>
@@ -337,7 +357,9 @@ export default function CheckoutSuccessContent() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Phone className="h-5 w-5" />
-                  Customer Information
+                  {language === "ar"
+                    ? "معلومات العميل"
+                    : "Customer Information"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -370,7 +392,7 @@ export default function CheckoutSuccessContent() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5" />
-                  Delivery Address
+                  {language === "ar" ? "عنوان التوصيل" : "Delivery Address"}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -381,7 +403,9 @@ export default function CheckoutSuccessContent() {
             {/* Order Items */}
             <Card>
               <CardHeader>
-                <CardTitle>Order Items</CardTitle>
+                <CardTitle>
+                  {language === "ar" ? "عناصر الطلب" : "Order Items"}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -414,10 +438,12 @@ export default function CheckoutSuccessContent() {
                             {item.product_name}
                           </h4>
                           <p className="text-sm text-gray-500">
-                            SKU: {item.product_sku}
+                            {language === "ar" ? "الرقم التسلسلي: " : "SKU: "}
+                            {item.product_sku}
                           </p>
                           <p className="text-sm text-gray-600">
-                            Quantity: {item.quantity} × AED {item.price}
+                            {language === "ar" ? "الكمية: " : "Quantity: "}
+                            {item.quantity} × AED {item.price}
                           </p>
                         </div>
                         <div className="text-right">
@@ -435,29 +461,37 @@ export default function CheckoutSuccessContent() {
           <div className="lg:col-span-1">
             <Card className="sticky top-6">
               <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+                <CardTitle>
+                  {language === "ar" ? "ملخص الطلب" : "Order Summary"}
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span>Subtotal</span>
+                    <span>
+                      {language === "ar" ? "المجموع الفرعي" : "Subtotal"}
+                    </span>
                     <span>AED {order.subtotal}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Delivery Fee</span>
+                    <span>
+                      {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
+                    </span>
                     <span
                       className={
                         order.delivery_fee === 0 ? "text-green-600" : ""
                       }
                     >
                       {order.delivery_fee === 0
-                        ? "FREE"
+                        ? language === "ar"
+                          ? "مجاناً"
+                          : "FREE"
                         : `AED ${order.delivery_fee}`}
                     </span>
                   </div>
                   <Separator />
                   <div className="flex justify-between text-lg font-semibold">
-                    <span>Total</span>
+                    <span>{language === "ar" ? "الإجمالي" : "Total"}</span>
                     <span>AED {order.total}</span>
                   </div>
                 </div>
@@ -466,19 +500,33 @@ export default function CheckoutSuccessContent() {
 
                 {/* Next Steps */}
                 <div className="space-y-3">
-                  <h4 className="font-medium">What's Next?</h4>
+                  <h4 className="font-medium">
+                    {language === "ar" ? "الخطوات التالية" : "What's Next?"}
+                  </h4>
                   <div className="space-y-2 text-sm text-gray-600">
                     <div className="flex items-start gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p>We'll confirm your order within 1 hour</p>
+                      <p>
+                        {language === "ar"
+                          ? "سنؤكد طلبك خلال ساعة واحدة"
+                          : "We'll confirm your order within 1 hour"}
+                      </p>
                     </div>
                     <div className="flex items-start gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p>Your order will be prepared and shipped</p>
+                      <p>
+                        {language === "ar"
+                          ? "سيتم تحضير طلبك وشحنه"
+                          : "Your order will be prepared and shipped"}
+                      </p>
                     </div>
                     <div className="flex items-start gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p>Delivery within 1-2 business days</p>
+                      <p>
+                        {language === "ar"
+                          ? "التوصيل خلال 1-2 أيام عمل"
+                          : "Delivery within 1-2 business days"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -489,12 +537,14 @@ export default function CheckoutSuccessContent() {
                 <div className="space-y-3">
                   <Link href="/" className="block">
                     <Button className="w-full bg-red-600 hover:bg-red-700">
-                      Continue Shopping
+                      {language === "ar"
+                        ? "مواصلة التسوق"
+                        : "Continue Shopping"}
                     </Button>
                   </Link>
                   <Link href="/track-order" className="block">
                     <Button variant="outline" className="w-full">
-                      Track Your Order
+                      {language === "ar" ? "تتبع طلبك" : "Track Your Order"}
                     </Button>
                   </Link>
                 </div>
@@ -507,10 +557,10 @@ export default function CheckoutSuccessContent() {
         <Alert className="mt-8">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            <strong>Important:</strong> Save your order number{" "}
-            <strong>#{order.order_number}</strong> and phone number for order
-            tracking and customer support. You can track your order anytime
-            using these details.
+            <strong>{language === "ar" ? "مهم:" : "Important:"}</strong>{" "}
+            {language === "ar"
+              ? `احفظ رقم طلبك <strong>#${order.order_number}</strong> ورقم هاتفك لمتابعة الطلب وخدمة العملاء. يمكنك تتبع طلبك في أي وقت باستخدام هذه التفاصيل.`
+              : `Save your order number <strong>#${order.order_number}</strong> and phone number for order tracking and customer support. You can track your order anytime using these details.`}
           </AlertDescription>
         </Alert>
       </div>

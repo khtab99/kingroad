@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ import DeliveryTab from "../../components/checkout/DeliveryTab";
 import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid"; // ✅ Import uuid
 import { getToken, getUserData, setPhoneData } from "@/util/storage";
+import { LoadingSpinner } from "@/components/checkout/confirm/LoadingSpinner";
 
 export default function CheckoutPage() {
   const { cartItems, language, cartCount } = useStore();
@@ -60,7 +61,14 @@ export default function CheckoutPage() {
   }, [token, parsedUserData]);
 
   // Redirect if cart is empty
+  const hasMounted = useRef(false);
+
   useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+
     if (cartCount === 0) {
       toast.error(language === "ar" ? "عربة التسوق فارغة" : "Cart is empty", {
         description:
@@ -72,20 +80,16 @@ export default function CheckoutPage() {
     }
   }, [cartCount, language, router]);
 
-  // Validate direct access to checkout page
-  useEffect(() => {
-    // Check if user navigated here directly without cart items
-    if (typeof window !== "undefined" && cartCount === 0) {
-      router.push("/");
-    }
-  }, [cartCount, router]);
-
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
+
+  if (!cartCount) {
+    return <LoadingSpinner language={language} />;
+  }
 
   const isFormValid = () => {
     if (!selectedAddressType) return false;
@@ -164,7 +168,7 @@ export default function CheckoutPage() {
       <CheckoutHeader
         language={language}
         onBack={() => router.back()}
-        title={language === "ar" ? "تأكيد الطلب" : "Checkout"}
+        title={language === "ar" ? "معلومات شخصية" : "Personal Information"}
       />
 
       <DeliveryTab language={language} />
@@ -175,13 +179,15 @@ export default function CheckoutPage() {
         onSelectAddressType={setSelectedAddressType}
       />
 
-      <AddressForm
-        language={language}
-        selectedAddressType={selectedAddressType}
-        formData={formData}
-        onInputChange={handleInputChange}
-        disabled={!selectedAddressType}
-      />
+      <div className="" dir={language === "ar" ? "rtl" : "ltr"}>
+        <AddressForm
+          language={language}
+          selectedAddressType={selectedAddressType}
+          formData={formData}
+          onInputChange={handleInputChange}
+          disabled={!selectedAddressType}
+        />
+      </div>
 
       <Button
         onClick={handleNext}

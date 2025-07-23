@@ -49,7 +49,9 @@ export default function ProductsPage() {
       />
 
       {/* Breadcrumb */}
-      <Breadcrumb category={selectedCategory} />
+      <div dir="ltr">
+        <Breadcrumb category={selectedCategory} />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Mobile Filter Button */}

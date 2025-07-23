@@ -9,8 +9,9 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      inter: "var(--font-inter)",
-      cairo: "var(--font-cairo)",
+      cairo: ["var(--font-cairo)"],
+      amiri: ["var(--font-amiri)"],
+      inter: ["var(--font-inter)"],
     },
     extend: {
       backgroundImage: {

@@ -109,51 +109,45 @@ export default function CheckoutConfirmPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div className="max-w-2xl mx-auto px-4 py-6">
+      <CheckoutHeader language={language} />
 
-      <div className="max-w-2xl mx-auto px-4 py-6">
-        <CheckoutHeader language={language} />
+      <PaymentMethodSelector
+        paymentMethods={paymentMethods}
+        selectedPaymentMethod={selectedPaymentMethod}
+        onPaymentMethodChange={setSelectedPaymentMethod}
+        language={language}
+      />
 
-        <PaymentMethodSelector
-          paymentMethods={paymentMethods}
-          selectedPaymentMethod={selectedPaymentMethod}
-          onPaymentMethodChange={setSelectedPaymentMethod}
-          language={language}
-        />
+      <OrderSummary checkoutData={checkoutData} language={language} />
 
-        <OrderSummary checkoutData={checkoutData} language={language} />
+      <DeliveryInfo checkoutData={checkoutData} language={language} />
 
-        <DeliveryInfo checkoutData={checkoutData} language={language} />
+      <SelectedPaymentDisplay
+        selectedPaymentMethod={selectedPaymentMethod}
+        paymentMethods={paymentMethods}
+        language={language}
+      />
 
-        <SelectedPaymentDisplay
-          selectedPaymentMethod={selectedPaymentMethod}
-          paymentMethods={paymentMethods}
-          language={language}
-        />
+      <OrderTotal checkoutData={checkoutData} language={language} />
 
-        <OrderTotal checkoutData={checkoutData} language={language} />
-
-        <Button
-          onClick={handlePayNow}
-          disabled={!selectedPaymentMethod || isProcessing || isProcessingOrder}
-          className={`w-full py-4 text-lg font-medium rounded-md ${
-            selectedPaymentMethod && !isProcessing && !isProcessingOrder
-              ? "bg-red-600 hover:bg-red-700 text-white"
-              : "bg-red-300 text-red-500 cursor-not-allowed"
-          }`}
-        >
-          {isProcessing || isProcessingOrder
-            ? language === "ar"
-              ? "جاري المعالجة..."
-              : "Processing..."
-            : language === "ar"
-            ? "ادفع الآن"
-            : "Pay Now"}
-        </Button>
-      </div>
-
-      <Footer />
+      <Button
+        onClick={handlePayNow}
+        disabled={!selectedPaymentMethod || isProcessing || isProcessingOrder}
+        className={`w-full py-4 text-lg font-medium rounded-md ${
+          selectedPaymentMethod && !isProcessing && !isProcessingOrder
+            ? "bg-red-600 hover:bg-red-700 text-white"
+            : "bg-red-300 text-red-500 cursor-not-allowed"
+        }`}
+      >
+        {isProcessing || isProcessingOrder
+          ? language === "ar"
+            ? "جاري المعالجة..."
+            : "Processing..."
+          : language === "ar"
+          ? "ادفع الآن"
+          : "Pay Now"}
+      </Button>
     </div>
   );
 }

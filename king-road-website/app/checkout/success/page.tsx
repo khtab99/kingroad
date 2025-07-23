@@ -39,11 +39,7 @@ export default function SuccessPage() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <CheckoutSuccessContent />
-        <Footer />
-      </div>
+      <CheckoutSuccessContent />
     </Suspense>
   );
 }

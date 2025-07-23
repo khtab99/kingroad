@@ -163,46 +163,40 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div className="max-w-2xl mx-auto px-4 py-6">
+      <CheckoutHeader
+        language={language}
+        onBack={() => router.back()}
+        title={language === "ar" ? "تأكيد الطلب" : "Checkout"}
+      />
 
-      <div className="max-w-2xl mx-auto px-4 py-6">
-        <CheckoutHeader
-          language={language}
-          onBack={() => router.back()}
-          title={language === "ar" ? "تأكيد الطلب" : "Checkout"}
-        />
+      <DeliveryTab language={language} />
 
-        <DeliveryTab language={language} />
+      <AddressTypeSelection
+        language={language}
+        selectedAddressType={selectedAddressType}
+        onSelectAddressType={setSelectedAddressType}
+      />
 
-        <AddressTypeSelection
-          language={language}
-          selectedAddressType={selectedAddressType}
-          onSelectAddressType={setSelectedAddressType}
-        />
+      <AddressForm
+        language={language}
+        selectedAddressType={selectedAddressType}
+        formData={formData}
+        onInputChange={handleInputChange}
+        disabled={!selectedAddressType}
+      />
 
-        <AddressForm
-          language={language}
-          selectedAddressType={selectedAddressType}
-          formData={formData}
-          onInputChange={handleInputChange}
-          disabled={!selectedAddressType}
-        />
-
-        <Button
-          onClick={handleNext}
-          disabled={!isFormValid()}
-          className={`w-full py-4 text-lg font-medium rounded-md ${
-            isFormValid()
-              ? "bg-red-600 hover:bg-red-700 text-white"
-              : "bg-red-400 text-white cursor-not-allowed"
-          }`}
-        >
-          {language === "ar" ? "التالي" : "Next"}
-        </Button>
-      </div>
-
-      <Footer />
+      <Button
+        onClick={handleNext}
+        disabled={!isFormValid()}
+        className={`w-full py-4 text-lg font-medium rounded-md ${
+          isFormValid()
+            ? "bg-red-600 hover:bg-red-700 text-white"
+            : "bg-red-400 text-white cursor-not-allowed"
+        }`}
+      >
+        {language === "ar" ? "التالي" : "Next"}
+      </Button>
     </div>
   );
 }

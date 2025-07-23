@@ -547,18 +547,14 @@ export default function TrackOrderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="max-w-4xl mx-auto p-6">
-        {/* Render no Auth view */}
+    <div className="max-w-4xl mx-auto p-6">
+      {/* Render no Auth view */}
 
-        <div className="mt-4">
-          {viewMode === "list" && renderOrderList()}
-          {viewMode === "search" && renderSearchForm()}
-          {viewMode === "details" && renderOrderDetails()}
-        </div>
+      <div className="mt-4">
+        {viewMode === "list" && renderOrderList()}
+        {viewMode === "search" && renderSearchForm()}
+        {viewMode === "details" && renderOrderDetails()}
       </div>
-      <Footer />
     </div>
   );
 }

@@ -12,18 +12,14 @@ import { NewsletterSection } from "@/components/NewsletterSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white overflow-hidden">
-      <Header />
-      <main>
-        <HeroSection />
-        <CategorySection />
-        <FeaturedProducts limit={8} />
-        <StatsSection />
-        <WhyChooseUsSection />
-        <TestimonialsSection />
-        {/* <NewsletterSection /> */}
-      </main>
-      <Footer />
-    </div>
+    <main>
+      <HeroSection />
+      <CategorySection />
+      <FeaturedProducts limit={8} />
+      <StatsSection />
+      <WhyChooseUsSection />
+      <TestimonialsSection />
+      {/* <NewsletterSection /> */}
+    </main>
   );
 }

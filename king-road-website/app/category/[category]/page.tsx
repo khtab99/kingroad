@@ -41,10 +41,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-
-      {/* Category Navigation */}
+    <>
       <CategoryNavigation
         categoryId={categoryId}
         selectedCategory={selectedCategory}
@@ -122,7 +119,6 @@ export default function ProductsPage() {
           </div>
         </div>
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }

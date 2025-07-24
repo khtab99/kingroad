@@ -130,7 +130,7 @@ export function ProductCard({
             src={cleanImageUrl}
             alt={productName}
             fill
-            className="object-cover"
+            className="object-contain"
           />
 
           {/* Out of Stock Overlay */}

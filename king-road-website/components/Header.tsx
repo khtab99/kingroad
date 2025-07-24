@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { AuthModal } from "./auth/AuthModal";
 import { AuthButton } from "./AuthButton";
 import Image from "next/image";
+import { Tooltip, TooltipContent, TooltipProvider } from "./ui/tooltip";
 
 function SearchInput({
   placeholder = "Search",
@@ -43,20 +44,22 @@ function LanguageToggle() {
   const language = useStore((s) => s.language);
   const toggleLanguage = useStore((s) => s.toggleLanguage);
 
+  const nextLanguage = language === "en" ? "AR" : "EN";
+
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={toggleLanguage}
-      className="text-sm font-medium text-gray-700 hover:text-red-600 bg-white hover:bg-red-50 rounded-full px-4"
-    >
-      <Globe className="h-4 w-4 mr-2" />
-      {language === "en" ? (
-        <span className="hidden md:inline">عربي</span>
-      ) : (
-        <span className="hidden md:inline">English</span>
-      )}
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipContent>{`Switch to ${nextLanguage}`}</TooltipContent>
+        <button
+          onClick={toggleLanguage}
+          aria-label="Toggle language"
+          className="flex items-center gap-1 px-2 py-1 rounded-full bg-gray-600 text-white hover:bg-red-100 hover:text-red-600 transition-colors duration-200"
+        >
+          <Globe className="h-4 w-4" />
+          <span className="text-xs font-medium uppercase">{nextLanguage}</span>
+        </button>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 

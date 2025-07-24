@@ -126,7 +126,7 @@ export function TestimonialsSection() {
 
         {/* Trust Badges */}
         <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-8 bg-gray-50 rounded-full px-8 py-4">
+          <div className=" flex  md:inline-flex items-center gap-4 md:gap-8 bg-gray-50 rounded-full px-8 py-4">
             <div className="flex items-center gap-2">
               <Shield className="h-6 w-6 text-green-600" />
               <span className="font-semibold text-gray-900">

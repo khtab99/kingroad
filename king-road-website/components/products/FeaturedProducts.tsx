@@ -6,7 +6,13 @@ import { ProductError } from "./ProductError";
 import { ProductCard } from "./ProductCard";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 
 interface FeaturedProductsProps {
   limit?: number;
@@ -80,7 +86,10 @@ export function FeaturedProducts({ limit = 8 }: FeaturedProductsProps) {
           </p>
         </div>
         {/* implement next and prev button in carousel */}
-        <Carousel className="w-full overflow-hidden " dir="ltr">
+
+        <Carousel className="w-full overflow-hidden  " dir="ltr">
+          <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-gray-100 hover:bg-red-600 hover:text-white overflow-hidden" />
+          <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-gray-100 hover:bg-red-600 hover:text-white overflow-hidden" />
           <CarouselContent className="">
             {featuredProducts.map((product: any) => (
               <CarouselItem

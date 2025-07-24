@@ -65,10 +65,7 @@ public function store(CreateOrderRequest $request)
                              ->first();
 
         if ($existingOrder) {
-            return response()->json([
-                'message' => 'Order already exists for this session',
-                'order' => new OrderResource($existingOrder),
-            ], 200);
+            return handleSuccessReponse(1, 'Order already exists', new OrderResource($existingOrder));
         }
 
         $subtotal = 0;  

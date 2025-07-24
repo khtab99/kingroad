@@ -292,7 +292,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
             <div className="text-center md:text-left">
               <p>
-                © 2025King Road{" "}
+                © 2025 King Road{" "}
                 {language === "ar"
                   ? "جميع الحقوق محفوظة"
                   : "All rights reserved"}

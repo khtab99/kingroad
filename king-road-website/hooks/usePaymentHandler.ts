@@ -77,6 +77,7 @@ export function usePaymentHandler(language: string) {
       };
 
       const orderResponse = await createNewOrder(orderBody);
+
       const orderId = orderResponse?.data?.id;
 
       console.log("Order response:", orderResponse);

@@ -155,7 +155,9 @@ export default function CheckoutPage() {
     };
 
     localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
-    setPhoneData(formData.phone);
+    if (!token) {
+      setPhoneData(checkoutData.phone);
+    }
     router.push("/checkout/confirm");
   };
 

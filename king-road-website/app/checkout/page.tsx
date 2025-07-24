@@ -10,7 +10,12 @@ import AddressForm from "../../components/checkout/AddressForm";
 import DeliveryTab from "../../components/checkout/DeliveryTab";
 import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid"; // ✅ Import uuid
-import { getToken, getUserData, setPhoneData } from "@/util/storage";
+import {
+  getCheckOutData,
+  getToken,
+  getUserData,
+  setPhoneData,
+} from "@/util/storage";
 import { LoadingSpinner } from "@/components/checkout/confirm/LoadingSpinner";
 
 export default function CheckoutPage() {
@@ -22,6 +27,8 @@ export default function CheckoutPage() {
   const token = getToken(); // however you're checking auth
 
   const [parsedUserData, setParsedUserData] = useState<any>({});
+
+  const checkoutData = getCheckOutData();
 
   useEffect(() => {
     try {
@@ -47,6 +54,12 @@ export default function CheckoutPage() {
     email: "",
     createAccount: false,
   });
+
+  useEffect(() => {
+    if (checkoutData) {
+      setFormData(JSON.parse(checkoutData));
+    }
+  }, [checkoutData]);
 
   // Update name/email/phone only after login
   useEffect(() => {

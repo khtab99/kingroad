@@ -53,3 +53,21 @@ export const deletePhoneData = () => {
     window.localStorage.removeItem("phone");
   }
 };
+export const setCheckOutData = (checkoutData: any) => {
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+  }
+};
+
+export const getCheckOutData = () => {
+  if (typeof window !== "undefined") {
+    return window.localStorage.getItem("checkoutData");
+  }
+  return null;
+};
+
+export const deleteCheckOutData = () => {
+  if (typeof window !== "undefined") {
+    window.localStorage.removeItem("checkoutData");
+  }
+};

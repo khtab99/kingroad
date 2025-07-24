@@ -1,14 +1,12 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import { CategoryNavigation } from "@/components/products/CategoryNavigation";
 import { ProductsGrid } from "@/components/products/ProductsGrid";
 import { ProductsSidebar } from "@/components/products/ProductsSidebar";
 import { Breadcrumb } from "@/components/products/Breadcrumb";
 import { useStore } from "@/store/useStore";
-import { useState, useEffect } from "react";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
 import {
@@ -23,21 +21,27 @@ import {
 export default function ProductsPage() {
   const params = useParams();
   const { language } = useStore();
+
   const [selectedCategory, setSelectedCategory] = useState<any>();
   const [selectedSubcategories, setSelectedSubcategories] = useState<any>(null);
-
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const category = params.category as string;
-
   const categoryId = category;
 
   const categoryFilters = {
     superCategoryId: parseInt(categoryId),
     categoryId: selectedCategory,
     subCategoryId: selectedSubcategories,
+  };
+
+  const handleResetFilters = () => {
+    setSelectedCategory(undefined);
+    setSelectedSubcategories(null);
+    setSortBy("newest");
+    setCurrentPage(1);
   };
 
   return (
@@ -91,6 +95,7 @@ export default function ProductsPage() {
                   onSubcategoryChange={setSelectedSubcategories}
                   sortBy={sortBy}
                   onSortChange={setSortBy}
+                  onResetFilters={handleResetFilters}
                 />
               </div>
             </SheetContent>
@@ -106,6 +111,7 @@ export default function ProductsPage() {
               onSubcategoryChange={setSelectedSubcategories}
               sortBy={sortBy}
               onSortChange={setSortBy}
+              onResetFilters={handleResetFilters}
             />
           </div>
 

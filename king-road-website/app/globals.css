@@ -92,7 +92,6 @@ body {
 
 /* Arabic font optimization */
 [dir="rtl"] {
-  font-family: -apple-system, BlinkMacSystemFont, "Cairo", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Tajawal", "Cairo", "Noto Kufi Arabic", "Segoe UI", "Roboto",
+    "Helvetica Neue", "Arial", sans-serif;
 }

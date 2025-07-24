@@ -9,6 +9,7 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
+      tajawal: ["var(--font-tajawal)"],
       cairo: ["var(--font-cairo)"],
       amiri: ["var(--font-amiri)"],
       inter: ["var(--font-inter)"],

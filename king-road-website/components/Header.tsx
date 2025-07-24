@@ -173,7 +173,7 @@ export function Header() {
               }`}
             >
               {/* Logo */}
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0" dir="ltr">
                 <Logo />
               </div>
 

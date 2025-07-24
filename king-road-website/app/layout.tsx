@@ -2,7 +2,7 @@
 import { Header } from "@/components/Header";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Amiri, Cairo, Inter } from "next/font/google";
+import { Amiri, Cairo, Inter, Tajawal } from "next/font/google";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/Footer";
 import { useStore } from "@/store/useStore";
@@ -18,10 +18,10 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const cairo = Cairo({
-  subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cairo",
+const tajawal = Tajawal({
+  subsets: ["arabic"],
+  weight: ["400", "500", "700"],
+  variable: "--font-tajawal",
 });
 
 export default function RootLayout({
@@ -38,7 +38,9 @@ export default function RootLayout({
         <title>King Road</title>
       </head>
       <body
-        className={`${amiri.variable} ${cairo.variable} ${inter.variable} font-sans antialiased`}
+        className={`${tajawal.variable} ${inter.variable} ${
+          language === "ar" ? "font-arabic" : "font-sans"
+        }`}
       >
         <div
           className="min-h-screen bg-gray-50 "

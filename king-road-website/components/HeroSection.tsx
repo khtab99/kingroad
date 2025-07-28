@@ -72,9 +72,9 @@ export function HeroSection() {
 
   return (
     <section className="relative bg-gradient-to-br from-gray-50 via-white to-red-50 overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-4 py-4 md:py-8 lg:py-12">
+      <div className="relative max-w-7xl mx-auto  sm:px-6 py-0 md:py-8 lg:py-12">
         {/* Mobile Layout - Content on top of image */}
-        <div className="block lg:hidden max-h-[70vh] min-h-[500px] mx-auto">
+        <div className="block lg:hidden max-h-[40vh]  mx-auto">
           <Swiper
             modules={[Autoplay, Pagination, EffectFade]}
             effect="fade"
@@ -89,30 +89,30 @@ export function HeroSection() {
                 "swiper-pagination-bullet-active !bg-white !opacity-100",
             }}
             loop={true}
-            className="relative rounded-2xl overflow-hidden shadow-2xl"
+            className="relative rounded-sm  md:rounded-2xl overflow-hidden shadow-2xl"
           >
             {heroSlides.map((slide) => (
               <SwiperSlide key={slide.id}>
-                <div className="relative h-[70vh] min-h-[500px]">
+                <div className="relative h-[30vh] ">
                   {/* Background Image */}
                   <Image
                     src={slide.image}
                     alt="Nissan Patrol Parts"
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     priority={slide.id === 1}
                   />
 
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div>
+                  {/* <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div> */}
 
                   {/* Content Overlay */}
-                  <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
+                  <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6 bg-black/30">
                     {/* Badge */}
-                    <span className="inline-flex items-center px-4 py-2 rounded-full bg-red-600/90 text-white text-sm font-medium mb-4 backdrop-blur-sm">
+                    {/* <span className="inline-flex items-center px-4 py-2 rounded-full bg-red-600/90 text-white text-sm font-medium mb-4 backdrop-blur-sm">
                       <Star className="h-4 w-4 mr-2" />
                       {slide.badge}
-                    </span>
+                    </span> */}
 
                     {/* Title */}
                     <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
@@ -127,7 +127,7 @@ export function HeroSection() {
                     </p>
 
                     {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    {/* <div className="flex flex-col sm:flex-row gap-4">
                       <Button
                         size="lg"
                         className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
@@ -150,11 +150,11 @@ export function HeroSection() {
                           {language === "ar" ? "تتبع الطلب" : "Track Order"}
                         </Button>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* Floating Logo */}
-                  <div className="absolute bottom-4 right-4 w-16 h-16 z-10">
+                  <div className="absolute bottom-0 right-4 w-16 h-16 z-10">
                     <div className="w-full h-full bg-white rounded-full shadow-xl p-2 border-2 border-red-100">
                       <Image
                         src="/assets/images/logo.png"
@@ -170,7 +170,7 @@ export function HeroSection() {
           </Swiper>
 
           {/* Mobile Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
             {features.map((feature, index) => (
               <div
                 key={index}
@@ -185,7 +185,7 @@ export function HeroSection() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
 
         {/* Desktop Layout - Side by side */}

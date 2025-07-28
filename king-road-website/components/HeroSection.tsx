@@ -6,88 +6,243 @@ import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Shield, Truck, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, EffectFade } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 
 export function HeroSection() {
   const { language } = useStore();
   const router = useRouter();
 
+  // Hero slides data
+  const heroSlides = [
+    {
+      id: 1,
+      image: "/assets/images/hero/1.jpg",
+      title: language === "ar" ? "قطع غيار السيارات" : "Car Spare Parts",
+      subtitle:
+        language === "ar"
+          ? "أفضل قطع الغيار الأصلية لسيارات نيسان باترول في أم القيوين. جودة عالية وأسعار منافسة."
+          : "Premium original spare parts for Nissan Patrol in Umm Al Quwain. High quality and competitive prices.",
+      badge: language === "ar" ? "الأفضل في الإمارات" : "Best in UAE",
+    },
+    {
+      id: 2,
+      image: "/assets/images/hero/2.jpg", // Add your second hero image
+      title: language === "ar" ? "خدمة موثوقة" : "Trusted Service",
+      subtitle:
+        language === "ar"
+          ? "20 عاماً من الخبرة في توفير أفضل قطع الغيار الأصلية مع ضمان الجودة والتوصيل السريع."
+          : "20 years of experience providing the best original spare parts with quality guarantee and fast delivery.",
+      badge: language === "ar" ? "خبرة 20 سنة" : "20 Years Experience",
+    },
+    {
+      id: 3,
+      image: "/assets/images/hero/3.jpg", // Add your third hero image
+      title: language === "ar" ? "توصيل سريع" : "Fast Delivery",
+      subtitle:
+        language === "ar"
+          ? "احصل على قطع الغيار التي تحتاجها في أسرع وقت ممكن مع خدمة التوصيل المجاني داخل أم القيوين."
+          : "Get the spare parts you need as quickly as possible with free delivery service in Umm Al Quwain.",
+      badge: language === "ar" ? "توصيل مجاني" : "Free Delivery",
+    },
+  ];
+
+  const features = [
+    {
+      icon: Shield,
+      title: language === "ar" ? "ضمان الجودة" : "Quality Assured",
+      subtitle: language === "ar" ? "قطع أصلية" : "Original Parts",
+    },
+    {
+      icon: Truck,
+      title: language === "ar" ? "توصيل سريع" : "Fast Delivery",
+      subtitle: language === "ar" ? "خلال يومين" : "Within 2 Days",
+    },
+    {
+      icon: Star,
+      title: language === "ar" ? "خبرة 20 سنة" : "20 Years Experience",
+      subtitle: language === "ar" ? "موثوق" : "Trusted",
+    },
+  ];
+
   return (
-    <section className="relative bg-gradient-to-br from-gray-50 via-white to-red-50 overflow-hidden ">
-      {/* Background Pattern */}
-      {/* <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[url('/assets/images/pattern.svg')] bg-repeat"></div>
-      </div> */}
-
+    <section className="relative bg-gradient-to-br from-gray-50 via-white to-red-50 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 py-4 md:py-8 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div
-            className={`text-center  hidden lg:block ${
-              language === "ar" ? "lg:text-right" : "lg:text-left"
-            }`}
+        {/* Mobile Layout - Content on top of image */}
+        <div className="block lg:hidden max-h-[70vh] min-h-[500px] mx-auto">
+          <Swiper
+            modules={[Autoplay, Pagination, EffectFade]}
+            effect="fade"
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet !bg-white !opacity-60",
+              bulletActiveClass:
+                "swiper-pagination-bullet-active !bg-white !opacity-100",
+            }}
+            loop={true}
+            className="relative rounded-2xl overflow-hidden shadow-2xl"
           >
-            <div className="mb-6">
-              <span className="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-red-800 text-sm font-medium mb-4">
-                <Star className="h-4 w-4 mr-2" />
-                {language === "ar" ? "الأفضل في الإمارات" : "Best in UAE"}
-              </span>
+            {heroSlides.map((slide) => (
+              <SwiperSlide key={slide.id}>
+                <div className="relative h-[70vh] min-h-[500px]">
+                  {/* Background Image */}
+                  <Image
+                    src={slide.image}
+                    alt="Nissan Patrol Parts"
+                    fill
+                    className="object-cover"
+                    priority={slide.id === 1}
+                  />
 
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                <span className="text-red-600">KING ROAD</span>
-                <br />
-                <span className="text-gray-700">
-                  {language === "ar" ? "قطع غيار السيارات" : "Car Spare Parts"}
-                </span>
-              </h1>
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div>
 
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                {language === "ar"
-                  ? "أفضل قطع الغيار الأصلية لسيارات نيسان باترول في أم القيوين. جودة عالية وأسعار منافسة."
-                  : "Premium original spare parts for Nissan Patrol in Umm Al Quwain. High quality and competitive prices."}
-              </p>
-            </div>
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
+                    {/* Badge */}
+                    <span className="inline-flex items-center px-4 py-2 rounded-full bg-red-600/90 text-white text-sm font-medium mb-4 backdrop-blur-sm">
+                      <Star className="h-4 w-4 mr-2" />
+                      {slide.badge}
+                    </span>
+
+                    {/* Title */}
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                      <span className="text-red-400">KING ROAD</span>
+                      <br />
+                      <span>{slide.title}</span>
+                    </h1>
+
+                    {/* Subtitle */}
+                    <p className="text-lg text-white/90 mb-8 leading-relaxed max-w-md">
+                      {slide.subtitle}
+                    </p>
+
+                    {/* CTA Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Button
+                        size="lg"
+                        className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                        onClick={() => router.push("/product")}
+                      >
+                        {language === "ar" ? "تسوق الآن" : "Shop Now"}
+                        {language === "ar" ? (
+                          <ArrowLeft className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                        ) : (
+                          <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                        )}
+                      </Button>
+
+                      <Link href="/track-order">
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          className="border-2 border-white/50 text-white hover:bg-white hover:text-gray-900 px-8 py-4 text-lg rounded-full transition-all duration-300 backdrop-blur-sm"
+                        >
+                          {language === "ar" ? "تتبع الطلب" : "Track Order"}
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Floating Logo */}
+                  <div className="absolute bottom-4 right-4 w-16 h-16 z-10">
+                    <div className="w-full h-full bg-white rounded-full shadow-xl p-2 border-2 border-red-100">
+                      <Image
+                        src="/assets/images/logo.png"
+                        alt="King Road Logo"
+                        fill
+                        className="object-contain p-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          {/* Mobile Features */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm"
+              >
+                <feature.icon className="h-8 w-8 text-red-600" />
+                <div>
+                  <h3 className="font-semibold text-gray-900">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">{feature.subtitle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Layout - Side by side */}
+        <div className="hidden lg:grid grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <div className={`${language === "ar" ? "text-right" : "text-left"}`}>
+            <Swiper
+              modules={[Autoplay]}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              className="h-full"
+            >
+              {heroSlides.map((slide) => (
+                <SwiperSlide key={slide.id}>
+                  <div className="mb-6">
+                    <span className="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-red-800 text-sm font-medium mb-4">
+                      <Star className="h-4 w-4 mr-2" />
+                      {slide.badge}
+                    </span>
+
+                    <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                      <span className="text-red-600">KING ROAD</span>
+                      <br />
+                      <span className="text-gray-700">{slide.title}</span>
+                    </h1>
+
+                    <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                      {slide.subtitle}
+                    </p>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
             {/* Features */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-              <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
-                <Shield className="h-8 w-8 text-red-600" />
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {language === "ar" ? "ضمان الجودة" : "Quality Assured"}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {language === "ar" ? "قطع أصلية" : "Original Parts"}
-                  </p>
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm"
+                >
+                  <feature.icon className="h-8 w-8 text-red-600" />
+                  <div>
+                    <h3 className="font-semibold text-gray-900">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">{feature.subtitle}</p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
-                <Truck className="h-8 w-8 text-red-600" />
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {language === "ar" ? "توصيل سريع" : "Fast Delivery"}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {language === "ar" ? "خلال يومين" : "Within 2 Days"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
-                <Star className="h-8 w-8 text-red-600" />
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {language === "ar" ? "خبرة 20 سنة" : "20 Years Experience"}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {language === "ar" ? "موثوق" : "Trusted"}
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start ">
+            <div className="flex flex-col sm:flex-row gap-4 justify-start">
               <Button
                 size="lg"
                 className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
@@ -113,58 +268,72 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right Content - Hero Image */}
+          {/* Right Content - Hero Image Slider */}
           <div className="relative">
-            <div className="relative w-full h-[300px] lg:h-[600px]">
-              {/* Main Hero Image */}
-              <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
+            <Swiper
+              modules={[Autoplay, Pagination, EffectFade]}
+              effect="fade"
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                clickable: true,
+                bulletClass: "swiper-pagination-bullet !bg-red-600",
+                bulletActiveClass:
+                  "swiper-pagination-bullet-active !bg-red-700",
+              }}
+              loop={true}
+              className="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl"
+            >
+              {heroSlides.map((slide) => (
+                <SwiperSlide key={slide.id}>
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={slide.image}
+                      alt="Nissan Patrol Parts"
+                      fill
+                      className="object-contain scale-110"
+                      priority={slide.id === 1}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="text-white/70 text-4xl md:text-8xl font-bold tracking-wider transform rotate-12">
+                        {language === "ar" ? "كينج رود" : "KING ROAD"}
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* Floating Logo */}
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 z-10">
+              <div className="w-full h-full bg-white rounded-full shadow-xl p-4 border-4 border-red-100">
                 <Image
-                  src="/assets/images/hero.jpg"
-                  alt="Nissan Patrol Parts"
+                  src="/assets/images/logo.png"
+                  alt="King Road Logo"
                   fill
-                  className="object-contain scale-110"
-                  priority
+                  className="object-contain p-2"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="text-white/70 text-4xl md:text-8xl font-bold tracking-wider transform rotate-12">
-                    {language === "ar" ? "كينج رود" : "KING ROAD"}
-                  </div>
+              </div>
+            </div>
+
+            {/* Floating Stats */}
+            <div className="absolute top-6 -left-6 bg-white rounded-xl z-10 shadow-lg p-4 border border-gray-100">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-red-600">500+</div>
+                <div className="text-sm text-gray-600">
+                  {language === "ar" ? "منتج" : "Products"}
                 </div>
               </div>
+            </div>
 
-              {/* Floating Logo */}
-              <div className="absolute -bottom-2 md:-bottom-6 -right-6 w-24 h-24 lg:w-32 lg:h-32 z-10">
-                <div className="w-full h-full bg-white rounded-full shadow-xl p-4 border-4 border-red-100">
-                  <Image
-                    src="/assets/images/logo.png"
-                    alt="King Road Logo"
-                    fill
-                    className="object-contain p-2"
-                  />
-                </div>
-              </div>
-
-              {/* Floating Stats */}
-              <div className="absolute top-6 -left-6 bg-white rounded-xl shadow-lg p-2 lg:p-4 border border-gray-100">
-                <div className="text-center">
-                  <div className="text-lg lg:text-2xl font-bold text-red-600">
-                    500+
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {language === "ar" ? "منتج" : "Products"}
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute bottom-5 md:bottom-20 -left-6 bg-white rounded-xl shadow-lg p-2 lg:p-4 border border-gray-100">
-                <div className="text-center">
-                  <div className="text-lg lg:text-2xl font-bold text-red-600">
-                    1000+
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {language === "ar" ? "عميل راضي" : "Happy Customers"}
-                  </div>
+            <div className="absolute bottom-20 -left-6 bg-white rounded-xl z-10 shadow-lg p-4 border border-gray-100">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-red-600">1000+</div>
+                <div className="text-sm text-gray-600">
+                  {language === "ar" ? "عميل راضي" : "Happy Customers"}
                 </div>
               </div>
             </div>
@@ -185,6 +354,25 @@ export function HeroSection() {
           />
         </svg>
       </div>
+
+      {/* Custom Swiper Styles */}
+      <style jsx global>{`
+        .swiper-pagination {
+          bottom: 20px !important;
+        }
+
+        .swiper-pagination-bullet {
+          width: 12px !important;
+          height: 12px !important;
+          margin: 0 6px !important;
+        }
+
+        @media (max-width: 1024px) {
+          .swiper-pagination {
+            bottom: 100px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

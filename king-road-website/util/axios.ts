@@ -152,4 +152,7 @@ export const endpoints = {
     profile: "/api/v1/user/profile",
     refresh: "/api/v1/auth/refresh",
   },
+  slider: {
+    list: "/api/v1/sliders",
+  },
 };

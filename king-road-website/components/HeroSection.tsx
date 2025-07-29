@@ -69,54 +69,64 @@ export function HeroSection() {
           >
             {/* Slides Loading skeleton */}
 
-            {sliderList.map((slide: any) => (
-              <SwiperSlide key={slide.id}>
-                <div className="relative h-[30vh] ">
-                  {/* Background Image */}
-                  <Image
-                    src={slide.image}
-                    alt="Nissan Patrol Parts"
-                    fill
-                    className="object-contain"
-                    priority={slide.id === 1}
-                  />
+            {sliderList.map((slide: any) => {
+              const cleanImageUrl = slide?.image?.includes("assets/images/")
+                ? slide.image.replace("http://localhost:8000", "")
+                : slide?.image || "/assets/images/hero/1.jpg";
 
-                  {/* Overlay */}
-                  {/* <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div> */}
+              return (
+                <SwiperSlide key={slide.id}>
+                  <div className="relative h-[30vh] ">
+                    {/* Background Image */}
+                    <Image
+                      src={cleanImageUrl}
+                      alt="Nissan Patrol Parts"
+                      fill
+                      className="object-contain"
+                      priority={slide.id === 1}
+                    />
 
-                  {/* Content Overlay */}
-                  <div className="  absolute inset-0  flex flex-col justify-center items-center text-center m-12 rounded-md backdrop-blur-sm bg-gradient-to-b from-black/30 via-black/20 to-black/10 ">
-                    {/* Title */}
-                    <h1 className="text-2xl md:text-4xl font-bold text-white mb-1 leading-tight">
-                      {/* <span className="text-red-400">KING ROAD</span> */}
-                      <br />
-                      <span className="text-white text-2xl">
-                        {language === "ar" ? slide.title_ar : slide.title_en}
-                      </span>
-                    </h1>
+                    {/* Overlay */}
+                    {/* <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div> */}
 
-                    {/* Subtitle */}
-                    <p className="text-md text-white/90 mb-8 leading-relaxed max-w-md">
-                      {language === "ar"
-                        ? slide.description_ar
-                        : slide.description_en}
-                    </p>
-                  </div>
+                    {/* Content Overlay */}
+                    {(slide.title_ar || slide.title_en) && (
+                      <div className="  absolute inset-0  flex flex-col justify-center items-center text-center m-12 rounded-md backdrop-blur-sm bg-gradient-to-b from-black/30 via-black/20 to-black/10 ">
+                        {/* Title */}
+                        <h1 className="text-2xl md:text-4xl font-bold text-white mb-1 leading-tight">
+                          {/* <span className="text-red-400">KING ROAD</span> */}
+                          <br />
+                          <span className="text-white text-2xl">
+                            {language === "ar"
+                              ? slide.title_ar
+                              : slide.title_en}
+                          </span>
+                        </h1>
 
-                  {/* Floating Logo */}
-                  <div className="absolute bottom-0 right-4 w-16 h-16 z-10">
-                    <div className="w-full h-full bg-white rounded-full shadow-xl p-2 border-2 border-red-100">
-                      <Image
-                        src="/assets/images/logo.png"
-                        alt="King Road Logo"
-                        fill
-                        className="object-contain p-1"
-                      />
+                        {/* Subtitle */}
+                        <p className="text-md text-white/90 mb-8 leading-relaxed max-w-md">
+                          {language === "ar"
+                            ? slide.description_ar
+                            : slide.description_en}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Floating Logo */}
+                    <div className="absolute bottom-0 right-4 w-16 h-16 z-10">
+                      <div className="w-full h-full bg-white rounded-full shadow-xl p-2 border-2 border-red-100">
+                        <Image
+                          src="/assets/images/logo.png"
+                          alt="King Road Logo"
+                          fill
+                          className="object-contain p-1"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
 
@@ -236,25 +246,30 @@ export function HeroSection() {
                 loop={true}
                 className="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl"
               >
-                {sliderList.map((slide: any) => (
-                  <SwiperSlide key={slide.id}>
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={slide.image}
-                        alt="Nissan Patrol Parts"
-                        fill
-                        className="object-contain scale-110"
-                        priority={slide.id === 1}
-                      />
-                      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div> */}
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="text-white/70 text-4xl md:text-8xl font-bold tracking-wider transform rotate-12">
-                          {language === "ar" ? "كينج رود" : "KING ROAD"}
+                {sliderList.map((slide: any) => {
+                  const cleanImageUrl = slide?.image?.includes("assets/images/")
+                    ? slide.image.replace("http://localhost:8000", "")
+                    : slide?.image || "/assets/images/hero/1.jpg";
+                  return (
+                    <SwiperSlide key={slide.id}>
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={cleanImageUrl}
+                          alt="Nissan Patrol Parts"
+                          fill
+                          className="object-contain scale-110"
+                          priority={slide.id === 1}
+                        />
+                        {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div> */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <div className="text-white/70 text-4xl md:text-8xl font-bold tracking-wider transform rotate-12">
+                            {language === "ar" ? "كينج رود" : "KING ROAD"}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
 
               {/* Floating Logo */}

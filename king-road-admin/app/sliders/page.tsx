@@ -276,7 +276,7 @@ export default function SlidersPage() {
                             {slider.id}
                           </TableCell>
                           <TableCell>
-                            <Avatar className="h-16 w-16 rounded-lg shadow-sm">
+                            <Avatar className="h-16 w-24 rounded-lg shadow-sm">
                               <AvatarImage
                                 src={cleanImageUrl}
                                 alt={slider?.title_en}

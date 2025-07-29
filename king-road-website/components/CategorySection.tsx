@@ -50,32 +50,39 @@ export function CategorySection() {
             </>
           )}
           {filteredCategoriesWithNoParent.map(
-            (category: any, index: number) => (
-              <Link key={index} href={`/category/${category.id}`}>
-                <div className="bg-white cursor-pointer hover:shadow-xl rounded-xl transition-all duration-300 border border-gray-200 group hover:-translate-y-2">
-                  <div className="relative aspect-[4/3] overflow-hidden mb-4 rounded-t-xl">
-                    <Image
-                      src={category?.image ?? "/assets/images/hero.jpg"}
-                      alt={category.name_en}
-                      fill
-                      className="object-contain group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
+            (category: any, index: number) => {
+              const cleanImageUrl = category?.image?.includes("assets/images/")
+                ? category.image.replace("http://localhost:8000", "")
+                : category?.image || "/assets/images/hero/1.jpg";
+              return (
+                <Link key={index} href={`/category/${category.id}`}>
+                  <div className="bg-white cursor-pointer hover:shadow-xl rounded-xl transition-all duration-300 border border-gray-200 group hover:-translate-y-2">
+                    <div className="relative aspect-[4/3] overflow-hidden mb-4 rounded-t-xl">
+                      <Image
+                        src={cleanImageUrl ?? "/assets/images/hero.jpg"}
+                        alt={category.name_en}
+                        fill
+                        className="object-contain group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
 
-                  <div className="text-center p-2 pb-6 md:p-4 lg:p-6">
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
-                      {language === "ar" ? category.name_ar : category.name_en}
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed truncate">
-                      {language === "ar"
-                        ? category.description_ar
-                        : category.description_en}
-                    </p>
+                    <div className="text-center p-2 pb-6 md:p-4 lg:p-6">
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
+                        {language === "ar"
+                          ? category.name_ar
+                          : category.name_en}
+                      </h3>
+                      <p className="text-sm text-gray-600 leading-relaxed truncate">
+                        {language === "ar"
+                          ? category.description_ar
+                          : category.description_en}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            )
+                </Link>
+              );
+            }
           )}
         </div>
 

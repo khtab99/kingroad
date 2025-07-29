@@ -58,7 +58,7 @@ export function VendorSidebar() {
     },
     {
       title: "Slider",
-      href: "/slider",
+      href: "/sliders",
       icon: SlidersHorizontalIcon,
       badge: null,
     },

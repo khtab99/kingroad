@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdminLayout } from "@/components/layout/admin-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -107,6 +107,15 @@ export default function SlidersPage() {
     setIsDialogOpen(true);
   };
 
+  // This effect sets image preview or File object conditionally
+  useEffect(() => {
+    if (currentSlider && typeof currentSlider.image === "string") {
+      // Optional: fetch and convert to File if needed
+      // For preview only (not File object)
+      form.setValue("image", currentSlider.image);
+    }
+  }, [currentSlider]);
+
   const handleDelete = async (id: number) => {
     try {
       const res = await deleteSlider(id);
@@ -141,6 +150,7 @@ export default function SlidersPage() {
       if (data.image && data.image instanceof File) {
         formData.append("image", data.image);
       }
+      console.log(data);
 
       let res;
       if (currentSlider) {

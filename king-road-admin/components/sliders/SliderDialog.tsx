@@ -72,8 +72,6 @@ export function SliderDialog({
 }: SliderDialogProps) {
   const [imagePreview, setImagePreview] = useState<any>(currentSlider?.image);
 
-  console.log(imagePreview);
-
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     fieldChange: (value: File | null) => void

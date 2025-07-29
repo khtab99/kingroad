@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\AdminReviewController;
 use App\Http\Controllers\Api\Admin\AdminCouponController;
 use App\Http\Controllers\Api\Admin\AdminAnalyticsController;
 use App\Http\Controllers\Api\Admin\AdminSettingController;
+use App\Http\Controllers\Api\Admin\AdminSliderController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
 
 // Admin routes
@@ -79,6 +80,15 @@ Route::prefix('v1/admin')->group(function () {
             // Route::get('/{user}/reviews', [AdminCustomerController::class, 'reviews']);
             // Route::post('/{user}/send-email', [AdminCustomerController::class, 'sendEmail']);
             // Route::get('/export', [AdminCustomerController::class, 'export']);
+        });
+
+        //Slider management
+        Route::prefix('sliders')->group(function (): void {
+            Route::get('/', [AdminSliderController::class, 'index']);
+            Route::post('/', [AdminSliderController::class, 'store']);
+            Route::get('/{slider}', [AdminSliderController::class, 'show']);
+            Route::put('/{slider}', [AdminSliderController::class, 'update']);
+            Route::delete('/{slider}', [AdminSliderController::class, 'destroy']);
         });
 
         // Reviews management

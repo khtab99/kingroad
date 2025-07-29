@@ -86,9 +86,9 @@ Route::prefix('v1/admin')->group(function () {
         Route::prefix('sliders')->group(function (): void {
             Route::get('/', [AdminSliderController::class, 'index']);
             Route::post('/', [AdminSliderController::class, 'store']);
-            Route::get('/{slider}', [AdminSliderController::class, 'show']);
-            Route::put('/{slider}', [AdminSliderController::class, 'update']);
-            Route::delete('/{slider}', [AdminSliderController::class, 'destroy']);
+            Route::get('/{id}', [AdminSliderController::class, 'show']);
+            Route::put('/{id}', [AdminSliderController::class, 'update']);
+            Route::delete('/{id}', [AdminSliderController::class, 'destroy']);
         });
 
         // Reviews management

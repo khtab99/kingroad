@@ -106,18 +106,12 @@ export function HeroSection() {
                   {/* <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div> */}
 
                   {/* Content Overlay */}
-                  <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-3 ">
-                    {/* Badge */}
-                    {/* <span className="inline-flex items-center px-4 py-2 rounded-full bg-red-600/90 text-white text-sm font-medium mb-4 backdrop-blur-sm">
-                      <Star className="h-4 w-4 mr-2" />
-                      {slide.badge}
-                    </span> */}
-
+                  <div className="  absolute inset-0  flex flex-col justify-center items-center text-center m-12 rounded-md backdrop-blur-sm bg-gradient-to-b from-black/30 via-black/20 to-black/10 ">
                     {/* Title */}
                     <h1 className="text-2xl md:text-4xl font-bold text-white mb-1 leading-tight">
                       {/* <span className="text-red-400">KING ROAD</span> */}
                       <br />
-                      <span className="text-white text-3xl">{slide.title}</span>
+                      <span className="text-white text-2xl">{slide.title}</span>
                     </h1>
 
                     {/* Subtitle */}

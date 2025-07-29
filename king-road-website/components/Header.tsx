@@ -147,13 +147,15 @@ export function Header() {
           </div>
           <div className="lg:hidden flex-shrink-0">
             {" "}
-            <Image
-              src="/assets/images/logo.png"
-              alt="King Road Logo"
-              width={55}
-              height={55}
-              className="object-contain p-2"
-            />
+            <Link href="/">
+              <Image
+                src="/assets/images/logo.png"
+                alt="King Road Logo"
+                width={55}
+                height={55}
+                className="object-contain p-2"
+              />
+            </Link>
           </div>
 
           <div className="flex items-center gap-2"></div>

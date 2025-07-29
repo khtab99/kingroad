@@ -44,6 +44,11 @@ function LanguageToggle() {
   const language = useStore((s) => s.language);
   const toggleLanguage = useStore((s) => s.toggleLanguage);
 
+  const handleToggleLanguage = () => {
+    toggleLanguage();
+    window.location.reload();
+  };
+
   const nextLanguage = language === "en" ? "AR" : "EN";
 
   return (
@@ -51,7 +56,7 @@ function LanguageToggle() {
       <Tooltip>
         <TooltipContent>{`Switch to ${nextLanguage}`}</TooltipContent>
         <button
-          onClick={toggleLanguage}
+          onClick={handleToggleLanguage}
           aria-label="Toggle language"
           className="flex items-center gap-1 px-2 py-1 rounded-full bg-gray-600 text-white hover:bg-red-100 hover:text-red-600 transition-colors duration-200"
         >

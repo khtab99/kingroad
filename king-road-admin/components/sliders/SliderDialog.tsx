@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImageIcon, X } from "lucide-react";
 
 // Slider data interface
@@ -70,9 +70,9 @@ export function SliderDialog({
   isEditing,
   currentSlider,
 }: SliderDialogProps) {
-  const [imagePreview, setImagePreview] = useState<string | null>(
-    currentSlider?.image || null
-  );
+  const [imagePreview, setImagePreview] = useState<any>(currentSlider?.image);
+
+  console.log(imagePreview);
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -106,6 +106,14 @@ export function SliderDialog({
       setImagePreview(null);
     }
   };
+
+  useEffect(() => {
+    if (isEditing && currentSlider?.image) {
+      setImagePreview(currentSlider.image);
+    } else {
+      setImagePreview(null);
+    }
+  }, [isEditing, currentSlider]);
 
   const removeImage = (fieldChange: (value: null) => void) => {
     fieldChange(null);
@@ -271,6 +279,7 @@ export function SliderDialog({
                             type="file"
                             accept="image/*"
                             className="focus-visible:ring-1 cursor-pointer file:cursor-pointer"
+                            // value={isEditing ? currentSlider?.image : ""}
                             onChange={(e) =>
                               handleFileChange(e, field.onChange)
                             }

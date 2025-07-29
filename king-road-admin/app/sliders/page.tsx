@@ -52,13 +52,15 @@ const sliderSchema = z.object({
   description_ar: z.string(),
   status: z.enum(["active", "inactive"]).default("active"),
   image: z
-    .any()
-    .refine(
-      (file) => file instanceof File || (file && file[0] instanceof File),
-      {
-        message: "Image is required",
-      }
-    ),
+    .union([
+      z.custom<File>((file) => file instanceof File, {
+        message: "Image must be a File",
+      }),
+      z.string().url(), // This allows existing image URLs
+    ])
+    .refine((val) => val, {
+      message: "Image is required",
+    }),
 });
 
 type SliderFormData = z.infer<typeof sliderSchema>;
@@ -67,8 +69,8 @@ export default function SlidersPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedSlider, setSelectedSlider] = useState<number | null>(null);
-  const [currentSlider, setCurrentSlider] = useState<SliderData | null>(null);
+  const [selectedSlider, setSelectedSlider] = useState<any>();
+  const [currentSlider, setCurrentSlider] = useState<any>();
 
   const {
     sliderList,
@@ -78,21 +80,21 @@ export default function SlidersPage() {
     revalidateSlider,
   } = useGetSliderList();
 
-  const form = useForm<SliderFormData>({
+  const form = useForm<any>({
     resolver: zodResolver(sliderSchema),
     defaultValues: {
       title_en: "",
       title_ar: "",
       description_en: "",
       description_ar: "",
-      status: "active",
+      status: "",
       image: null,
     },
   });
 
   // Filter sliders based on search term
 
-  const handleEdit = (slider: SliderData) => {
+  const handleEdit = (slider: any) => {
     setCurrentSlider(slider);
     form.reset({
       title_en: slider.title_en ?? "",
@@ -100,7 +102,7 @@ export default function SlidersPage() {
       description_en: slider.description_en ?? "",
       description_ar: slider.description_ar ?? "",
       status: slider.status ?? "active",
-      image: null, // Reset image field for editing
+      image: slider.image ?? null,
     });
     setIsDialogOpen(true);
   };
@@ -143,7 +145,7 @@ export default function SlidersPage() {
       let res;
       if (currentSlider) {
         // For updates, you might need to add a method field for Laravel
-        formData.append("_method", "PUT");
+        // formData.append("_method", "PUT");
         res = await updateSlider(formData, currentSlider.id);
       } else {
         res = await createNewSlider(formData);

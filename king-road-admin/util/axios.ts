@@ -180,4 +180,11 @@ export const endpoints = {
     update: "/api/v1/admin/customers/",
     delete: "/api/v1/admin/customers/",
   },
+  slider: {
+    list: "/api/v1/admin/sliders",
+    details: "/api/v1/admin/sliders/",
+    create: "/api/v1/admin/sliders",
+    update: "/api/v1/admin/sliders/",
+    delete: "/api/v1/admin/sliders/",
+  },
 };

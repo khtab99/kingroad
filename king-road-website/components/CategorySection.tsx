@@ -29,7 +29,7 @@ export function CategorySection() {
   );
 
   return (
-    <section className="bg-gray-100/50 py-6 md:py-12 lg:py-20">
+    <section className="bg-white py-4 md:py-12 lg:py-20 p">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-4 md:mb-8 lg:mb-12">
           <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 md:mb-4">
@@ -42,7 +42,7 @@ export function CategorySection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 ">
+        <div className="grid grid-cols-2 gap-2 md:gap-4 md:gap-6 mb-4 md:mb-8 ">
           {superCategoryLoading && (
             <>
               <Skeleton className="aspect-[4/3] w-full" />{" "}
@@ -58,16 +58,16 @@ export function CategorySection() {
                       src={category?.image ?? "/assets/images/hero.jpg"}
                       alt={category.name_en}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="object-contain group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
 
-                  <div className="text-center p-6">
+                  <div className="text-center p-2 pb-6 md:p-4 lg:p-6">
                     <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
                       {language === "ar" ? category.name_ar : category.name_en}
                     </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-sm text-gray-600 leading-relaxed truncate">
                       {language === "ar"
                         ? category.description_ar
                         : category.description_en}
@@ -83,8 +83,8 @@ export function CategorySection() {
         <div className="text-center">
           <Link href="/product">
             <Button
-              size="lg"
-              className="bg-red-600 hover:bg-red-700 text-white px-16 py-6 text-lg rounded-full font-semibold w-full md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 group"
+              size="sm"
+              className="bg-red-600 hover:bg-red-700 text-white px-16 py-6 text-lg rounded-full font-semibold w-3/4  md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 group"
             >
               {language === "ar" ? "ابدأ الطلب" : "Start Ordering"}
               {language === "ar" ? (

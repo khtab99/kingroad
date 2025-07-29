@@ -3,8 +3,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAdminAuth } from "@/contexts/admin-auth-context";
-import { AdminHeader } from "./admin-header";
-import { AdminSidebar } from "./admin-sidebar";
 import { Loader2 } from "lucide-react";
 import { VendorHeader } from "./vendor-header";
 import { VendorSidebar } from "./vendor-sidebar";

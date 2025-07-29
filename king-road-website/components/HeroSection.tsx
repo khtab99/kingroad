@@ -82,11 +82,11 @@ export function HeroSection() {
               delay: 4000,
               disableOnInteraction: false,
             }}
-            // pagination={{
-            //   clickable: true,
-            //   bulletClass: "swiper-pagination-bullet !bg-red-600 ",
-            //   bulletActiveClass: "swiper-pagination-bullet-active !bg-red-700",
-            // }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet !bg-red-600 ",
+              bulletActiveClass: "swiper-pagination-bullet-active !bg-red-700",
+            }}
             loop={true}
             className="relative rounded-sm  md:rounded-2xl overflow-hidden shadow-2xl"
           >
@@ -295,7 +295,7 @@ export function HeroSection() {
                       className="object-contain scale-110"
                       priority={slide.id === 1}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div> */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                       <div className="text-white/70 text-4xl md:text-8xl font-bold tracking-wider transform rotate-12">
                         {language === "ar" ? "كينج رود" : "KING ROAD"}
@@ -353,25 +353,6 @@ export function HeroSection() {
           />
         </svg>
       </div>
-
-      {/* Custom Swiper Styles */}
-      <style jsx global>{`
-        .swiper-pagination {
-          bottom: 20px !important;
-        }
-
-        .swiper-pagination-bullet {
-          width: 12px !important;
-          height: 12px !important;
-          margin: 0 6px !important;
-        }
-
-        @media (max-width: 1024px) {
-          .swiper-pagination {
-            bottom: 100px !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

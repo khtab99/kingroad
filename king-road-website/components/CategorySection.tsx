@@ -29,13 +29,13 @@ export function CategorySection() {
   );
 
   return (
-    <section className="bg-white py-6 md:py-12 lg:py-20">
+    <section className="bg-gray-100/50 py-6 md:py-12 lg:py-20">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-4 md:mb-8 lg:mb-12">
+          <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 md:mb-4">
             {language === "ar" ? "تسوق حسب الفئة" : "Shop by Category"}
           </h2>
-          <p className="text-md md:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-sm md:text-lg lg:text-xl text-gray-600  mx-auto w-2/3">
             {language === "ar"
               ? "اكتشف مجموعتنا الواسعة من قطع غيار نيسان باترول الأصلية"
               : "Discover our wide range of original Nissan Patrol spare parts"}

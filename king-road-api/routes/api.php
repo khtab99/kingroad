@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SliderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
@@ -65,6 +66,12 @@ Route::prefix('v1')->group(function () {
     });
    // Payment webhook
     Route::post('/webhook/stripe', [PaymentController::class, 'handleWebhook']);
+
+    //slider
+
+    Route::prefix('sliders')->group(function () {
+   Route::get('/', [SliderController::class, 'index']);
+    });
 
 });
 

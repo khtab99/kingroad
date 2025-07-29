@@ -79,23 +79,31 @@ export function SliderDialog({
     fieldChange: (value: File | null) => void
   ) => {
     e.preventDefault();
-    const fileReader = new FileReader();
 
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      fieldChange(file);
 
+      // Validate file type
       if (!file.type.includes("image")) {
         setImagePreview(null);
+        fieldChange(null);
         return;
       }
 
-      fileReader.onload = async (event) => {
+      // Set the actual File object for form submission
+      fieldChange(file);
+
+      // Create preview URL for display
+      const fileReader = new FileReader();
+      fileReader.onload = (event) => {
         const imageDataUrl = event.target?.result?.toString() || "";
         setImagePreview(imageDataUrl);
       };
-
       fileReader.readAsDataURL(file);
+    } else {
+      // Clear everything if no file selected
+      fieldChange(null);
+      setImagePreview(null);
     }
   };
 
@@ -150,7 +158,7 @@ export function SliderDialog({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-sm font-medium">
-                        English Title*
+                        English Title
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -170,7 +178,7 @@ export function SliderDialog({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-sm font-medium">
-                        English Description*
+                        English Description
                       </FormLabel>
                       <FormControl>
                         <Textarea
@@ -200,7 +208,7 @@ export function SliderDialog({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-sm font-medium">
-                        Arabic Title*
+                        Arabic Title
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -221,7 +229,7 @@ export function SliderDialog({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-sm font-medium">
-                        Arabic Description*
+                        Arabic Description
                       </FormLabel>
                       <FormControl>
                         <Textarea
@@ -253,7 +261,7 @@ export function SliderDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-medium">
-                      Hero Image {!isEditing && "*"}
+                      Hero Image*
                     </FormLabel>
                     <FormControl>
                       <div className="space-y-4">
@@ -297,8 +305,13 @@ export function SliderDialog({
                               </div>
                             </div>
                             <p className="text-xs text-muted-foreground mt-2">
-                              Recommended: 1920x1080px or larger for best
-                              quality
+                              {field.value instanceof File
+                                ? `Selected: ${field.value.name} (${(
+                                    field.value.size /
+                                    1024 /
+                                    1024
+                                  ).toFixed(2)} MB)`
+                                : "Current image"}
                             </p>
                           </div>
                         )}

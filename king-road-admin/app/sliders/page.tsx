@@ -46,12 +46,19 @@ interface SliderData {
 
 // Define validation schema for slider
 const sliderSchema = z.object({
-  title_en: z.string().min(1, "English title is required").max(255),
-  title_ar: z.string().min(1, "Arabic title is required").max(255),
-  description_en: z.string().min(1, "English description is required"),
-  description_ar: z.string().min(1, "Arabic description is required"),
+  title_en: z.string(),
+  title_ar: z.string(),
+  description_en: z.string(),
+  description_ar: z.string(),
   status: z.enum(["active", "inactive"]).default("active"),
-  image: z.any().nullable(), // For file uploads
+  image: z
+    .any()
+    .refine(
+      (file) => file instanceof File || (file && file[0] instanceof File),
+      {
+        message: "Image is required",
+      }
+    ),
 });
 
 type SliderFormData = z.infer<typeof sliderSchema>;
@@ -63,7 +70,6 @@ export default function SlidersPage() {
   const [selectedSlider, setSelectedSlider] = useState<number | null>(null);
   const [currentSlider, setCurrentSlider] = useState<SliderData | null>(null);
 
-  const { token } = useAdminAuth();
   const {
     sliderList,
     sliderLoading,
@@ -85,22 +91,15 @@ export default function SlidersPage() {
   });
 
   // Filter sliders based on search term
-  const filteredSliders = sliderList.filter(
-    (slider: SliderData) =>
-      slider.title_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      slider.title_ar.includes(searchTerm) ||
-      slider.description_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      slider.description_ar.includes(searchTerm)
-  );
 
   const handleEdit = (slider: SliderData) => {
     setCurrentSlider(slider);
     form.reset({
-      title_en: slider.title_en,
-      title_ar: slider.title_ar,
-      description_en: slider.description_en,
-      description_ar: slider.description_ar,
-      status: slider.status,
+      title_en: slider.title_en ?? "",
+      title_ar: slider.title_ar ?? "",
+      description_en: slider.description_en ?? "",
+      description_ar: slider.description_ar ?? "",
+      status: slider.status ?? "active",
       image: null, // Reset image field for editing
     });
     setIsDialogOpen(true);
@@ -126,11 +125,28 @@ export default function SlidersPage() {
 
   const onSubmit = async (data: SliderFormData) => {
     try {
+      // Create FormData object for file upload
+      const formData = new FormData();
+
+      // Append text fields
+      formData.append("title_en", data.title_en ?? "");
+      formData.append("title_ar", data.title_ar ?? "");
+      formData.append("description_en", data.description_en ?? "");
+      formData.append("description_ar", data.description_ar ?? "");
+      formData.append("status", data.status);
+
+      // Append image file if it exists and is a File object
+      if (data.image && data.image instanceof File) {
+        formData.append("image", data.image);
+      }
+
       let res;
       if (currentSlider) {
-        res = await updateSlider(data, currentSlider.id);
+        // For updates, you might need to add a method field for Laravel
+        formData.append("_method", "PUT");
+        res = await updateSlider(formData, currentSlider.id);
       } else {
-        res = await createNewSlider(data);
+        res = await createNewSlider(formData);
       }
 
       console.log(res);
@@ -151,7 +167,6 @@ export default function SlidersPage() {
       toast.error("Something went wrong");
     }
   };
-
   const handleAddNew = () => {
     setCurrentSlider(null);
     form.reset({
@@ -203,7 +218,7 @@ export default function SlidersPage() {
                 />
               </div>
               <div className="text-sm text-muted-foreground">
-                {filteredSliders.length} of {sliderList.length} sliders
+                {sliderList?.length} of {sliderList?.length} sliders
               </div>
             </div>
 
@@ -239,7 +254,7 @@ export default function SlidersPage() {
                         Error loading sliders: {sliderError}
                       </TableCell>
                     </TableRow>
-                  ) : filteredSliders.length === 0 ? (
+                  ) : sliderList?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={7} className="text-center py-8">
                         {searchTerm
@@ -248,99 +263,104 @@ export default function SlidersPage() {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    filteredSliders.map((slider: SliderData) => (
-                      <TableRow key={slider.id} className="hover:bg-muted/50">
-                        <TableCell className="font-medium">
-                          {slider.id}
-                        </TableCell>
-                        <TableCell>
-                          <Avatar className="h-16 w-16 rounded-lg shadow-sm">
-                            <AvatarImage
-                              src={slider.image}
-                              alt={slider.title_en}
-                              className="object-cover"
-                            />
-                            <AvatarFallback className="rounded-lg">
-                              {slider.title_en
-                                .split(" ")
-                                .map((word: string) => word[0])
-                                .join("")
-                                .toUpperCase()
-                                .slice(0, 2)}
-                            </AvatarFallback>
-                          </Avatar>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="font-medium text-sm">
-                              {slider.title_en}
+                    sliderList?.map((slider: SliderData) => {
+                      const cleanImageUrl = slider?.image?.includes(
+                        "assets/images/"
+                      )
+                        ? slider.image.replace("http://localhost:8000", "")
+                        : slider?.image || "/assets/images/hero/1.jpg";
+
+                      return (
+                        <TableRow key={slider.id} className="hover:bg-muted/50">
+                          <TableCell className="font-medium">
+                            {slider.id}
+                          </TableCell>
+                          <TableCell>
+                            <Avatar className="h-16 w-16 rounded-lg shadow-sm">
+                              <AvatarImage
+                                src={cleanImageUrl}
+                                alt={slider?.title_en}
+                                className="object-cover"
+                              />
+                              <AvatarFallback>
+                                {slider?.title_en?.split(" ")[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                          </TableCell>
+                          <TableCell>
+                            <div className="space-y-1">
+                              <div className="font-medium text-sm">
+                                {slider.title_en}
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {slider.title_ar}
+                              </div>
                             </div>
-                            <div className="text-sm text-muted-foreground">
-                              {slider.title_ar}
+                          </TableCell>
+                          <TableCell>
+                            <div className="space-y-1 max-w-xs">
+                              <div
+                                className="text-sm truncate"
+                                title={slider.description_en}
+                              >
+                                {slider.description_en}
+                              </div>
+                              <div
+                                className="text-sm text-muted-foreground truncate"
+                                title={slider.description_ar}
+                              >
+                                {slider.description_ar}
+                              </div>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1 max-w-xs">
-                            <div
-                              className="text-sm truncate"
-                              title={slider.description_en}
+                          </TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                slider.status === "active"
+                                  ? "default"
+                                  : "secondary"
+                              }
+                              className={`${
+                                slider.status === "active"
+                                  ? "bg-green-500 hover:bg-green-600"
+                                  : "bg-gray-500 hover:bg-gray-600 text-gray-100"
+                              }`}
                             >
-                              {slider.description_en}
+                              {slider.status === "active"
+                                ? "Active"
+                                : "Inactive"}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-sm text-muted-foreground">
+                            {formatDate(slider.created_at)}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center space-x-1">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleEdit(slider)}
+                                title="Edit slider"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  setSelectedSlider(slider.id);
+                                  setDeleteDialogOpen(true);
+                                }}
+                                title="Delete slider"
+                                className="hover:bg-red-50 hover:border-red-200"
+                              >
+                                <Trash2 className="h-4 w-4 text-red-500" />
+                              </Button>
                             </div>
-                            <div
-                              className="text-sm text-muted-foreground truncate"
-                              title={slider.description_ar}
-                            >
-                              {slider.description_ar}
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              slider.status === "active"
-                                ? "default"
-                                : "secondary"
-                            }
-                            className={`${
-                              slider.status === "active"
-                                ? "bg-green-500 hover:bg-green-600"
-                                : "bg-gray-500 hover:bg-gray-600"
-                            }`}
-                          >
-                            {slider.status === "active" ? "Active" : "Inactive"}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {formatDate(slider.created_at)}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center space-x-1">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleEdit(slider)}
-                              title="Edit slider"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSlider(slider.id);
-                                setDeleteDialogOpen(true);
-                              }}
-                              title="Delete slider"
-                              className="hover:bg-red-50 hover:border-red-200"
-                            >
-                              <Trash2 className="h-4 w-4 text-red-500" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
                   )}
                 </TableBody>
               </Table>

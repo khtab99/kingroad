@@ -14,7 +14,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 class AdminProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request) 
     {
         $products = QueryBuilder::for(Product::class)
             ->with(['category', 'subcategory', 'sub_subcategory'])

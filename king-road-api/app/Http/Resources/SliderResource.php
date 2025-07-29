@@ -15,7 +15,7 @@ class SliderResource extends JsonResource
             "title_ar" => $this->title_ar,
             "description_en" => $this->description_en,
             "description_ar" => $this->description_ar,
-            "image" => $this->image,
+      'image' => $this->image ? url($this->image) : null,
             "status" => $this->status,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,

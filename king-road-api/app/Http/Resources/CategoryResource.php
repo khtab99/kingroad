@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'description_en' => $this->description_en,
             'description_ar' => $this->description_ar,
             'description' => $this->description, // Localized description
-            'image' => $this->image,
+            'image' => $this->image ? url($this->image) : null,
             'parent_id' => $this->parent_id,
             'sort_order' => $this->sort_order,
             'is_active' => $this->is_active,

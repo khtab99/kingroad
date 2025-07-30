@@ -572,39 +572,44 @@ export default function TrackOrderPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {selectedOrder.items.map((item) => (
-                <div key={item.id} className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-                    {item.product_image ? (
-                      <img
-                        src={item.product_image}
-                        alt={item.product_name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Package className="h-6 w-6 text-gray-400" />
-                      </div>
-                    )}
+              {selectedOrder.items.map((item: any) => {
+                const cleanImageUrl = item?.image?.includes("assets/images/")
+                  ? item.image.replace("http://localhost:8000", "")
+                  : item?.image || "/assets/images/hero/1.jpg";
+                return (
+                  <div key={item.id} className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
+                      {item.product_image ? (
+                        <img
+                          src={cleanImageUrl}
+                          alt={item.product_name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Package className="h-6 w-6 text-gray-400" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900">
+                        {item.product_name}
+                      </h4>
+                      <p className="text-sm text-gray-500">
+                        {language === "ar" ? "الرقم التسلسلي: " : "SKU: "}
+                        {item.product_sku}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {language === "ar" ? "الكمية: " : "Quantity: "}
+                        {item.quantity} × AED {item.price}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium">AED {item.total}</p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-gray-900">
-                      {item.product_name}
-                    </h4>
-                    <p className="text-sm text-gray-500">
-                      {language === "ar" ? "الرقم التسلسلي: " : "SKU: "}
-                      {item.product_sku}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      {language === "ar" ? "الكمية: " : "Quantity: "}
-                      {item.quantity} × AED {item.price}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium">AED {item.total}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </CardContent>
         </Card>

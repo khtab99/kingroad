@@ -419,38 +419,45 @@ export default function OrderDetailsPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {order?.items.map((item: any) => (
-                      <div
-                        key={item.id}
-                        className="flex items-center space-x-4 p-4 border rounded-lg"
-                      >
-                        <img
-                          src={item.product_image}
-                          alt={item.product_name}
-                          className="w-16 h-16 object-cover rounded-md"
-                        />
-                        <div className="flex-1">
-                          <h4 className="font-medium">{item.product_name}</h4>
-                          <p className="text-sm text-gray-500">
-                            SKU: {item.product_sku}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            Quantity: {item.quantity} ×{" "}
-                            {formatCurrency(item.price)}
-                          </p>
+                    {order?.items.map((item: any) => {
+                      const cleanImageUrl = item?.image?.includes(
+                        "assets/images/"
+                      )
+                        ? item.image.replace("http://localhost:8000", "")
+                        : item?.image || "/assets/images/hero/1.jpg";
+                      return (
+                        <div
+                          key={item.id}
+                          className="flex items-center space-x-4 p-4 border rounded-lg"
+                        >
+                          <img
+                            src={cleanImageUrl}
+                            alt={item.product_name}
+                            className="w-16 h-16 object-cover rounded-md"
+                          />
+                          <div className="flex-1">
+                            <h4 className="font-medium">{item.product_name}</h4>
+                            <p className="text-sm text-gray-500">
+                              SKU: {item.product_sku}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              Quantity: {item.quantity} ×{" "}
+                              {formatCurrency(item.price)}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-medium">
+                              {formatCurrency(item.total)}
+                            </p>
+                            {item.product.is_low_stock && (
+                              <Badge variant="destructive" className="text-xs">
+                                Low Stock
+                              </Badge>
+                            )}
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <p className="font-medium">
-                            {formatCurrency(item.total)}
-                          </p>
-                          {item.product.is_low_stock && (
-                            <Badge variant="destructive" className="text-xs">
-                              Low Stock
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   <Separator className="my-4" />

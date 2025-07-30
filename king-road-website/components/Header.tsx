@@ -21,6 +21,7 @@ import { AuthModal } from "./auth/AuthModal";
 import { AuthButton } from "./AuthButton";
 import Image from "next/image";
 import { Tooltip, TooltipContent, TooltipProvider } from "./ui/tooltip";
+import { useGetDeliveryFeeList } from "@/api/delivery_fees";
 
 function SearchInput({
   placeholder = "Search",
@@ -101,6 +102,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const { deliveryFeeList } = useGetDeliveryFeeList();
+
+  const [fee, setFee] = useState(0);
+
+  useEffect(() => {
+    const fee = deliveryFeeList[0]?.base_fee || 0;
+    setFee(fee);
+  }, [deliveryFeeList]);
+
   return (
     <>
       {/* Top Bar */}
@@ -122,7 +132,11 @@ export function Header() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <span>Fixed delivery fee: AED 35 for all orders inside UAE</span>
+              <span>
+                {language === "en"
+                  ? `Fixed delivery fee: AED ${fee} for all orders inside UAE`
+                  : `رسوم التوصيل: AED ${fee}  لجميع الطلبات داخل الامارات`}
+              </span>
               <LanguageToggle />
             </div>
           </div>

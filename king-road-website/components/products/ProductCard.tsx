@@ -335,7 +335,13 @@ export function ProductCard({
                 ? "secondary"
                 : "outline"
             }
-            className="text-xs"
+            className={`text-xs ${
+              isOutOfStock
+                ? "bg-red-600"
+                : product.is_low_stock
+                ? "bg-yellow-100"
+                : "bg-green-100"
+            }`}
           >
             {isOutOfStock
               ? language === "ar"

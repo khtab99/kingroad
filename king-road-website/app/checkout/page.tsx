@@ -110,8 +110,7 @@ export default function CheckoutPage() {
     if (
       !formData.street.trim() ||
       !formData.name.trim() ||
-      !formData.phone.trim() ||
-      !formData.email.trim()
+      !formData.phone.trim()
     ) {
       return false;
     }

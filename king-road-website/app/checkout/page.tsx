@@ -41,6 +41,7 @@ export default function CheckoutPage() {
 
   const [formData, setFormData] = useState({
     country: "UAE",
+    emirate: "",
     city: "",
     street: "",
     houseNumber: "",
@@ -54,6 +55,7 @@ export default function CheckoutPage() {
     email: "",
     createAccount: false,
   });
+  console.log(formData);
 
   useEffect(() => {
     if (checkoutData) {

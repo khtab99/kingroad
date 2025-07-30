@@ -3,8 +3,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 

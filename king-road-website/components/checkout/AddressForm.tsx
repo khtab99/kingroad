@@ -10,22 +10,14 @@ import {
 } from "@/components/ui/select";
 import { AuthModal } from "../auth/AuthModal";
 import { useState } from "react";
-
-const uaeCities = [
-  "Dubai",
-  "Abu Dhabi",
-  "Sharjah",
-  "Ajman",
-  "Ras Al Khaimah",
-  "Fujairah",
-  "Umm Al Quwain",
-];
+import { EmiratesCitySelector } from "./emairate-city-form";
 
 interface AddressFormProps {
   language: string;
   selectedAddressType: string;
   formData: {
     country: any;
+    emirate: any;
     city: any;
     street: string;
     houseNumber: string;
@@ -274,53 +266,12 @@ export default function AddressForm({
           </Select>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            {language === "ar" ? "المدينة" : "City"}
-          </label>
-          <Select
-            value={formData.city}
-            onValueChange={(value) => onInputChange("city", value)}
-            disabled={disabled}
-          >
-            <SelectTrigger
-              className={`${language === "ar" ? "text-right" : "text-left"} ${
-                disabled ? "bg-gray-100 text-gray-400" : ""
-              }`}
-              dir="ltr"
-            >
-              <SelectValue
-                placeholder={
-                  language === "ar" ? "اختر المدينة" : "Select a city"
-                }
-              />
-            </SelectTrigger>
-            <SelectContent>
-              {uaeCities.map((city) => (
-                <SelectItem key={city} value={city}>
-                  {language === "ar"
-                    ? // simple example of manual translation for common cities
-                      city === "Dubai"
-                      ? "دبي"
-                      : city === "Abu Dhabi"
-                      ? "أبو ظبي"
-                      : city === "Sharjah"
-                      ? "الشارقة"
-                      : city === "Ajman"
-                      ? "عجمان"
-                      : city === "Ras Al Khaimah"
-                      ? "رأس الخيمة"
-                      : city === "Fujairah"
-                      ? "الفجيرة"
-                      : city === "Umm Al Quwain"
-                      ? "أم القيوين"
-                      : city
-                    : city}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <EmiratesCitySelector
+          formData={formData}
+          onInputChange={onInputChange}
+          disabled={disabled}
+          language={language}
+        />
       </>
     );
   };

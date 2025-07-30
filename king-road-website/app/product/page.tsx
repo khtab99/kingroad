@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/products/ProductCard";
 import { useGetAllProducts } from "@/api/product";
 import { ProductSkeleton } from "@/components/products/ProductSkeleton";
+import { ArrowLeft } from "lucide-react";
 
 export default function AllProductsPage() {
   const { language } = useStore();
@@ -13,14 +14,20 @@ export default function AllProductsPage() {
 
   return (
     <>
-      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-          {language === "ar" ? "جميع المنتجات" : "All Products"}
-        </h1>
+      <main className="w-full max-w-7xl text-center mx-auto px-4 sm:px-6 lg:px-8 xl:px-12  py-8 lg:py-12 xl:py-16">
+        <div>
+          <ArrowLeft
+            className="w-6 h-6 text-gray-500 cursor-pointer"
+            onClick={() => window.history.back()}
+          />
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 mb-6">
+            {language === "ar" ? "جميع المنتجات" : "All Products"}
+          </h1>
+        </div>
 
         {/* Loading State */}
         {productLoading && (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-6">
             {Array.from({ length: 10 }).map((_, index) => (
               <ProductSkeleton key={index} variant="card" />
             ))}
@@ -46,7 +53,7 @@ export default function AllProductsPage() {
 
         {/* Products Grid */}
         {!productLoading && !productError && productList.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList.map((product: any) => (
               <ProductCard key={product.id} product={product} variant="grid" />
             ))}

@@ -187,4 +187,11 @@ export const endpoints = {
     update: "/api/v1/admin/sliders/",
     delete: "/api/v1/admin/sliders/",
   },
+  deliveryFees: {
+    list: "/api/v1/admin/delivery_fees",
+    details: "/api/v1/admin/delivery_fees/",
+    create: "/api/v1/admin/delivery_fees",
+    update: "/api/v1/admin/delivery_fees/",
+    delete: "/api/v1/admin/delivery_fees/",
+  },
 };

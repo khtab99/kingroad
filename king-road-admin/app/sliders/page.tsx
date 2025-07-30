@@ -248,7 +248,7 @@ export default function SlidersPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sliderLoading ? (
+                  {sliderLoading && (
                     <TableRow>
                       <TableCell colSpan={7} className="text-center py-8">
                         <div className="flex items-center justify-center">
@@ -257,7 +257,8 @@ export default function SlidersPage() {
                         </div>
                       </TableCell>
                     </TableRow>
-                  ) : sliderError ? (
+                  )}{" "}
+                  {sliderError && (
                     <TableRow>
                       <TableCell
                         colSpan={7}
@@ -266,7 +267,8 @@ export default function SlidersPage() {
                         Error loading sliders: {sliderError}
                       </TableCell>
                     </TableRow>
-                  ) : sliderList?.length === 0 ? (
+                  )}{" "}
+                  {sliderList?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={7} className="text-center py-8">
                         {searchTerm

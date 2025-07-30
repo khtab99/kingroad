@@ -21,21 +21,76 @@ export const EmiratesCitySelector = ({
 }) => {
   const isArabic = language === "ar";
 
+  // Find selected emirate by name to get available cities
+  const selectedEmirateData = useMemo(() => {
+    if (!formData.emirate) return null;
+
+    return locations.find((emirate) => {
+      const emirateName = isArabic
+        ? emirate.details?.name_ar
+        : emirate.details?.name;
+      return emirateName === formData.emirate;
+    });
+  }, [formData.emirate, isArabic]);
+
   // Memoize available cities when emirate changes
   const availableCities = useMemo(() => {
-    if (!formData.emirate) return [];
+    return selectedEmirateData?.areas || [];
+  }, [selectedEmirateData]);
 
+  const handleEmirateChange = (emirateId: string) => {
+    // Find the emirate by ID and store its name in form data
     const selectedEmirate = locations.find(
-      (emirate) => emirate.details.city_id === formData.emirate
+      (emirate) => emirate.details.city_id === emirateId
     );
 
-    return selectedEmirate?.areas || [];
-  }, [formData.emirate]);
+    if (selectedEmirate) {
+      const emirateName = isArabic
+        ? selectedEmirate.details?.name_ar
+        : selectedEmirate.details?.name;
 
-  const handleEmirateChange = (value: string) => {
-    onInputChange("emirate", value);
-    onInputChange("city", ""); // reset city on emirate change
+      onInputChange("emirate", emirateName || "");
+      onInputChange("city", ""); // reset city on emirate change
+    }
   };
+
+  const handleCityChange = (cityId: string) => {
+    // Find the city by ID and store its name in form data
+    const selectedCity = availableCities.find(
+      (city: any) => city?.area_id === cityId
+    );
+
+    if (selectedCity) {
+      const cityName = isArabic ? selectedCity?.name_ar : selectedCity?.name;
+      onInputChange("city", cityName || "");
+    }
+  };
+
+  // Get current emirate ID for Select value (reverse lookup)
+  const currentEmirateId = useMemo(() => {
+    if (!formData.emirate) return "";
+
+    const emirate = locations.find((emirate) => {
+      const emirateName = isArabic
+        ? emirate.details?.name_ar
+        : emirate.details?.name;
+      return emirateName === formData.emirate;
+    });
+
+    return emirate ? String(emirate.details.city_id) : "";
+  }, [formData.emirate, isArabic]);
+
+  // Get current city ID for Select value (reverse lookup)
+  const currentCityId = useMemo(() => {
+    if (!formData.city || !availableCities.length) return "";
+
+    const city = availableCities.find((city: any) => {
+      const cityName = isArabic ? city?.name_ar : city?.name;
+      return cityName === formData.city;
+    });
+
+    return city ? city.area_id : "";
+  }, [formData.city, availableCities, isArabic]);
 
   return (
     <>
@@ -45,7 +100,7 @@ export const EmiratesCitySelector = ({
           {isArabic ? "الامارة" : "Emirate"}
         </label>
         <Select
-          value={formData.emirate || ""}
+          value={currentEmirateId}
           onValueChange={handleEmirateChange}
           disabled={disabled}
         >
@@ -78,8 +133,8 @@ export const EmiratesCitySelector = ({
           {isArabic ? "المدينة" : "City"}
         </label>
         <Select
-          value={formData.city || ""}
-          onValueChange={(value) => onInputChange("city", value)}
+          value={currentCityId}
+          onValueChange={handleCityChange}
           disabled={disabled || !formData.emirate}
         >
           <SelectTrigger

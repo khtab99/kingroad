@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/products/ProductCard";
 import { useGetAllProducts } from "@/api/product";
 import { ProductSkeleton } from "@/components/products/ProductSkeleton";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function AllProductsPage() {
   const { language } = useStore();
@@ -14,12 +14,19 @@ export default function AllProductsPage() {
 
   return (
     <>
-      <main className="w-full max-w-7xl text-center mx-auto px-4 sm:px-6 lg:px-8 xl:px-12  py-8 lg:py-12 xl:py-16">
-        <div>
-          <ArrowLeft
-            className="w-6 h-6 text-gray-500 cursor-pointer"
-            onClick={() => window.history.back()}
-          />
+      <main className="w-full max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 xl:px-12  py-8  ">
+        <div className=" text-center">
+          {language === "ar" ? (
+            <ArrowRight
+              className="w-6 h-6 text-gray-500 cursor-pointer hover:text-red-800"
+              onClick={() => window.history.back()}
+            />
+          ) : (
+            <ArrowLeft
+              className="w-6 h-6 text-gray-500 cursor-pointer hover:text-red-800"
+              onClick={() => window.history.back()}
+            />
+          )}
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 mb-6">
             {language === "ar" ? "جميع المنتجات" : "All Products"}
           </h1>

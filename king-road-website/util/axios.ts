@@ -155,4 +155,7 @@ export const endpoints = {
   slider: {
     list: "/api/v1/sliders",
   },
+  deliveryFee: {
+    list: "/api/v1/delivery_fees",
+  },
 };

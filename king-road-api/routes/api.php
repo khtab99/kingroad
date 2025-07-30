@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\DeliveryFeeController;
 use App\Http\Controllers\Api\SliderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -71,6 +72,10 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('sliders')->group(function () {
    Route::get('/', [SliderController::class, 'index']);
+    });
+
+    Route::prefix('delivery_fees')->group(function () {
+              Route::get('/', [DeliveryFeeController::class, 'index']);
     });
 
 });

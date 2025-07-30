@@ -18,11 +18,14 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useGetDeliveryFeeList } from "@/api/delivery_fees";
 
 export default function CartPage() {
   const { cartItems, language, updateQuantity, removeFromCart } = useStore();
   const [discountCode, setDiscountCode] = useState("");
   const router = useRouter();
+
+  const { deliveryFeeList } = useGetDeliveryFeeList();
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -209,9 +212,12 @@ export default function CartPage() {
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-gray-800">
-                  {deliveryFee} {language === "ar" ? "د.إ" : "AED"}
-                </span>
+                {deliveryFeeList && (
+                  <span className="text-gray-800">
+                    {deliveryFeeList[0]?.base_fee}{" "}
+                    {language === "ar" ? "د.إ" : "AED"}
+                  </span>
+                )}
                 <span className="text-gray-600">
                   {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
                 </span>

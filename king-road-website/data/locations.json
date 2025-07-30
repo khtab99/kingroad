@@ -1,0 +1,5472 @@
+[
+  {
+    "details": {
+      "city_id": "90",
+      "name": "Dubai",
+      "name_ar": "دبي",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "2647",
+        "city_id": "90",
+        "name": "Abu Hail",
+        "name_ar": "ابو هيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2648",
+        "city_id": "90",
+        "name": "Academic City",
+        "name_ar": "مدينة اكاديمية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2649",
+        "city_id": "90",
+        "name": "Al Awir",
+        "name_ar": "العوير",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2650",
+        "city_id": "90",
+        "name": "Al Bada'a",
+        "name_ar": "البدع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2651",
+        "city_id": "90",
+        "name": "Al Baraha",
+        "name_ar": "البراحة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2652",
+        "city_id": "90",
+        "name": "Al Barari",
+        "name_ar": "البراري",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2653",
+        "city_id": "90",
+        "name": "Al Barsha 1",
+        "name_ar": "البرشاء 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2654",
+        "city_id": "90",
+        "name": "Al Barsha 2",
+        "name_ar": "البرشاء 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2655",
+        "city_id": "90",
+        "name": "Al Barsha 3",
+        "name_ar": "البرشاء 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2656",
+        "city_id": "90",
+        "name": "Al Barsha South",
+        "name_ar": "البرشاء جنوب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2657",
+        "city_id": "90",
+        "name": "Al Dhagaya",
+        "name_ar": "الضغاية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2658",
+        "city_id": "90",
+        "name": "Al Furjan",
+        "name_ar": "الفرجان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2659",
+        "city_id": "90",
+        "name": "Al Garhoud",
+        "name_ar": "القرهود",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2660",
+        "city_id": "90",
+        "name": "Al Hamriya",
+        "name_ar": "الحمرية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2661",
+        "city_id": "90",
+        "name": "Al Hudaiba",
+        "name_ar": "الحضيبة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2662",
+        "city_id": "90",
+        "name": "Al Jaddaf",
+        "name_ar": "الجداف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2663",
+        "city_id": "90",
+        "name": "Al Jaffiliya",
+        "name_ar": "الجافلية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2664",
+        "city_id": "90",
+        "name": "Al Karama",
+        "name_ar": "الكرامة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2665",
+        "city_id": "90",
+        "name": "Al Khabaisi",
+        "name_ar": "الخبائسي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2666",
+        "city_id": "90",
+        "name": "Al Khawaneej 1",
+        "name_ar": "الخوانيج 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2667",
+        "city_id": "90",
+        "name": "Al Khawaneej 2",
+        "name_ar": "الخوانيج 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2668",
+        "city_id": "90",
+        "name": "Al Mamzar",
+        "name_ar": "الممزر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2669",
+        "city_id": "90",
+        "name": "Al Manara",
+        "name_ar": "المنارة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2670",
+        "city_id": "90",
+        "name": "Al Mankhool",
+        "name_ar": "المنخول",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2671",
+        "city_id": "90",
+        "name": "Al Mina",
+        "name_ar": "الميناء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2672",
+        "city_id": "90",
+        "name": "Al Mizhar 1",
+        "name_ar": "المزهر 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2673",
+        "city_id": "90",
+        "name": "Al Mizhar 2",
+        "name_ar": "المزهر 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2674",
+        "city_id": "90",
+        "name": "Al Muraqqabat",
+        "name_ar": "المرقبات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2675",
+        "city_id": "90",
+        "name": "Al Murar",
+        "name_ar": "المرر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2676",
+        "city_id": "90",
+        "name": "Al Mushrif",
+        "name_ar": "المشرف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2677",
+        "city_id": "90",
+        "name": "Al Muteena",
+        "name_ar": "المطينة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2678",
+        "city_id": "90",
+        "name": "Al Nahda 1",
+        "name_ar": "النهدة 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2679",
+        "city_id": "90",
+        "name": "Al Nahda 2",
+        "name_ar": "النهدة 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2680",
+        "city_id": "90",
+        "name": "Al Quoz 1",
+        "name_ar": "القوز 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2681",
+        "city_id": "90",
+        "name": "Al Quoz 2",
+        "name_ar": "القوز 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2682",
+        "city_id": "90",
+        "name": "Al Quoz 3",
+        "name_ar": "القوز 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2683",
+        "city_id": "90",
+        "name": "Al Quoz 4",
+        "name_ar": "القوز 4",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2684",
+        "city_id": "90",
+        "name": "Al Quoz Industrial Area 1",
+        "name_ar": "القوز الصناعية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2685",
+        "city_id": "90",
+        "name": "Al Quoz Industrial Area 2",
+        "name_ar": "القوز الصناعية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2686",
+        "city_id": "90",
+        "name": "Al Quoz Industrial Area 3",
+        "name_ar": "القوز الصناعية 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2687",
+        "city_id": "90",
+        "name": "Al Quoz Industrial Area 4",
+        "name_ar": "القوز الصناعية 4",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2688",
+        "city_id": "90",
+        "name": "Al Qusais 1",
+        "name_ar": "القصيص 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2689",
+        "city_id": "90",
+        "name": "Al Qusais 2",
+        "name_ar": "القصيص 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2690",
+        "city_id": "90",
+        "name": "Al Qusais 3",
+        "name_ar": "القصيص 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2691",
+        "city_id": "90",
+        "name": "Al Qusais Industrial Area 1",
+        "name_ar": "القصيص الصناعية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2692",
+        "city_id": "90",
+        "name": "Al Qusais Industrial Area 2",
+        "name_ar": "القصيص الصناعية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2693",
+        "city_id": "90",
+        "name": "Al Qusais Industrial Area 3",
+        "name_ar": "القصيص الصناعية 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2694",
+        "city_id": "90",
+        "name": "Al Qusais Industrial Area 4",
+        "name_ar": "القصيص الصناعية 4",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2695",
+        "city_id": "90",
+        "name": "Al Qusais Industrial Area 5",
+        "name_ar": "القصيص الصناعية 5",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2696",
+        "city_id": "90",
+        "name": "Al Raffa",
+        "name_ar": "الرفاعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2697",
+        "city_id": "90",
+        "name": "Al Ras",
+        "name_ar": "الراس",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2698",
+        "city_id": "90",
+        "name": "Al Rashidiya",
+        "name_ar": "الراشدية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2699",
+        "city_id": "90",
+        "name": "Al Rigga",
+        "name_ar": "الرقة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2700",
+        "city_id": "90",
+        "name": "Al Sabkha",
+        "name_ar": "السبخة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2701",
+        "city_id": "90",
+        "name": "Al Safa 2",
+        "name_ar": "الصفا 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2702",
+        "city_id": "90",
+        "name": "Al Safa",
+        "name_ar": "الصفا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2703",
+        "city_id": "90",
+        "name": "Al Satwa",
+        "name_ar": "السطوة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2704",
+        "city_id": "90",
+        "name": "Al Shindagha",
+        "name_ar": "الشندغة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2705",
+        "city_id": "90",
+        "name": "Al Souq Al Kabeer",
+        "name_ar": "السوق الكبير",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2706",
+        "city_id": "90",
+        "name": "Al Sufouh 1",
+        "name_ar": "الصفوح 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2707",
+        "city_id": "90",
+        "name": "Al Sufouh 2",
+        "name_ar": "الصفوح 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2708",
+        "city_id": "90",
+        "name": "Al Twar 1",
+        "name_ar": "الطوار 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2709",
+        "city_id": "90",
+        "name": "Al Twar 2",
+        "name_ar": "الطوار 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2710",
+        "city_id": "90",
+        "name": "Al Twar 3",
+        "name_ar": "الطوار 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2711",
+        "city_id": "90",
+        "name": "Al Waheda",
+        "name_ar": "الوحيدة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2712",
+        "city_id": "90",
+        "name": "Al Warqa 1",
+        "name_ar": "الورقاء 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2713",
+        "city_id": "90",
+        "name": "Al Warqa 2",
+        "name_ar": "الورقاء 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2714",
+        "city_id": "90",
+        "name": "Al Warqa 3",
+        "name_ar": "الورقاء 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2715",
+        "city_id": "90",
+        "name": "Al Warqa 4",
+        "name_ar": "الورقاء 4",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2716",
+        "city_id": "90",
+        "name": "Al Warqa 5",
+        "name_ar": "الورقاء 5",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2717",
+        "city_id": "90",
+        "name": "Al Wasl",
+        "name_ar": "الوصل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2718",
+        "city_id": "90",
+        "name": "Arabian Ranches 2",
+        "name_ar": "المرابع العربية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2719",
+        "city_id": "90",
+        "name": "Arabian Ranches",
+        "name_ar": "المرابع العربية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2720",
+        "city_id": "90",
+        "name": "Arjan",
+        "name_ar": "ارجان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2721",
+        "city_id": "90",
+        "name": "Barsha Heights - TECOM",
+        "name_ar": "ابراج البرشاء- تيكوم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2722",
+        "city_id": "90",
+        "name": "Bukadra",
+        "name_ar": "بو كدرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2723",
+        "city_id": "90",
+        "name": "Business Bay",
+        "name_ar": "الخليج التجارى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2724",
+        "city_id": "90",
+        "name": "Corniche Deira",
+        "name_ar": "كورنيش ديرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2725",
+        "city_id": "90",
+        "name": "DIFC",
+        "name_ar": "المركز المالى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2726",
+        "city_id": "90",
+        "name": "Discovery Gardens",
+        "name_ar": "حدائق ديسكفري",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2727",
+        "city_id": "90",
+        "name": "Downtown Burj Khalifa",
+        "name_ar": "برج خليفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2728",
+        "city_id": "90",
+        "name": "Downtown Jabel Ali",
+        "name_ar": "جبل على داون تاون",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2729",
+        "city_id": "90",
+        "name": "Dubai Airport Freezone",
+        "name_ar": "المنطقة الحرة بمطار دبى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2730",
+        "city_id": "90",
+        "name": "Dubai Cargo Village",
+        "name_ar": "قرية دبى للشحن",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2731",
+        "city_id": "90",
+        "name": "Dubai Design District",
+        "name_ar": "منطقة دبي للتصميم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2732",
+        "city_id": "90",
+        "name": "Dubai Falcon City",
+        "name_ar": "دبى فالكون سيتى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2733",
+        "city_id": "90",
+        "name": "Dubai Festival City",
+        "name_ar": "دبي فستيفال سيتي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2734",
+        "city_id": "90",
+        "name": "Dubai Healthcare City",
+        "name_ar": "مدينة دبى الطبية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2735",
+        "city_id": "90",
+        "name": "Dubai International Airport",
+        "name_ar": "مطار دبى الدولى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2736",
+        "city_id": "90",
+        "name": "Dubai Internet City - DIC",
+        "name_ar": "مدينة دبى للانترنت",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2737",
+        "city_id": "90",
+        "name": "Dubai Investments Park 1",
+        "name_ar": "مجمع دبى للاستثمار 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2738",
+        "city_id": "90",
+        "name": "Dubai Investments Park 2",
+        "name_ar": "مجمع دبى للاستثمار 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2739",
+        "city_id": "90",
+        "name": "Dubai Lifestyle City",
+        "name_ar": "مدينة دبي لايف ستايل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2740",
+        "city_id": "90",
+        "name": "Dubai Marina",
+        "name_ar": "مرسى دبى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2741",
+        "city_id": "90",
+        "name": "Dubai Maritime City",
+        "name_ar": "مدينة دبى الملاحية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2742",
+        "city_id": "90",
+        "name": "Dubai Media City",
+        "name_ar": "مدينة دبى للاعلام",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2743",
+        "city_id": "90",
+        "name": "Dubai Motor City",
+        "name_ar": "موتور سيتى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2744",
+        "city_id": "90",
+        "name": "Dubai Silicon Oasis",
+        "name_ar": "واحة دبي السيليكون",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2745",
+        "city_id": "90",
+        "name": "Dubai Sports City",
+        "name_ar": "مدينة دبى الرياضية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2746",
+        "city_id": "90",
+        "name": "Dubai Studio City",
+        "name_ar": "مدينة دبي للاستوديوهات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2747",
+        "city_id": "90",
+        "name": "Dubai Techno Park",
+        "name_ar": "مجمع التقنية بدبي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2748",
+        "city_id": "90",
+        "name": "Dubai World Central - DWC",
+        "name_ar": "دبي ورلد سنترال",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2749",
+        "city_id": "90",
+        "name": "Dubai World Trade Center - DWTC",
+        "name_ar": "مركز دبي التجاري العالمى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2750",
+        "city_id": "90",
+        "name": "Emirates Hills",
+        "name_ar": "تلال الامارات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2751",
+        "city_id": "90",
+        "name": "Gardens",
+        "name_ar": "جاردنز",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2752",
+        "city_id": "90",
+        "name": "Global Village",
+        "name_ar": "القرية العالمية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2753",
+        "city_id": "90",
+        "name": "Green Community Motor City",
+        "name_ar": "جرين كوميونيتي موتور سيتي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2754",
+        "city_id": "90",
+        "name": "Green Community",
+        "name_ar": "المجتمع الاخضر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2755",
+        "city_id": "90",
+        "name": "Hatta",
+        "name_ar": "حتا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2756",
+        "city_id": "90",
+        "name": "Hor Al Anz East",
+        "name_ar": "هور العنز شرق",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2757",
+        "city_id": "90",
+        "name": "Hor Al Anz",
+        "name_ar": "هور العنز",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2758",
+        "city_id": "90",
+        "name": "Ibn Batutta Mall",
+        "name_ar": "ابن بطوطة مول",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2759",
+        "city_id": "90",
+        "name": "IMPZ",
+        "name_ar": "المنطقة العالمية للانتاج الاعلامي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2760",
+        "city_id": "90",
+        "name": "International City 2",
+        "name_ar": "المدينة الدولية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2761",
+        "city_id": "90",
+        "name": "International City",
+        "name_ar": "المدينة الدولية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2762",
+        "city_id": "90",
+        "name": "Jebel Ali 1",
+        "name_ar": "جبل علي 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2763",
+        "city_id": "90",
+        "name": "Jebel Ali 2",
+        "name_ar": "جبل علي 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2764",
+        "city_id": "90",
+        "name": "Jebel Ali Freezone Extension",
+        "name_ar": "توسعة منطقة جبل علي الحرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2765",
+        "city_id": "90",
+        "name": "Jebel Ali Freezone",
+        "name_ar": "المنطقة الحرة بجبل على",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2766",
+        "city_id": "90",
+        "name": "Jebel Ali Industrial Area",
+        "name_ar": "منطقة جبل على الصناعية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2767",
+        "city_id": "90",
+        "name": "Jumeirah 1",
+        "name_ar": "الجميرا 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2768",
+        "city_id": "90",
+        "name": "Jumeirah 2",
+        "name_ar": "الجميرا 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2769",
+        "city_id": "90",
+        "name": "Jumeirah 3",
+        "name_ar": "الجميرا 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2770",
+        "city_id": "90",
+        "name": "Jumeirah Beach Residence - JBR",
+        "name_ar": "جميرا بيتش ريزيدنس",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2771",
+        "city_id": "90",
+        "name": "Jumeirah Golf Estates",
+        "name_ar": "ملاعب الجميرة للجولف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2772",
+        "city_id": "90",
+        "name": "Jumeirah Heights",
+        "name_ar": "جميرا هايتس",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2773",
+        "city_id": "90",
+        "name": "Jumeirah Islands",
+        "name_ar": "جزر جميرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2774",
+        "city_id": "90",
+        "name": "Jumeirah Lakes Towers - JLT",
+        "name_ar": "ابراج بحيرات الجميرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2775",
+        "city_id": "90",
+        "name": "Jumeirah Park",
+        "name_ar": "جميرا بارك",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2776",
+        "city_id": "90",
+        "name": "Jumeirah Village Circle - JVC",
+        "name_ar": "جنوب قرية جميرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2777",
+        "city_id": "90",
+        "name": "Jumeirah Village Triangle - JVT",
+        "name_ar": "مثلث قرية الجميرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2778",
+        "city_id": "90",
+        "name": "Knowledge Village",
+        "name_ar": "قرية المعرفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2779",
+        "city_id": "90",
+        "name": "Layan Community",
+        "name_ar": "ليان كومينيتي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2780",
+        "city_id": "90",
+        "name": "Legends",
+        "name_ar": "لجيندز",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2781",
+        "city_id": "90",
+        "name": "Liwan",
+        "name_ar": "ليوان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2782",
+        "city_id": "90",
+        "name": "Majan",
+        "name_ar": "مجان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2783",
+        "city_id": "90",
+        "name": "MBR- Al Merkad",
+        "name_ar": "مدينة محمد بن راشد- المركاض",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2784",
+        "city_id": "90",
+        "name": "Meadows",
+        "name_ar": "المروج",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2785",
+        "city_id": "90",
+        "name": "Meydan South",
+        "name_ar": "ميدان جنوب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2786",
+        "city_id": "90",
+        "name": "Mira Community",
+        "name_ar": "ميرا كوميونيتي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2787",
+        "city_id": "90",
+        "name": "Mirdif",
+        "name_ar": "مردف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2788",
+        "city_id": "90",
+        "name": "Mudon",
+        "name_ar": "مودون",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2789",
+        "city_id": "90",
+        "name": "Muhaisnah 1",
+        "name_ar": "محيصنة 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2790",
+        "city_id": "90",
+        "name": "Muhaisnah 2",
+        "name_ar": "محيصنة 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2791",
+        "city_id": "90",
+        "name": "Muhaisnah 3",
+        "name_ar": "محيصنة 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2792",
+        "city_id": "90",
+        "name": "Muhaisnah 4",
+        "name_ar": "محيصنة 4",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2793",
+        "city_id": "90",
+        "name": "Nad Al Sheba 1",
+        "name_ar": "ند الشبا 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2794",
+        "city_id": "90",
+        "name": "Nad Al Sheba 2",
+        "name_ar": "ند الشبا الثانية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2795",
+        "city_id": "90",
+        "name": "Nad Al Sheba 3",
+        "name_ar": "ند الشبا الثالثة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2796",
+        "city_id": "90",
+        "name": "Nad Al Sheba 4",
+        "name_ar": "ند الشبا الرابعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2797",
+        "city_id": "90",
+        "name": "Nadd Al Hamar",
+        "name_ar": "ند الحمر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2798",
+        "city_id": "90",
+        "name": "Nadd Al Shamma",
+        "name_ar": "ند الشما",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2799",
+        "city_id": "90",
+        "name": "Naif",
+        "name_ar": "نايف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2800",
+        "city_id": "90",
+        "name": "Oud Al Muteena",
+        "name_ar": "عود المطينة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2801",
+        "city_id": "90",
+        "name": "Oud Metha",
+        "name_ar": "عود ميثاء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2802",
+        "city_id": "90",
+        "name": "Port Rashid",
+        "name_ar": "ميناء راشد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2803",
+        "city_id": "90",
+        "name": "Port Saeed",
+        "name_ar": "ميناء سعيد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2804",
+        "city_id": "90",
+        "name": "Ras Al Khor Indsutrial Area 1",
+        "name_ar": "منطقة رأس الخور الصناعية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2805",
+        "city_id": "90",
+        "name": "Ras Al Khor Indsutrial Area 2",
+        "name_ar": "منطقة رأس الخور الصناعية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2806",
+        "city_id": "90",
+        "name": "Ras Al Khor Indsutrial Area 3",
+        "name_ar": "منطقة رأس الخور الصناعية 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2807",
+        "city_id": "90",
+        "name": "Ras Al Khor",
+        "name_ar": "رأس الخور",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2808",
+        "city_id": "90",
+        "name": "Remraam",
+        "name_ar": "رمرام",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2809",
+        "city_id": "90",
+        "name": "Rigga Al Buteen",
+        "name_ar": "رقة البطين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2810",
+        "city_id": "90",
+        "name": "Springs",
+        "name_ar": "الينابيع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2811",
+        "city_id": "90",
+        "name": "The Greens",
+        "name_ar": "الروضة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2812",
+        "city_id": "90",
+        "name": "The Lakes",
+        "name_ar": "البحيرات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2813",
+        "city_id": "90",
+        "name": "The Palm Deira",
+        "name_ar": "نخلة ديرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2814",
+        "city_id": "90",
+        "name": "The Palm Jebel Ali",
+        "name_ar": "نخلة جبل علي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2815",
+        "city_id": "90",
+        "name": "The Palm Jumeirah",
+        "name_ar": "نخلة الجميرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2816",
+        "city_id": "90",
+        "name": "The Skycourts",
+        "name_ar": "سكاي كورتس",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2817",
+        "city_id": "90",
+        "name": "The Sustainable City",
+        "name_ar": "المدينة المستدامة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2818",
+        "city_id": "90",
+        "name": "The Villa",
+        "name_ar": "ذا فيلا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2819",
+        "city_id": "90",
+        "name": "Um Al Sheif",
+        "name_ar": "أم الشيف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2820",
+        "city_id": "90",
+        "name": "Umm Hurair 1",
+        "name_ar": "ام هرير الاولى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2821",
+        "city_id": "90",
+        "name": "Umm Hurair 2",
+        "name_ar": "ام هرير الثانيه",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2822",
+        "city_id": "90",
+        "name": "Umm Ramool",
+        "name_ar": "أم رمول",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2823",
+        "city_id": "90",
+        "name": "Umm Suqeim 1",
+        "name_ar": "أم سقيم 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2824",
+        "city_id": "90",
+        "name": "Umm Suqeim 2",
+        "name_ar": "أم سقيم 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2825",
+        "city_id": "90",
+        "name": "Umm Suqeim 3",
+        "name_ar": "أم سقيم 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2826",
+        "city_id": "90",
+        "name": "Wadi Alamardi",
+        "name_ar": "وادى العمردي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2827",
+        "city_id": "90",
+        "name": "Warsan 1",
+        "name_ar": "ورسان 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2828",
+        "city_id": "90",
+        "name": "Warsan 2",
+        "name_ar": "ورسان 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2829",
+        "city_id": "90",
+        "name": "Waterfront",
+        "name_ar": "واترفرونت",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2830",
+        "city_id": "90",
+        "name": "Za'abeel 1",
+        "name_ar": "زعبيل 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2831",
+        "city_id": "90",
+        "name": "Za'abeel 2",
+        "name_ar": "زعبيل 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "7035",
+        "city_id": "90",
+        "name": "Trade  center",
+        "name_ar": "المركز التجاري",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "7036",
+        "city_id": "90",
+        "name": "City Walk 1",
+        "name_ar": "سيتي ووك ١",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "7041",
+        "city_id": "90",
+        "name": "City Walk 2",
+        "name_ar": "سيتي ووك ٢",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "7045",
+        "city_id": "90",
+        "name": "Sheikh Zayed Rd - Sea Side",
+        "name_ar": "طريق الشيخ زايد - الجانب البحري",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  },
+  {
+    "details": {
+      "city_id": "91",
+      "name": "Abu Dhabi",
+      "name_ar": "أبو ظبي",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "2832",
+        "city_id": "91",
+        "name": "Abu Dhabi Gate City",
+        "name_ar": "مدينة بوابة أبوظبي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2833",
+        "city_id": "91",
+        "name": "Abu Dhabi Hills",
+        "name_ar": "تلال أبوظبي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2834",
+        "city_id": "91",
+        "name": "Abu Dhabi International Airport",
+        "name_ar": "مطار أبو ظبي الدولي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2835",
+        "city_id": "91",
+        "name": "Al Adla",
+        "name_ar": "العدلة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2836",
+        "city_id": "91",
+        "name": "Al Aman",
+        "name_ar": "الأمان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2837",
+        "city_id": "91",
+        "name": "Al Bahya",
+        "name_ar": "الباهية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2838",
+        "city_id": "91",
+        "name": "Al Bandar (Al Raha)",
+        "name_ar": "البندر (الراحه)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2839",
+        "city_id": "91",
+        "name": "Al Dafrah",
+        "name_ar": "الظفرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2840",
+        "city_id": "91",
+        "name": "Al Etihad",
+        "name_ar": "الاتحاد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2841",
+        "city_id": "91",
+        "name": "Al Falah City",
+        "name_ar": "مدينة الفلاح",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2842",
+        "city_id": "91",
+        "name": "Al Forsan Village (Khalifa- A)",
+        "name_ar": "الفرسان (خليفة أ)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2843",
+        "city_id": "91",
+        "name": "Al Gurum Resort",
+        "name_ar": "القرم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2844",
+        "city_id": "91",
+        "name": "Al Hosn",
+        "name_ar": "الحصن",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2845",
+        "city_id": "91",
+        "name": "Al Karamah",
+        "name_ar": "الكرامة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2846",
+        "city_id": "91",
+        "name": "Al Khalidiyah",
+        "name_ar": "الخالدية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2847",
+        "city_id": "91",
+        "name": "Al Khubeirah",
+        "name_ar": "الخبيرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2848",
+        "city_id": "91",
+        "name": "Al Mafraq",
+        "name_ar": "المفرق",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2849",
+        "city_id": "91",
+        "name": "Al Manhal",
+        "name_ar": "المنهل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2850",
+        "city_id": "91",
+        "name": "Al Maqta",
+        "name_ar": "المقطع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2851",
+        "city_id": "91",
+        "name": "Al Markaziyah West",
+        "name_ar": "المركزية الغربية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2852",
+        "city_id": "91",
+        "name": "Al Markaziyah",
+        "name_ar": "المركزية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2853",
+        "city_id": "91",
+        "name": "Al Maryah Island",
+        "name_ar": "جزيرة الماريه",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2854",
+        "city_id": "91",
+        "name": "Al Mina",
+        "name_ar": "الميناء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2855",
+        "city_id": "91",
+        "name": "Al Muneera (Al Raha)",
+        "name_ar": "المنيرة (الراحه)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2856",
+        "city_id": "91",
+        "name": "Al Muntazah",
+        "name_ar": "المنتزة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2857",
+        "city_id": "91",
+        "name": "Al Musalla",
+        "name_ar": "المصلى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2858",
+        "city_id": "91",
+        "name": "Al Mushrif",
+        "name_ar": "المشرف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2859",
+        "city_id": "91",
+        "name": "Al Muzoon",
+        "name_ar": "المزون",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2860",
+        "city_id": "91",
+        "name": "Al Nahyan",
+        "name_ar": "ال نهيان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2861",
+        "city_id": "91",
+        "name": "Al Raha Beach",
+        "name_ar": "شاطئ الراحة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2862",
+        "city_id": "91",
+        "name": "Al Raha",
+        "name_ar": "الراحة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2863",
+        "city_id": "91",
+        "name": "Al Rahba",
+        "name_ar": "الرحبة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2864",
+        "city_id": "91",
+        "name": "Al Ras Al Akhdar",
+        "name_ar": "الرأس الأخضر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2865",
+        "city_id": "91",
+        "name": "Al Rayyana (Khalifa- A)",
+        "name_ar": "الريانة (خليفة أ)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2866",
+        "city_id": "91",
+        "name": "Al Reef",
+        "name_ar": "الريف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2867",
+        "city_id": "91",
+        "name": "Al Rowdah",
+        "name_ar": "الروضة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2868",
+        "city_id": "91",
+        "name": "Al Ruwais (Western Region)",
+        "name_ar": "الرويس (الغربية)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2869",
+        "city_id": "91",
+        "name": "Al Sader",
+        "name_ar": "الصدر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2870",
+        "city_id": "91",
+        "name": "Al Safarrat",
+        "name_ar": "السفارات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2871",
+        "city_id": "91",
+        "name": "Al Samha",
+        "name_ar": "السمحة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2872",
+        "city_id": "91",
+        "name": "Al Shaleela",
+        "name_ar": "الشليلة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2873",
+        "city_id": "91",
+        "name": "Al Shamkha South",
+        "name_ar": "جنوب الشامخة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2874",
+        "city_id": "91",
+        "name": "Al Shamkha",
+        "name_ar": "الشامخة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2875",
+        "city_id": "91",
+        "name": "Al Shawamekh",
+        "name_ar": "الشوامخ",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2876",
+        "city_id": "91",
+        "name": "Al Wahdah",
+        "name_ar": "الوحدة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2877",
+        "city_id": "91",
+        "name": "Al Wathba",
+        "name_ar": "الوثبة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2878",
+        "city_id": "91",
+        "name": "Al Zaab",
+        "name_ar": "الزعاب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2879",
+        "city_id": "91",
+        "name": "Al Zafranah",
+        "name_ar": "الزعفرانة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2880",
+        "city_id": "91",
+        "name": "Al Zahraa",
+        "name_ar": "الزهراء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2881",
+        "city_id": "91",
+        "name": "Al Zeina (Al Raha)",
+        "name_ar": "الزينة (الراحه)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2882",
+        "city_id": "91",
+        "name": "Bani Yas East",
+        "name_ar": "بني ياس شرق",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2883",
+        "city_id": "91",
+        "name": "Bani Yas West",
+        "name_ar": "بنى ياس غرب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2884",
+        "city_id": "91",
+        "name": "BreakWater",
+        "name_ar": "كاسر الأمواج",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2885",
+        "city_id": "91",
+        "name": "Capital Centre",
+        "name_ar": "كابيتال سنتر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2886",
+        "city_id": "91",
+        "name": "Golf Gardens (Khalifa- A)",
+        "name_ar": "حدائق الجولف (خليفة أ)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2887",
+        "city_id": "91",
+        "name": "Hydra Village (Shahama)",
+        "name_ar": "قرية هايدرا (الشهامة)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2888",
+        "city_id": "91",
+        "name": "Al Bateen",
+        "name_ar": "البطين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2889",
+        "city_id": "91",
+        "name": "Madinat Khalifa - A",
+        "name_ar": "مدينة خليفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2890",
+        "city_id": "91",
+        "name": "Madinat Khalifa - C",
+        "name_ar": "مدينة خليفة ج",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2891",
+        "city_id": "91",
+        "name": "Madinat Zayed",
+        "name_ar": "مدينة زايد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2892",
+        "city_id": "91",
+        "name": "Mahwi",
+        "name_ar": "محوي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2893",
+        "city_id": "91",
+        "name": "Masdar City",
+        "name_ar": "مدينة مصدر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2894",
+        "city_id": "91",
+        "name": "Mohammed Bin Zayed City",
+        "name_ar": "مدينة محمد بن زايد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2895",
+        "city_id": "91",
+        "name": "Mussafah Industrial City",
+        "name_ar": "مدينة مصفح الصناعية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2896",
+        "city_id": "91",
+        "name": "Mussafah South",
+        "name_ar": "مصفح جنوب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2897",
+        "city_id": "91",
+        "name": "New Shahama",
+        "name_ar": "الشهامة الجديدة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2898",
+        "city_id": "91",
+        "name": "Old Bahya",
+        "name_ar": "الباهية القديمة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2899",
+        "city_id": "91",
+        "name": "Port Zayed (Al Mina)",
+        "name_ar": "ميناء زايد (المينا)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2900",
+        "city_id": "91",
+        "name": "Qasr El Bahr",
+        "name_ar": "قصر البحر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2901",
+        "city_id": "91",
+        "name": "Qasr El Shatie",
+        "name_ar": "قصر الشاطئ",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2902",
+        "city_id": "91",
+        "name": "Reem Island",
+        "name_ar": "جزيرة الريم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2903",
+        "city_id": "91",
+        "name": "Saadiyat Island",
+        "name_ar": "جزيرة سعديات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2904",
+        "city_id": "91",
+        "name": "Sas Al Nakheel (Khalifa- A)",
+        "name_ar": "قرية ساس النخل (خليفة أ)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2905",
+        "city_id": "91",
+        "name": "Sas Al Nakhl Island",
+        "name_ar": "جزيرة ساس النخل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2906",
+        "city_id": "91",
+        "name": "Shahama",
+        "name_ar": "الشهامة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2907",
+        "city_id": "91",
+        "name": "Shakhbout City",
+        "name_ar": "مدينة شخبوط",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2908",
+        "city_id": "91",
+        "name": "Tourist Club Area (Al Zahiya)",
+        "name_ar": "منطقة النادى السياحى (الزاهية)",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2909",
+        "city_id": "91",
+        "name": "Western Region",
+        "name_ar": "المنطقة الغربية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2910",
+        "city_id": "91",
+        "name": "Yas Island",
+        "name_ar": "جزيرة ياس",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2911",
+        "city_id": "91",
+        "name": "Zayed Sports City",
+        "name_ar": "المدينة الرياضية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  },
+  {
+    "details": {
+      "city_id": "92",
+      "name": "Sharjah",
+      "name_ar": "الشارقة",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "2912",
+        "city_id": "92",
+        "name": "Abu Shagara",
+        "name_ar": "ابو شغارة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2913",
+        "city_id": "92",
+        "name": "Al Muntazah",
+        "name_ar": "المنتزة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2914",
+        "city_id": "92",
+        "name": "Al Abar",
+        "name_ar": "الآبار",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2915",
+        "city_id": "92",
+        "name": "Al Atain",
+        "name_ar": "العطين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2916",
+        "city_id": "92",
+        "name": "Al Azra",
+        "name_ar": "العزرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2917",
+        "city_id": "92",
+        "name": "Al Bataeh",
+        "name_ar": "البطائح",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2918",
+        "city_id": "92",
+        "name": "Al Bdai'a Subrub",
+        "name_ar": "ضاحية البديع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2919",
+        "city_id": "92",
+        "name": "Al Darari",
+        "name_ar": "الدرارى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2920",
+        "city_id": "92",
+        "name": "Al Dhaid",
+        "name_ar": "الذيد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2921",
+        "city_id": "92",
+        "name": "Al Elyash",
+        "name_ar": "الياش",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2922",
+        "city_id": "92",
+        "name": "Al Falah Suburb",
+        "name_ar": "ضاحية الفلاح",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2923",
+        "city_id": "92",
+        "name": "Al Falaj",
+        "name_ar": "الفلج",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2924",
+        "city_id": "92",
+        "name": "Al Fayha",
+        "name_ar": "الفيحاء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2925",
+        "city_id": "92",
+        "name": "Al Fisht",
+        "name_ar": "الفشت",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2926",
+        "city_id": "92",
+        "name": "Al Ghaphia",
+        "name_ar": "الغافية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2927",
+        "city_id": "92",
+        "name": "Al Gharayen",
+        "name_ar": "القرائن",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2928",
+        "city_id": "92",
+        "name": "Al Ghubaiba",
+        "name_ar": "الغبيبة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2929",
+        "city_id": "92",
+        "name": "Al Ghuwair",
+        "name_ar": "الغوير",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2930",
+        "city_id": "92",
+        "name": "Al Goaz",
+        "name_ar": "القوز",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2931",
+        "city_id": "92",
+        "name": "Al Hazana",
+        "name_ar": "الحزانة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2932",
+        "city_id": "92",
+        "name": "Al Homaa",
+        "name_ar": "الحومة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2933",
+        "city_id": "92",
+        "name": "Al Jazzat",
+        "name_ar": "الجزات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2934",
+        "city_id": "92",
+        "name": "Al Jubail",
+        "name_ar": "الجبيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2935",
+        "city_id": "92",
+        "name": "Al Juraina",
+        "name_ar": "الجرينة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2936",
+        "city_id": "92",
+        "name": "Al Khaledia Suburb",
+        "name_ar": "ضاحية الخالدية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2937",
+        "city_id": "92",
+        "name": "Al Khan",
+        "name_ar": "الخان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2938",
+        "city_id": "92",
+        "name": "Al Khezamia",
+        "name_ar": "الخزامية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2939",
+        "city_id": "92",
+        "name": "Al Layyah",
+        "name_ar": "اللية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2940",
+        "city_id": "92",
+        "name": "Al Mahatta",
+        "name_ar": "المحطة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2941",
+        "city_id": "92",
+        "name": "Al Majaz 1",
+        "name_ar": "المجاز 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2942",
+        "city_id": "92",
+        "name": "Al Majaz 2",
+        "name_ar": "المجاز 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2943",
+        "city_id": "92",
+        "name": "Al Majaz 3",
+        "name_ar": "المجاز 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2944",
+        "city_id": "92",
+        "name": "Al Mamzar",
+        "name_ar": "الممزر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2945",
+        "city_id": "92",
+        "name": "Al Manakh",
+        "name_ar": "المناخ",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2946",
+        "city_id": "92",
+        "name": "Al Manazel",
+        "name_ar": "المنازل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2947",
+        "city_id": "92",
+        "name": "Al Mansura",
+        "name_ar": "المنصورة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2948",
+        "city_id": "92",
+        "name": "Al Mareija",
+        "name_ar": "المريجة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2949",
+        "city_id": "92",
+        "name": "Al Mirgab",
+        "name_ar": "المرقاب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2950",
+        "city_id": "92",
+        "name": "Al Mujarah",
+        "name_ar": "المجرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2951",
+        "city_id": "92",
+        "name": "Al Musalla",
+        "name_ar": "المصلى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2952",
+        "city_id": "92",
+        "name": "Al Nabba",
+        "name_ar": "النبا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2953",
+        "city_id": "92",
+        "name": "Al Nad",
+        "name_ar": "النود",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2954",
+        "city_id": "92",
+        "name": "Al Nahda",
+        "name_ar": "النهدة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2955",
+        "city_id": "92",
+        "name": "Al Nasserya",
+        "name_ar": "الناصرية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2956",
+        "city_id": "92",
+        "name": "Al Nekhailat",
+        "name_ar": "النخيلات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2957",
+        "city_id": "92",
+        "name": "Al Noof",
+        "name_ar": "النوف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2958",
+        "city_id": "92",
+        "name": "Al Qadisia",
+        "name_ar": "القادسية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2959",
+        "city_id": "92",
+        "name": "Al Qasimia",
+        "name_ar": "القاسمية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2960",
+        "city_id": "92",
+        "name": "Al Qulayaa",
+        "name_ar": "القليعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2961",
+        "city_id": "92",
+        "name": "Al Rahmania",
+        "name_ar": "الرحمانية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2962",
+        "city_id": "92",
+        "name": "Al Ramaqia",
+        "name_ar": "الرماقية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2963",
+        "city_id": "92",
+        "name": "Al Ramla East",
+        "name_ar": "شرق الرملة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2964",
+        "city_id": "92",
+        "name": "Al Ramla West",
+        "name_ar": "غرب الرملة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2965",
+        "city_id": "92",
+        "name": "Al Ramtha",
+        "name_ar": "الرمثاء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2966",
+        "city_id": "92",
+        "name": "Al Rifah",
+        "name_ar": "الرفاعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2967",
+        "city_id": "92",
+        "name": "Al Riffa",
+        "name_ar": "الرفاع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2968",
+        "city_id": "92",
+        "name": "Al Sabkha",
+        "name_ar": "الصبخة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2969",
+        "city_id": "92",
+        "name": "Al Seef",
+        "name_ar": "السيف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2970",
+        "city_id": "92",
+        "name": "Al Seyouh",
+        "name_ar": "السيوح",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2971",
+        "city_id": "92",
+        "name": "Al Shahba",
+        "name_ar": "الشهباء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2972",
+        "city_id": "92",
+        "name": "Al Shuwaihen",
+        "name_ar": "الشويهين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2973",
+        "city_id": "92",
+        "name": "Al Soor",
+        "name_ar": "السور",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2974",
+        "city_id": "92",
+        "name": "Al Sweihat",
+        "name_ar": "السويحات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2975",
+        "city_id": "92",
+        "name": "Al Taawun",
+        "name_ar": "التعاون",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2976",
+        "city_id": "92",
+        "name": "Al Talaa",
+        "name_ar": "الطلاع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2977",
+        "city_id": "92",
+        "name": "Al Tarfa",
+        "name_ar": "الطرفا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2978",
+        "city_id": "92",
+        "name": "Al Yarmook",
+        "name_ar": "اليرموك",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2979",
+        "city_id": "92",
+        "name": "Barashi",
+        "name_ar": "براشى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2980",
+        "city_id": "92",
+        "name": "Bu Danig",
+        "name_ar": "بو دانج",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2981",
+        "city_id": "92",
+        "name": "Bu Tina",
+        "name_ar": "بوطينة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2982",
+        "city_id": "92",
+        "name": "Dasman",
+        "name_ar": "دسمان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2983",
+        "city_id": "92",
+        "name": "Industrial Area 1",
+        "name_ar": "المنطقة الصناعية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2984",
+        "city_id": "92",
+        "name": "Industrial Area 10",
+        "name_ar": "المنطقة الصناعية 10",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2985",
+        "city_id": "92",
+        "name": "Industrial Area 11",
+        "name_ar": "المنطقة الصناعية 11",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2986",
+        "city_id": "92",
+        "name": "Industrial Area 12",
+        "name_ar": "المنطقة الصناعية 12",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2987",
+        "city_id": "92",
+        "name": "Industrial Area 13",
+        "name_ar": "المنطقة الصناعية 13",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2988",
+        "city_id": "92",
+        "name": "Industrial Area 15",
+        "name_ar": "المنطقة الصناعية 15",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2989",
+        "city_id": "92",
+        "name": "Industrial Area 17",
+        "name_ar": "المنطقة الصناعية 17",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2990",
+        "city_id": "92",
+        "name": "Industrial Area 18",
+        "name_ar": "المنطقة الصناعية 18",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2991",
+        "city_id": "92",
+        "name": "Industrial Area 2",
+        "name_ar": "المنطقة الصناعية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2992",
+        "city_id": "92",
+        "name": "Industrial Area 3",
+        "name_ar": "المنطقة الصناعية 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2993",
+        "city_id": "92",
+        "name": "Industrial Area 4",
+        "name_ar": "المنطقة الصناعية 4",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2994",
+        "city_id": "92",
+        "name": "Industrial Area 5",
+        "name_ar": "المنطقة الصناعية 5",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2995",
+        "city_id": "92",
+        "name": "Industrial Area 6",
+        "name_ar": "المنطقة الصناعية 6",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2996",
+        "city_id": "92",
+        "name": "Industrial Area 7",
+        "name_ar": "المنطقة الصناعية 7",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2997",
+        "city_id": "92",
+        "name": "Industrial Area 8",
+        "name_ar": "المنطقة الصناعية 8",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2998",
+        "city_id": "92",
+        "name": "Industrial Area 9",
+        "name_ar": "المنطقة الصناعية 9",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "2999",
+        "city_id": "92",
+        "name": "Kalba",
+        "name_ar": "كلبا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3000",
+        "city_id": "92",
+        "name": "Khor Fakkan",
+        "name_ar": "خورفكان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3001",
+        "city_id": "92",
+        "name": "Maysaloon",
+        "name_ar": "ميسلون",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3002",
+        "city_id": "92",
+        "name": "Muwafjah",
+        "name_ar": "موافجة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3003",
+        "city_id": "92",
+        "name": "Muwaileh Commercial",
+        "name_ar": "مويلح التجارية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3004",
+        "city_id": "92",
+        "name": "Muzairah",
+        "name_ar": "مزيرعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3005",
+        "city_id": "92",
+        "name": "Rolla",
+        "name_ar": "الرولة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3006",
+        "city_id": "92",
+        "name": "Saif Zone",
+        "name_ar": "المنطقة الحرة بمطار الشارقة الدولي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3007",
+        "city_id": "92",
+        "name": "Samnan",
+        "name_ar": "سمنان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3008",
+        "city_id": "92",
+        "name": "Sharqan",
+        "name_ar": "شرقان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3009",
+        "city_id": "92",
+        "name": "Um Altaraffa",
+        "name_ar": "أم طرافة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3010",
+        "city_id": "92",
+        "name": "University of Sharjah",
+        "name_ar": "جامعة الشارقة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  },
+  {
+    "details": {
+      "city_id": "93",
+      "name": "Ajman",
+      "name_ar": "عجمان",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "3011",
+        "city_id": "93",
+        "name": "Ajman City Center",
+        "name_ar": "عجمان سيتي سنتر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3012",
+        "city_id": "93",
+        "name": "Ajman Corniche",
+        "name_ar": "كورنيش عجمان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3013",
+        "city_id": "93",
+        "name": "Ajman Free Zone",
+        "name_ar": "منطقة عجمان الحرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3014",
+        "city_id": "93",
+        "name": "Ajman Industrial Area 1",
+        "name_ar": "عجمان الصناعية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3015",
+        "city_id": "93",
+        "name": "Ajman Industrial Area 2",
+        "name_ar": "عجمان الصناعية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3016",
+        "city_id": "93",
+        "name": "Ajman Pearl",
+        "name_ar": "لؤلؤة عجمان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3017",
+        "city_id": "93",
+        "name": "Ajman University",
+        "name_ar": "جامعة عجمان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3018",
+        "city_id": "93",
+        "name": "Al Alia",
+        "name_ar": "العالية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3019",
+        "city_id": "93",
+        "name": "Al Amerah",
+        "name_ar": "العامرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3020",
+        "city_id": "93",
+        "name": "Al Bahia",
+        "name_ar": "الباهية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3021",
+        "city_id": "93",
+        "name": "Al Bustan",
+        "name_ar": "البستان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3022",
+        "city_id": "93",
+        "name": "Al Butain",
+        "name_ar": "البطين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3023",
+        "city_id": "93",
+        "name": "Al Hamidiya 1",
+        "name_ar": "الحميدية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3024",
+        "city_id": "93",
+        "name": "Al Hamidiya 2",
+        "name_ar": "الحميدية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3025",
+        "city_id": "93",
+        "name": "Al Hamidiya",
+        "name_ar": "الحميدية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3026",
+        "city_id": "93",
+        "name": "Al Helio",
+        "name_ar": "الحليو",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3027",
+        "city_id": "93",
+        "name": "Al Heliow 1",
+        "name_ar": "الحليو 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3028",
+        "city_id": "93",
+        "name": "Al Heliow 2",
+        "name_ar": "الحليو 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3029",
+        "city_id": "93",
+        "name": "Al Jurf 1",
+        "name_ar": "الجرف 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3030",
+        "city_id": "93",
+        "name": "Al Jurf 2",
+        "name_ar": "الجرف 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3031",
+        "city_id": "93",
+        "name": "Al Jurf Industrial Area 1",
+        "name_ar": "منطقة الجرف الصناعية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3032",
+        "city_id": "93",
+        "name": "Al Jurf Industrial Area 2",
+        "name_ar": "منطقة الجرف الصناعية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3033",
+        "city_id": "93",
+        "name": "Al Jurf Industrial Area 3",
+        "name_ar": "منطقة الجرف الصناعية 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3034",
+        "city_id": "93",
+        "name": "Al Muntazi 1",
+        "name_ar": "المنتزى 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3035",
+        "city_id": "93",
+        "name": "Al Muntazi 2",
+        "name_ar": "المنتزى 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3036",
+        "city_id": "93",
+        "name": "Al Mushairef",
+        "name_ar": "المشيرف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3037",
+        "city_id": "93",
+        "name": "Al Mwaihat 1",
+        "name_ar": "المويهات 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3038",
+        "city_id": "93",
+        "name": "Al Mwaihat 2",
+        "name_ar": "المويهات 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3039",
+        "city_id": "93",
+        "name": "Al Mwaihat 3",
+        "name_ar": "المويهات 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3040",
+        "city_id": "93",
+        "name": "Al Nakhil 1",
+        "name_ar": "النخيل 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3041",
+        "city_id": "93",
+        "name": "Al Nakhil 2",
+        "name_ar": "النخيل 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3042",
+        "city_id": "93",
+        "name": "Al Nakhil",
+        "name_ar": "النخيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3043",
+        "city_id": "93",
+        "name": "Al Nuaimia 1",
+        "name_ar": "النعيمية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3044",
+        "city_id": "93",
+        "name": "Al Nuaimia 2",
+        "name_ar": "النعيمية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3045",
+        "city_id": "93",
+        "name": "Al Raqaib 1",
+        "name_ar": "الرقايب 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3046",
+        "city_id": "93",
+        "name": "Al Raqaib 2",
+        "name_ar": "الرقايب 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3047",
+        "city_id": "93",
+        "name": "Al Rashidiya 1",
+        "name_ar": "الراشيدية 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3048",
+        "city_id": "93",
+        "name": "Al Rashidiya 2",
+        "name_ar": "الراشيدية 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3049",
+        "city_id": "93",
+        "name": "Al Rashidiya 3",
+        "name_ar": "الراشيدية 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3050",
+        "city_id": "93",
+        "name": "Al Rawda 1 Al Zahraa",
+        "name_ar": "الروضة 1 الزهراء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3051",
+        "city_id": "93",
+        "name": "Al Rawda 2 Al Zahraa",
+        "name_ar": "الروضة 2 الزهراء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3052",
+        "city_id": "93",
+        "name": "Al Rawda 3 Al Zahraa",
+        "name_ar": "الروضة 3 الزهراء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3053",
+        "city_id": "93",
+        "name": "Al Rumailah",
+        "name_ar": "الرميلة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3054",
+        "city_id": "93",
+        "name": "Al Tallah 1",
+        "name_ar": "التلة 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3055",
+        "city_id": "93",
+        "name": "Al Tallah 2",
+        "name_ar": "التلة 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3056",
+        "city_id": "93",
+        "name": "Al Yasmeen",
+        "name_ar": "الياسمين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3057",
+        "city_id": "93",
+        "name": "Al Zahra",
+        "name_ar": "الزهراء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3058",
+        "city_id": "93",
+        "name": "Al Zahya",
+        "name_ar": "الزاهية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3059",
+        "city_id": "93",
+        "name": "Al Zawarah",
+        "name_ar": "الزوراء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3060",
+        "city_id": "93",
+        "name": "Al Zora",
+        "name_ar": "الزورة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3061",
+        "city_id": "93",
+        "name": "Emirates City Extension",
+        "name_ar": "امتداد مدينة الامارات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3062",
+        "city_id": "93",
+        "name": "Emirates City",
+        "name_ar": "مدينة الإمارات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3063",
+        "city_id": "93",
+        "name": "Garden City",
+        "name_ar": "جاردين سيتي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3064",
+        "city_id": "93",
+        "name": "Ittihad Village",
+        "name_ar": "قرية الأتحاد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3065",
+        "city_id": "93",
+        "name": "Masfout",
+        "name_ar": "مصفوت",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  },
+  {
+    "details": {
+      "city_id": "94",
+      "name": "Al Ain",
+      "name_ar": "العين",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "3066",
+        "city_id": "94",
+        "name": "Abu Samrah",
+        "name_ar": "أيو سمرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3067",
+        "city_id": "94",
+        "name": "Al Agabiyya",
+        "name_ar": "العقابية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3068",
+        "city_id": "94",
+        "name": "Al Ain International Airport",
+        "name_ar": "مطار العين الدولي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3069",
+        "city_id": "94",
+        "name": "Al Ain Zoo",
+        "name_ar": "حديقة حيوانات العين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3070",
+        "city_id": "94",
+        "name": "Al Ameriya",
+        "name_ar": "العامرية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3071",
+        "city_id": "94",
+        "name": "Al Bateen",
+        "name_ar": "البطين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3072",
+        "city_id": "94",
+        "name": "Al Dhahir",
+        "name_ar": "الظاهر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3073",
+        "city_id": "94",
+        "name": "Al Foaa",
+        "name_ar": "الفوعه",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3074",
+        "city_id": "94",
+        "name": "Al Hili",
+        "name_ar": "هيلي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3075",
+        "city_id": "94",
+        "name": "Al Jahili",
+        "name_ar": "الجاهلي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3076",
+        "city_id": "94",
+        "name": "Al Jimi",
+        "name_ar": "الجيمي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3077",
+        "city_id": "94",
+        "name": "Al Khabisi",
+        "name_ar": "الخبيصي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3078",
+        "city_id": "94",
+        "name": "Al Kuwaitat",
+        "name_ar": "الكويتات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3079",
+        "city_id": "94",
+        "name": "Al Manasir",
+        "name_ar": "المناصير",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3080",
+        "city_id": "94",
+        "name": "Al Maqam",
+        "name_ar": "المقام",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3081",
+        "city_id": "94",
+        "name": "Al Marakhaniya",
+        "name_ar": "المرخانية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3082",
+        "city_id": "94",
+        "name": "Al Masoudi",
+        "name_ar": "المسعودي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3083",
+        "city_id": "94",
+        "name": "Al Murabaa",
+        "name_ar": "المربعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3084",
+        "city_id": "94",
+        "name": "Al Muraijeb",
+        "name_ar": "مريجب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3085",
+        "city_id": "94",
+        "name": "Al Mutarad",
+        "name_ar": "المعترض",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3086",
+        "city_id": "94",
+        "name": "Al Mutawaa",
+        "name_ar": "المطاوعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3087",
+        "city_id": "94",
+        "name": "Al Muwaiji",
+        "name_ar": "المويجعي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3088",
+        "city_id": "94",
+        "name": "Al Nabagh",
+        "name_ar": "النباغ",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3089",
+        "city_id": "94",
+        "name": "Al Neyadat",
+        "name_ar": "النيادات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3090",
+        "city_id": "94",
+        "name": "Al Qattara",
+        "name_ar": "القطارة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3091",
+        "city_id": "94",
+        "name": "Al Sad",
+        "name_ar": "الساد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3092",
+        "city_id": "94",
+        "name": "Al Salamat District",
+        "name_ar": "السلامات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3093",
+        "city_id": "94",
+        "name": "Al Sarooj",
+        "name_ar": "الصاروج",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3094",
+        "city_id": "94",
+        "name": "Al Towayya",
+        "name_ar": "الطوية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3095",
+        "city_id": "94",
+        "name": "Al Yahar",
+        "name_ar": "اليحر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3096",
+        "city_id": "94",
+        "name": "Alain Al Fiyada",
+        "name_ar": "العين الفايضة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3097",
+        "city_id": "94",
+        "name": "Asharej",
+        "name_ar": "عشارج",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3098",
+        "city_id": "94",
+        "name": "Bedda Bn Ammar",
+        "name_ar": "بدع بن عمار",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3099",
+        "city_id": "94",
+        "name": "Falaj Hazzaa",
+        "name_ar": "فلج هزاع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3100",
+        "city_id": "94",
+        "name": "Industrial Area",
+        "name_ar": "المنطقة الصناعية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3101",
+        "city_id": "94",
+        "name": "Khatim Al Shikla",
+        "name_ar": "خطم الشكلة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3102",
+        "city_id": "94",
+        "name": "Mezyed",
+        "name_ar": "مزيد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3103",
+        "city_id": "94",
+        "name": "Mubzara",
+        "name_ar": "مبزرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3104",
+        "city_id": "94",
+        "name": "Neima",
+        "name_ar": "نعمة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3105",
+        "city_id": "94",
+        "name": "Remah",
+        "name_ar": "رماح",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3106",
+        "city_id": "94",
+        "name": "Tawam",
+        "name_ar": "توام",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3107",
+        "city_id": "94",
+        "name": "UAE University",
+        "name_ar": "جامعة الامارات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3108",
+        "city_id": "94",
+        "name": "Um Ghaffa",
+        "name_ar": "أم غافة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3109",
+        "city_id": "94",
+        "name": "Zakher",
+        "name_ar": "زاخر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  },
+  {
+    "details": {
+      "city_id": "95",
+      "name": "Fujairah",
+      "name_ar": "الفجيرة",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "3110",
+        "city_id": "95",
+        "name": "Al Aqah",
+        "name_ar": "العقة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3111",
+        "city_id": "95",
+        "name": "Al Bedia",
+        "name_ar": "البدية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3112",
+        "city_id": "95",
+        "name": "Al Buthna",
+        "name_ar": "البثنة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3113",
+        "city_id": "95",
+        "name": "Al Farfar",
+        "name_ar": "الفرفار",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3114",
+        "city_id": "95",
+        "name": "Al Faseel",
+        "name_ar": "الفصيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3115",
+        "city_id": "95",
+        "name": "Al Gurfa",
+        "name_ar": "الغرفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3116",
+        "city_id": "95",
+        "name": "Al Hala",
+        "name_ar": "الحلا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3117",
+        "city_id": "95",
+        "name": "Al Haray",
+        "name_ar": "الحراى",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3118",
+        "city_id": "95",
+        "name": "Al Heel",
+        "name_ar": "الحيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3119",
+        "city_id": "95",
+        "name": "Al Ittihad",
+        "name_ar": "الاتحاد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3120",
+        "city_id": "95",
+        "name": "Al Mahatta",
+        "name_ar": "المحطة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3121",
+        "city_id": "95",
+        "name": "Al Owaid",
+        "name_ar": "العويد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3122",
+        "city_id": "95",
+        "name": "Al Qurayya",
+        "name_ar": "القرية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3123",
+        "city_id": "95",
+        "name": "Al Taween",
+        "name_ar": "الطويين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3124",
+        "city_id": "95",
+        "name": "Albeledah",
+        "name_ar": "البليدة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3125",
+        "city_id": "95",
+        "name": "Anajaimat",
+        "name_ar": "النجمات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3126",
+        "city_id": "95",
+        "name": "Awhala",
+        "name_ar": "أوحلة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3127",
+        "city_id": "95",
+        "name": "Dedna",
+        "name_ar": "ضدنا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3128",
+        "city_id": "95",
+        "name": "Dibba Al Hisn",
+        "name_ar": "دبا الحصن",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3129",
+        "city_id": "95",
+        "name": "Dibba Industrial Area",
+        "name_ar": "المنطقة الصناعية دبا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3130",
+        "city_id": "95",
+        "name": "Dibba",
+        "name_ar": "دبا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3131",
+        "city_id": "95",
+        "name": "Fujairah Free Trade Zone",
+        "name_ar": "المنطقة التجارية الحرة الفجيرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3132",
+        "city_id": "95",
+        "name": "Fujairah Intl Airport",
+        "name_ar": "مطار الفجيرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3133",
+        "city_id": "95",
+        "name": "Fujairah Port",
+        "name_ar": "ميناء الفجيرة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3134",
+        "city_id": "95",
+        "name": "Halefaath",
+        "name_ar": "الحليفات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3135",
+        "city_id": "95",
+        "name": "Industrial Area",
+        "name_ar": "المنطقة الصناعية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3136",
+        "city_id": "95",
+        "name": "Karsha",
+        "name_ar": "كارشا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3137",
+        "city_id": "95",
+        "name": "Madhab",
+        "name_ar": "مذهب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3138",
+        "city_id": "95",
+        "name": "Masafi",
+        "name_ar": "مسافي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3139",
+        "city_id": "95",
+        "name": "Merashid",
+        "name_ar": "مرشد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3140",
+        "city_id": "95",
+        "name": "Mirbah",
+        "name_ar": "مربح",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3141",
+        "city_id": "95",
+        "name": "Old Fujairah City",
+        "name_ar": "الفجيرة القديمة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3142",
+        "city_id": "95",
+        "name": "Qidfa",
+        "name_ar": "قدفع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3143",
+        "city_id": "95",
+        "name": "Rughaylat",
+        "name_ar": "الرغيلات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3144",
+        "city_id": "95",
+        "name": "Rumailah",
+        "name_ar": "الرميلة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3145",
+        "city_id": "95",
+        "name": "Sakamkam",
+        "name_ar": "سكمكم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3146",
+        "city_id": "95",
+        "name": "Sharm",
+        "name_ar": "شرم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3147",
+        "city_id": "95",
+        "name": "Suwayfah",
+        "name_ar": "سويفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3148",
+        "city_id": "95",
+        "name": "Zubara",
+        "name_ar": "الزبارة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  },
+  {
+    "details": {
+      "city_id": "96",
+      "name": "Ras Al Khaima",
+      "name_ar": "رأس الخيمة",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "3149",
+        "city_id": "96",
+        "name": "Al Darbijaniyah",
+        "name_ar": "الدربيجانية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3150",
+        "city_id": "96",
+        "name": "Al Dhait North",
+        "name_ar": "الظيت الشمالي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3151",
+        "city_id": "96",
+        "name": "Al Dhait South",
+        "name_ar": "الظيت الجنوبي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3152",
+        "city_id": "96",
+        "name": "Al Duhaisah",
+        "name_ar": "الدُهَيسة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3153",
+        "city_id": "96",
+        "name": "Al Fahlain",
+        "name_ar": "الفحلين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3154",
+        "city_id": "96",
+        "name": "Al Ghubb",
+        "name_ar": "الغب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3155",
+        "city_id": "96",
+        "name": "Al Hamra Free Zone",
+        "name_ar": "المنطقة الحرة بالحمرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3156",
+        "city_id": "96",
+        "name": "Al Hamra Industrial Area",
+        "name_ar": "المنطقة الصناعية بالحمرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3157",
+        "city_id": "96",
+        "name": "Al Hamra Island",
+        "name_ar": "الحمراء ايلاند",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3158",
+        "city_id": "96",
+        "name": "Al Hamra Village",
+        "name_ar": "قرية الحمرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3159",
+        "city_id": "96",
+        "name": "Al Hudaibah",
+        "name_ar": "الحضيبة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3160",
+        "city_id": "96",
+        "name": "Al Jazeerah Al Hamra",
+        "name_ar": "جزيرة الحمرا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3161",
+        "city_id": "96",
+        "name": "Al Jesser Area",
+        "name_ar": "منطقة الجسر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3162",
+        "city_id": "96",
+        "name": "Al Juwais Area",
+        "name_ar": "الغواص",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3163",
+        "city_id": "96",
+        "name": "Al Kharran",
+        "name_ar": "الخران",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3164",
+        "city_id": "96",
+        "name": "Al Mairid",
+        "name_ar": "المعيريض",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3165",
+        "city_id": "96",
+        "name": "Al Marjan Island",
+        "name_ar": "جزيرة المرجان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3166",
+        "city_id": "96",
+        "name": "Al Mataf",
+        "name_ar": "المطاف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3167",
+        "city_id": "96",
+        "name": "Al Nadiyah",
+        "name_ar": "الندية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3168",
+        "city_id": "96",
+        "name": "Al Nakheel Area",
+        "name_ar": "منطقة النخيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3169",
+        "city_id": "96",
+        "name": "Al Nudood",
+        "name_ar": "الندود",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3170",
+        "city_id": "96",
+        "name": "Al Qurm",
+        "name_ar": "القرم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3171",
+        "city_id": "96",
+        "name": "Al Qusaidat",
+        "name_ar": "القصيدات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3172",
+        "city_id": "96",
+        "name": "Al Ragibah",
+        "name_ar": "الرجيبه",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3173",
+        "city_id": "96",
+        "name": "Al Sall",
+        "name_ar": "السل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3174",
+        "city_id": "96",
+        "name": "Al Seer",
+        "name_ar": "السير",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3175",
+        "city_id": "96",
+        "name": "Al Soor",
+        "name_ar": "السور",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3176",
+        "city_id": "96",
+        "name": "Al Turfah",
+        "name_ar": "الترفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3177",
+        "city_id": "96",
+        "name": "Al Uraibi",
+        "name_ar": "العريبي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3178",
+        "city_id": "96",
+        "name": "Al Zahra",
+        "name_ar": "الزهراء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3179",
+        "city_id": "96",
+        "name": "Burairaat",
+        "name_ar": "بريرات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3180",
+        "city_id": "96",
+        "name": "Dafan Al Khor",
+        "name_ar": "دافن الخور",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3181",
+        "city_id": "96",
+        "name": "Dafan Al Nakheel",
+        "name_ar": "دفان النخيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3182",
+        "city_id": "96",
+        "name": "Dahan",
+        "name_ar": "دَهَن",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3183",
+        "city_id": "96",
+        "name": "Digdagga",
+        "name_ar": "دقداقة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3184",
+        "city_id": "96",
+        "name": "Ghalilah",
+        "name_ar": "غاليلة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3185",
+        "city_id": "96",
+        "name": "Hamrania",
+        "name_ar": "الحمرانية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3186",
+        "city_id": "96",
+        "name": "Khatt",
+        "name_ar": "خط",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3187",
+        "city_id": "96",
+        "name": "Khazam",
+        "name_ar": "خزام",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3188",
+        "city_id": "96",
+        "name": "Liwa Badr",
+        "name_ar": "لواء بدر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3189",
+        "city_id": "96",
+        "name": "Mamoora",
+        "name_ar": "المعمورة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3190",
+        "city_id": "96",
+        "name": "Mina Al arab",
+        "name_ar": "ميناء العرب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3191",
+        "city_id": "96",
+        "name": "RAK City",
+        "name_ar": "راك سيتي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3192",
+        "city_id": "96",
+        "name": "Rams",
+        "name_ar": "الرمس",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3193",
+        "city_id": "96",
+        "name": "Ras Al Selaab Area",
+        "name_ar": "راس السلاب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3194",
+        "city_id": "96",
+        "name": "Refa`ah",
+        "name_ar": "الرفاعة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3195",
+        "city_id": "96",
+        "name": "Seih Al Ghubb",
+        "name_ar": "سيح الغب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3196",
+        "city_id": "96",
+        "name": "Seih al Harf",
+        "name_ar": "سيف الحرف",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3197",
+        "city_id": "96",
+        "name": "Seih Al Hudaibah",
+        "name_ar": "سيخ الحضيبة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3198",
+        "city_id": "96",
+        "name": "Seih Al Qusaidat",
+        "name_ar": "سيح القُسَيدات",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3199",
+        "city_id": "96",
+        "name": "Seih Al Uraibi",
+        "name_ar": "سيح العريبي",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3200",
+        "city_id": "96",
+        "name": "Seih Shihyar",
+        "name_ar": "سيح شهيار",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3201",
+        "city_id": "96",
+        "name": "Shamal Haqueel",
+        "name_ar": "شمال حقيل",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3202",
+        "city_id": "96",
+        "name": "Shamal Julphar",
+        "name_ar": "شمال جلفار",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3203",
+        "city_id": "96",
+        "name": "Shareesha",
+        "name_ar": "الشريشة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3204",
+        "city_id": "96",
+        "name": "Sidroh",
+        "name_ar": "سيدوره",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3205",
+        "city_id": "96",
+        "name": "Suhaim Area",
+        "name_ar": "سهيم",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3206",
+        "city_id": "96",
+        "name": "Wadi Ammar",
+        "name_ar": "وادي عمار",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  },
+  {
+    "details": {
+      "city_id": "97",
+      "name": "Umm Al-Quwain",
+      "name_ar": "ام القيوين",
+      "latitude": null,
+      "longitude": null
+    },
+    "areas": [
+      {
+        "area_id": "3207",
+        "city_id": "97",
+        "name": "Al Humrah - D",
+        "name_ar": "الحمرة- 4",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3208",
+        "city_id": "97",
+        "name": "Al Aahad",
+        "name_ar": "الاحد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3209",
+        "city_id": "97",
+        "name": "Al Abrab",
+        "name_ar": "الابرب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3210",
+        "city_id": "97",
+        "name": "Al Dar Al Baidah",
+        "name_ar": "الدار البيضاء",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3211",
+        "city_id": "97",
+        "name": "Al Haditha",
+        "name_ar": "الحديثة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3212",
+        "city_id": "97",
+        "name": "Al Hawiyah",
+        "name_ar": "الحواية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3213",
+        "city_id": "97",
+        "name": "Al Hobob",
+        "name_ar": "الهبوب",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3214",
+        "city_id": "97",
+        "name": "Al Humrah - A",
+        "name_ar": "الحمرة- 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3215",
+        "city_id": "97",
+        "name": "Al Humrah - B",
+        "name_ar": "الحمرة- 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3216",
+        "city_id": "97",
+        "name": "Al Humrah - C",
+        "name_ar": "الحمرة- 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3217",
+        "city_id": "97",
+        "name": "Al Khor",
+        "name_ar": "الخور",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3218",
+        "city_id": "97",
+        "name": "Al Limgadhar",
+        "name_ar": "اللمغدر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3219",
+        "city_id": "97",
+        "name": "Al Maidan",
+        "name_ar": "الميدان",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3220",
+        "city_id": "97",
+        "name": "Al Qarain",
+        "name_ar": "القراين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3221",
+        "city_id": "97",
+        "name": "Al Raas - A",
+        "name_ar": "الراس- 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3222",
+        "city_id": "97",
+        "name": "Al Raas - B",
+        "name_ar": "الراس- 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3223",
+        "city_id": "97",
+        "name": "Al Raas - C",
+        "name_ar": "الراس- 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3224",
+        "city_id": "97",
+        "name": "Al Rafaah",
+        "name_ar": "الراعفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3225",
+        "city_id": "97",
+        "name": "Al Ramlah",
+        "name_ar": "الرملة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3226",
+        "city_id": "97",
+        "name": "Al Raudah",
+        "name_ar": "الروضة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3227",
+        "city_id": "97",
+        "name": "Al Riqqah",
+        "name_ar": "الرقة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3228",
+        "city_id": "97",
+        "name": "Al Salamah - A",
+        "name_ar": "السلامة- 1",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3229",
+        "city_id": "97",
+        "name": "Al Salamah - B",
+        "name_ar": "السلامة- 2",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3230",
+        "city_id": "97",
+        "name": "Al Salamah - C",
+        "name_ar": "السلامة- 3",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3231",
+        "city_id": "97",
+        "name": "Defence Camp",
+        "name_ar": "مخيم الدفاع",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3232",
+        "city_id": "97",
+        "name": "Emirates Modern Industrial",
+        "name_ar": "الامارات الصناعية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3233",
+        "city_id": "97",
+        "name": "Green Belt",
+        "name_ar": "الحزام الاخضر",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3234",
+        "city_id": "97",
+        "name": "Industrial Area",
+        "name_ar": "المنطقة الصناعية",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3235",
+        "city_id": "97",
+        "name": "Khalifa City",
+        "name_ar": "مدينة خليفة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3236",
+        "city_id": "97",
+        "name": "Latin",
+        "name_ar": "لعطين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3237",
+        "city_id": "97",
+        "name": "Mohamed Bin Rashed",
+        "name_ar": "محمد بن راشد",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3238",
+        "city_id": "97",
+        "name": "Old Town Area",
+        "name_ar": "المدينة القديمة",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3239",
+        "city_id": "97",
+        "name": "Umm Al Quwain Airport",
+        "name_ar": "مطار ام القيوين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      },
+      {
+        "area_id": "3240",
+        "city_id": "97",
+        "name": "Umm Al Quwain Marina",
+        "name_ar": "مارينا ام القيوين",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
+      }
+    ]
+  }
+]

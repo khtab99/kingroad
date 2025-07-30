@@ -6,8 +6,9 @@ import { ProductError } from "./ProductError";
 import { ProductCard } from "./ProductCard";
 import { useStore } from "@/store/useStore";
 import { useParams, useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Grid, List } from "lucide-react";
 
 interface CategoryFilters {
   superCategoryId?: string;
@@ -38,7 +39,7 @@ export function ProductsGrid({
   const { language } = useStore();
   const router = useRouter();
 
-  console.log("categoryFilters", categoryFilters);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // Prepare filters for API call with 3-level category support
   const filters = useMemo(() => {
@@ -101,8 +102,6 @@ export function ProductsGrid({
     lastPage,
     revalidateProducts,
   } = useGetProductsByCategory(effectiveCategoryId, filters);
-
-  console.log("productList", productList);
 
   const handleBuyNow = (product: any) => {
     router.push("/cart");
@@ -181,27 +180,33 @@ export function ProductsGrid({
   return (
     <div>
       {/* Products Header */}
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-2 capitalize">
-          {getCategoryDisplayName()}
-        </h2>
-        <p className="text-gray-600 text-sm">
-          {totalProducts} {language === "ar" ? "منتج" : "products"}
-        </p>
+      <div className="flex items-center justify-between mb-4">
+        {" "}
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2 capitalize">
+            {getCategoryDisplayName()}
+          </h2>
+          <p className="text-gray-600 text-sm">
+            {totalProducts} {language === "ar" ? "منتج" : "products"}
+          </p>
 
-        {/* Category Breadcrumb */}
-        <div className="mt-2 text-sm text-gray-500">
-          {/* {selectedCategories.superCategory && (
-            <span>
-              {selectedCategories.superCategory}
-              {selectedCategories.category && (
-                <span> → {selectedCategories.category}</span>
-              )}
-              {selectedCategories.subCategory && (
-                <span> → {selectedCategories.subCategory}</span>
-              )}
-            </span>
-          )} */}
+          {/* Category Breadcrumb */}
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant={viewMode === "grid" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setViewMode("grid")}
+          >
+            <Grid className="h-4 w-4" />
+          </Button>
+          <Button
+            variant={viewMode === "list" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setViewMode("list")}
+          >
+            <List className="h-4 w-4" />
+          </Button>
         </div>
       </div>
 
@@ -212,7 +217,7 @@ export function ProductsGrid({
             key={product.id}
             product={product}
             onBuyNow={handleBuyNow}
-            variant="grid"
+            variant={viewMode}
           />
         ))}
       </div>

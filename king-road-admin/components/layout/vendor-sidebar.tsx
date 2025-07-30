@@ -16,6 +16,8 @@ import {
   Store,
   HelpCircle,
   Users,
+  SlidersHorizontalIcon,
+  Truck,
 } from "lucide-react";
 import { useLanguage } from "../providers/language-provider";
 
@@ -53,6 +55,18 @@ export function VendorSidebar() {
       title: "Customers",
       href: "/customers",
       icon: Users,
+      badge: null,
+    },
+    {
+      title: "Slider",
+      href: "/sliders",
+      icon: SlidersHorizontalIcon,
+      badge: null,
+    },
+    {
+      title: "Delivery Fees",
+      href: "/delivery_fees",
+      icon: Truck,
       badge: null,
     },
   ];

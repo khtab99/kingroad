@@ -56,5 +56,13 @@ export function AddressDisplay({
     return details;
   };
 
-  return <div className="text-sm text-gray-600">{getAddressDetails()}</div>;
+  return (
+    <div
+      className={`text-sm text-gray-600  ${
+        language === "ar" ? "text-right" : "text-left"
+      }`}
+    >
+      {getAddressDetails()}
+    </div>
+  );
 }

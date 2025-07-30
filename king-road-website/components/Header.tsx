@@ -21,6 +21,7 @@ import { AuthModal } from "./auth/AuthModal";
 import { AuthButton } from "./AuthButton";
 import Image from "next/image";
 import { Tooltip, TooltipContent, TooltipProvider } from "./ui/tooltip";
+import { useGetDeliveryFeeList } from "@/api/delivery_fees";
 
 function SearchInput({
   placeholder = "Search",
@@ -44,6 +45,11 @@ function LanguageToggle() {
   const language = useStore((s) => s.language);
   const toggleLanguage = useStore((s) => s.toggleLanguage);
 
+  const handleToggleLanguage = () => {
+    toggleLanguage();
+    window.location.reload();
+  };
+
   const nextLanguage = language === "en" ? "AR" : "EN";
 
   return (
@@ -51,7 +57,7 @@ function LanguageToggle() {
       <Tooltip>
         <TooltipContent>{`Switch to ${nextLanguage}`}</TooltipContent>
         <button
-          onClick={toggleLanguage}
+          onClick={handleToggleLanguage}
           aria-label="Toggle language"
           className="flex items-center gap-1 px-2 py-1 rounded-full bg-gray-600 text-white hover:bg-red-100 hover:text-red-600 transition-colors duration-200"
         >
@@ -96,6 +102,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const { deliveryFeeList } = useGetDeliveryFeeList();
+
+  const [fee, setFee] = useState(0);
+
+  useEffect(() => {
+    const fee = deliveryFeeList[0]?.base_fee || 0;
+    setFee(fee);
+  }, [deliveryFeeList]);
+
   return (
     <>
       {/* Top Bar */}
@@ -117,7 +132,11 @@ export function Header() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <span>Fixed delivery fee: AED 35 for all orders inside UAE</span>
+              <span>
+                {language === "en"
+                  ? `Fixed delivery fee: AED ${fee} for all orders inside UAE`
+                  : `رسوم التوصيل: AED ${fee}  لجميع الطلبات داخل الامارات`}
+              </span>
               <LanguageToggle />
             </div>
           </div>
@@ -147,13 +166,15 @@ export function Header() {
           </div>
           <div className="lg:hidden flex-shrink-0">
             {" "}
-            <Image
-              src="/assets/images/logo.png"
-              alt="King Road Logo"
-              width={55}
-              height={55}
-              className="object-contain p-2"
-            />
+            <Link href="/">
+              <Image
+                src="/assets/images/logo.png"
+                alt="King Road Logo"
+                width={55}
+                height={55}
+                className="object-contain p-2"
+              />
+            </Link>
           </div>
 
           <div className="flex items-center gap-2"></div>

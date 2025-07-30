@@ -10,7 +10,9 @@ use App\Http\Controllers\Api\Admin\AdminReviewController;
 use App\Http\Controllers\Api\Admin\AdminCouponController;
 use App\Http\Controllers\Api\Admin\AdminAnalyticsController;
 use App\Http\Controllers\Api\Admin\AdminSettingController;
+use App\Http\Controllers\Api\Admin\AdminSliderController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
+use App\Http\Controllers\Api\Admin\DeliveryFeeController;
 
 // Admin routes
 Route::prefix('v1/admin')->group(function () {
@@ -79,6 +81,24 @@ Route::prefix('v1/admin')->group(function () {
             // Route::get('/{user}/reviews', [AdminCustomerController::class, 'reviews']);
             // Route::post('/{user}/send-email', [AdminCustomerController::class, 'sendEmail']);
             // Route::get('/export', [AdminCustomerController::class, 'export']);
+        });
+
+        //Slider management
+        Route::prefix('sliders')->group(function (): void {
+            Route::get('/', [AdminSliderController::class, 'index']);
+            Route::post('/', [AdminSliderController::class, 'store']);
+            Route::get('/{id}', [AdminSliderController::class, 'show']);
+            Route::put('/{id}', [AdminSliderController::class, 'update']);
+            Route::delete('/{id}', [AdminSliderController::class, 'destroy']);
+        });
+
+        // Delivery management
+        Route::prefix('delivery_fees')->group(function (): void {
+            Route::get('/', [DeliveryFeeController::class, 'index']);
+            Route::post('/', [DeliveryFeeController::class, 'store']);
+            Route::get('/{delivery_fee}', [DeliveryFeeController::class, 'show']);
+            Route::put('/{delivery_fee}', [DeliveryFeeController::class, 'update']);
+            Route::delete('/{delivery_fee}', [DeliveryFeeController::class, 'destroy']);
         });
 
         // Reviews management

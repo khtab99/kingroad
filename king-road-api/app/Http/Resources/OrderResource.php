@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
                 'office_number' => $this->office_number,
                 'additional_description' => $this->additional_description,
                 'city' => $this->city,
+                'emirate' => $this->emirate,
                 'country' => $this->country,
             ],
             'subtotal' => $this->subtotal,

@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import {
   ChevronRight,
   ChevronLeft,
@@ -16,13 +14,15 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useGetDeliveryFeeList } from "@/api/delivery_fees";
 
 export default function CartPage() {
   const { cartItems, language, updateQuantity, removeFromCart } = useStore();
   const [discountCode, setDiscountCode] = useState("");
   const router = useRouter();
+
+  const { deliveryFeeList } = useGetDeliveryFeeList();
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -191,16 +191,21 @@ export default function CartPage() {
                   language === "ar" ? "أدخل كود الخصم" : "Enter discount code"
                 }
                 className="flex-1 text-right border-gray-300 rounded-md"
-                dir="rtl"
               />
             </div>
           </div>
 
           {/* Order Summary */}
-          <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
+          <div
+            className="bg-white rounded-lg p-4 mb-6 border border-gray-200"
+            dir={language === "ar" ? "ltr" : "rtl"}
+          >
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-gray-800">
+                <span
+                  className="text-gray-800"
+                  dir={language === "ar" ? "rtl" : "ltr"}
+                >
                   {subtotal} {language === "ar" ? "د.إ" : "AED"}
                 </span>
                 <span className="text-gray-600">
@@ -209,9 +214,15 @@ export default function CartPage() {
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-gray-800">
-                  {deliveryFee} {language === "ar" ? "د.إ" : "AED"}
-                </span>
+                {deliveryFeeList && (
+                  <span
+                    className="text-gray-800"
+                    dir={language === "ar" ? "rtl" : "ltr"}
+                  >
+                    {deliveryFeeList[0]?.base_fee}{" "}
+                    {language === "ar" ? "د.إ" : "AED"}
+                  </span>
+                )}
                 <span className="text-gray-600">
                   {language === "ar" ? "رسوم التوصيل" : "Delivery Fee"}
                 </span>
@@ -219,7 +230,10 @@ export default function CartPage() {
 
               <div className="border-t border-gray-200 pt-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-800 font-medium text-lg">
+                  <span
+                    className="text-gray-800 font-medium text-lg"
+                    dir={language === "ar" ? "rtl" : "ltr"}
+                  >
                     {total} {language === "ar" ? "د.إ" : "AED"}
                   </span>
                   <span className="text-gray-800 font-medium">

@@ -17,6 +17,7 @@ import {
   setPhoneData,
 } from "@/util/storage";
 import { LoadingSpinner } from "@/components/checkout/confirm/LoadingSpinner";
+import { useGetDeliveryFeeList } from "@/api/delivery_fees";
 
 export default function CheckoutPage() {
   const { cartItems, language, cartCount } = useStore();
@@ -30,6 +31,15 @@ export default function CheckoutPage() {
 
   const checkoutData = getCheckOutData();
 
+  const { deliveryFeeList } = useGetDeliveryFeeList();
+
+  const [fee, setFee] = useState(0);
+
+  useEffect(() => {
+    const fee = deliveryFeeList[0]?.base_fee || 0;
+    setFee(fee);
+  }, [deliveryFeeList]);
+
   useEffect(() => {
     try {
       const raw: any = getUserData();
@@ -41,6 +51,7 @@ export default function CheckoutPage() {
 
   const [formData, setFormData] = useState({
     country: "UAE",
+    emirate: "",
     city: "",
     street: "",
     houseNumber: "",
@@ -110,8 +121,7 @@ export default function CheckoutPage() {
     if (
       !formData.street.trim() ||
       !formData.name.trim() ||
-      !formData.phone.trim() ||
-      !formData.email.trim()
+      !formData.phone.trim()
     ) {
       return false;
     }
@@ -148,7 +158,6 @@ export default function CheckoutPage() {
       );
       return;
     }
-    const deliveryfee = 35;
 
     const checkoutData = {
       checkoutSessionId: uuidv4(), // ✅ Generate unique session ID
@@ -160,9 +169,9 @@ export default function CheckoutPage() {
         (sum, item) => sum + item.price * item.quantity,
         0
       ),
-      deliveryFee: deliveryfee,
+      deliveryFee: fee,
       total: cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity + deliveryfee,
+        (sum, item) => sum + item.price * item.quantity + fee,
         0
       ),
     };

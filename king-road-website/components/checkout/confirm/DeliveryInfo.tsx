@@ -26,7 +26,10 @@ export function DeliveryInfo({ checkoutData, language }: DeliveryInfoProps) {
     Home;
 
   return (
-    <div className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
+    <div
+      className="bg-white rounded-lg p-4 mb-6 border border-gray-200"
+      dir={language === "ar" ? "ltr" : "rtl"}
+    >
       <div className="flex items-center justify-between text-right mb-4">
         <div className="flex items-center gap-2 text-gray-600">
           <Clock className="h-4 w-4" />
@@ -44,7 +47,7 @@ export function DeliveryInfo({ checkoutData, language }: DeliveryInfoProps) {
       <div className="space-y-3 text-right">
         <div className="flex items-center justify-end gap-2">
           <span className="text-gray-700">
-            {checkoutData.country}, {checkoutData.city}
+            {checkoutData.country} , {checkoutData.emirate}, {checkoutData.city}
           </span>
           <AddressIcon className="h-4 w-4 text-gray-600" />
         </div>
@@ -57,7 +60,7 @@ export function DeliveryInfo({ checkoutData, language }: DeliveryInfoProps) {
         </div>
 
         <div className="flex items-center justify-end gap-2">
-          <span className="text-gray-700">+971{checkoutData.phone}</span>
+          <span className="text-gray-700">+{checkoutData.phone}</span>
           <Phone className="h-4 w-4 text-gray-600" />
         </div>
 

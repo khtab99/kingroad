@@ -199,70 +199,78 @@ export default function CategoriesPage() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  filteredCategories.map((category: any) => (
-                    <TableRow key={category.id}>
-                      <TableCell>{category.id}</TableCell>
-                      <TableCell>
-                        <Avatar className="h-16 w-16 shadow-sm">
-                          <AvatarImage
-                            src={category.image}
-                            alt={category.name_en}
-                          />
-                          <AvatarFallback>
-                            {category.name_en
-                              .split(" ")
-                              .map((n: string) => n[0])
-                              .join("")
-                              .toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                      </TableCell>
-                      <TableCell>
-                        <div className="font-medium">{category.name_en}</div>
-                        <div className="text-sm text-muted-foreground">
-                          {category.name_ar}
-                        </div>
-                      </TableCell>
-                      <TableCell>{category.slug}</TableCell>
-                      <TableCell>
-                        {category.parent?.name_en || "Main Category"}
-                      </TableCell>
-                      <TableCell>{category.sort_order}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={category.is_active ? "default" : "outline"}
-                          className={`${
-                            category.is_active
-                              ? "bg-green-500"
-                              : "border-red-500"
-                          }`}
-                        >
-                          {category.is_active ? "Active" : "Inactive"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center space-x-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleEdit(category)}
+                  filteredCategories.map((category: any) => {
+                    const cleanImageUrl = category?.image?.includes(
+                      "assets/images/"
+                    )
+                      ? category.image.replace("http://localhost:8000", "")
+                      : category?.image || "/assets/images/hero/1.jpg";
+
+                    return (
+                      <TableRow key={category.id}>
+                        <TableCell>{category.id}</TableCell>
+                        <TableCell>
+                          <Avatar className="h-16 w-16 shadow-sm">
+                            <AvatarImage
+                              src={cleanImageUrl}
+                              alt={category.name_en}
+                            />
+                            <AvatarFallback>
+                              {category.name_en
+                                .split(" ")
+                                .map((n: string) => n[0])
+                                .join("")
+                                .toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                        </TableCell>
+                        <TableCell>
+                          <div className="font-medium">{category.name_en}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {category.name_ar}
+                          </div>
+                        </TableCell>
+                        <TableCell>{category.slug}</TableCell>
+                        <TableCell>
+                          {category.parent?.name_en || "Main Category"}
+                        </TableCell>
+                        <TableCell>{category.sort_order}</TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={category.is_active ? "default" : "outline"}
+                            className={`${
+                              category.is_active
+                                ? "bg-green-500"
+                                : "border-red-500"
+                            }`}
                           >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              setSelectedCategory(category.id);
-                              setDeleteDialogOpen(true);
-                            }}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                            {category.is_active ? "Active" : "Inactive"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleEdit(category)}
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setSelectedCategory(category.id);
+                                setDeleteDialogOpen(true);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 )}
               </TableBody>
             </Table>

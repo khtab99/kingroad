@@ -44,7 +44,7 @@ export function DeliveryInfo({ checkoutData, language }: DeliveryInfoProps) {
       <div className="space-y-3 text-right">
         <div className="flex items-center justify-end gap-2">
           <span className="text-gray-700">
-            {checkoutData.country}, {checkoutData.city}
+            {checkoutData.country} , {checkoutData.emirate}, {checkoutData.city}
           </span>
           <AddressIcon className="h-4 w-4 text-gray-600" />
         </div>

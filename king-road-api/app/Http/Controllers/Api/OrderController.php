@@ -116,6 +116,8 @@ public function store(CreateOrderRequest $request)
             'customer_phone' => $data['customer_phone'],
             'customer_email' => $data['customer_email'] ?? (auth()->check() ? auth()->user()->email : null),
             'address_type' => $data['address_type'],
+            'emirate' => $data['emirate'],
+            'city' => $data['city'],
             'street' => $data['street'],
             'house_number' => $data['house_number'] ?? null,
             'building_number' => $data['building_number'] ?? null,

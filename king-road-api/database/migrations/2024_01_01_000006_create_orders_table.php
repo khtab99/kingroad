@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('apartment_number')->nullable();
             $table->string('office_number')->nullable();
             $table->text('additional_description')->nullable();
-            $table->string('city')->default('Umm Al Quwain');
+            $table->string('city')->default('falaj al mualla');
+            $table->string('emirate')->default('Umm Al Quwain');
             $table->string('country')->default('United Arab Emirates');
             $table->decimal('subtotal', 10, 2);
             $table->decimal('delivery_fee', 10, 2)->default(0);

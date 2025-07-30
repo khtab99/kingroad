@@ -29,6 +29,8 @@ class CreateOrderRequest extends FormRequest
             'payment_method' => 'nullable|string|max:50',
             'customer_notes' => 'nullable|string|max:500',
             'coupon_code' => 'nullable|string|exists:coupons,code',
+            'emirate' => 'required|string|max:100',
+            'city' => 'required|string|max:100',
             'items' => 'required|array|min:1',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',

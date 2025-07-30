@@ -26,6 +26,7 @@ class Order extends Model
         'office_number',
         'additional_description',
         'city',
+        'emirate',
         'country',
         'subtotal',
         'delivery_fee',
@@ -129,6 +130,7 @@ class Order extends Model
         if ($this->additional_description) {
             $parts[] = $this->additional_description;
         }
+        $parts[] = $this->emirate;
 
         $parts[] = $this->city;
         $parts[] = $this->country;

@@ -126,7 +126,7 @@ export function WhyChooseUsSection() {
                   </a>
                 </div>
               </div>
-              <div className="relative h-48 lg:h-64">
+              <div className="relative h-36  ">
                 <Image
                   src="/assets/images/logo.png"
                   alt="King Road Support"

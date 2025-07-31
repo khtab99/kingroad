@@ -3,13 +3,14 @@
     "navigation": {
       "search": "Search",
       "cart": "Cart",
-      "menu": "MENU",
-      "orderStatus": "ORDER STATUS",
+      "menu": "Home",
+      "orderStatus": "TRACK ORDER",
       "contactUs": "CONTACT US",
       "login": "LOGIN",
       "aboutUs": "ABOUT US",
       "privacyPolicy": "PRIVACY POLICY",
-      "arabic": "عربي"
+      "arabic": "عربي",
+      "logout": "LOGOUT"
     },
     "topNav": {
       "branches": "Branches",
@@ -52,13 +53,14 @@
     "navigation": {
       "search": "ابحث",
       "cart": "السلة",
-      "menu": "القائمة",
-      "orderStatus": "حالة الطلب",
+      "menu": "الصفحة الرئيسية",
+      "orderStatus": "تتبع الطلب",
       "contactUs": "اتصل بنا",
       "login": "تسجيل دخول",
       "aboutUs": "من نحن",
       "privacyPolicy": "سياسة الخصوصية",
-      "arabic": "عربي"
+      "arabic": "عربي",
+      "logout": "تسجيل خروج"
     },
     "topNav": {
       "branches": "الفروع",

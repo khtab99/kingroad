@@ -199,7 +199,7 @@ export function ProductCard({
             <Button
               variant="outline"
               size="sm"
-              className="flex-1 bg-red-300 text-white hover:bg-red-400 text-xs sm:text-sm px-2 py-1 h-7 sm:h-8"
+              className="flex-1 bg-transparent text-red-600 hover:bg-red-400 text-xs sm:text-sm px-2 py-1 h-7 sm:h-8"
               disabled={isOutOfStock}
               onClick={handleBuyNow}
             >

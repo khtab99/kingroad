@@ -5466,6 +5466,15 @@
         "latitude": null,
         "longitude": null,
         "zone_id": "2"
+      },
+      {
+        "area_id": "3241",
+        "city_id": "97",
+        "name": "Falaj al Mualla",
+        "name_ar": "فلج المعلا",
+        "latitude": null,
+        "longitude": null,
+        "zone_id": "2"
       }
     ]
   }

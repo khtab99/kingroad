@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Product } from "@/api/product";
+
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,9 +10,9 @@ import { toast } from "sonner";
 import { useMemo, useState } from "react";
 
 interface ProductCardProps {
-  product: Product;
-  onAddToCart?: (product: Product) => void;
-  onBuyNow?: (product: Product) => void;
+  product: any;
+  onAddToCart?: (product: any) => void;
+  onBuyNow?: (product: any) => void;
   variant?: "grid" | "list";
 }
 

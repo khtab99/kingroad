@@ -18,7 +18,7 @@ interface CategoryFilters {
 
 interface ProductsGridProps {
   // Updated to support 3-level hierarchy
-  categoryFilters: CategoryFilters;
+  categoryFilters: any;
   selectedCategories: {
     superCategory?: string;
     category?: string;

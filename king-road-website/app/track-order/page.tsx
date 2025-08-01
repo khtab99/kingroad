@@ -287,11 +287,11 @@ export default function TrackOrderPage() {
                   })}
                   placeholder="e.g., KR250104001"
                 />
-                {errors.order_number && (
+                {/* {errors.order_number && (
                   <p className="text-sm text-red-600 mt-1">
                     {errors.order_number.message}
                   </p>
-                )}
+                )} */}
               </div>
               <div>
                 <Label htmlFor="customer_phone">Phone Number</Label>
@@ -302,11 +302,11 @@ export default function TrackOrderPage() {
                   })}
                   placeholder="+971 XX XXX XXXX"
                 />
-                {errors.customer_phone && (
+                {/* {errors.customer_phone && (
                   <p className="text-sm text-red-600 mt-1">
                     {errors.customer_phone.message}
                   </p>
-                )}
+                )} */}
               </div>
             </div>
             <Button

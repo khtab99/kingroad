@@ -80,14 +80,14 @@ export function ProductCard({
       toast.success(
         language === "ar"
           ? `تم إضافة ${productName} إلى السلة`
-          : `${productName} added to cart`,
-        {
-          description:
-            language === "ar"
-              ? "يمكنك مراجعة السلة من الأعلى"
-              : "You can review your cart from the top",
-          duration: 3000,
-        }
+          : `${productName} added to cart`
+        // {
+        //   description:
+        //     language === "ar"
+        //       ? "يمكنك مراجعة السلة من الأعلى"
+        //       : "You can review your cart from the top",
+        //   duration: 3000,
+        // }
       );
     } catch (error) {
       toast.error(language === "ar" ? "حدث خطأ" : "Something went wrong");

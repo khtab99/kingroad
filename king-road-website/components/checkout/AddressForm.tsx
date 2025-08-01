@@ -15,24 +15,10 @@ import { EmiratesCitySelector } from "./emairate-city-form";
 interface AddressFormProps {
   language: string;
   selectedAddressType: string;
-  formData: {
-    country: any;
-    emirate: any;
-    city: any;
-    street: string;
-    houseNumber: string;
-    buildingNumber: string;
-    floor: string;
-    apartmentNumber: string;
-    officeNumber: string;
-    additionalDescription: string;
-    name: string;
-    phone: string;
-    email: string;
-    createAccount: boolean;
-  };
+  formData: any;
   onInputChange: (field: string, value: string | boolean) => void;
   disabled: boolean;
+  validationErrors: any;
 }
 
 export default function AddressForm({
@@ -41,6 +27,7 @@ export default function AddressForm({
   formData,
   onInputChange,
   disabled,
+  validationErrors,
 }: AddressFormProps) {
   const renderAddressFields = () => {
     switch (selectedAddressType) {

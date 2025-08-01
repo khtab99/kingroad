@@ -3,7 +3,7 @@ import { Home, Building, Building2 } from "lucide-react";
 interface AddressTypeSelectionProps {
   language: string;
   selectedAddressType: string;
-  onSelectAddressType: (type: string) => void;
+  onSelectAddressType: any;
 }
 
 export default function AddressTypeSelection({

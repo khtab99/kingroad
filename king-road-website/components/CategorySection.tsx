@@ -62,7 +62,7 @@ export function CategorySection() {
                         src={cleanImageUrl ?? "/assets/images/hero.jpg"}
                         alt={category.name_en}
                         fill
-                        className="object-contain group-hover:scale-110 transition-transform duration-300"
+                        className="object-cover scale-105 group-hover:scale-110 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>

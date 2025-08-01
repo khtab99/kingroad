@@ -2,6 +2,7 @@
   "en": {
     "navigation": {
       "search": "Search",
+      "products": "Products",
       "cart": "Cart",
       "menu": "Home",
       "orderStatus": "TRACK ORDER",
@@ -51,6 +52,7 @@
   },
   "ar": {
     "navigation": {
+      "products": "المنتجات",
       "search": "ابحث",
       "cart": "السلة",
       "menu": "الصفحة الرئيسية",

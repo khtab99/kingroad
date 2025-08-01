@@ -9,6 +9,7 @@ import {
   Info,
   Shield,
   Instagram,
+  Package,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -37,6 +38,8 @@ export function MobileMenu() {
 
   const menuItems = [
     { icon: Home, label: t.navigation.menu, href: "/" },
+    { icon: Package, label: t.navigation.products, href: "/product" },
+    // { icon: Pro, label: t.navigation., href: "/login" },
     { icon: Truck, label: t.navigation.orderStatus, href: "/track-order" },
     { icon: Phone, label: t.navigation.contactUs, href: "/contact" },
 

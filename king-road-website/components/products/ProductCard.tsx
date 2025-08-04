@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Product } from "@/api/product";
+
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,9 +10,9 @@ import { toast } from "sonner";
 import { useMemo, useState } from "react";
 
 interface ProductCardProps {
-  product: Product;
-  onAddToCart?: (product: Product) => void;
-  onBuyNow?: (product: Product) => void;
+  product: any;
+  onAddToCart?: (product: any) => void;
+  onBuyNow?: (product: any) => void;
   variant?: "grid" | "list";
 }
 
@@ -80,14 +80,14 @@ export function ProductCard({
       toast.success(
         language === "ar"
           ? `تم إضافة ${productName} إلى السلة`
-          : `${productName} added to cart`,
-        {
-          description:
-            language === "ar"
-              ? "يمكنك مراجعة السلة من الأعلى"
-              : "You can review your cart from the top",
-          duration: 3000,
-        }
+          : `${productName} added to cart`
+        // {
+        //   description:
+        //     language === "ar"
+        //       ? "يمكنك مراجعة السلة من الأعلى"
+        //       : "You can review your cart from the top",
+        //   duration: 3000,
+        // }
       );
     } catch (error) {
       toast.error(language === "ar" ? "حدث خطأ" : "Something went wrong");
@@ -123,9 +123,9 @@ export function ProductCard({
       ? product.featured_image.replace("http://localhost:8000", "")
       : product?.featured_image || "/assets/images/product/1.jpg";
     return (
-      <div className="flex gap-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+      <div className="flex gap-2 sm:gap-4 p-2 sm:p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
         {/* Product Image */}
-        <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 relative">
+        <div className="w-16 h-16 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 relative">
           <Image
             src={cleanImageUrl}
             alt={productName}
@@ -145,38 +145,44 @@ export function ProductCard({
 
         {/* Product Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-medium text-gray-800 text-sm leading-relaxed mb-1 line-clamp-2">
+          <h3 className="font-medium text-gray-800 text-xs sm:text-sm leading-relaxed mb-1 line-clamp-2">
             {productName}
           </h3>
 
           {/* Price */}
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg font-semibold text-gray-900">
+          <div className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+            <span className="text-sm sm:text-lg font-semibold text-gray-900">
               {Number(product.current_price)}{" "}
               {language === "ar" ? "د.إ" : "AED"}
             </span>
             {product.is_on_sale && product.sale_price && (
-              <span className="text-sm text-gray-500 line-through">
+              <span className="text-xs sm:text-sm text-gray-500 line-through">
                 {product?.price} {language === "ar" ? "د.إ" : "AED"}
               </span>
             )}
           </div>
 
           {/* Badges */}
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
             {product.is_on_sale && (
-              <Badge variant="destructive" className="text-xs">
+              <Badge
+                variant="destructive"
+                className="text-xs px-1 py-0 sm:px-2 sm:py-1"
+              >
                 -{product.discount_percentage}%
               </Badge>
             )}
             {product.is_featured && (
-              <Badge variant="secondary" className="text-xs">
+              <Badge
+                variant="secondary"
+                className="text-xs px-1 py-0 sm:px-2 sm:py-1"
+              >
                 {language === "ar" ? "مميز" : "Featured"}
               </Badge>
             )}
             <Badge
               variant={isOutOfStock ? "destructive" : "secondary"}
-              className="text-xs"
+              className="text-xs px-1 py-0 sm:px-2 sm:py-1"
             >
               {isOutOfStock
                 ? language === "ar"
@@ -189,11 +195,11 @@ export function ProductCard({
           </div>
 
           {/* Actions */}
-          <div className="flex gap-2">
+          <div className="flex gap-1 sm:gap-2">
             <Button
               variant="outline"
               size="sm"
-              className="flex-1 bg-red-300 text-white hover:bg-red-400"
+              className="flex-1 bg-transparent text-red-600 hover:bg-red-400 text-xs sm:text-sm px-2 py-1 h-7 sm:h-8"
               disabled={isOutOfStock}
               onClick={handleBuyNow}
             >
@@ -202,15 +208,15 @@ export function ProductCard({
             <Button
               variant="outline"
               size="sm"
-              className="flex-1 bg-red-600 text-white hover:bg-red-700"
+              className="flex-1 bg-red-600 text-white hover:bg-red-700 text-xs sm:text-sm px-2 py-1 h-7 sm:h-8"
               disabled={isOutOfStock || isAddingToCart}
               onClick={handleAddToCart}
             >
               {isAddingToCart ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600" />
+                <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 border-b-2 border-red-600" />
               ) : (
                 <>
-                  <ShoppingCart className="h-4 w-4 mr-1" />
+                  <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                   {language === "ar" ? "أضف" : "Add"}
                 </>
               )}
@@ -239,21 +245,27 @@ export function ProductCard({
         />
 
         {/* Badges */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1">
+        <div className="absolute top-1 sm:top-2 left-1 sm:left-2 flex flex-col gap-1">
           {product.is_on_sale && (
-            <Badge variant="destructive" className="text-xs">
+            <Badge
+              variant="destructive"
+              className="text-xs px-1 py-0 sm:px-2 sm:py-1"
+            >
               -{product.discount_percentage}%
             </Badge>
           )}
           {product.is_featured && (
-            <Badge variant="secondary" className="text-xs">
+            <Badge
+              variant="secondary"
+              className="text-xs px-1 py-0 sm:px-2 sm:py-1"
+            >
               {language === "ar" ? "مميز" : "Featured"}
             </Badge>
           )}
         </div>
 
-        {/* Watermark Logo */}
-        <div className="absolute top-4 right-4 bg-black/40 text-white px-2 py-1 text-sm rounded flex items-center gap-1">
+        {/* Watermark Logo - Hide on mobile */}
+        <div className="hidden sm:flex absolute top-4 right-4 bg-black/40 text-white px-2 py-1 text-sm rounded items-center gap-1">
           <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
             <Image
               src="/assets/images/logo.png"
@@ -269,7 +281,7 @@ export function ProductCard({
         {/* Out of Stock Overlay */}
         {isOutOfStock && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <div className="bg-red-600/90 text-white px-4 py-2 rounded-lg font-medium text-lg">
+            <div className="bg-red-600/90 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-sm sm:text-lg">
               {language === "ar" ? "غير متوفر" : "Out of Stock"}
             </div>
           </div>
@@ -277,7 +289,7 @@ export function ProductCard({
 
         {/* Low Stock Warning */}
         {!isOutOfStock && product.is_low_stock && (
-          <div className="absolute bottom-2 right-2 bg-orange-500 text-white px-2 py-1 text-xs rounded">
+          <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 bg-orange-500 text-white px-1 py-0.5 sm:px-2 sm:py-1 text-xs rounded">
             {language === "ar"
               ? `${availableInventory} متبقي`
               : `${availableInventory} left`}
@@ -286,14 +298,14 @@ export function ProductCard({
       </div>
 
       {/* Product Info */}
-      <div className="p-4">
-        <h3 className="font-medium text-gray-800 mb-2 text-sm leading-relaxed line-clamp-2">
+      <div className="p-2 sm:p-4">
+        <h3 className="font-medium text-gray-800 mb-1 sm:mb-2 text-xs sm:text-sm leading-relaxed line-clamp-2">
           {productName}
         </h3>
 
-        {/* Rating */}
+        {/* Rating - Hide on mobile */}
         {product.rating > 0 && (
-          <div className="flex items-center gap-1 mb-2">
+          <div className="hidden sm:flex items-center gap-1 mb-2">
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
                 <Star
@@ -313,14 +325,14 @@ export function ProductCard({
         )}
 
         {/* Price */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold text-gray-900">
+        <div className="flex items-center justify-between mb-2 sm:mb-4">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <span className="text-sm sm:text-lg font-semibold text-gray-900">
               {Number(product.current_price)}{" "}
               {language === "ar" ? "د.إ" : "AED"}
             </span>
             {product.is_on_sale && product.sale_price && (
-              <span className="text-sm text-gray-500 line-through">
+              <span className="text-xs sm:text-sm text-gray-500 line-through hidden sm:block">
                 {product.price}
               </span>
             )}
@@ -335,7 +347,7 @@ export function ProductCard({
                 ? "secondary"
                 : "outline"
             }
-            className={`text-xs ${
+            className={`text-xs px-1 py-0 sm:px-2 sm:py-1 ${
               isOutOfStock
                 ? "bg-red-600"
                 : product.is_low_stock
@@ -357,9 +369,9 @@ export function ProductCard({
           </Badge>
         </div>
 
-        {/* Views */}
+        {/* Views - Hide on mobile */}
         {product.views > 0 && (
-          <div className="flex items-center gap-1 mb-3 text-xs text-gray-500">
+          <div className="hidden sm:flex items-center gap-1 mb-3 text-xs text-gray-500">
             <Eye className="h-3 w-3" />
             <span>
               {product.views} {language === "ar" ? "مشاهدة" : "views"}
@@ -368,43 +380,41 @@ export function ProductCard({
         )}
 
         {/* Action Buttons */}
-        <div className="flex gap-2">
+        <div className="flex gap-1 sm:gap-2">
           <Button
             variant="outline"
             size="sm"
-            className="flex-1 border-red-600 text-red-600 hover:bg-red-50 hover:text-red-700"
+            className="flex-1 border-red-600 text-red-600 hover:bg-red-50 hover:text-red-700 text-xs sm:text-sm px-2 py-1 h-7 sm:h-8"
             disabled={isOutOfStock || !canAddToCart}
             onClick={handleBuyNow}
           >
-            {language === "ar" ? "اشتري الآن" : "Buy Now +"}
+            {language === "ar" ? "اشتري الآن" : "Buy Now"}
           </Button>
           <Button
             variant="outline"
             size="sm"
-            className="flex-1 bg-red-600 text-white hover:bg-red-700 hover:text-white"
+            className="flex-1 bg-red-600 text-white hover:bg-red-700 hover:text-white text-xs sm:text-sm px-2 py-1 h-7 sm:h-8"
             disabled={isOutOfStock || !canAddToCart || isAddingToCart}
             onClick={handleAddToCart}
           >
             {isAddingToCart ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600" />
+              <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 border-b-2 border-gray-600" />
             ) : language === "ar" ? (
               availableInventory > 0 ? (
                 <div className="flex items-center gap-1">
-                  {" "}
                   <span>اضافة</span>
-                  <ShoppingCartIcon className="h-4 w-4 " />
+                  <ShoppingCartIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 </div>
               ) : (
                 <span>نفذ المخزون</span>
               )
             ) : availableInventory > 0 ? (
               <div className="flex items-center gap-1">
-                {" "}
-                <ShoppingCartIcon className="h-4 w-4 " />
+                <ShoppingCartIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span>Add</span>
               </div>
             ) : (
-              <span> Out of stock</span>
+              <span>Out of stock</span>
             )}
           </Button>
         </div>

@@ -187,7 +187,7 @@ export function Header() {
 
         {/* Desktop */}
         <div className="hidden md:block">
-          <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="max-w-7xl mx-auto px-4 py-2">
             <div
               className={`flex items-center justify-between ${
                 dir === "rtl" ? "flex-row-reverse" : ""
@@ -195,7 +195,15 @@ export function Header() {
             >
               {/* Logo */}
               <div className="flex-shrink-0" dir="ltr">
-                <Logo />
+                <Link href="/">
+                  <Image
+                    src="/assets/images/logo.png"
+                    alt="King Road Logo"
+                    width={80}
+                    height={80}
+                    className="object-contain "
+                  />
+                </Link>
               </div>
 
               {/* Navigation */}

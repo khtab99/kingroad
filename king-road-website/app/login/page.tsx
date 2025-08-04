@@ -14,12 +14,12 @@ import Link from "next/link";
 export default function LoginPage() {
   const { language } = useStore();
   const router = useRouter();
-  
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  
+
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
@@ -36,22 +36,18 @@ export default function LoginPage() {
   const handleLogin = async () => {
     if (!isFormValid()) {
       toast.error(
-        language === "ar" 
-          ? "يرجى ملء جميع الحقول" 
-          : "Please fill all fields"
+        language === "ar" ? "يرجى ملء جميع الحقول" : "Please fill all fields"
       );
       return;
     }
 
     setIsLoading(true);
-    
+
     // Simulate login API call
     setTimeout(() => {
       setIsLoading(false);
       toast.success(
-        language === "ar" 
-          ? "تم تسجيل الدخول بنجاح" 
-          : "Login successful"
+        language === "ar" ? "تم تسجيل الدخول بنجاح" : "Login successful"
       );
       router.push("/");
     }, 1500);
@@ -63,8 +59,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-
       <div className="max-w-md mx-auto px-4 py-8">
         {/* Header with Back Button */}
         <div className="flex items-center justify-between mb-8">
@@ -89,8 +83,8 @@ export default function LoginPage() {
         {/* Subtitle */}
         <div className="text-center mb-8">
           <p className="text-gray-600">
-            {language === "ar" 
-              ? "يرجى تسجيل الدخول إلى حسابك" 
+            {language === "ar"
+              ? "يرجى تسجيل الدخول إلى حسابك"
               : "Please login to your account"}
           </p>
         </div>
@@ -108,8 +102,8 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
                 placeholder={
-                  language === "ar" 
-                    ? "أدخل بريدك الإلكتروني" 
+                  language === "ar"
+                    ? "أدخل بريدك الإلكتروني"
                     : "Enter Your Email"
                 }
                 className="pl-10 text-left"
@@ -130,9 +124,7 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
                 placeholder={
-                  language === "ar" 
-                    ? "أدخل كلمة المرور" 
-                    : "Enter Your Password"
+                  language === "ar" ? "أدخل كلمة المرور" : "Enter Your Password"
                 }
                 className="pl-10 text-left"
                 dir="ltr"
@@ -156,15 +148,19 @@ export default function LoginPage() {
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                 {language === "ar" ? "جاري تسجيل الدخول..." : "Logging in..."}
               </div>
+            ) : language === "ar" ? (
+              "تسجيل الدخول"
             ) : (
-              language === "ar" ? "تسجيل الدخول" : "LOGIN"
+              "LOGIN"
             )}
           </Button>
 
           {/* Forgot Password */}
           <div className="text-center">
             <button className="text-gray-600 hover:text-gray-800 text-sm">
-              {language === "ar" ? "نسيت كلمة المرور؟" : "Forgot your password ?"}
+              {language === "ar"
+                ? "نسيت كلمة المرور؟"
+                : "Forgot your password ?"}
             </button>
           </div>
 
@@ -173,8 +169,8 @@ export default function LoginPage() {
             <span className="text-gray-600 text-sm">
               {language === "ar" ? "ليس لديك حساب؟" : "Don't have an account ?"}{" "}
             </span>
-            <Link 
-              href="/register" 
+            <Link
+              href="/register"
               className="text-gray-800 hover:text-gray-600 font-medium text-sm"
             >
               {language === "ar" ? "تسجيل" : "Register"}

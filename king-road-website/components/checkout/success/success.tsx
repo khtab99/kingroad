@@ -554,7 +554,7 @@ export default function CheckoutSuccessContent() {
         </div>
 
         {/* Important Information */}
-        <Alert className="mt-8">
+        {/* <Alert className="mt-8">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
             <strong>{language === "ar" ? "مهم:" : "Important:"}</strong>{" "}
@@ -562,7 +562,7 @@ export default function CheckoutSuccessContent() {
               ? `احفظ رقم طلبك <strong>#${order.order_number}</strong> ورقم هاتفك لمتابعة الطلب وخدمة العملاء. يمكنك تتبع طلبك في أي وقت باستخدام هذه التفاصيل.`
               : `Save your order number <strong>#${order.order_number}</strong> and phone number for order tracking and customer support. You can track your order anytime using these details.`}
           </AlertDescription>
-        </Alert>
+        </Alert> */}
       </div>
     </div>
   );

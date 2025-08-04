@@ -18,7 +18,7 @@ interface CategoryFilters {
 
 interface ProductsGridProps {
   // Updated to support 3-level hierarchy
-  categoryFilters: CategoryFilters;
+  categoryFilters: any;
   selectedCategories: {
     superCategory?: string;
     category?: string;
@@ -211,7 +211,11 @@ export function ProductsGrid({
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div
+        className={`grid ${
+          viewMode === "list" ? "grid-cols-1 " : "grid-cols-2 "
+        } md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 lg:gap-6`}
+      >
         {productList.map((product: any) => (
           <ProductCard
             key={product.id}
